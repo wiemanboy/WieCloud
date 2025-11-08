@@ -1,0 +1,4 @@
+resources:
+  - cert-manager.yaml
+  - certificate.yaml
+  - issuer.yaml
