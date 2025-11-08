@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: wiemansite
+  name: infrastructure
   namespace: argocd
 spec:
   project: default
