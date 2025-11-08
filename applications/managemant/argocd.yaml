@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argo-cd
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: argo-cd
+    repoURL: https://argoproj.github.io/argo-helm
+    targetRevision: 9.1.0
+    helm:
+      releaseName: argo-cd
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: argocd

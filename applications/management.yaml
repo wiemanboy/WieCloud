@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/wiemanboy/WieCloud.git
     targetRevision: master
-    path: applications/wiemansite
+    path: applications/management
   destination:
     server: https://kubernetes.default.svc
-    namespace: wiemansite
+    namespace: management
