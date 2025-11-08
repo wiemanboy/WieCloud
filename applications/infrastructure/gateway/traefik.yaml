@@ -11,7 +11,7 @@ spec:
     targetRevision: 37.2.0
     helm:
       releaseName: traefik
-      values: infrastructure/gateway/values.yaml
+      valueFiles: [ ./values.yaml ]
   destination:
     server: "https://kubernetes.default.svc"
     namespace: infrastructure
