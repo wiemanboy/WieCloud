@@ -8,6 +8,7 @@ spec:
   source:
     chart: cert-manager
     repoURL: https://charts.jetstack.io
+    targetRevision: 1.19.1
     helm:
       releaseName: cert-manager
       values: infrastructure/tls/values.yaml
