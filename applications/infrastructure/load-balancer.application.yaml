@@ -11,4 +11,4 @@ spec:
     path: applications/infrastructure/load-balancer
   destination:
     server: https://kubernetes.default.svc
-    namespace: infrastructure
+    namespace: metallb-system
