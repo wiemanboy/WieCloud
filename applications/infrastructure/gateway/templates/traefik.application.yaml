@@ -2,7 +2,6 @@
   "chart" "traefik"
   "repoURL" "https://traefik.github.io/charts"
   "targetRevision" "37.2.0"
-  "releaseName" "traefik"
   "valueFiles" (list "traefik.values.yaml")
 
 {{- include "helm.application" (dict "name" "traefik" "config" $traefikConfig) -}}
