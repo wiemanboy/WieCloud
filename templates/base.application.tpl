@@ -1,4 +1,9 @@
-{{- range $name, $config := .Values.applications }}
+{{/*
+Generate ArgoCD Application manifest
+*/}}
+{{- define "base.application" -}}
+{{- $name := .name -}}
+{{- $config := .config -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:

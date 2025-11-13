@@ -1,0 +1,3 @@
+{{- range $name, $config := .Values.applications }}
+{{- include "base.application" (dict "name" $name "config" $config) }}
+{{- end }}

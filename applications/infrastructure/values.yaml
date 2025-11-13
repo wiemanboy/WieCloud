@@ -1,0 +1,10 @@
+applications:
+  gateway:
+    path: applications/infrastructure/gateway
+    namespace: infrastructure
+  load-balancer:
+    path: applications/infrastructure/load-balancer
+    namespace: infrastructure
+  tls:
+    path: applications/infrastructure/tls
+    namespace: infrastructure
