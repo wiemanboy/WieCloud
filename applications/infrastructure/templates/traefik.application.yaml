@@ -1,0 +1,9 @@
+# templates/traefik-application.yaml
+{{- $traefikConfig := dict
+  "chart" "traefik"
+  "repoURL" "https://traefik.github.io/charts"
+  "targetRevision" "37.2.0"
+  "releaseName" "traefik"
+-}}
+
+{{- include "helm.application" (dict "name" "traefik" "config" $traefikConfig) -}}
