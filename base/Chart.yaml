@@ -1,4 +1,4 @@
 apiVersion: v2
-name: infrastructure
+name: wiecloud
 type: application
 version: 0.0.0
