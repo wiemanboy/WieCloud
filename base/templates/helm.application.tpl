@@ -16,7 +16,7 @@ spec:
     repoURL: {{ $config.repoURL }}
     targetRevision: {{ $config.targetRevision }}
     helm:
-      valueFiles: [ ./values.yaml ]
+      valueFiles: {{ $config.valueFiles}}
   destination:
     server: "https://kubernetes.default.svc"
     namespace: infrastructure
