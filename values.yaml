@@ -2,6 +2,15 @@ applications:
   infrastructure:
     path: applications/infrastructure
     namespace: infrastructure
+  infrastructure/gateway:
+    path: applications/infrastructure/gateway
+    namespace: infrastructure
+  infrastructure/load-balancer:
+    path: applications/infrastructure/load-balancer
+    namespace: infrastructure
+  infrastructure/tls:
+    path: applications/infrastructure/tls
+    namespace: infrastructure
   management:
     path: applications/management  
     namespace: management
