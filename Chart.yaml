@@ -2,7 +2,3 @@ apiVersion: v2
 name: wiecloud
 type: application
 version: 0.0.0
-dependencies:
-  - name: infrastructure
-    version: 0.0.0
-    repository: file://applications/infrastructure
