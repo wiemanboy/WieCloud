@@ -11,7 +11,7 @@ spec:
     targetRevision: 1.19.1
     helm:
       releaseName: cert-manager
-      valueFiles: [ ./values.yaml ]
+      valueFiles: [ cert-manager.values.yaml ]
   destination:
     server: "https://kubernetes.default.svc"
     namespace: infrastructure
