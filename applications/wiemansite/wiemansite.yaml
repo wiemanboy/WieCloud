@@ -47,7 +47,7 @@ metadata:
     kubernetes.io/ingress.class: traefik
 spec:
   rules:
-  - host: "wiemansite.localhost"
+  - host: "site.wieman.cloud"
     http:
       paths:
       - path: /
