@@ -17,6 +17,7 @@ spec:
     targetRevision: {{ $config.targetRevision }}
     helm:
       valueFiles: {{ $config.valueFiles}}
+      values: {{ $config.values | default "" | nindent 8 }}
   destination:
     server: "https://kubernetes.default.svc"
     namespace: infrastructure
