@@ -6,7 +6,7 @@ metadata:
 spec:
   secretName: letsencrypt-secret
   dnsNames:
-  - "*.localhost"
+  - "*.wieman.cloud"
   issuerRef:
     name: letsencrypt
     kind: ClusterIssuer
