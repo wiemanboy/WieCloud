@@ -16,8 +16,8 @@ spec:
     repoURL: {{ $config.repoURL }}
     targetRevision: {{ $config.targetRevision }}
     helm:
-      valueFiles: {{ $config.valueFiles}}
-      values: {{ $config.values | default "" | nindent 8 }}
+      valueFiles: 
+        - {{ "https://raw.githubusercontent.com/wiemanboy/WieCloud/refs/heads/master" $config.valueFile }}
   destination:
     server: "https://kubernetes.default.svc"
     namespace: infrastructure
