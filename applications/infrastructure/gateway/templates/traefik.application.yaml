@@ -2,7 +2,7 @@
   "chart" "traefik"
   "repoURL" "https://traefik.github.io/charts"
   "targetRevision" "37.2.0"
-  "valuesFiles" (list "https://raw.githubusercontent.com/wiemanboy/WieCloud/refs/heads/master/applications/infrastructure/gateway/traefik.values.yaml")
+  "valueFiles" (list "https://raw.githubusercontent.com/wiemanboy/WieCloud/refs/heads/master/applications/infrastructure/gateway/traefik.values.yaml")
 }}
 
 {{- include "helm.application" (dict "name" "traefik" "config" $traefikConfig) -}}
