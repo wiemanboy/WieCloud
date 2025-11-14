@@ -1,8 +1,0 @@
-{{- $traefikConfig := dict
-  "chart" "traefik"
-  "repoURL" "https://traefik.github.io/charts"
-  "targetRevision" "37.2.0"
-  "valueFile" "/applications/infrastructure/gateway/traefik.values.yaml"
-}}
-
-{{- include "helm.application" (dict "name" "traefik" "config" $traefikConfig) -}}

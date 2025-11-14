@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: metallb
+  name: traefik
   namespace: argocd
 spec:
   project: default
   source:
-    chart: metallb
-    repoURL: https://metallb.github.io/metallb
+    chart: traefik
+    repoURL: https://traefik.github.io/charts
     targetRevision: 0.15.2
     helm:
-      releaseName: metallb
+      releaseName: traefik
       valueFiles: [ ./values.yaml ]
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: metallb-system
+    namespace: infrastructure
