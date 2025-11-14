@@ -1,2 +1,1 @@
-crds:
-  enabled: true
+installCRDs: true
