@@ -1,10 +1,8 @@
-{{- $traefikValues := .Files.Get "traefik.values" | toString }}
-
 {{- $traefikConfig := dict
   "chart" "traefik"
   "repoURL" "https://traefik.github.io/charts"
   "targetRevision" "37.2.0"
-  "values" $traefikValues
+  "valuesFiles" (list "https://raw.githubusercontent.com/wiemanboy/WieCloud/refs/heads/master/applications/infrastructure/gateway/traefik.values.yaml")
 }}
 
 {{- include "helm.application" (dict "name" "traefik" "config" $traefikConfig) -}}
