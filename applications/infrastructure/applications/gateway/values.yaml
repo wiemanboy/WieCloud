@@ -1,40 +1,39 @@
-traefik:
-  ingressRoute:
-    dashboard:
-      enabled: true
-      matchRule: Host(`dashboard.localhost`)
-      entryPoints:
-        - web
-        - websecure
-  providers:
-    kubernetesGateway:
-      enabled: true
-  gateway:
-    listeners:
-      web:
-        port: 80
-        protocol: HTTP
-      websecure:
-        port: 443
-        protocol: HTTPS
-        namespacePolicy:
-          from: All 
-        mode: Terminate
-        certificateRefs:
-          - name: letsencrypt-secret
-            kind: Secret
-  ports:
+ingressRoute:
+  dashboard:
+    enabled: true
+    matchRule: Host(`dashboard.localhost`)
+    entryPoints:
+      - web
+      - websecure
+providers:
+  kubernetesGateway:
+    enabled: true
+gateway:
+  listeners:
     web:
       port: 80
-      redirections:
-        entryPoint:
-          to: websecure
-          scheme: https
+      protocol: HTTP
     websecure:
       port: 443
-      tls:
-        enabled: true
-  tlsStore:
-    default:
-      defaultCertificate:
-        secretName: letsencrypt-secret
+      protocol: HTTPS
+      namespacePolicy:
+        from: All 
+      mode: Terminate
+      certificateRefs:
+        - name: letsencrypt-secret
+          kind: Secret
+ports:
+  web:
+    port: 80
+    redirections:
+      entryPoint:
+        to: websecure
+        scheme: https
+  websecure:
+    port: 443
+    tls:
+      enabled: true
+tlsStore:
+  default:
+    defaultCertificate:
+      secretName: letsencrypt-secret
