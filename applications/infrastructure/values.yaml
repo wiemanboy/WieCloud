@@ -2,9 +2,9 @@ applications:
   gateway:
     path: applications/infrastructure/applications/gateway
     namespace: infrastructure
-  load-balancer:
-    path: applications/infrastructure/applications/load-balancer
-    namespace: infrastructure
+  # load-balancer:
+  #   path: applications/infrastructure/applications/load-balancer
+  #   namespace: infrastructure
   tls:
     path: applications/infrastructure/applications/tls
     namespace: infrastructure

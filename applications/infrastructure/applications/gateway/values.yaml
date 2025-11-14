@@ -1,4 +1,7 @@
 traefik:
+  service:
+    externalIps:
+      -192.168.178.194
   ingressRoute:
     dashboard:
       enabled: true
