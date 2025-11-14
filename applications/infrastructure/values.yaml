@@ -1,7 +1,7 @@
 applications:
-  gateway:
-    path: applications/infrastructure/applications/gateway
-    namespace: infrastructure
+  # gateway:
+  #   path: applications/infrastructure/applications/gateway
+  #   namespace: infrastructure
   load-balancer:
     path: applications/infrastructure/applications/load-balancer
     namespace: infrastructure
