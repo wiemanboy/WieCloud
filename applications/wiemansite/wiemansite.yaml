@@ -57,4 +57,63 @@ spec:
             name: wiemansite-svc
             port:
               number: 80
-              
+  - host: "wiemanboy.com"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: wiemansite-svc
+            port:
+              number: 80
+  - host: "www.wiemanboy.com"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: wiemansite-svc
+            port:
+              number: 80
+  - host: "jarnowieman.com"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: wiemansite-svc
+            port:
+              number: 80
+  - host: "www.jarnowieman.com"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: wiemansite-svc
+            port:
+              number: 80
+  - host: "jarnowieman.nl"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: wiemansite-svc
+            port:
+              number: 80
+  - host: "www.jarnowieman.nl"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: wiemansite-svc
+            port:
+              number: 80
