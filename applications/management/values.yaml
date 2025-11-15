@@ -3,3 +3,6 @@ argo-cd:
     ingress:
       enabled: true
       hostname: argocd.wieman.cloud
+  configs:
+    params:
+      server.insecure: true
