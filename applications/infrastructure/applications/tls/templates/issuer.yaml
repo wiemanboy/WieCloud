@@ -17,6 +17,9 @@ spec:
     privateKeySecretRef:
       name: letsencrypt-secret
     solvers:
-    - http01:
-        ingress:
-          class: traefik
+    - dns01:
+        cloudflare:
+          email: wiemanboy@gmail.com
+          apiTokenSecretRef:
+            name: cloudflare-api-token
+            key: api-token
