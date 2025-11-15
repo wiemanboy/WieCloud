@@ -15,7 +15,7 @@ spec:
     email: wiemanboy@gmail.com
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
-      name: cert-manager-private-key
+      name: letsencrypt-secret
     solvers:
     - http01:
         ingress:
