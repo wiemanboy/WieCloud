@@ -2,7 +2,7 @@ apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
   name: default-pool
-  namespace: metallb-system
+  namespace: metallb
 spec:
   addresses:
   - 192.168.178.194-192.168.178.194
@@ -11,7 +11,7 @@ apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
 metadata:
   name: default-l2
-  namespace: metallb-system
+  namespace: metallb
 spec:
   ipAddressPools:
   - default-pool

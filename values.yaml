@@ -1,10 +1,16 @@
 applications:
-  infrastructure:
-    path: applications/infrastructure
-    namespace: infrastructure
-  management:
-    path: applications/management  
+  argocd:
+    path: applications/argocd  
     namespace: argocd
+  cert-manager:
+    path: applications/cert-manager
+    namespace: cert-manager
+  metallb:
+    path: applications/metallb
+    namespace: metallb
+  traefik:
+    path: applications/traefik
+    namespace: traefik
   wiemansite:
     path: applications/wiemansite
     namespace: default
