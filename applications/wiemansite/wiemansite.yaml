@@ -39,6 +39,31 @@ spec:
     targetPort: 3000
   type: ClusterIP
 ---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: wiemansite-https
+  namespace: gateway
+spec:
+  parentRefs:
+    - name: traefik-gateway
+      sectionName: websecure
+      kind: Gateway
+
+  hostnames:
+    - site.wieman.cloud
+
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+
+      backendRefs:
+        - name: wiemansite-svc
+          namespace: default
+          port: 80
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -47,16 +72,6 @@ metadata:
     kubernetes.io/ingress.class: traefik
 spec:
   rules:
-  - host: "site.wieman.cloud"
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: wiemansite-svc
-            port:
-              number: 80
   - host: "wiemanboy.com"
     http:
       paths:
