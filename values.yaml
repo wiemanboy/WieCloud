@@ -4,13 +4,13 @@ applications:
     namespace: argocd
   cert-manager:
     path: applications/cert-manager
-    namespace: cert-manager
+    namespace: gateway
   metallb:
     path: applications/metallb
     namespace: metallb
   traefik:
     path: applications/traefik
-    namespace: traefik
+    namespace: gateway
   wiemansite:
     path: applications/wiemansite
     namespace: default
