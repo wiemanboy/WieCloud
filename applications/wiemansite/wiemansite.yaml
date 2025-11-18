@@ -51,6 +51,12 @@ spec:
 
   hostnames:
     - site.wieman.cloud
+    - wiemanboy.com
+    - www.wiemanboy.com
+    - jarnowieman.com
+    - www.jarnowieman.com
+    - jarnowieman.nl
+    - www.jarnowieman.nl
 
   rules:
     - matches:
@@ -62,72 +68,3 @@ spec:
         - name: wiemansite-svc
           namespace: default
           port: 80
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: wiemanboy-ingress
-  annotations:
-    kubernetes.io/ingress.class: traefik
-spec:
-  rules:
-  - host: "wiemanboy.com"
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: wiemansite-svc
-            port:
-              number: 80
-  - host: "www.wiemanboy.com"
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: wiemansite-svc
-            port:
-              number: 80
-  - host: "jarnowieman.com"
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: wiemansite-svc
-            port:
-              number: 80
-  - host: "www.jarnowieman.com"
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: wiemansite-svc
-            port:
-              number: 80
-  - host: "jarnowieman.nl"
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: wiemansite-svc
-            port:
-              number: 80
-  - host: "www.jarnowieman.nl"
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: wiemansite-svc
-            port:
-              number: 80
