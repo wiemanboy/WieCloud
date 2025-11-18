@@ -47,7 +47,7 @@ spec:
   parentRefs:
     - name: traefik-gateway
       sectionName: websecure
-      kind: Gateway
+      namespace: gateway
 
   hostnames:
     - site.wieman.cloud
