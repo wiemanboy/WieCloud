@@ -1,5 +1,5 @@
 DRY_RUN=${1:-true}
-SECURE=${2:-true}
+DRY_RUN_TAG=$([[ $DRY_RUN == "true" ]] && echo "--dry-run" || echo "")
 
 CLUSTER_NAME=homelab
 
@@ -8,10 +8,10 @@ CONTROL_PLANE_ENDPOINT=https://$CONTROL_PLANE_IP:6443
 
 talosctl gen config $CLUSTER_NAME $CONTROL_PLANE_ENDPOINT --config-patch-control-plane @controlplane.config.yaml --config-patch-worker @worker.config.yaml || exit
 
+talosctl apply-config --insecure --nodes $CONTROL_PLANE_IP --file controlplane.yaml $DRY_RUN_TAG
+
 if [[ $DRY_RUN == "true" ]]; then
-  talosctl apply-config --insecure --nodes $CONTROL_PLANE_IP --file controlplane.yaml --dry-run
   exit
 fi
 
-talosctl apply-config --insecure --nodes $CONTROL_PLANE_IP --file controlplane.yaml
 talosctl --talosconfig=./talosconfig config endpoints $CONTROL_PLANE_IP
