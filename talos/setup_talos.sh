@@ -15,3 +15,5 @@ if [[ $DRY_RUN == "true" ]]; then
 fi
 
 talosctl --talosconfig=./talosconfig config endpoints $CONTROL_PLANE_IP
+
+echo "NEXT STEP: run setup_k8s.sh to bootstrap the cluster"
