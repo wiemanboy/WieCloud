@@ -1,5 +1,19 @@
-DRY_RUN=${1:-true}
-DRY_RUN_TAG=$([[ $DRY_RUN == "true" ]] && echo "--dry-run=client" || echo "")
+DRY_RUN=true
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --dry-run)
+      DRY_RUN="$2"
+      shift 2
+      ;;
+    *)
+      echo "Unknown parameter: $1"
+      exit 1
+      ;;
+  esac
+done
+
+DRY_RUN_TAG=$([[ $DRY_RUN != "false" ]] && echo "--dry-run" || echo "")
 
 helm repo add argo https://argoproj.github.io/argo-helm
 
@@ -10,7 +24,7 @@ helm install argocd argo/argo-cd --version 9.1.3 -n argocd --create-namespace -f
 echo "creating root application"
 kubectl apply -f wiecloud.application.yaml $DRY_RUN_TAG
 
-if [[ $DRY_RUN == "true" ]]; then
+if [[ $DRY_RUN != "false" ]]; then
   exit
 fi
 

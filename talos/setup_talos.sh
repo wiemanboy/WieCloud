@@ -1,9 +1,25 @@
-DRY_RUN=${1:-true}
-DRY_RUN_TAG=$([[ $DRY_RUN == "true" ]] && echo "--dry-run" || echo "")
-
+DRY_RUN=true
+CONTROL_PLANE_IP=192.168.178.194
 CLUSTER_NAME=homelab
 
-CONTROL_PLANE_IP=192.168.178.194
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --dry-run)
+      DRY_RUN="$2"
+      shift 2
+      ;;
+    --ip)
+      CONTROL_PLANE_IP="$2"
+      shift 2
+      ;;
+    *)
+      echo "Unknown parameter: $1"
+      exit 1
+      ;;
+  esac
+done
+
+DRY_RUN_TAG=$([[ $DRY_RUN != "false" ]] && echo "--dry-run" || echo "")
 CONTROL_PLANE_ENDPOINT=https://$CONTROL_PLANE_IP:6443
 
 talosctl gen config $CLUSTER_NAME $CONTROL_PLANE_ENDPOINT --config-patch-control-plane @controlplane.config.yaml --config-patch-worker @worker.config.yaml || exit
