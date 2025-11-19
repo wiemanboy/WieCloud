@@ -5,9 +5,12 @@ applications:
   cert-manager:
     path: applications/cert-manager
     namespace: gateway
+  longhorn:
+    path: applications/longhorn
+    namespace: longhorn-system
   metallb:
     path: applications/metallb
-    namespace: metallb
+    namespace: metallb-system
   traefik:
     path: applications/traefik
     namespace: gateway
