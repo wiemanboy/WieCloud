@@ -21,3 +21,10 @@ spec:
         - name: longhorn-frontend
           namespace: longhorn-system
           port: 80
+
+      filters:
+        - type: ExtensionRef
+          extensionRef:
+            group: traefik.io
+            kind: Middleware
+            name: basic-auth

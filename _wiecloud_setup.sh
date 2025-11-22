@@ -28,7 +28,12 @@ if [[ $DRY_RUN != "false" ]]; then
   exit
 fi
 
-echo "TODO: remove this later"
-echo "default argo password: $(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)"
+DEFAULT_PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
+
+kubectl create secret generic server-auth-secret -n gateway --type=kubernetes.io/basic-auth --from-literal=username=admin --from-literal=password=$DEFAULT_PASSWORD
+kubectl create secret generic server-auth-secret -n longhorn-system --type=kubernetes.io/basic-auth --from-literal=username=admin --from-literal=password=$DEFAULT_PASSWORD
+echo "TODO: implement oidc so secret password is not needed"
+echo "default password: $DEFAULT_PASSWORD"
+echo "TODO: implement secret server"
 echo "setup cloudflare api token secret:"
 echo "kubectl create secret generic cloudflare-api-token --from-literal=api-token=<CLOUDFLARE_API_TOKEN> \--namespace=gateway"

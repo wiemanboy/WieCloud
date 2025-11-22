@@ -9,6 +9,8 @@ traefik:
       entryPoints:
         - web
         - websecure
+      middlewares:
+        - name: basic-auth
   providers:
     kubernetesGateway:
       enabled: true
