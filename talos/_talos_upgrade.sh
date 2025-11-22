@@ -27,8 +27,8 @@ IMAGE_ID=$(curl -s -X POST --data-binary @bare-metal.yaml https://factory.talos.
 
 if [[ $DRY_RUN != "false" ]]; then
     echo "DRY RUN:"
-    echo "talosctl upgrade --nodes  --image ghcr.io/siderolabs/installer/${IMAGE_ID}:${TALOS_VERSION} --preserve"
+    echo "talosctl upgrade --nodes  --image factory.talos.dev/installer/${IMAGE_ID}:${TALOS_VERSION} --preserve"
     exit
 fi
 
-talosctl upgrade --nodes $NODE_IPS --talosconfig=./talosconfig --image ghcr.io/siderolabs/installer/${IMAGE_ID}:${TALOS_VERSION} --preserve
+talosctl upgrade --nodes $NODE_IPS --talosconfig=./talosconfig --image factory.talos.dev/installer/${IMAGE_ID}:${TALOS_VERSION} --preserve
