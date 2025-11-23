@@ -8,6 +8,4 @@ external-dns:
           name: cloudflare-api-token
           key: api-token
   sources:
-    - service
-    - crd
-    - gateway-httproute
+    - traefik-proxy
