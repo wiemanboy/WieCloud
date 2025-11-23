@@ -1,0 +1,91 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: harbor-route
+spec:
+  parentRefs:
+    - name: traefik-gateway
+      sectionName: websecure
+      namespace: gateway
+      
+  hostnames:
+    - core.harbor.wieman.cloud
+
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: harbor-harbor-portal
+          namespace: harbor
+          port: 80
+
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api/
+      backendRefs:
+        - name: harbor-harbor-core
+          namespace: harbor
+          port: 80
+
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /service/
+      backendRefs:
+        - name: harbor-harbor-core
+          namespace: harbor
+          port: 80
+
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /v2/
+      backendRefs:
+        - name: harbor-harbor-core
+          namespace: harbor
+          port: 80
+
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /chartrepo/
+      backendRefs:
+        - name: harbor-harbor-core
+          namespace: harbor
+          port: 80
+
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /c/
+      backendRefs:
+        - name: harbor-harbor-core
+          namespace: harbor
+          port: 80
+
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: harbor-route-notary
+spec:
+  parentRefs:
+    - name: traefik-gateway
+      sectionName: websecure
+      namespace: gateway
+
+  hostnames:
+    - notary.harbor.wieman.cloud
+
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: harbor-harbor-notary-server
+          namespace: harbor
+          port: 4443
