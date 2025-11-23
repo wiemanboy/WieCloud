@@ -2,6 +2,8 @@ traefik:
   service:
     externalIps:
       -192.168.178.194
+    annotations:
+      external-dns.alpha.kubernetes.io/target: wieman.cloud
   ingressRoute:
     dashboard:
       enabled: true
