@@ -1,5 +1,5 @@
 harbor:
   expose:
-    type: NodePort
+    # type: NodePort
     tls:
       enabled: false
