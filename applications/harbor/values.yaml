@@ -1,0 +1,3 @@
+harbor:
+  expose:
+    type: NodePort
