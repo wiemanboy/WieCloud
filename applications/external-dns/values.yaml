@@ -7,3 +7,7 @@ external-dns:
         secretKeyRef:
           name: cloudflare-api-token
           key: api-token
+  sources:
+    - service
+    - crd
+    - gateway-httproute
