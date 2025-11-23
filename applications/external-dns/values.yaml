@@ -10,4 +10,4 @@ external-dns:
   sources:
     - service
     - crd
-    -gateway-httproute
+    - gateway-httproute
