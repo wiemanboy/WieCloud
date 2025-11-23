@@ -5,6 +5,9 @@ applications:
   cert-manager:
     path: applications/cert-manager
     namespace: gateway
+  external-dns:
+    path: applications/external-dns
+    namespace: gateway
   harbor:
     path: applications/harbor
     namespace: harbor
