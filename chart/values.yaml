@@ -5,6 +5,9 @@ applications:
   cert-manager:
     path: applications/cert-manager
     namespace: gateway
+  harbor:
+    path: applications/harbor
+    namespace: harbor
   longhorn:
     path: applications/longhorn
     namespace: longhorn-system
