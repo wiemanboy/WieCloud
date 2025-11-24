@@ -18,6 +18,8 @@ traefik:
     kubernetesGateway:
       enabled: true
   gateway:
+    annotations:
+      external-dns.alpha.kubernetes.io/target: wieman.cloud
     listeners:
       web:
         port: 80
