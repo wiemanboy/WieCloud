@@ -4,6 +4,7 @@ traefik:
       -192.168.178.194
     annotations:
       external-dns.alpha.kubernetes.io/hostname: wieman.cloud
+      external-dns.alpha.kubernetes.io/target: 85.148.81.86
   ingressRoute:
     dashboard:
       enabled: true
