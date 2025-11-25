@@ -10,7 +10,7 @@ metadata:
   name: {{ $name }}
   namespace: argocd
 spec:
-  project: default
+  project: infrastructure
   source:
     repoURL: https://github.com/wiemanboy/WieCloud.git
     targetRevision: master
