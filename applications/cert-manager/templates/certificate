@@ -8,6 +8,7 @@ spec:
   dnsNames:
   - "wieman.cloud"
   - "*.wieman.cloud"
+  - "*.harbor.wieman.cloud"
   - "wiemanboy.com"
   - "*.wiemanboy.com"
   - "jarnowieman.com"

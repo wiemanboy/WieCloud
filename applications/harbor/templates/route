@@ -11,7 +11,7 @@ spec:
       namespace: gateway
 
   hostnames:
-    - core.harbor.wieman.cloud
+    - harbor.wieman.cloud
 
   rules:
     - matches:
