@@ -3,3 +3,4 @@ harbor:
     type: NodePort
     tls:
       enabled: false
+  externalURL: https://harbor.wieman.cloud
