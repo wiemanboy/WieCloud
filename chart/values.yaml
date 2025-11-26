@@ -11,6 +11,9 @@ applications:
   harbor:
     path: applications/harbor
     namespace: harbor
+  keycloak:
+    path: applications/keycloak
+    namespace: keycloak
   longhorn:
     path: applications/longhorn
     namespace: longhorn-system
