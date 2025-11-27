@@ -13,6 +13,8 @@ spec:
     passwordSecret:
       name: keycloak-db-secret
       key: password
+  ingress:
+    enabled: false
   http:
     httpEnabled: true
   hostname:
