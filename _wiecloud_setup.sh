@@ -34,6 +34,7 @@ DEFAULT_PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o j
 
 kubectl create secret generic server-auth-secret -n gateway --type=kubernetes.io/basic-auth --from-literal=username=admin --from-literal=password=$DEFAULT_PASSWORD
 kubectl create secret generic server-auth-secret -n longhorn-system --type=kubernetes.io/basic-auth --from-literal=username=admin --from-literal=password=$DEFAULT_PASSWORD
+kubectl create secret generic keycloak-db-secret -n keycloak --from-literal=username=keycloak --from-literal=password=$DEFAULT_PASSWORD
 echo "TODO: implement oidc so secret password is not needed"
 echo "default password: $DEFAULT_PASSWORD"
 echo "TODO: implement secret server"
