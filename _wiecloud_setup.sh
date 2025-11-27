@@ -28,6 +28,8 @@ if [[ $DRY_RUN != "false" ]]; then
   exit
 fi
 
+curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.38.0/install.sh | bash -s v0.38.0
+
 DEFAULT_PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
 
 kubectl create secret generic server-auth-secret -n gateway --type=kubernetes.io/basic-auth --from-literal=username=admin --from-literal=password=$DEFAULT_PASSWORD
