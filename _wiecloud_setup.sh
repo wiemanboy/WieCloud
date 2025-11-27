@@ -35,8 +35,14 @@ DEFAULT_PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o j
 kubectl create secret generic server-auth-secret -n gateway --type=kubernetes.io/basic-auth --from-literal=username=admin --from-literal=password=$DEFAULT_PASSWORD
 kubectl create secret generic server-auth-secret -n longhorn-system --type=kubernetes.io/basic-auth --from-literal=username=admin --from-literal=password=$DEFAULT_PASSWORD
 kubectl create secret generic keycloak-db-secret -n keycloak --from-literal=username=keycloak --from-literal=password=$DEFAULT_PASSWORD
+
 echo "TODO: implement oidc so secret password is not needed"
 echo "default password: $DEFAULT_PASSWORD"
+
+echo "keycloak initial admin user:"
+kubectl get secret keycloak-initial-admin -o jsonpath='{.data.username}' | base64 --decode
+kubectl get secret keycloak-initial-admin -o jsonpath='{.data.password}' | base64 --decode
+
 echo "TODO: implement secret server"
 echo "setup cloudflare api token secret:"
 echo "kubectl create secret generic cloudflare-api-token --from-literal=api-token=<CLOUDFLARE_API_TOKEN> \--namespace=gateway"
