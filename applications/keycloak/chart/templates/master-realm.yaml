@@ -1,0 +1,48 @@
+apiVersion: k8s.keycloak.org/v2alpha1
+kind: KeycloakRealmImport
+metadata:
+  name: master
+spec:
+  keycloakCRName: keycloak
+  realm:
+    id: 488e588f-61bf-48b9-9384-18df35686d84
+    realm: master
+    displayName: Keycloak
+    enabled: true
+    groups:
+    - id: 174c1b4b-daca-403c-ab64-35e1cd54fdd8
+      name: INFRA_ADMIN
+      path: /INFRA_ADMIN
+      subGroups: []
+      attributes: {}
+      realmRoles: []
+      clientRoles: {}
+    users:
+      - id: 5ce0013a-c5ed-4099-85d0-15823d580edd
+        username: jarno_wieman
+        firstName: Jarno
+        lastName: Wieman
+        email: wiemanboy@gmail.com
+        emailVerified: true
+        enabled: true
+        createdTimestamp: 1764532430321
+        totp: true
+        credentials:
+          - id: f5d5ef15-06da-4160-a2ec-4788fa1b6b36
+            type: password
+            createdDate: 1764532636278
+            secretData: '{"value":"qOtpD7Vh8d/ivLxcFFqKw7pY0BwJmlvZjvibIyYn2P8=","salt":"HWHUrf/GcehN2hI4Xgxzhg==","additionalParameters":{}}'
+            credentialData: '{"hashIterations":5,"algorithm":"argon2","additionalParameters":{"hashLength":["32"],"memory":["7168"],"type":["id"],"version":["1.3"],"parallelism":["1"]}}'
+          - id: 75e2e3e0-2a42-4c2b-af5b-7467f1dfe2be
+            type: otp
+            userLabel: s24-ultra
+            createdDate: 1764532588236
+            secretData: '{"value":"qlEcjCHO03BvjR4db33s"}'
+            credentialData: '{"subType":"totp","digits":6,"counter":0,"period":30,"algorithm":"HmacSHA1"}'
+        disableableCredentialTypes: []
+        requiredActions: []
+        realmRoles:
+          - default-roles-master
+          - admin
+        notBefore: 0
+        groups: []
