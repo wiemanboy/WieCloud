@@ -12,7 +12,7 @@ applications:
     path: applications/harbor
     namespace: harbor
   keycloak:
-    path: applications/keycloak
+    path: applications/keycloak/chart
     namespace: keycloak
   longhorn:
     path: applications/longhorn
