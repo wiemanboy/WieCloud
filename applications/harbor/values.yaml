@@ -4,13 +4,20 @@ harbor:
     tls:
       enabled: false
   externalURL: https://harbor.wieman.cloud
-  authMode: oidc_auth
-  oidc:
-    endpoint: https://keycloak.wieman.cloud/realms/master
-    client_id: harbor
-    client_secret: QYEC9d6en0tCnaJBijHkJDPxjgaRYSsy # TODO: BIG NONO SECRET IN REPO
-    scope: openid,profile,email
-    verify_cert: true
-    auto_onboard: true
-    groups_claim: groups
-    admin_group: harbor-admins
+  core:
+    extraEnvVars:
+    - name: CONFIG_OVERWRITE_JSON
+      value: |
+        {
+          "auth_mode": "oidc_auth",
+          "oidc_name": "keycloak",
+          "oidc_endpoint": "https://keycloak.wieman.cloud/realms/master",
+          "oidc_groups_claim": "groups",
+          "oidc_admin_group": "harbor-admin",
+          "oidc_client_id": "harbor",
+          "oidc_client_secret": "QYEC9d6en0tCnaJBijHkJDPxjgaRYSsy", # TODO: BIG NONO SECRET IN REPO
+          "oidc_scope": "openid,email,profile,offline_access",
+          "oidc_verify_cert": "true",
+          "oidc_auto_onboard": "true",
+          "oidc_user_claim": "preferred_username"
+        }
