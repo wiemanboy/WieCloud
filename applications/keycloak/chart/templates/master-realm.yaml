@@ -20,7 +20,8 @@ spec:
     - id: 174c1b4b-daca-403c-ab64-35e1cd54fdd8
       name: infra-admin
       path: /infra-admin
-      subGroups: [ harbor-admins ]
+      subGroups:
+        - name: harbor-admins
       clientRoles: {}
     - id: 3f6f5f1e-6d3b-4e2e-8f13-1f3e5f4e4a8b
       name: harbor-admins
