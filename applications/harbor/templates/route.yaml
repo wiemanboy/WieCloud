@@ -67,29 +67,3 @@ spec:
         - name: harbor-core
           namespace: harbor
           port: 80
-
----
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
-metadata:
-  name: harbor-route-notary
-  annotations:
-    external-dns.alpha.kubernetes.io/target: wieman.cloud
-spec:
-  parentRefs:
-    - name: traefik-gateway
-      sectionName: websecure
-      namespace: gateway
-
-  hostnames:
-    - notary.harbor.wieman.cloud
-
-  rules:
-    - matches:
-        - path:
-            type: PathPrefix
-            value: /
-      backendRefs:
-        - name: harbor-notary-server
-          namespace: harbor
-          port: 4443
