@@ -19,7 +19,7 @@ spec:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: harbor-harbor-portal
+        - name: harbor-portal
           namespace: harbor
           port: 80
 
@@ -28,7 +28,7 @@ spec:
             type: PathPrefix
             value: /api/
       backendRefs:
-        - name: harbor-harbor-core
+        - name: harbor-core
           namespace: harbor
           port: 80
 
@@ -37,7 +37,7 @@ spec:
             type: PathPrefix
             value: /service/
       backendRefs:
-        - name: harbor-harbor-core
+        - name: harbor-core
           namespace: harbor
           port: 80
 
@@ -46,7 +46,7 @@ spec:
             type: PathPrefix
             value: /v2/
       backendRefs:
-        - name: harbor-harbor-core
+        - name: harbor-core
           namespace: harbor
           port: 80
 
@@ -55,7 +55,7 @@ spec:
             type: PathPrefix
             value: /chartrepo/
       backendRefs:
-        - name: harbor-harbor-core
+        - name: harbor-core
           namespace: harbor
           port: 80
 
@@ -64,7 +64,7 @@ spec:
             type: PathPrefix
             value: /c/
       backendRefs:
-        - name: harbor-harbor-core
+        - name: harbor-core
           namespace: harbor
           port: 80
 
@@ -90,6 +90,6 @@ spec:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: harbor-harbor-notary-server
+        - name: harbor-notary-server
           namespace: harbor
           port: 4443
