@@ -10,6 +10,7 @@ harbor:
       value: |
         {
           "auth_mode": "oidc_auth",
+          "primary_auth_mode": "true",
           "oidc_name": "keycloak",
           "oidc_endpoint": "https://keycloak.wieman.cloud/realms/master",
           "oidc_groups_claim": "groups",
