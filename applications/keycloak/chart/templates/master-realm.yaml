@@ -9,14 +9,24 @@ spec:
     realm: master
     displayName: Keycloak
     enabled: true
+    eventsEnabled: true
+    eventsExpiration: 2592000
+    eventsListeners:
+      - jboss-logging
+    enabledEventTypes: ["UPDATE_CONSENT_ERROR","SEND_RESET_PASSWORD","GRANT_CONSENT","VERIFY_PROFILE_ERROR","UPDATE_TOTP","REMOVE_TOTP","REVOKE_GRANT","LOGIN_ERROR","CLIENT_LOGIN","RESET_PASSWORD_ERROR","UPDATE_CREDENTIAL","IMPERSONATE_ERROR","CODE_TO_TOKEN_ERROR","CUSTOM_REQUIRED_ACTION","OAUTH2_DEVICE_CODE_TO_TOKEN_ERROR","RESTART_AUTHENTICATION","UPDATE_PROFILE_ERROR","IMPERSONATE","LOGIN","UPDATE_PASSWORD_ERROR","OAUTH2_DEVICE_VERIFY_USER_CODE","CLIENT_INITIATED_ACCOUNT_LINKING","IDENTITY_PROVIDER_LOGIN","USER_DISABLED_BY_PERMANENT_LOCKOUT","OAUTH2_EXTENSION_GRANT","REMOVE_CREDENTIAL_ERROR","TOKEN_EXCHANGE","REGISTER","LOGOUT","AUTHREQID_TO_TOKEN","DELETE_ACCOUNT_ERROR","CLIENT_REGISTER","IDENTITY_PROVIDER_LINK_ACCOUNT","USER_DISABLED_BY_TEMPORARY_LOCKOUT","UPDATE_PASSWORD","DELETE_ACCOUNT","FEDERATED_IDENTITY_LINK_ERROR","CLIENT_DELETE","IDENTITY_PROVIDER_FIRST_LOGIN","VERIFY_EMAIL","CLIENT_DELETE_ERROR","CLIENT_LOGIN_ERROR","RESTART_AUTHENTICATION_ERROR","REMOVE_FEDERATED_IDENTITY_ERROR","EXECUTE_ACTIONS","TOKEN_EXCHANGE_ERROR","PERMISSION_TOKEN","FEDERATED_IDENTITY_OVERRIDE_LINK","SEND_IDENTITY_PROVIDER_LINK_ERROR","UPDATE_CREDENTIAL_ERROR","EXECUTE_ACTION_TOKEN_ERROR","SEND_VERIFY_EMAIL","OAUTH2_EXTENSION_GRANT_ERROR","OAUTH2_DEVICE_AUTH","EXECUTE_ACTIONS_ERROR","REMOVE_FEDERATED_IDENTITY","OAUTH2_DEVICE_CODE_TO_TOKEN","IDENTITY_PROVIDER_POST_LOGIN","IDENTITY_PROVIDER_LINK_ACCOUNT_ERROR","FEDERATED_IDENTITY_OVERRIDE_LINK_ERROR","UPDATE_EMAIL","OAUTH2_DEVICE_VERIFY_USER_CODE_ERROR","REGISTER_ERROR","REVOKE_GRANT_ERROR","LOGOUT_ERROR","UPDATE_EMAIL_ERROR","EXECUTE_ACTION_TOKEN","CLIENT_UPDATE_ERROR","UPDATE_PROFILE","AUTHREQID_TO_TOKEN_ERROR","INVITE_ORG_ERROR","FEDERATED_IDENTITY_LINK","CLIENT_REGISTER_ERROR","INVITE_ORG","SEND_VERIFY_EMAIL_ERROR","SEND_IDENTITY_PROVIDER_LINK","IDENTITY_PROVIDER_LOGIN_ERROR","RESET_PASSWORD","CLIENT_INITIATED_ACCOUNT_LINKING_ERROR","OAUTH2_DEVICE_AUTH_ERROR","REMOVE_CREDENTIAL","UPDATE_CONSENT","REMOVE_TOTP_ERROR","VERIFY_EMAIL_ERROR","SEND_RESET_PASSWORD_ERROR","CLIENT_UPDATE","IDENTITY_PROVIDER_POST_LOGIN_ERROR","CUSTOM_REQUIRED_ACTION_ERROR","UPDATE_TOTP_ERROR","CODE_TO_TOKEN","VERIFY_PROFILE","GRANT_CONSENT_ERROR","IDENTITY_PROVIDER_FIRST_LOGIN_ERROR"]
+    adminEventsEnabled: true
+
     groups:
     - id: 174c1b4b-daca-403c-ab64-35e1cd54fdd8
-      name: INFRA_ADMIN
-      path: /INFRA_ADMIN
-      subGroups: []
-      attributes: {}
-      realmRoles: []
+      name: infra-admin
+      path: /infra-admin
+      subGroups: [ harbor-admins ]
       clientRoles: {}
+    - id: 3f6f5f1e-6d3b-4e2e-8f13-1f3e5f4e4a8b
+      name: harbor-admins
+      path: /infra-admin/harbor-admins
+      clientRoles: { "harbor" : [ "harbor-admin" ] }
+
     users:
       - id: 5ce0013a-c5ed-4099-85d0-15823d580edd
         username: jarno_wieman
@@ -25,7 +35,6 @@ spec:
         email: wiemanboy@gmail.com
         emailVerified: true
         enabled: true
-        createdTimestamp: 1764532430321
         totp: true
         credentials:
           - id: f5d5ef15-06da-4160-a2ec-4788fa1b6b36
@@ -39,10 +48,34 @@ spec:
             createdDate: 1764532588236
             secretData: '{"value":"qlEcjCHO03BvjR4db33s"}'
             credentialData: '{"subType":"totp","digits":6,"counter":0,"period":30,"algorithm":"HmacSHA1"}'
-        disableableCredentialTypes: []
-        requiredActions: []
         realmRoles:
           - default-roles-master
           - admin
         notBefore: 0
-        groups: []
+        groups: [ infra-admin]
+
+    clients:
+      - id: d2c47d1b-73d9-4534-9aca-7501f792f938
+        clientId: harbor
+        name: Harbor
+        rootUrl: https://harbor.wieman.cloud
+        baseUrl: https://harbor.wieman.cloud
+        enabled: true
+        clientAuthenticatorType: client-secret
+        secret: QYEC9d6en0tCnaJBijHkJDPxjgaRYSsy # TODO: BIG NONO SECRET IN REPO
+        redirectUris:
+        - https://harbor.wieman.cloud/c/oidc/callback
+        standardFlowEnabled: true
+        directAccessGrantsEnabled: true
+        serviceAccountsEnabled: true
+        protocol: openid-connect
+
+    roles:
+      client:
+        harbor:
+          - name: harbor-admin
+            clientRole: true
+            attributes: {}
+            containerId: d2c47d1b-73d9-4534-9aca-7501f792f938
+
+          

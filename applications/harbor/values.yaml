@@ -4,3 +4,13 @@ harbor:
     tls:
       enabled: false
   externalURL: https://harbor.wieman.cloud
+  authMode: oidc_auth
+  oidc:
+    endpoint: https://keycloak.wieman.cloud/realms/master
+    client_id: harbor
+    client_secret: QYEC9d6en0tCnaJBijHkJDPxjgaRYSsy # TODO: BIG NONO SECRET IN REPO
+    scope: openid,profile,email
+    verify_cert: true
+    auto_onboard: true
+    groups_claim: groups
+    admin_group: harbor-admins
