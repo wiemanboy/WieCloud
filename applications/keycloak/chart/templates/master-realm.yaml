@@ -63,7 +63,11 @@ spec:
         baseUrl: https://harbor.wieman.cloud
         enabled: true
         clientAuthenticatorType: client-secret
-        secret: QYEC9d6en0tCnaJBijHkJDPxjgaRYSsy # TODO: BIG NONO SECRET IN REPO
+        secret:
+          valueFrom:
+            secretKeyRef:
+              name: harbor-client-secret
+              key: secret
         redirectUris:
         - https://harbor.wieman.cloud/c/oidc/callback
         standardFlowEnabled: true

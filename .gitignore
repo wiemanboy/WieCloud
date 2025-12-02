@@ -3,3 +3,4 @@ worker.yaml
 talosconfig
 
 *.temp*
+env.yaml
