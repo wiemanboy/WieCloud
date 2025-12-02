@@ -6,7 +6,7 @@ spec:
   keycloakCRName: keycloak
   realm:
     id: 488e588f-61bf-48b9-9384-18df35686d84
-    realm: master
+    realm: infrastructure
     displayName: Infrastructure
     enabled: true
     eventsEnabled: true
