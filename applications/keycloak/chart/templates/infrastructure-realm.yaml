@@ -70,7 +70,7 @@ spec:
         realmRoles:
           - default-roles-infrastructure
         notBefore: 0
-        groups: [ infra-admin, harbor-admin, keycloak-admin ]
+        groups: [ /infra-admin, /infra-admin/harbor-admin, /infra-admin/keycloak-admin ]
 
     clients:
       - id: d2c47d1b-73d9-4534-9aca-7501f792f938
