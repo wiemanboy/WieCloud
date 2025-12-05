@@ -87,6 +87,20 @@ spec:
         directAccessGrantsEnabled: true
         serviceAccountsEnabled: true
         protocol: openid-connect
+        protocolMappers:
+        - id: 8f6628b9-f213-476a-9584-b5b03eec578c
+          name: groups
+          protocol: openid-connect
+          protocolMapper: oidc-group-membership-mapper
+          consentRequired: false
+          config:
+            full.path: 'true'
+            introspection.token.claim: 'true'
+            userinfo.token.claim: 'true'
+            id.token.claim: 'true'
+            lightweight.claim: 'false'
+            access.token.claim: 'true'
+            claim.name: groups
 
     roles:
       realm:

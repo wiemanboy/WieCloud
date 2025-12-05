@@ -1,5 +1,5 @@
-REALM_NAME=master
-TARGET_DIR=./master-realm.temp
+REALM_NAME=infrastructure
+TARGET_DIR=./infrastructure-realm.temp
 NAMESPACE=keycloak
 KEYCLOAK_POD_NAME_KEYWORD=keycloak
 
