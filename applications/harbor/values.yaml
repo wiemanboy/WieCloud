@@ -19,7 +19,7 @@ harbor:
           "oidc_name": "keycloak",
           "oidc_endpoint": "https://keycloak.wieman.cloud/realms/infrastructure",
           "oidc_groups_claim": "groups",
-          "oidc_admin_group": "default-roles-infrastructure",
+          "oidc_admin_group": "harbor-admin",
           "oidc_client_id": "harbor",
           "oidc_client_secret": "$(OIDC_CLIENT_SECRET)",
           "oidc_scope": "openid,email,profile,offline_access,roles",
