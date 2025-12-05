@@ -36,7 +36,7 @@ kubectl create secret generic server-auth-secret -n gateway --type=kubernetes.io
 kubectl create secret generic server-auth-secret -n longhorn-system --type=kubernetes.io/basic-auth --from-literal=username=admin --from-literal=password=$DEFAULT_PASSWORD
 kubectl create secret generic keycloak-db-secret -n keycloak --from-literal=username=admin --from-literal=password=$DEFAULT_PASSWORD
 
-HARBOR_SECRET=$(yq '.wiecloud.harbor.oidc.clientSecret.secret' env.yaml)
+HARBOR_SECRET=$(yq '.wiecloud.harbor.oidc.clientSecret.secret' env.yaml --raw-output)
 kubectl create secret generic harbor-client-secret -n harbor --from-literal=secret=$HARBOR_SECRET
 
 CLOUDFLARE_API_TOKEN=$(yq '.wiecloud.cloudflare.apiToken' env.yaml)
@@ -45,5 +45,5 @@ kubectl create secret generic cloudflare-api-token --from-literal=api-token=$CLO
 echo "default password: $DEFAULT_PASSWORD"
 
 echo "keycloak initial admin user:"
-kubectl get secret keycloak-initial-admin -o jsonpath='{.data.username}' | base64 --decode
-kubectl get secret keycloak-initial-admin -o jsonpath='{.data.password}' | base64 --decode
+kubectl get secret keycloak-initial-admin -n keycloak -o jsonpath='{.data.username}' | base64 --decode
+kubectl get secret keycloak-initial-admin -n keycloak -o jsonpath='{.data.password}' | base64 --decode

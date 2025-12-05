@@ -19,14 +19,32 @@ spec:
     groups:
     - id: 174c1b4b-daca-403c-ab64-35e1cd54fdd8
       name: infra-admin
-      path: /infra-admin
+      path: "/infra-admin"
       subGroups:
-        - name: harbor-admins
+      - id: 43af343a-64bb-4f9a-9159-fcaa3b79fe4c
+        name: harbor-admin
+        description: ''
+        path: "/infra-admin/harbor-admin"
+        parentId: 174c1b4b-daca-403c-ab64-35e1cd54fdd8
+        subGroups: []
+        attributes: {}
+        realmRoles: []
+        clientRoles:
+          harbor:
+          - harbor-admin
+      - id: 33290827-70a9-4f5d-bf22-63fe72442c3c
+        name: keycloak-admin
+        description: ''
+        path: "/infra-admin/keycloak-admin"
+        parentId: 174c1b4b-daca-403c-ab64-35e1cd54fdd8
+        subGroups: []
+        attributes: {}
+        realmRoles:
+        - admin
+        clientRoles: {}
+      attributes: {}
+      realmRoles: []
       clientRoles: {}
-    - id: 3f6f5f1e-6d3b-4e2e-8f13-1f3e5f4e4a8b
-      name: harbor-admins
-      path: /infra-admin/harbor-admins
-      clientRoles: { "harbor" : [ "harbor-admin" ] }
 
     users:
       - id: 5ce0013a-c5ed-4099-85d0-15823d580edd
@@ -50,10 +68,9 @@ spec:
             secretData: '{"value":"qlEcjCHO03BvjR4db33s"}'
             credentialData: '{"subType":"totp","digits":6,"counter":0,"period":30,"algorithm":"HmacSHA1"}'
         realmRoles:
-          - default-roles-master
-          - admin
+          - default-roles-infrastructure
         notBefore: 0
-        groups: [ infra-admin]
+        groups: [ infra-admin, harbor-admin, keycloak-admin ]
 
     clients:
       - id: d2c47d1b-73d9-4534-9aca-7501f792f938
@@ -72,6 +89,15 @@ spec:
         protocol: openid-connect
 
     roles:
+      realm:
+        - id: 78b4bc9c-1b59-4f65-a02c-89358263c29a
+          name: admin
+          composite: true
+          composites:
+            client:
+              realm-management: [ "view-clients", "manage-realm", "view-users", "create-client", "manage-users", "query-users", "view-identity-providers", "manage-identity-providers", "view-events", "view-authorization", "manage-clients", "query-clients", "view-realm", "manage-events", "impersonation", "query-realms", "manage-authorization", "query-groups" ]
+          containerId: 488e588f-61bf-48b9-9384-18df35686d84
+          attributes: {}
       client:
         harbor:
           - name: harbor-admin
