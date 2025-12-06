@@ -1,37 +1,49 @@
+environment: 
+  name: prod
+  hostname: wieman.cloud
+
+gateway:
+  name: traefik-gateway
+  listener: websecure
+  namespace: gateway
+
 applications:
   argocd:
     deploy: true
     target: 0.0.0
     namespace: argocd
+
   cert-manager:
     deploy: true
     target: 0.0.0
     namespace: gateway
+
   external-dns:
     deploy: true
     target: 0.0.0
     namespace: gateway
+
   harbor:
     deploy: true
     target: 0.0.0
     namespace: harbor
+
   keycloak:
     deploy: true
     target: 0.0.0
     namespace: keycloak
+
   longhorn:
     deploy: true
     target: 0.0.0
     namespace: longhorn-system
+
   metallb:
     deploy: true
     target: 0.0.0
     namespace: metallb-system
+
   traefik:
     deploy: true
     target: 0.0.0
     namespace: gateway
-  wiemansite:
-    deploy: true
-    target: 0.0.0
-    namespace: default
