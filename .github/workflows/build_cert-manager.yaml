@@ -1,0 +1,31 @@
+name: Build cert-manager
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - infrastructure/cert-manager/chart**
+      - .github/workflows/build_cert-manager.yaml
+      - .github/workflows/package_push.yaml
+      - pipeline/build/scripts/**
+  pull_request:
+    branches:
+      - master
+    paths:
+      - infrastructure/cert-manager/chart**
+      - .github/workflows/build_cert-manager.yaml
+      - .github/workflows/package_push.yaml
+      - pipeline/build/scripts/**
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/package_push.yaml
+    with:
+      chart_name: cert-manager
+      chart_path: infrastructure/cert-manager/chart
+      registry: oci://harbor.wieman.cloud
+      repository: infrastructure
+    secrets:
+      registry_username: ${{ secrets.OCI_REGISTRY_USERNAME }}
+      registry_password: ${{ secrets.OCI_REGISTRY_PASSWORD }}

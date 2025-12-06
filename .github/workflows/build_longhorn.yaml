@@ -1,0 +1,31 @@
+name: Build longhorn
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - infrastructure/longhorn/chart**
+      - .github/workflows/build_longhorn.yaml
+      - .github/workflows/package_push.yaml
+      - pipeline/build/scripts/**
+  pull_request:
+    branches:
+      - master
+    paths:
+      - infrastructure/longhorn/chart**
+      - .github/workflows/build_longhorn.yaml
+      - .github/workflows/package_push.yaml
+      - pipeline/build/scripts/**
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/package_push.yaml
+    with:
+      chart_name: longhorn
+      chart_path: infrastructure/longhorn/chart
+      registry: oci://harbor.wieman.cloud
+      repository: infrastructure
+    secrets:
+      registry_username: ${{ secrets.OCI_REGISTRY_USERNAME }}
+      registry_password: ${{ secrets.OCI_REGISTRY_PASSWORD }}

@@ -1,0 +1,31 @@
+name: Build external-dns
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - infrastructure/external-dns/chart**
+      - .github/workflows/build_external-dns.yaml
+      - .github/workflows/package_push.yaml
+      - pipeline/build/scripts/**
+  pull_request:
+    branches:
+      - master
+    paths:
+      - infrastructure/external-dns/chart**
+      - .github/workflows/build_external-dns.yaml
+      - .github/workflows/package_push.yaml
+      - pipeline/build/scripts/**
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/package_push.yaml
+    with:
+      chart_name: external-dns
+      chart_path: infrastructure/external-dns/chart
+      registry: oci://harbor.wieman.cloud
+      repository: infrastructure
+    secrets:
+      registry_username: ${{ secrets.OCI_REGISTRY_USERNAME }}
+      registry_password: ${{ secrets.OCI_REGISTRY_PASSWORD }}
