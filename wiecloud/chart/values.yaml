@@ -1,28 +1,37 @@
 applications:
   argocd:
-    path: infrastructure/argocd/chart
+    deploy: true
+    target: 0.0.0
     namespace: argocd
   cert-manager:
-    path: infrastructure/cert-manager/chart
+    deploy: true
+    target: 0.0.0
     namespace: gateway
   external-dns:
-    path: infrastructure/external-dns/chart
+    deploy: true
+    target: 0.0.0
     namespace: gateway
   harbor:
-    path: infrastructure/harbor/chart
+    deploy: true
+    target: 0.0.0
     namespace: harbor
   keycloak:
-    path: infrastructure/keycloak/chart
+    deploy: true
+    target: 0.0.0
     namespace: keycloak
   longhorn:
-    path: infrastructure/longhorn/chart
+    deploy: true
+    target: 0.0.0
     namespace: longhorn-system
   metallb:
-    path: infrastructure/metallb/chart
+    deploy: true
+    target: 0.0.0
     namespace: metallb-system
   traefik:
-    path: infrastructure/traefik/chart
+    deploy: true
+    target: 0.0.0
     namespace: gateway
   wiemansite:
-    path: applications/wiemansite
+    deploy: true
+    target: 0.0.0
     namespace: default
