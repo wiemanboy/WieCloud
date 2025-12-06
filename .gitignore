@@ -13,3 +13,7 @@ Chart.lock
 controlplane.yaml
 worker.yaml
 talosconfig
+
+# Tofu files
+**.tfstate**
+.terraform**
