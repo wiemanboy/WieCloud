@@ -3,6 +3,8 @@ environment:
   hostname: wieman.cloud
   namespace: argocd
 
+test: test-value
+
 gateway:
   name: traefik-gateway
   listener: websecure
