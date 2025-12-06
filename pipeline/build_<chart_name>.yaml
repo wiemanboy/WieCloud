@@ -1,20 +1,20 @@
-name: Build Base
+name: Build <chart_name>
 
 on:
   push:
     branches:
       - master
     paths:
-      - infrastructure/_base/chart**
-      - .github/workflows/build__base.yaml
+      - <chart_path>**
+      - .github/workflows/build_<chart_name>.yaml
       - .github/workflows/package_push.yaml
       - pipeline/build/scripts/**
   pull_request:
     branches:
       - master
     paths:
-      - infrastructure/_base/chart**
-      - .github/workflows/build__base.yaml
+      - <chart_path>**
+      - .github/workflows/build_<chart_name>.yaml
       - .github/workflows/package_push.yaml
       - pipeline/build/scripts/**
 
@@ -22,10 +22,10 @@ jobs:
   deploy:
     uses: ./.github/workflows/package_push.yaml
     with:
-      chart_name: base
-      chart_path: infrastructure/_base/chart
-      registry: oci://harbor.wieman.cloud
-      repository: charts
+      chart_name: <chart_name>
+      chart_path: <chart_path>
+      registry: <registry>
+      repository: <repository>
     secrets:
       registry_username: ${{ secrets.OCI_REGISTRY_USERNAME }}
       registry_password: ${{ secrets.OCI_REGISTRY_PASSWORD }}
