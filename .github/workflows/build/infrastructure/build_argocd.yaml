@@ -1,0 +1,30 @@
+name: Build ArgoCD
+
+on:
+  push:
+    branches:
+      - master
+    files:
+      - infrastructure/argocd/chart**
+      - .github/workflows/build/infrastructure/build_argocd.yaml
+      - pipeline/build/scripts/**
+      - .github/workflows/build/package_push.yaml
+  pull_request:
+    branches:
+      - master
+    files:
+      - infrastructure/argocd/chart**
+      - .github/workflows/build/infrastructure/build_argocd.yaml
+      - pipeline/build/scripts/**
+      - .github/workflows/build/package_push.yaml
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/build/package_push.yaml
+    with:
+      chart_path: infrastructure/argocd/chart
+      registry: oci://harbor.wieman.cloud
+      repository: charts
+    secrets:
+      registry_username: ${{ secrets.OCI_REGISTRY_USERNAME }}
+      registry_password: ${{ secrets.OCI_REGISTRY_PASSWORD }}
