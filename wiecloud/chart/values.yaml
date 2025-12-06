@@ -1,27 +1,27 @@
 applications:
   argocd:
-    path: applications/argocd/chart
+    path: infrastructure/argocd/chart
     namespace: argocd
   cert-manager:
-    path: applications/cert-manager/chart
+    path: infrastructure/cert-manager/chart
     namespace: gateway
   external-dns:
-    path: applications/external-dns/chart
+    path: infrastructure/external-dns/chart
     namespace: gateway
   harbor:
-    path: applications/harbor/chart
+    path: infrastructure/harbor/chart
     namespace: harbor
   keycloak:
-    path: applications/keycloak/chart
+    path: infrastructure/keycloak/chart
     namespace: keycloak
   longhorn:
-    path: applications/longhorn/chart
+    path: infrastructure/longhorn/chart
     namespace: longhorn-system
   metallb:
-    path: applications/metallb/chart
+    path: infrastructure/metallb/chart
     namespace: metallb-system
   traefik:
-    path: applications/traefik/chart
+    path: infrastructure/traefik/chart
     namespace: gateway
   wiemansite:
     path: applications/wiemansite
