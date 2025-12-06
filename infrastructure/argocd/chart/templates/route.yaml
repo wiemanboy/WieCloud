@@ -4,12 +4,12 @@ metadata:
   name: argocd-server
 spec:
   parentRefs:
-    - name: traefik-gateway
-      sectionName: websecure
-      namespace: gateway
+    - name: {{ .Values.gateway.name }}
+      sectionName: {{ .Values.gateway.listener }}
+      namespace: {{ .Values.gateway.namespace }}
 
   hostnames:
-    - argo.wieman.cloud
+    - argo.{{ .Values.environment.hostname }}
     
   rules:
     - matches:
@@ -19,5 +19,5 @@ spec:
 
       backendRefs:
         - name: argocd-server
-          namespace: argocd
+          namespace: {{ .Values.environment.namespace }}
           port: 80

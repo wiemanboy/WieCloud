@@ -1,3 +1,13 @@
+environment: 
+  name: prod
+  hostname: wieman.cloud
+  namespace: argocd
+
+gateway:
+  name: traefik-gateway
+  listener: websecure
+  namespace: gateway
+
 argo-cd:
   configs:
     params:

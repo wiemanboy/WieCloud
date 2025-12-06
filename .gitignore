@@ -1,6 +1,14 @@
+# Temporary files
+*.temp*
+
+# Environment files
+env.yaml
+
+# Helm files
+charts
+chart.lock
+
+# Talos files
 controlplane.yaml
 worker.yaml
 talosconfig
-
-*.temp*
-env.yaml
