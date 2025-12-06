@@ -6,7 +6,8 @@ env.yaml
 
 # Helm files
 charts
-chart.lock
+Chart.lock
+*.tgz
 
 # Talos files
 controlplane.yaml
