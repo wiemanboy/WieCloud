@@ -13,7 +13,7 @@ while [[ $# -gt 0 ]]; do
       REGISTRY="$2"
       shift 2
       ;;
-    --registry)
+    --repository)
       REGISTRY="$2"
       shift 2
       ;;
