@@ -4,12 +4,12 @@ metadata:
   name: harbor-route
 spec:
   parentRefs:
-    - name: traefik-gateway
-      sectionName: websecure
-      namespace: gateway
+    - name: {{ .Values.gateway.name }}
+      sectionName: {{ .Values.gateway.listener }}
+      namespace: {{ .Values.gateway.namespace }}
 
   hostnames:
-    - harbor.wieman.cloud
+    - harbor.{{ .Values.environment.hostname }}
 
   rules:
     - matches:
@@ -18,7 +18,7 @@ spec:
             value: /
       backendRefs:
         - name: harbor-portal
-          namespace: harbor
+          namespace: {{ .Values.environment.namespace }}
           port: 80
 
     - matches:
@@ -27,7 +27,7 @@ spec:
             value: /api/
       backendRefs:
         - name: harbor-core
-          namespace: harbor
+          namespace: {{ .Values.environment.namespace }}
           port: 80
 
     - matches:
@@ -36,7 +36,7 @@ spec:
             value: /service/
       backendRefs:
         - name: harbor-core
-          namespace: harbor
+          namespace: {{ .Values.environment.namespace }}
           port: 80
 
     - matches:
@@ -45,7 +45,7 @@ spec:
             value: /v2/
       backendRefs:
         - name: harbor-core
-          namespace: harbor
+          namespace: {{ .Values.environment.namespace }}
           port: 80
 
     - matches:
@@ -54,7 +54,7 @@ spec:
             value: /chartrepo/
       backendRefs:
         - name: harbor-core
-          namespace: harbor
+          namespace: {{ .Values.environment.namespace }}
           port: 80
 
     - matches:
@@ -63,5 +63,5 @@ spec:
             value: /c/
       backendRefs:
         - name: harbor-core
-          namespace: harbor
+          namespace: {{ .Values.environment.namespace }}
           port: 80
