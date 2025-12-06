@@ -1,4 +1,4 @@
-name: Build gateway
+name: Build traefik
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - master
     paths:
       - infrastructure/traefik/chart**
-      - .github/workflows/build_gateway.yaml
+      - .github/workflows/build_traefik.yaml
       - .github/workflows/package_push.yaml
       - pipeline/build/scripts/**
   pull_request:
@@ -14,7 +14,7 @@ on:
       - master
     paths:
       - infrastructure/traefik/chart**
-      - .github/workflows/build_gateway.yaml
+      - .github/workflows/build_traefik.yaml
       - .github/workflows/package_push.yaml
       - pipeline/build/scripts/**
 
@@ -23,7 +23,7 @@ jobs:
     name: Package and push
     uses: ./.github/workflows/package_push.yaml
     with:
-      chart_name: gateway
+      chart_name: traefik
       chart_path: infrastructure/traefik/chart
       registry: oci://harbor.wieman.cloud
       repository: infrastructure
