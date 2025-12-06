@@ -1,7 +1,22 @@
+environment: 
+  name: prod
+  hostname: wieman.cloud
+  namespace: gateway
+
+gateway:
+  name: traefik-gateway
+  listener: websecure
+  namespace: gateway
+  authentication:
+    basicAuth:
+      name: basic-auth
+      secret:
+        name: longhorn-basic-auth
+
 traefik:
   service:
     externalIps:
-      -192.168.178.194
+      - 192.168.178.194
     annotations:
       external-dns.alpha.kubernetes.io/hostname: wieman.cloud
       external-dns.alpha.kubernetes.io/target: 85.148.81.86
