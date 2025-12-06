@@ -30,8 +30,8 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      # - name: Set up Helm
-      #   run: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+      - name: Set up Helm
+        run: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
       - name: Registry Login
         run: helm registry login ${{ inputs.registry }} --username ${{ secrets.registry_username }} --password ${{ secrets.registry_password }}
