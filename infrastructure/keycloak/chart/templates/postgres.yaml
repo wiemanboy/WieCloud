@@ -23,13 +23,13 @@ spec:
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: keycloak-db-secret
-                  key: username
+                  name: {{ .Values.keycloak.db.username.secret }}
+                  key: {{ .Values.keycloak.db.username.key }}
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: keycloak-db-secret
-                  key: password
+                  name: {{ .Values.keycloak.db.password.secret }}
+                  key: {{ .Values.keycloak.db.password.key }}
             - name: PGDATA
               value: /data/pgdata
             - name: POSTGRES_DB
@@ -41,7 +41,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgres-db
+  name: {{ .Values.keycloak.db.host }}
 spec:
   selector:
     app: postgresql-db

@@ -76,13 +76,13 @@ spec:
       - id: d2c47d1b-73d9-4534-9aca-7501f792f938
         clientId: harbor
         name: Harbor
-        rootUrl: https://harbor.wieman.cloud
-        baseUrl: https://harbor.wieman.cloud
+        rootUrl: https://harbor.{{ .Values.environment.hostname }}
+        baseUrl: https://harbor.{{ .Values.environment.hostname }}
         enabled: true
         clientAuthenticatorType: client-secret
         secret: "set manually"
         redirectUris:
-        - https://harbor.wieman.cloud/c/oidc/callback
+        - https://harbor.{{ .Values.environment.hostname }}/c/oidc/callback
         standardFlowEnabled: true
         directAccessGrantsEnabled: true
         serviceAccountsEnabled: true

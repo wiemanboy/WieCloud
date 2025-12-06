@@ -1,0 +1,20 @@
+environment: 
+  name: prod
+  hostname: wieman.cloud
+  namespace: keycloak
+
+gateway:
+  name: traefik-gateway
+  listener: websecure
+  namespace: gateway
+
+keycloak:
+  db:
+    vendor: postgres
+    host: postgres-db
+    username:
+      secret: keycloak-db-secret
+      key: username
+    password:
+      secret: keycloak-db-secret
+      key: password

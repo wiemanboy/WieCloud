@@ -5,20 +5,20 @@ metadata:
 spec:
   instances: 1
   db:
-    vendor: postgres
-    host: postgres-db
+    vendor: {{ .Values.keycloak.db.vendor }}
+    host: {{ .Values.keycloak.db.host }}
     usernameSecret:
-      name: keycloak-db-secret
-      key: username
+      name: {{ .Values.keycloak.db.username.secret }}
+      key: {{ .Values.keycloak.db.username.key }}
     passwordSecret:
-      name: keycloak-db-secret
-      key: password
+      name: {{ .Values.keycloak.db.password.secret }}
+      key: {{ .Values.keycloak.db.password.key }}
   ingress:
     enabled: false
   http:
     httpEnabled: true
   hostname:
-    hostname: keycloak.wieman.cloud
+    hostname: keycloak.{{ .Values.environment.hostname }}
   proxy:
     headers: xforwarded
 ---
@@ -28,12 +28,12 @@ metadata:
   name: keycloak
 spec:
   parentRefs:
-    - name: traefik-gateway
-      sectionName: websecure
-      namespace: gateway
+    - name: {{ .Values.gateway.name }}
+      sectionName: {{ .Values.gateway.listener }}
+      namespace: {{ .Values.gateway.namespace }}
 
   hostnames:
-    - keycloak.wieman.cloud
+    - keycloak.{{ .Values.environment.hostname }}
 
   rules:
     - matches:
@@ -43,5 +43,5 @@ spec:
 
       backendRefs:
         - name: keycloak-service
-          namespace: keycloak
+          namespace: {{ .Values.environment.namespace }}
           port: 8080
