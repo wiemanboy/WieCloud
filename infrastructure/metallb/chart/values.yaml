@@ -1,0 +1,7 @@
+environment: 
+  name: prod
+  hostname: wieman.cloud
+  namespace: metallb-system
+
+ipconfig:
+  ipv4: 192.168.178.194

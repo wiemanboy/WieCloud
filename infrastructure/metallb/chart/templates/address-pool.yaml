@@ -4,7 +4,7 @@ metadata:
   name: default-pool
 spec:
   addresses:
-  - 192.168.178.194-192.168.178.194
+  - {{ .Values.ipconfig.ipv4 }}-{{ .Values.ipconfig.ipv4 }}
 ---
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
