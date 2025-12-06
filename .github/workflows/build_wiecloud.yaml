@@ -19,7 +19,8 @@ on:
       - pipeline/build/scripts/**
 
 jobs:
-  deploy:
+  package_and_push:
+    name: Package and push
     uses: ./.github/workflows/package_push.yaml
     with:
       chart_name: wiecloud

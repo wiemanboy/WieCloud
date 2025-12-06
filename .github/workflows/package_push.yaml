@@ -29,7 +29,7 @@ on:
 
 jobs:
   package_and_push:
-    name: Package and Push ${{ inputs.chart_name }} Helm Chart
+    name: ${{ inputs.chart_name }} Helm Chart
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
