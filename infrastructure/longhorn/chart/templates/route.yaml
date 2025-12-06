@@ -4,12 +4,12 @@ metadata:
   name: longhorn-frontend
 spec:
   parentRefs:
-    - name: traefik-gateway
-      sectionName: websecure
-      namespace: gateway
+    - name: {{ .Values.gateway.name }}
+      sectionName: {{ .Values.gateway.listener }}
+      namespace: {{ .Values.gateway.namespace }}
 
   hostnames:
-    - storage.wieman.cloud
+    - storage.{{ .Values.environment.hostname }}
     
   rules:
     - matches:
@@ -19,12 +19,16 @@ spec:
 
       backendRefs:
         - name: longhorn-frontend
-          namespace: longhorn-system
+          namespace: {{ .Values.environment.namespace }}
           port: 80
 
       filters:
+        {{- if .Values.gateway.authentication.enabled }}
+        {{- if .Values.gateway.authentication.basicAuth }}
         - type: ExtensionRef
           extensionRef:
             group: traefik.io
             kind: Middleware
-            name: basic-auth
+            name: {{ .Values.gateway.authentication.basicAuth.name }}
+        {{- end }}
+        {{- end }}

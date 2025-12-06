@@ -1,0 +1,15 @@
+environment: 
+  name: prod
+  hostname: wieman.cloud
+  namespace: longhorn-system
+
+gateway:
+  name: traefik-gateway
+  listener: websecure
+  namespace: gateway
+  authentication:
+    enabled: true
+    basicAuth:
+      name: basic-auth
+      secret:
+        name: longhorn-basic-auth
