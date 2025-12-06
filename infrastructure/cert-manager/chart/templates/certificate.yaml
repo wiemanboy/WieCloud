@@ -2,9 +2,9 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: letsencrypt-certificate
-  namespace: gateway
+  namespace: {{ .Values.gateway.namespace }}
 spec:
-  secretName: letsencrypt-secret
+  secretName: {{ .Values.gateway.dns.certificate.secret }}
   dnsNames:
   - "wieman.cloud"
   - "*.wieman.cloud"
@@ -16,5 +16,5 @@ spec:
   - "jarnowieman.nl"
   - "*.jarnowieman.nl"
   issuerRef:
-    name: letsencrypt
+    name: {{ .Values.gateway.dns.certificate.issuer }}
     kind: ClusterIssuer
