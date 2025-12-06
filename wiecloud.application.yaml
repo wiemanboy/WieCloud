@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/wiemanboy/WieCloud.git
     targetRevision: master
-    path: chart
+    path: wiecloud/chart
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
