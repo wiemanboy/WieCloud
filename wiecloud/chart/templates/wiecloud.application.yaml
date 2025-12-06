@@ -1,3 +1,8 @@
+{{- $first := true }}
 {{- range $name, $config := .Values.applications }}
-{{- include "base.application" (dict "name" $name "config" $config) }}
+{{- if not $first }}
+---
+{{ end }}
+{{ include "base.application" (dict "name" $name "config" $config) }}
+{{- $first = false }}
 {{- end }}
