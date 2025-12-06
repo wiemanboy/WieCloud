@@ -4,19 +4,19 @@ on:
   push:
     branches:
       - master
-    files:
+    paths:
       - infrastructure/argocd/chart**
-      - .github/workflows/build/infrastructure/build_argocd.yaml
+      - .github/workflows/build_argocd.yaml
+      - .github/workflows/package_push.yaml
       - pipeline/build/scripts/**
-      - .github/workflows/build/package_push.yaml
   pull_request:
     branches:
       - master
-    files:
+    paths:
       - infrastructure/argocd/chart**
-      - .github/workflows/build/infrastructure/build_argocd.yaml
+      - .github/workflows/build_argocd.yaml
+      - .github/workflows/package_push.yaml
       - pipeline/build/scripts/**
-      - .github/workflows/build/package_push.yaml
 
 jobs:
   deploy:
