@@ -5,4 +5,4 @@ version: 0.0.0
 dependencies:
   - name: base
     version: 0.0.0
-    repository: file://../../applications/_base/chart
+    repository: oci://harbor.wieman.cloud/wiecloud/wiecloud
