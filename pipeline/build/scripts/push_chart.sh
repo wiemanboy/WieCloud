@@ -14,7 +14,7 @@ while [[ $# -gt 0 ]]; do
       shift 2
       ;;
     --repository)
-      REGISTRY="$2"
+      REPOSITORY="$2"
       shift 2
       ;;
     *)
