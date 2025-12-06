@@ -11,7 +11,7 @@ gateway:
     basicAuth:
       name: basic-auth
       secret:
-        name: longhorn-basic-auth
+        name: server-auth-secret
 
 traefik:
   service:
