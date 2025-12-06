@@ -20,7 +20,7 @@ on:
 
 jobs:
   deploy:
-    uses: ./.github/workflows/build/package_push.yaml
+    uses: ./.github/workflows/package_push.yaml
     with:
       chart_path: infrastructure/argocd/chart
       registry: oci://harbor.wieman.cloud
