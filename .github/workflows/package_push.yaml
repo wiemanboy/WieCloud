@@ -3,6 +3,10 @@ name: Package and Push Helm Chart
 on:
   workflow_call:
     inputs:
+      chart_name: 
+        description: "Name of the Helm chart"
+        required: true
+        type: string
       chart_path:
         description: "Path to the Helm chart to be packaged and pushed"
         required: true
@@ -25,6 +29,7 @@ on:
 
 jobs:
   package_and_push:
+    name: Package and Push ${{ inputs.chart_name }} Helm Chart
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository

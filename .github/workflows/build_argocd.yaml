@@ -22,6 +22,7 @@ jobs:
   deploy:
     uses: ./.github/workflows/package_push.yaml
     with:
+      chart_name: argocd
       chart_path: infrastructure/argocd/chart
       registry: oci://harbor.wieman.cloud
       repository: charts
