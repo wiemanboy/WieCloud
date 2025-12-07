@@ -13,7 +13,7 @@ argo-cd:
     params:
       server.insecure: true
     cm:
-      url: https://argocd.wieman.cloud
+      url: https://argo.wieman.cloud
       exec.enabled: true
       oidc.config: |
         name: Keycloak
