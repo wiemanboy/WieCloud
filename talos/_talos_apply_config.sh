@@ -1,5 +1,6 @@
 DRY_RUN=true
-NODE_IPS=192.168.178.194
+CONTROL_PLANE_IP=""
+WORKER_IPS=""
 TALOS_VERSION=v1.11.5
 
 while [[ $# -gt 0 ]]; do
@@ -8,8 +9,12 @@ while [[ $# -gt 0 ]]; do
       DRY_RUN="$2"
       shift 2
       ;;
-    --ip)
-      NODE_IPS="$2"
+    --cp)
+      CONTROL_PLANE_IP="$2"
+      shift 2
+      ;;
+    --workers)
+      WORKER_IPS="$2"
       shift 2
       ;;
     --version)
@@ -29,6 +34,7 @@ IMAGE_ID=$(curl -s -X POST --data-binary @bare-metal.yaml https://factory.talos.
 echo "Patching bare-metal config with image id: ${IMAGE_ID} and talos version: ${TALOS_VERSION}"
 sed -i "s/{image_id}/${IMAGE_ID}/g; s/{version}/${TALOS_VERSION}/g" bare-metal.config.yaml
 
-talosctl patch machineconfig --talosconfig=./talosconfig -n $NODE_IPS -p @controlplane.config.yaml -p @worker.config.yaml -p @bare-metal.config.yaml $DRY_RUN_TAG
+talosctl patch machineconfig --talosconfig=./talosconfig -n $WORKER_IPS -p @worker.config.yaml -p @bare-metal.config.yaml $DRY_RUN_TAG
+talosctl patch machineconfig --talosconfig=./talosconfig -n $CONTROL_PLANE_IP -p @controlplane.config.yaml -p @bare-metal.config.yaml $DRY_RUN_TAG
 
 sed -i "s/${IMAGE_ID}/{image_id}/g; s/${TALOS_VERSION}/{version}/g" bare-metal.config.yaml

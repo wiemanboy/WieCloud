@@ -1,7 +1,3 @@
-locals {
-  env = yamldecode(file(var.env_file))
-}
-
 resource "proxmox_storage_iso" "gigabyte-pve-0-metal-amd64-iso" {
   pve_node = "gigabyte-pve-0"
   storage  = "local"
@@ -42,6 +38,7 @@ resource "proxmox_vm_qemu" "talos-controlplane-0" {
     id     = 0
     model  = "virtio"
     bridge = "vmbr0"
+    macaddr = "BC:24:11:F5:47:41"
   }
 }
 
@@ -78,5 +75,6 @@ resource "proxmox_vm_qemu" "talos-wroker-0" {
     id     = 0
     model  = "virtio"
     bridge = "vmbr0"
+    macaddr = "BC:24:11:26:37:90"
   }
 }
