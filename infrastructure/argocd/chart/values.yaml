@@ -14,3 +14,9 @@ argo-cd:
       server.insecure: true
     cm:
       exec.enabled: true
+      oidc.config: |
+        name: Keycloak
+        issuer: https://keycloak.wieman.cloud/realms/infrastructure
+        clientID: argocd
+        clientSecret: $oidc.keycloak.clientSecret
+        requestedScopes: ["openid", "profile", "email", "groups"]
