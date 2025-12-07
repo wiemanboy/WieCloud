@@ -7,7 +7,11 @@ spec:
   realm:
     id: 488e588f-61bf-48b9-9384-18df35686d84
     realm: infrastructure
-    displayName: Infrastructure
+    displayName: 
+      valueFrom:
+        secretKeyRef:
+          name: harbor-client-secret 
+          key: secret
     enabled: true
     eventsEnabled: true
     eventsExpiration: 2592000
