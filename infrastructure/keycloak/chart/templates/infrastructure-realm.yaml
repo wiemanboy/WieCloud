@@ -22,137 +22,137 @@ spec:
     enabledEventTypes: ["UPDATE_CONSENT_ERROR","SEND_RESET_PASSWORD","GRANT_CONSENT","VERIFY_PROFILE_ERROR","UPDATE_TOTP","REMOVE_TOTP","REVOKE_GRANT","LOGIN_ERROR","CLIENT_LOGIN","RESET_PASSWORD_ERROR","UPDATE_CREDENTIAL","IMPERSONATE_ERROR","CODE_TO_TOKEN_ERROR","CUSTOM_REQUIRED_ACTION","OAUTH2_DEVICE_CODE_TO_TOKEN_ERROR","RESTART_AUTHENTICATION","UPDATE_PROFILE_ERROR","IMPERSONATE","LOGIN","UPDATE_PASSWORD_ERROR","OAUTH2_DEVICE_VERIFY_USER_CODE","CLIENT_INITIATED_ACCOUNT_LINKING","IDENTITY_PROVIDER_LOGIN","USER_DISABLED_BY_PERMANENT_LOCKOUT","OAUTH2_EXTENSION_GRANT","REMOVE_CREDENTIAL_ERROR","TOKEN_EXCHANGE","REGISTER","LOGOUT","AUTHREQID_TO_TOKEN","DELETE_ACCOUNT_ERROR","CLIENT_REGISTER","IDENTITY_PROVIDER_LINK_ACCOUNT","USER_DISABLED_BY_TEMPORARY_LOCKOUT","UPDATE_PASSWORD","DELETE_ACCOUNT","FEDERATED_IDENTITY_LINK_ERROR","CLIENT_DELETE","IDENTITY_PROVIDER_FIRST_LOGIN","VERIFY_EMAIL","CLIENT_DELETE_ERROR","CLIENT_LOGIN_ERROR","RESTART_AUTHENTICATION_ERROR","REMOVE_FEDERATED_IDENTITY_ERROR","EXECUTE_ACTIONS","TOKEN_EXCHANGE_ERROR","PERMISSION_TOKEN","FEDERATED_IDENTITY_OVERRIDE_LINK","SEND_IDENTITY_PROVIDER_LINK_ERROR","UPDATE_CREDENTIAL_ERROR","EXECUTE_ACTION_TOKEN_ERROR","SEND_VERIFY_EMAIL","OAUTH2_EXTENSION_GRANT_ERROR","OAUTH2_DEVICE_AUTH","EXECUTE_ACTIONS_ERROR","REMOVE_FEDERATED_IDENTITY","OAUTH2_DEVICE_CODE_TO_TOKEN","IDENTITY_PROVIDER_POST_LOGIN","IDENTITY_PROVIDER_LINK_ACCOUNT_ERROR","FEDERATED_IDENTITY_OVERRIDE_LINK_ERROR","UPDATE_EMAIL","OAUTH2_DEVICE_VERIFY_USER_CODE_ERROR","REGISTER_ERROR","REVOKE_GRANT_ERROR","LOGOUT_ERROR","UPDATE_EMAIL_ERROR","EXECUTE_ACTION_TOKEN","CLIENT_UPDATE_ERROR","UPDATE_PROFILE","AUTHREQID_TO_TOKEN_ERROR","INVITE_ORG_ERROR","FEDERATED_IDENTITY_LINK","CLIENT_REGISTER_ERROR","INVITE_ORG","SEND_VERIFY_EMAIL_ERROR","SEND_IDENTITY_PROVIDER_LINK","IDENTITY_PROVIDER_LOGIN_ERROR","RESET_PASSWORD","CLIENT_INITIATED_ACCOUNT_LINKING_ERROR","OAUTH2_DEVICE_AUTH_ERROR","REMOVE_CREDENTIAL","UPDATE_CONSENT","REMOVE_TOTP_ERROR","VERIFY_EMAIL_ERROR","SEND_RESET_PASSWORD_ERROR","CLIENT_UPDATE","IDENTITY_PROVIDER_POST_LOGIN_ERROR","CUSTOM_REQUIRED_ACTION_ERROR","UPDATE_TOTP_ERROR","CODE_TO_TOKEN","VERIFY_PROFILE","GRANT_CONSENT_ERROR","IDENTITY_PROVIDER_FIRST_LOGIN_ERROR"]
     adminEventsEnabled: true
 
-  groups:
-  - id: 174c1b4b-daca-403c-ab64-35e1cd54fdd8
-    name: infra
-    description: ''
-    path: "/infra"
-    subGroups:
-    - id: af257c8a-eeb0-4136-8c7f-dbfbfe7a85cc
-      name: admin
-      description: ''
-      path: "/infra/admin"
-      parentId: 174c1b4b-daca-403c-ab64-35e1cd54fdd8
-      subGroups: []
-      attributes: {}
-      realmRoles: []
-      clientRoles: {}
-    - id: 43af343a-64bb-4f9a-9159-fcaa3b79fe4c
-      name: harbor
-      description: ''
-      path: "/infra/harbor"
-      parentId: 174c1b4b-daca-403c-ab64-35e1cd54fdd8
-      subGroups:
-      - id: 72533763-206b-47e9-9cec-a517b452e776
-        name: admin
+    groups:
+      - id: 174c1b4b-daca-403c-ab64-35e1cd54fdd8
+        name: infra
         description: ''
-        path: "/infra/harbor/admin"
-        parentId: 43af343a-64bb-4f9a-9159-fcaa3b79fe4c
-        subGroups: []
+        path: "/infra"
+        subGroups:
+        - id: af257c8a-eeb0-4136-8c7f-dbfbfe7a85cc
+          name: admin
+          description: ''
+          path: "/infra/admin"
+          parentId: 174c1b4b-daca-403c-ab64-35e1cd54fdd8
+          subGroups: []
+          attributes: {}
+          realmRoles: []
+          clientRoles: {}
+        - id: 43af343a-64bb-4f9a-9159-fcaa3b79fe4c
+          name: harbor
+          description: ''
+          path: "/infra/harbor"
+          parentId: 174c1b4b-daca-403c-ab64-35e1cd54fdd8
+          subGroups:
+          - id: 72533763-206b-47e9-9cec-a517b452e776
+            name: admin
+            description: ''
+            path: "/infra/harbor/admin"
+            parentId: 43af343a-64bb-4f9a-9159-fcaa3b79fe4c
+            subGroups: []
+            attributes: {}
+            realmRoles: []
+            clientRoles: {}
+          attributes: {}
+          realmRoles: []
+          clientRoles: {}
+        - id: 33290827-70a9-4f5d-bf22-63fe72442c3c
+          name: keycloak
+          description: ''
+          path: "/infra/keycloak"
+          parentId: 174c1b4b-daca-403c-ab64-35e1cd54fdd8
+          subGroups:
+          - id: 47d75a48-09e0-4e02-894a-b1604b698924
+            name: admin
+            description: ''
+            path: "/infra/keycloak/admin"
+            parentId: 33290827-70a9-4f5d-bf22-63fe72442c3c
+            subGroups: []
+            attributes: {}
+            realmRoles:
+            - admin
+            clientRoles: {}
+          attributes: {}
+          realmRoles:
+          - admin
+          clientRoles: {}
         attributes: {}
         realmRoles: []
         clientRoles: {}
-      attributes: {}
-      realmRoles: []
-      clientRoles: {}
-    - id: 33290827-70a9-4f5d-bf22-63fe72442c3c
-      name: keycloak
-      description: ''
-      path: "/infra/keycloak"
-      parentId: 174c1b4b-daca-403c-ab64-35e1cd54fdd8
-      subGroups:
-      - id: 47d75a48-09e0-4e02-894a-b1604b698924
-        name: admin
-        description: ''
-        path: "/infra/keycloak/admin"
-        parentId: 33290827-70a9-4f5d-bf22-63fe72442c3c
-        subGroups: []
-        attributes: {}
+
+    users:
+      - id: 5ce0013a-c5ed-4099-85d0-15823d580edd
+        username: jarno_wieman
+        firstName: Jarno
+        lastName: Wieman
+        email: wiemanboy@gmail.com
+        emailVerified: true
+        enabled: true
+        totp: true
+        credentials:
+          - id: f5d5ef15-06da-4160-a2ec-4788fa1b6b36
+            type: password
+            createdDate: 1764532636278
+            secretData: '{"value":"qOtpD7Vh8d/ivLxcFFqKw7pY0BwJmlvZjvibIyYn2P8=","salt":"HWHUrf/GcehN2hI4Xgxzhg==","additionalParameters":{}}'
+            credentialData: '{"hashIterations":5,"algorithm":"argon2","additionalParameters":{"hashLength":["32"],"memory":["7168"],"type":["id"],"version":["1.3"],"parallelism":["1"]}}'
+          - id: 75e2e3e0-2a42-4c2b-af5b-7467f1dfe2be
+            type: otp
+            userLabel: s24-ultra
+            createdDate: 1764532588236
+            secretData: '{"value":"qlEcjCHO03BvjR4db33s"}'
+            credentialData: '{"subType":"totp","digits":6,"counter":0,"period":30,"algorithm":"HmacSHA1"}'
         realmRoles:
-        - admin
-        clientRoles: {}
-      attributes: {}
-      realmRoles:
-      - admin
-      clientRoles: {}
-    attributes: {}
-    realmRoles: []
-    clientRoles: {}
+          - default-roles-infrastructure
+        notBefore: 0
+        groups:
+        - "/infra/admin"
+        - "/infra/harbor/admin"
+        - "/infra/keycloak/admin"
 
-  users:
-    - id: 5ce0013a-c5ed-4099-85d0-15823d580edd
-      username: jarno_wieman
-      firstName: Jarno
-      lastName: Wieman
-      email: wiemanboy@gmail.com
-      emailVerified: true
-      enabled: true
-      totp: true
-      credentials:
-        - id: f5d5ef15-06da-4160-a2ec-4788fa1b6b36
-          type: password
-          createdDate: 1764532636278
-          secretData: '{"value":"qOtpD7Vh8d/ivLxcFFqKw7pY0BwJmlvZjvibIyYn2P8=","salt":"HWHUrf/GcehN2hI4Xgxzhg==","additionalParameters":{}}'
-          credentialData: '{"hashIterations":5,"algorithm":"argon2","additionalParameters":{"hashLength":["32"],"memory":["7168"],"type":["id"],"version":["1.3"],"parallelism":["1"]}}'
-        - id: 75e2e3e0-2a42-4c2b-af5b-7467f1dfe2be
-          type: otp
-          userLabel: s24-ultra
-          createdDate: 1764532588236
-          secretData: '{"value":"qlEcjCHO03BvjR4db33s"}'
-          credentialData: '{"subType":"totp","digits":6,"counter":0,"period":30,"algorithm":"HmacSHA1"}'
-      realmRoles:
-        - default-roles-infrastructure
-      notBefore: 0
-      groups:
-      - "/infra/admin"
-      - "/infra/harbor/admin"
-      - "/infra/keycloak/admin"
-
-  clients:
-    - id: d2c47d1b-73d9-4534-9aca-7501f792f938
-      clientId: harbor
-      name: Harbor
-      rootUrl: https://harbor.{{ .Values.environment.hostname }}
-      baseUrl: https://harbor.{{ .Values.environment.hostname }}
-      enabled: true
-      clientAuthenticatorType: client-secret
-      secret: "set manually"
-      redirectUris:
-      - https://harbor.{{ .Values.environment.hostname }}/c/oidc/callback
-      standardFlowEnabled: true
-      directAccessGrantsEnabled: true
-      serviceAccountsEnabled: true
-      protocol: openid-connect
-      protocolMappers:
-      - id: 8f6628b9-f213-476a-9584-b5b03eec578c
-        name: groups
+    clients:
+      - id: d2c47d1b-73d9-4534-9aca-7501f792f938
+        clientId: harbor
+        name: Harbor
+        rootUrl: https://harbor.{{ .Values.environment.hostname }}
+        baseUrl: https://harbor.{{ .Values.environment.hostname }}
+        enabled: true
+        clientAuthenticatorType: client-secret
+        secret: "set manually"
+        redirectUris:
+        - https://harbor.{{ .Values.environment.hostname }}/c/oidc/callback
+        standardFlowEnabled: true
+        directAccessGrantsEnabled: true
+        serviceAccountsEnabled: true
         protocol: openid-connect
-        protocolMapper: oidc-group-membership-mapper
-        consentRequired: false
-        config:
-          full.path: 'true'
-          introspection.token.claim: 'true'
-          userinfo.token.claim: 'true'
-          id.token.claim: 'true'
-          lightweight.claim: 'false'
-          access.token.claim: 'true'
-          claim.name: groups
+        protocolMappers:
+        - id: 8f6628b9-f213-476a-9584-b5b03eec578c
+          name: groups
+          protocol: openid-connect
+          protocolMapper: oidc-group-membership-mapper
+          consentRequired: false
+          config:
+            full.path: 'true'
+            introspection.token.claim: 'true'
+            userinfo.token.claim: 'true'
+            id.token.claim: 'true'
+            lightweight.claim: 'false'
+            access.token.claim: 'true'
+            claim.name: groups
 
-  roles:
-    realm:
-      - id: 78b4bc9c-1b59-4f65-a02c-89358263c29a
-        name: admin
-        composite: true
-        composites:
-          client:
-            realm-management: [ "view-clients", "manage-realm", "view-users", "create-client", "manage-users", "query-users", "view-identity-providers", "manage-identity-providers", "view-events", "view-authorization", "manage-clients", "query-clients", "view-realm", "manage-events", "impersonation", "query-realms", "manage-authorization", "query-groups" ]
-        containerId: 488e588f-61bf-48b9-9384-18df35686d84
-        attributes: {}
-    client:
-      harbor:
-        - name: harbor-admin
-          clientRole: true
+    roles:
+      realm:
+        - id: 78b4bc9c-1b59-4f65-a02c-89358263c29a
+          name: admin
+          composite: true
+          composites:
+            client:
+              realm-management: [ "view-clients", "manage-realm", "view-users", "create-client", "manage-users", "query-users", "view-identity-providers", "manage-identity-providers", "view-events", "view-authorization", "manage-clients", "query-clients", "view-realm", "manage-events", "impersonation", "query-realms", "manage-authorization", "query-groups" ]
+          containerId: 488e588f-61bf-48b9-9384-18df35686d84
           attributes: {}
-          containerId: d2c47d1b-73d9-4534-9aca-7501f792f938
+      client:
+        harbor:
+          - name: harbor-admin
+            clientRole: true
+            attributes: {}
+            containerId: d2c47d1b-73d9-4534-9aca-7501f792f938
 
           
