@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: carnaval
+  labels:
+    app: carnaval
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: carnaval
+  template:
+    metadata:
+      labels:
+        app: carnaval
+    spec:
+      containers:
+        - name: carnaval
+          image: harbor.wieman.cloud/website/carnaval
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: carnaval-svc
+spec:
+  selector:
+    app: carnaval
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: carnaval
+spec:
+  parentRefs:
+    - name: traefik-gateway
+      sectionName: websecure
+      namespace: gateway
+
+  hostnames:
+    - carnaval.wieman.cloud
+
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+
+      backendRefs:
+        - name: carnaval-svc
+          namespace: carnaval
+          port: 80
