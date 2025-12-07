@@ -9,6 +9,10 @@ gateway:
   namespace: gateway
 
 harbor:
+  persistence:
+    persistentVolumeClaim:
+      registry:
+        size: 50Gi
   expose:
     type: NodePort
     tls:
