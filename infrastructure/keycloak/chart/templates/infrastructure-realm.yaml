@@ -4,6 +4,12 @@ metadata:
   name: infrastructure
 spec:
   keycloakCRName: keycloak
+  placeholders:
+    HARBOR_CLIENT_SECRET:
+      secret:
+        name: harbor-client-secret
+        key: secret
+
   realm:
     id: 488e588f-61bf-48b9-9384-18df35686d84
     realm: infrastructure
@@ -106,6 +112,7 @@ spec:
       - id: d2c47d1b-73d9-4534-9aca-7501f792f938
         clientId: harbor
         name: Harbor
+        secret: $(HARBOR_CLIENT_SECRET)
         rootUrl: https://harbor.{{ .Values.environment.hostname }}
         baseUrl: https://harbor.{{ .Values.environment.hostname }}
         enabled: true
