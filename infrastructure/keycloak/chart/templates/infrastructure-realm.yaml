@@ -3,12 +3,6 @@ kind: KeycloakRealmImport
 metadata:
   name: infrastructure
 spec:
-  additionalOptions:
-    - name: clients--harbor--secret
-      secret: 
-        name: harbor-client-secret
-        key: secret
-
   keycloakCRName: keycloak
   realm:
     id: 488e588f-61bf-48b9-9384-18df35686d84
