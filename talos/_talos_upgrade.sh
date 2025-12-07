@@ -1,5 +1,5 @@
 DRY_RUN=true
-NODE_IPS=192.168.178.194
+NODE_IPS=
 TALOS_VERSION=v1.11.5
 
 while [[ $# -gt 0 ]]; do
