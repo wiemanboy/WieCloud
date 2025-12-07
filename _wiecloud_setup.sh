@@ -13,24 +13,30 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-DRY_RUN_TAG=$([[ $DRY_RUN != "false" ]] && echo "--dry-run" || echo "")
+DRY_RUN_TAG=$([[ $DRY_RUN != "false" ]] && echo "--dry-run=client" || echo "")
 
-helm repo add argo https://argoproj.github.io/argo-helm
+helm repo add argo https://argoproj.github.io/argo-helm || exit 1
 
 echo "installing argocd helm chart"
-helm install argocd argo/argo-cd --version 9.1.3 -n argocd --create-namespace -f applications/argocd/values.yaml $DRY_RUN_TAG
+helm install argocd argo/argo-cd --version 9.1.3 -n argocd --create-namespace -f infrastructure/argocd/chart/values.yaml $DRY_RUN_TAG || exit 1
 
 
 echo "creating root application"
-kubectl apply -f wiecloud.application.yaml $DRY_RUN_TAG
+kubectl apply -f wiecloud/chart/templates/wiecloud.project.yaml $DRY_RUN_TAG || exit 1
+kubectl apply -f wiecloud.application.yaml $DRY_RUN_TAG || exit 1
 
 if [[ $DRY_RUN != "false" ]]; then
   exit
 fi
 
-curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.38.0/install.sh | bash -s v0.38.0
+curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.38.0/install.sh | bash -s v0.38.0 || exit 1
 
 DEFAULT_PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
+
+kubectl create namespace gateway || exit 1
+kubectl create namespace longhorn-system || exit 1
+kubectl create namespace keycloak || exit 1
+kubectl create namespace harbor || exit 1
 
 kubectl create secret generic server-auth-secret -n gateway --type=kubernetes.io/basic-auth --from-literal=username=admin --from-literal=password=$DEFAULT_PASSWORD
 kubectl create secret generic server-auth-secret -n longhorn-system --type=kubernetes.io/basic-auth --from-literal=username=admin --from-literal=password=$DEFAULT_PASSWORD
@@ -44,6 +50,5 @@ kubectl create secret generic cloudflare-api-token --from-literal=api-token=$CLO
 
 echo "default password: $DEFAULT_PASSWORD"
 
-echo "keycloak initial admin user:"
-kubectl get secret keycloak-initial-admin -n keycloak -o jsonpath='{.data.username}' | base64 --decode
-kubectl get secret keycloak-initial-admin -n keycloak -o jsonpath='{.data.password}' | base64 --decode
+# kubectl get secret keycloak-initial-admin -n keycloak -o jsonpath='{.data.username}' | base64 --decode
+# kubectl get secret keycloak-initial-admin -n keycloak -o jsonpath='{.data.password}' | base64 --decode
