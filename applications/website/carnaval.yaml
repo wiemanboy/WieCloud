@@ -60,5 +60,5 @@ spec:
 
       backendRefs:
         - name: carnaval-svc
-          namespace: carnaval
+          namespace: website
           port: 80
