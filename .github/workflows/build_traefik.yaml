@@ -17,6 +17,7 @@ on:
       - .github/workflows/build_traefik.yaml
       - .github/workflows/package_push.yaml
       - pipeline/build/scripts/**
+  workflow_dispatch:
 
 jobs:
   package_and_push:
