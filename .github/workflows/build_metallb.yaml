@@ -25,7 +25,7 @@ jobs:
     with:
       chart_name: metallb
       chart_path: infrastructure/metallb/chart
-      registry: harbor.wieman.cloud
+      registry: oci://harbor.wieman.cloud
       repository: infrastructure
     secrets:
       registry_username: ${{ secrets.OCI_REGISTRY_USERNAME }}
