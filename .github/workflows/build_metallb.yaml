@@ -1,4 +1,4 @@
-name: Build load-balancer
+name: Build metallb
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - master
     paths:
       - infrastructure/metallb/chart**
-      - .github/workflows/build_load-balancer.yaml
+      - .github/workflows/build_metallb.yaml
       - .github/workflows/package_push.yaml
       - pipeline/build/scripts/**
   pull_request:
@@ -14,7 +14,7 @@ on:
       - master
     paths:
       - infrastructure/metallb/chart**
-      - .github/workflows/build_load-balancer.yaml
+      - .github/workflows/build_metallb.yaml
       - .github/workflows/package_push.yaml
       - pipeline/build/scripts/**
 
@@ -23,9 +23,9 @@ jobs:
     name: Package and push
     uses: ./.github/workflows/package_push.yaml
     with:
-      chart_name: load-balancer
+      chart_name: metallb
       chart_path: infrastructure/metallb/chart
-      registry: oci://harbor.wieman.cloud
+      registry: harbor.wieman.cloud
       repository: infrastructure
     secrets:
       registry_username: ${{ secrets.OCI_REGISTRY_USERNAME }}
