@@ -22,62 +22,62 @@ spec:
     enabledEventTypes: ["UPDATE_CONSENT_ERROR","SEND_RESET_PASSWORD","GRANT_CONSENT","VERIFY_PROFILE_ERROR","UPDATE_TOTP","REMOVE_TOTP","REVOKE_GRANT","LOGIN_ERROR","CLIENT_LOGIN","RESET_PASSWORD_ERROR","UPDATE_CREDENTIAL","IMPERSONATE_ERROR","CODE_TO_TOKEN_ERROR","CUSTOM_REQUIRED_ACTION","OAUTH2_DEVICE_CODE_TO_TOKEN_ERROR","RESTART_AUTHENTICATION","UPDATE_PROFILE_ERROR","IMPERSONATE","LOGIN","UPDATE_PASSWORD_ERROR","OAUTH2_DEVICE_VERIFY_USER_CODE","CLIENT_INITIATED_ACCOUNT_LINKING","IDENTITY_PROVIDER_LOGIN","USER_DISABLED_BY_PERMANENT_LOCKOUT","OAUTH2_EXTENSION_GRANT","REMOVE_CREDENTIAL_ERROR","TOKEN_EXCHANGE","REGISTER","LOGOUT","AUTHREQID_TO_TOKEN","DELETE_ACCOUNT_ERROR","CLIENT_REGISTER","IDENTITY_PROVIDER_LINK_ACCOUNT","USER_DISABLED_BY_TEMPORARY_LOCKOUT","UPDATE_PASSWORD","DELETE_ACCOUNT","FEDERATED_IDENTITY_LINK_ERROR","CLIENT_DELETE","IDENTITY_PROVIDER_FIRST_LOGIN","VERIFY_EMAIL","CLIENT_DELETE_ERROR","CLIENT_LOGIN_ERROR","RESTART_AUTHENTICATION_ERROR","REMOVE_FEDERATED_IDENTITY_ERROR","EXECUTE_ACTIONS","TOKEN_EXCHANGE_ERROR","PERMISSION_TOKEN","FEDERATED_IDENTITY_OVERRIDE_LINK","SEND_IDENTITY_PROVIDER_LINK_ERROR","UPDATE_CREDENTIAL_ERROR","EXECUTE_ACTION_TOKEN_ERROR","SEND_VERIFY_EMAIL","OAUTH2_EXTENSION_GRANT_ERROR","OAUTH2_DEVICE_AUTH","EXECUTE_ACTIONS_ERROR","REMOVE_FEDERATED_IDENTITY","OAUTH2_DEVICE_CODE_TO_TOKEN","IDENTITY_PROVIDER_POST_LOGIN","IDENTITY_PROVIDER_LINK_ACCOUNT_ERROR","FEDERATED_IDENTITY_OVERRIDE_LINK_ERROR","UPDATE_EMAIL","OAUTH2_DEVICE_VERIFY_USER_CODE_ERROR","REGISTER_ERROR","REVOKE_GRANT_ERROR","LOGOUT_ERROR","UPDATE_EMAIL_ERROR","EXECUTE_ACTION_TOKEN","CLIENT_UPDATE_ERROR","UPDATE_PROFILE","AUTHREQID_TO_TOKEN_ERROR","INVITE_ORG_ERROR","FEDERATED_IDENTITY_LINK","CLIENT_REGISTER_ERROR","INVITE_ORG","SEND_VERIFY_EMAIL_ERROR","SEND_IDENTITY_PROVIDER_LINK","IDENTITY_PROVIDER_LOGIN_ERROR","RESET_PASSWORD","CLIENT_INITIATED_ACCOUNT_LINKING_ERROR","OAUTH2_DEVICE_AUTH_ERROR","REMOVE_CREDENTIAL","UPDATE_CONSENT","REMOVE_TOTP_ERROR","VERIFY_EMAIL_ERROR","SEND_RESET_PASSWORD_ERROR","CLIENT_UPDATE","IDENTITY_PROVIDER_POST_LOGIN_ERROR","CUSTOM_REQUIRED_ACTION_ERROR","UPDATE_TOTP_ERROR","CODE_TO_TOKEN","VERIFY_PROFILE","GRANT_CONSENT_ERROR","IDENTITY_PROVIDER_FIRST_LOGIN_ERROR"]
     adminEventsEnabled: true
 
-groups:
-- id: 174c1b4b-daca-403c-ab64-35e1cd54fdd8
-  name: infra
-  description: ''
-  path: "/infra"
-  subGroups:
-  - id: af257c8a-eeb0-4136-8c7f-dbfbfe7a85cc
-    name: admin
+  groups:
+  - id: 174c1b4b-daca-403c-ab64-35e1cd54fdd8
+    name: infra
     description: ''
-    path: "/infra/admin"
-    parentId: 174c1b4b-daca-403c-ab64-35e1cd54fdd8
-    subGroups: []
-    attributes: {}
-    realmRoles: []
-    clientRoles: {}
-  - id: 43af343a-64bb-4f9a-9159-fcaa3b79fe4c
-    name: harbor
-    description: ''
-    path: "/infra/harbor"
-    parentId: 174c1b4b-daca-403c-ab64-35e1cd54fdd8
+    path: "/infra"
     subGroups:
-    - id: 72533763-206b-47e9-9cec-a517b452e776
+    - id: af257c8a-eeb0-4136-8c7f-dbfbfe7a85cc
       name: admin
       description: ''
-      path: "/infra/harbor/admin"
-      parentId: 43af343a-64bb-4f9a-9159-fcaa3b79fe4c
+      path: "/infra/admin"
+      parentId: 174c1b4b-daca-403c-ab64-35e1cd54fdd8
       subGroups: []
       attributes: {}
       realmRoles: []
       clientRoles: {}
-    attributes: {}
-    realmRoles: []
-    clientRoles: {}
-  - id: 33290827-70a9-4f5d-bf22-63fe72442c3c
-    name: keycloak
-    description: ''
-    path: "/infra/keycloak"
-    parentId: 174c1b4b-daca-403c-ab64-35e1cd54fdd8
-    subGroups:
-    - id: 47d75a48-09e0-4e02-894a-b1604b698924
-      name: admin
+    - id: 43af343a-64bb-4f9a-9159-fcaa3b79fe4c
+      name: harbor
       description: ''
-      path: "/infra/keycloak/admin"
-      parentId: 33290827-70a9-4f5d-bf22-63fe72442c3c
-      subGroups: []
+      path: "/infra/harbor"
+      parentId: 174c1b4b-daca-403c-ab64-35e1cd54fdd8
+      subGroups:
+      - id: 72533763-206b-47e9-9cec-a517b452e776
+        name: admin
+        description: ''
+        path: "/infra/harbor/admin"
+        parentId: 43af343a-64bb-4f9a-9159-fcaa3b79fe4c
+        subGroups: []
+        attributes: {}
+        realmRoles: []
+        clientRoles: {}
+      attributes: {}
+      realmRoles: []
+      clientRoles: {}
+    - id: 33290827-70a9-4f5d-bf22-63fe72442c3c
+      name: keycloak
+      description: ''
+      path: "/infra/keycloak"
+      parentId: 174c1b4b-daca-403c-ab64-35e1cd54fdd8
+      subGroups:
+      - id: 47d75a48-09e0-4e02-894a-b1604b698924
+        name: admin
+        description: ''
+        path: "/infra/keycloak/admin"
+        parentId: 33290827-70a9-4f5d-bf22-63fe72442c3c
+        subGroups: []
+        attributes: {}
+        realmRoles:
+        - admin
+        clientRoles: {}
       attributes: {}
       realmRoles:
       - admin
       clientRoles: {}
     attributes: {}
-    realmRoles:
-    - admin
+    realmRoles: []
     clientRoles: {}
-  attributes: {}
-  realmRoles: []
-  clientRoles: {}
 
   users:
     - id: 5ce0013a-c5ed-4099-85d0-15823d580edd
