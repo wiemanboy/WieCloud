@@ -3,11 +3,6 @@ kind: Keycloak
 metadata:
   name: keycloak
 spec:
-  additionalOptions:
-    - name: clients--harbor--secret
-      secret: 
-        name: harbor-client-secret
-        key: secret
   instances: 1
   db:
     vendor: {{ .Values.keycloak.db.vendor }}
