@@ -112,7 +112,7 @@ spec:
       - id: d2c47d1b-73d9-4534-9aca-7501f792f938
         clientId: harbor
         name: Harbor
-        secret: $(HARBOR_CLIENT_SECRET)
+        secret: ${HARBOR_CLIENT_SECRET}
         rootUrl: https://harbor.{{ .Values.environment.hostname }}
         baseUrl: https://harbor.{{ .Values.environment.hostname }}
         enabled: true
