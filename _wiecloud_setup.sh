@@ -47,6 +47,7 @@ kubectl create secret generic keycloak-db-secret -n keycloak --from-literal=user
 
 HARBOR_SECRET=$(yq '.wiecloud.harbor.oidc.clientSecret.secret' env.yaml --raw-output)
 kubectl create secret generic harbor-client-secret -n harbor --from-literal=secret=$HARBOR_SECRET
+kubectl create secret generic harbor-client-secret -n keycloak --from-literal=secret=$HARBOR_SECRET
 
 CLOUDFLARE_API_TOKEN=$(yq '.wiecloud.cloudflare.apiToken' env.yaml --raw-output)
 kubectl create secret generic cloudflare-api-token --from-literal=api-token=$CLOUDFLARE_API_TOKEN \--namespace=gateway
