@@ -17,6 +17,7 @@ spec:
       containers:
         - name: carnaval
           image: harbor.wieman.cloud/website/carnaval:0.0.1
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
           resources:
