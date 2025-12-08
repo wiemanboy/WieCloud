@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: carnaval
-          image: harbor.wieman.cloud/website/carnaval@sha256:2ed00b79abd5e618f842d4c81b1c5412c72d548892312eb9d73ce32808b7e917
+          image: harbor.wieman.cloud/website/carnaval:latest
           ports:
             - containerPort: 80
           resources:
