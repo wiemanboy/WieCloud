@@ -2,8 +2,9 @@ variable "name" {}
 variable "node" {}
 
 variable "iso" {}
-variable "macaddr" {}
-
+variable "macaddr" {
+  nullable = true
+}
 variable "spec" {
   default = {
     cpu_cores = 4

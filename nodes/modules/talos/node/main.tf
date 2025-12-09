@@ -31,12 +31,12 @@ resource "talos_machine_configuration_apply" "config_apply" {
   ]
 }
 
-data "external" "maintenance_status" {
-  program = ["bash", "${path.root}/talos/check_maintenance.sh", var.node]
+data "external" "status" {
+  program = ["bash", "${path.root}/talos/check_status.sh", var.node]
 }
 
 resource "talos_machine_bootstrap" "bootstrap" {
-  count                = data.external.maintenance_status.result.maintenance ? 0 : 1
+  count                = data.external.status.result.status == "maintenance" && var.role == "controlplane" ? 1 : 0
   depends_on           = [talos_machine_configuration_apply.config_apply]
   node                 = var.node
   client_configuration = talos_machine_secrets.machine_secret.client_configuration
@@ -48,6 +48,7 @@ resource "talos_cluster_kubeconfig" "kubeconfig" {
   depends_on = [
     talos_machine_bootstrap.bootstrap
   ]
+  count                = var.role == "controlplane" ? 1 : 0
   client_configuration = talos_machine_secrets.machine_secret.client_configuration
   node                 = var.node
 }

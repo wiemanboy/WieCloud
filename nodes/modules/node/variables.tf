@@ -4,8 +4,12 @@ variable "endpoint" {}
 variable "cluster" {}
 variable "role" {}
 
-variable "ip" {}
-variable "macaddr" {}
+variable "ip" {
+  nullable = true
+}
+variable "macaddr" {
+  nullable = true
+}
 
 variable "talos_version" {}
 variable "iso" {}
