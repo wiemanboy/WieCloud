@@ -36,8 +36,18 @@ data "external" "maintenance_status" {
 }
 
 resource "talos_machine_bootstrap" "bootstrap" {
-  count = data.external.maintenance_status.result.maintenance ? 0 : 1
+  count                = data.external.maintenance_status.result.maintenance ? 0 : 1
   depends_on           = [talos_machine_configuration_apply.config_apply]
   node                 = var.node
   client_configuration = talos_machine_secrets.machine_secret.client_configuration
+}
+
+// talos_client_configuration.client_config.talos_config
+
+resource "talos_cluster_kubeconfig" "kubeconfig" {
+  depends_on = [
+    talos_machine_bootstrap.bootstrap
+  ]
+  client_configuration = talos_machine_secrets.machine_secret.client_configuration
+  node                 = var.node
 }
