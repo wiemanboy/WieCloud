@@ -31,7 +31,12 @@ resource "talos_machine_configuration_apply" "config_apply" {
   ]
 }
 
+data "external" "maintenance_status" {
+  program = ["bash", "${path.root}/talos/check_maintenance.sh", var.node]
+}
+
 resource "talos_machine_bootstrap" "bootstrap" {
+  count = data.external.maintenance_status.result.maintenance ? 0 : 1
   depends_on           = [talos_machine_configuration_apply.config_apply]
   node                 = var.node
   client_configuration = talos_machine_secrets.machine_secret.client_configuration
