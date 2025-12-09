@@ -20,6 +20,7 @@ resource "talos_machine_configuration_apply" "config_apply" {
   node                        = var.node
   config_patches = [
     file("./talos/bare-metal.config.yaml"),
+    file("./talos/${var.role}.config.yaml"),
     yamlencode({
       machine = {
         install = {
@@ -30,8 +31,8 @@ resource "talos_machine_configuration_apply" "config_apply" {
   ]
 }
 
-# resource "talos_machine_bootstrap" "bootstrap" {
-#   depends_on           = [talos_machine_configuration_apply.config_apply]
-#   node                 = var.node
-#   client_configuration = talos_machine_secrets.machine_secret.client_configuration
-# }
+resource "talos_machine_bootstrap" "bootstrap" {
+  depends_on           = [talos_machine_configuration_apply.config_apply]
+  node                 = var.node
+  client_configuration = talos_machine_secrets.machine_secret.client_configuration
+}

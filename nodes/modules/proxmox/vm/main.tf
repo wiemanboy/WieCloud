@@ -1,4 +1,4 @@
-resource "proxmox_vm_qemu" vm {
+resource "proxmox_vm_qemu" "vm" {
   name        = var.name
   target_node = var.node
   scsihw      = "virtio-scsi-pci"
@@ -25,12 +25,20 @@ resource "proxmox_vm_qemu" vm {
         }
       }
     }
-  }  
+  }
 
   network {
-    id     = 0
-    model  = "virtio"
-    bridge = "vmbr0"
+    id      = 0
+    model   = "virtio"
+    bridge  = "vmbr0"
     macaddr = var.macaddr
+  }
+  lifecycle {
+    ignore_changes = [
+      disks,
+      network,
+      tags,
+      startup_shutdown
+    ]
   }
 }
