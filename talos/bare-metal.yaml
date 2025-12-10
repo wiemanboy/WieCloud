@@ -1,6 +1,0 @@
-# https://docs.siderolabs.com/talos/v1.6/platform-specific-installations/boot-assets
-customization:
-  systemExtensions:
-    officialExtensions:
-      - siderolabs/iscsi-tools
-      - siderolabs/util-linux-tools

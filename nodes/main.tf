@@ -15,6 +15,4 @@ provider "proxmox" {
   pm_tls_insecure     = local.env.proxmox.nodes[0].tlsInsecure
 }
 
-provider "talos" {
-
-}
+provider "talos" {}

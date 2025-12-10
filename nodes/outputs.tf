@@ -17,3 +17,8 @@ output "talosconfig" {
   })
   sensitive = true
 }
+
+output "machine_secret" {
+  value = yamlencode(talos_machine_secrets.machine_secret)
+  sensitive = true
+}
