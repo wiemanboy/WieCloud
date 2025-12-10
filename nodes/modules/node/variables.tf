@@ -11,6 +11,7 @@ variable "macaddr" {
   nullable = true
 }
 
+variable "machine_secret" {}
 variable "talos_version" {}
 variable "iso" {}
 variable "image" {}
@@ -20,4 +21,7 @@ variable "spec" {
     disk_size = 100
     memory    = 4096
   }
+}
+variable "bootstrap" {
+  type = bool
 }

@@ -7,10 +7,12 @@ module "proxmox_vm" {
 }
 
 module "talos_node" {
-  source   = "../talos/node"
-  endpoint = var.endpoint
-  node     = var.ip
-  role     = var.role
-  cluster  = var.cluster
-  image    = var.image
+  source         = "../talos/node"
+  endpoint       = var.endpoint
+  node           = var.ip
+  role           = var.role
+  cluster        = var.cluster
+  image          = var.image
+  machine_secret = var.machine_secret
+  bootstrap      = var.bootstrap
 }

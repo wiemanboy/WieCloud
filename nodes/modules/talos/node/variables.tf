@@ -6,6 +6,8 @@ variable "image" {}
 variable "talos_version" {
   default = "v1.11.5"
 }
+
+variable "machine_secret" {}
 variable "role" {
   type = string
   validation {
@@ -13,4 +15,8 @@ variable "role" {
     error_message = "Role must be either 'worker' or 'controlplane'."
   }
   default = "worker"
+}
+
+variable "bootstrap" {
+  type = bool
 }

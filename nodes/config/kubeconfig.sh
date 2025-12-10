@@ -1,4 +1,4 @@
-terraform output -raw kubeconfig > kubeconfig
+tofu output -raw kubeconfig > kubeconfig
 
 export KUBECONFIG=~/.kube/config:kubeconfig
 kubectl config view --merge --flatten > /tmp/merged
