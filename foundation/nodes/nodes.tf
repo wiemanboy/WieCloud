@@ -20,6 +20,9 @@ resource "proxmox_storage_iso" "omen-pve-0-metal-amd64-iso" {
 
 resource "talos_machine_secrets" "machine_secret" {
   talos_version = local.talos_version
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 module "talos-controlplane-0" {
