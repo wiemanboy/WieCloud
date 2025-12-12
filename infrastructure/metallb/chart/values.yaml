@@ -4,4 +4,4 @@ environment:
   namespace: metallb-system
 
 ipconfig:
-  ipv4: 192.168.178.198
+  ipv4: 192.168.178.50
