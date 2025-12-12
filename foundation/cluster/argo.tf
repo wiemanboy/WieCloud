@@ -26,4 +26,8 @@ resource "kubernetes_manifest" "wiecloud-application" {
 resource "kubernetes_manifest" "infrastructure-project" {
   depends_on = [helm_release.argo]
   manifest   = yamldecode(file("../../wiecloud/chart/templates/wiecloud.project.yaml"))
+
+  lifecycle {
+    ignore_changes = all
+  }
 }

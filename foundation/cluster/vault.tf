@@ -18,6 +18,9 @@ resource "kubernetes_namespace_v1" "namespace" {
   metadata {
     name = each.key
   }
+  lifecycle {
+    ignore_changes = all
+  }
 }
 
 resource "kubernetes_secret_v1" "server-auth-secret" {

@@ -15,4 +15,5 @@ module "talos_node" {
   image          = var.image
   machine_secret = var.machine_secret
   bootstrap      = var.bootstrap
+  talos_version  = var.talos_version
 }
