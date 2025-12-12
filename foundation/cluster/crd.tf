@@ -18,6 +18,6 @@ resource "kubernetes_manifest" "keycloak_realm_crd" {
   manifest = yamldecode(data.http.keycloak_realm_crd.response_body)
 }
 
-resource "kubernetes_manifest" "keycloak_operator" {
-    manifest = yamldecode(data.http.keycloak_operator.response_body)
-}
+# resource "kubernetes_manifest" "keycloak_operator" {
+#     manifest = yamldecode(data.http.keycloak_operator.response_body)
+# }

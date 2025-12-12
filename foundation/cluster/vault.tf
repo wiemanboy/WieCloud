@@ -81,6 +81,6 @@ resource "kubernetes_secret_v1" "cloudflare-api-token" {
     namespace = "gateway"
   }
   data = {
-    token = local.env.wiecloud.cloudflare.token
+    api-token = local.env.wiecloud.cloudflare.token
   }
 }
