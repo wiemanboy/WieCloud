@@ -1,3 +1,4 @@
 variable "talos_version" {
-  default = "v1.11.5"
+  description = "Talos version to use"
+  type        = string
 }
