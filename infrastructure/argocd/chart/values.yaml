@@ -19,5 +19,5 @@ argo-cd:
         name: Keycloak
         issuer: https://keycloak.wieman.cloud/realms/infrastructure
         clientID: argocd
-        clientSecret: $oidc.keycloak.clientSecret
+        clientSecret: $argo-client-secret.secret
         requestedScopes: ["openid", "profile", "email", "groups"]

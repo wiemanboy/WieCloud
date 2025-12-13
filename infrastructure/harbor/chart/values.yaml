@@ -31,7 +31,7 @@ harbor:
           "auth_mode": "oidc_auth",
           "primary_auth_mode": "true",
           "oidc_name": "keycloak",
-          "oidc_endpoint": "https://keycloak.wieman.cloud/realms/infrastructure",
+          "oidc_endpoint": "https://keycloak.wieman.cloud/realms/wiekey",
           "oidc_groups_claim": "groups",
           "oidc_admin_group": "/infra/harbor/admin",
           "oidc_client_id": "harbor",
