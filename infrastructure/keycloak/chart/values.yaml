@@ -8,6 +8,32 @@ gateway:
   listener: websecure
   namespace: gateway
 
+realm:
+  clients:
+    defaults:
+      enabled: true
+      alwaysDisplayInConsole: true
+      clientAuthenticatorType: client-secret
+      standardFlowEnabled: true
+      directAccessGrantsEnabled: true
+      serviceAccountsEnabled: true
+      protocol: openid-connect
+      defaultClientScopes:
+        - web-origins
+        - service_account
+        - acr
+        - profile
+        - roles
+        - groups
+        - basic
+        - email
+      optionalClientScopes:
+        - address
+        - phone
+        - organization
+        - offline_access
+        - microprofile-jwt
+
 keycloak:
   db:
     vendor: postgres

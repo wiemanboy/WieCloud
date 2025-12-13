@@ -119,30 +119,9 @@ spec:
         secret: ${HARBOR_CLIENT_SECRET}
         rootUrl: https://harbor.{{ .Values.environment.hostname }}
         baseUrl: https://harbor.{{ .Values.environment.hostname }}
-        enabled: true
-        alwaysDisplayInConsole: true
-        clientAuthenticatorType: client-secret
         redirectUris:
         - https://harbor.{{ .Values.environment.hostname }}/c/oidc/callback
-        standardFlowEnabled: true
-        directAccessGrantsEnabled: true
-        serviceAccountsEnabled: true
-        protocol: openid-connect
-        defaultClientScopes:
-          - web-origins
-          - service_account
-          - acr
-          - profile
-          - roles
-          - groups
-          - basic
-          - email
-        optionalClientScopes:
-          - address
-          - phone
-          - organization
-          - offline_access
-          - microprofile-jwt
+        {{- toYaml .Values.realm.clients.defaults | nindent 8 }}
 
       - id: 5f7e7f35-f9fc-43e1-b4a7-f06ea33501d5
         clientId: argocd
@@ -152,32 +131,12 @@ spec:
         rootUrl: https://argo.{{ .Values.environment.hostname }}
         adminUrl: https://argo.{{ .Values.environment.hostname }}
         baseUrl: https://argo.{{ .Values.environment.hostname }}/applications
-        enabled: true
-        alwaysDisplayInConsole: true
-        clientAuthenticatorType: client-secret
         redirectUris:
           - https://argo.{{ .Values.environment.hostname }}/auth/callback
-        standardFlowEnabled: true
-        directAccessGrantsEnabled: true
-        serviceAccountsEnabled: true
-        protocol: openid-connect
         attributes:
           post.logout.redirect.uris: https://argo.{{ .Values.environment.hostname }}applications
-        defaultClientScopes:
-          - web-origins
-          - service_account
-          - acr
-          - profile
-          - roles
-          - groups
-          - basic
-          - email
-        optionalClientScopes:
-          - address
-          - phone
-          - organization
-          - offline_access
-          - microprofile-jwt
+        {{- toYaml .Values.realm.clients.defaults | nindent 8 }}
+
 
     clientScopes:
       - id: 16e40ee2-5b86-4aa6-805b-a8422e7a59da
