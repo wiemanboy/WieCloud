@@ -11,7 +11,7 @@ spec:
     targetRevision: {{ .Values.infrastructure.longhorn.version }}
     helm:
       values: |
-        environment: {{ toYaml .Values.environment | nindent 8 }}
+        environment: {{ toYaml .Values.environment | nindent 10 }}
   destination:
     namespace: longhorn-system
     server: {{ .Values.infrastructure.server }}

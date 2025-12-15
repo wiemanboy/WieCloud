@@ -11,7 +11,7 @@ spec:
     targetRevision: {{ .Values.infrastructure.traefik.version }}
     helm:
       values: |
-        environment: {{ toYaml .Values.environment | nindent 8 }}
+        environment: {{ toYaml .Values.environment | nindent 10 }}
   destination:
     namespace: gateway
     server: {{ .Values.infrastructure.server }}
