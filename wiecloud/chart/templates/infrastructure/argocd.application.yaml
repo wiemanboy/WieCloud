@@ -1,0 +1,35 @@
+{{- if .Values.infrastructure.argocd.deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd
+  namespace: argocd
+spec:
+  project: infrastructure
+  source:
+    chart: argocd
+    repoURL: harbor.wieman.cloud/infrastructure
+    targetRevision: {{ .Values.infrastructure.argocd.version }}
+    helm:
+      values: 
+        environment: {{ .Values.environment }}
+        argo-cd:
+          configs:
+            cm:
+              url: https://argo.{{ .Values.environment.hostname }}
+              oidc.config: |
+                name: Keycloak
+                issuer: https://keycloak.wieman.cloud/realms/infrastructure
+                clientID: argocd
+                clientSecret: $oidc.keycloak.clientSecret
+                requestedScopes: ["openid", "profile", "email", "groups"]
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+{{- end }}

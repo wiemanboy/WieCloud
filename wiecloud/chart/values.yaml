@@ -1,49 +1,51 @@
 environment: 
-  name: prod
   hostname: wieman.cloud
-
-gateway:
-  name: traefik-gateway
-  listener: websecure
-  namespace: gateway
+  gateway:
+    name: traefik-gateway
+    listener: websecure
+    namespace: gateway
 
 applications:
+  website:
+    deploy: true
+    namespace: website
+
+infrastructure:
   argocd:
     deploy: true
-    target: 0.0.0
-    namespace: argocd
+    version: 0.0.0
 
   cert-manager:
     deploy: true
-    target: 0.0.0
+    version: 0.0.0
     namespace: gateway
 
   external-dns:
     deploy: true
-    target: 0.0.0
+    version: 0.0.0
     namespace: gateway
 
   harbor:
     deploy: true
-    target: 0.0.1
+    version: 0.0.1
     namespace: harbor
 
   keycloak:
     deploy: true
-    target: 0.1.0
+    version: 0.1.0
     namespace: keycloak
 
   longhorn:
     deploy: true
-    target: 0.0.0
+    version: 0.0.0
     namespace: longhorn-system
 
   metallb:
     deploy: true
-    target: 0.0.2
+    version: 0.0.2
     namespace: metallb-system
 
   traefik:
     deploy: true
-    target: 0.0.1
+    version: 0.0.1
     namespace: gateway
