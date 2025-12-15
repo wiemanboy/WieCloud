@@ -1,18 +1,16 @@
 environment: 
   name: prod
   hostname: wieman.cloud
-  namespace: gateway
-
-gateway:
-  name: traefik-gateway
-  listener: websecure
-  namespace: gateway
-  authentication:
-    enabled: true
-    basicAuth:
-      name: basic-auth
-      secret:
-        name: server-auth-secret
+  gateway:
+    name: traefik-gateway
+    listener: websecure
+    namespace: gateway
+    authentication:
+      enabled: true
+      basicAuth:
+        name: basic-auth
+        secret:
+          name: server-auth-secret
 
 traefik:
   service:
