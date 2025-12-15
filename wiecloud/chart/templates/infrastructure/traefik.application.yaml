@@ -1,0 +1,17 @@
+{{- if .Values.infrastructure.traefik.deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik
+  namespace: argocd
+spec:
+  source:
+    chart: traefik
+    targetRevision: {{ .Values.infrastructure.traefik.version }}
+    helm:
+      values: 
+        environment: {{ .Values.environment }}
+  destination:
+    namespace: gateway
+  {{- toYaml .Values.infrastructure.defaults | nindent 2 }}
+{{- end }}

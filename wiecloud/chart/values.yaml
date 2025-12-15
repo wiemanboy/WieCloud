@@ -42,7 +42,6 @@ infrastructure:
   traefik:
     deploy: true
     version: 0.0.1
-    namespace: gateway
 
   defaults:
     project: infrastructure
