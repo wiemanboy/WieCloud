@@ -1,7 +1,7 @@
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
-  name: {{ .Values.gateway.authentication.basicAuth.name }}
+  name: {{ .Values.environment.gateway.authentication.basicAuth.name }}
 spec:
   basicAuth:
-    secret: {{ .Values.gateway.authentication.basicAuth.secret.name }}
+    secret: {{ .Values.environment.gateway.authentication.basicAuth.secret.name }}

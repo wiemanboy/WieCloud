@@ -4,9 +4,9 @@ metadata:
   name: longhorn-frontend
 spec:
   parentRefs:
-    - name: {{ .Values.gateway.name }}
-      sectionName: {{ .Values.gateway.listener }}
-      namespace: {{ .Values.gateway.namespace }}
+    - name: {{ .Values.environment.gateway.name }}
+      sectionName: {{ .Values.environment.gateway.listener }}
+      namespace: {{ .Values.environment.gateway.namespace }}
 
   hostnames:
     - storage.{{ .Values.environment.hostname }}
@@ -19,16 +19,16 @@ spec:
 
       backendRefs:
         - name: longhorn-frontend
-          namespace: {{ .Values.environment.namespace }}
+          namespace: {{ .Release.Namespace }}
           port: 80
 
       filters:
-        {{- if .Values.gateway.authentication.enabled }}
-        {{- if .Values.gateway.authentication.basicAuth }}
+        {{- if .Values.environment.gateway.authentication.enabled }}
+        {{- if .Values.environment.gateway.authentication.basicAuth }}
         - type: ExtensionRef
           extensionRef:
             group: traefik.io
             kind: Middleware
-            name: {{ .Values.gateway.authentication.basicAuth.name }}
+            name: {{ .Values.environment.gateway.authentication.basicAuth.name }}
         {{- end }}
         {{- end }}

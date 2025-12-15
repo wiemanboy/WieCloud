@@ -34,7 +34,6 @@ infrastructure:
   longhorn:
     deploy: true
     version: 0.0.0
-    namespace: longhorn-system
 
   metallb:
     deploy: true
