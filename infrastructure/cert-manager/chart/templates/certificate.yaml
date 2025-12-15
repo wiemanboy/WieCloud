@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Values.environment.gateway.namespace }}
 spec:
   secretName: {{ .Values.environment.gateway.dns.certificate.secret }}
-  dnsNames: {{ .Values.environment.gateway.dns.hostnames }}
+  dnsNames: {{ toYaml .Values.environment.gateway.dns.hostnames | nindent 4 }}
   issuerRef:
     name: {{ .Values.environment.gateway.dns.certificate.issuer }}
     kind: ClusterIssuer
