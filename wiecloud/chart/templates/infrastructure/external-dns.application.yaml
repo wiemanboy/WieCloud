@@ -7,11 +7,13 @@ metadata:
 spec:
   source:
     chart: external-dns
+    repoURL: {{ .Values.infrastructure.repository }}
     targetRevision: {{ .Values.infrastructure.externalDns.version }}
     helm:
-      values: 
+      values: |
         environment: {{ .Values.environment }}
   destination:
     namespace: gateway
+    server: {{ .Values.infrastructure.server }}
   {{- toYaml .Values.infrastructure.defaults | nindent 2 }}
 {{- end }}

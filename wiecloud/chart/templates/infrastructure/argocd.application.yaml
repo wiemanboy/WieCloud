@@ -5,12 +5,12 @@ metadata:
   name: argocd
   namespace: argocd
 spec:
-  project: infrastructure
   source:
     chart: argocd
+    repoURL: {{ .Values.infrastructure.repository }}
     targetRevision: {{ .Values.infrastructure.argocd.version }}
     helm:
-      values: 
+      values: |
         environment: {{ .Values.environment }}
         argo-cd:
           configs:
@@ -24,5 +24,6 @@ spec:
                 requestedScopes: ["openid", "profile", "email", "groups"]
   destination:
     namespace: argocd
+    server: {{ .Values.infrastructure.server }}
   {{- toYaml .Values.infrastructure.defaults | nindent 2 }}
 {{- end }}

@@ -48,12 +48,10 @@ infrastructure:
     deploy: true
     version: 0.0.1
 
+  server: https://kubernetes.default.svc
+  repository: harbor.wieman.cloud/infrastructure
   defaults:
     project: infrastructure
-    source:
-      repoURL: harbor.wieman.cloud/infrastructure
-    destination:
-      server: https://kubernetes.default.svc
     syncPolicy:
       automated:
         prune: true
