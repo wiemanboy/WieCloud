@@ -1,0 +1,17 @@
+{{- if .Values.infrastructure.harbor.deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: harbor
+  namespace: argocd
+spec:
+  source:
+    chart: harbor
+    targetRevision: {{ .Values.infrastructure.harbor.version }}
+    helm:
+      values: 
+        environment: {{ .Values.environment }}
+  destination:
+    namespace: harbor
+  {{- toYaml .Values.infrastructure.defaults | nindent 2 }}
+{{- end }}

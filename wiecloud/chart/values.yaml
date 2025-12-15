@@ -26,7 +26,6 @@ infrastructure:
   harbor:
     deploy: true
     version: 0.0.1
-    namespace: harbor
 
   keycloak:
     deploy: true
@@ -54,7 +53,6 @@ infrastructure:
       repoURL: harbor.wieman.cloud/infrastructure
     destination:
       server: https://kubernetes.default.svc
-      namespace: argocd
     syncPolicy:
       automated:
         prune: true
