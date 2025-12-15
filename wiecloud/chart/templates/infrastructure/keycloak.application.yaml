@@ -1,0 +1,17 @@
+{{- if .Values.infrastructure.keycloak.deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: keycloak
+  namespace: argocd
+spec:
+  source:
+    chart: keycloak
+    targetRevision: {{ .Values.infrastructure.keycloak.version }}
+    helm:
+      values: 
+        environment: {{ .Values.environment }}
+  destination:
+    namespace: keycloak
+  {{- toYaml .Values.infrastructure.defaults | nindent 2 }}
+{{- end }}

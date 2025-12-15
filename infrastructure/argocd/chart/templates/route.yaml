@@ -4,9 +4,9 @@ metadata:
   name: argocd-server
 spec:
   parentRefs:
-    - name: {{ .Values.gateway.name }}
-      sectionName: {{ .Values.gateway.listener }}
-      namespace: {{ .Values.gateway.namespace }}
+    - name: {{ .Values.environment.gateway.name }}
+      sectionName: {{ .Values.environment.gateway.listener }}
+      namespace: {{ .Values.environment.gateway.namespace }}
 
   hostnames:
     - argo.{{ .Values.environment.hostname }}
@@ -19,5 +19,5 @@ spec:
 
       backendRefs:
         - name: argocd-server
-          namespace: {{ .Values.environment.namespace }}
+          namespace: {{ .Release.Namespace }}
           port: 80

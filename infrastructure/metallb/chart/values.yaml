@@ -1,4 +1,2 @@
 environment: 
-  name: prod
   hostname: wieman.cloud
-  namespace: metallb-system

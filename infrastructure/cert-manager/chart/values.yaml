@@ -1,32 +1,29 @@
 environment: 
-  name: prod
   hostname: wieman.cloud
-  namespace: gateway
-
-gateway:
-  name: traefik-gateway
-  listener: websecure
-  namespace: gateway
-  dns:
-    certificate:
-      issuer: letsencrypt
-      secret: letsencrypt-secret
-    hostnames:
-      - "wieman.cloud"
-      - "*.wieman.cloud"
-      - "*.harbor.wieman.cloud"
-      - "wiemanboy.com"
-      - "*.wiemanboy.com"
-      - "jarnowieman.com"
-      - "*.jarnowieman.com"
-      - "jarnowieman.nl"
-      - "*.jarnowieman.nl"
-    cloudflare:
-      email: wiemanboy@gmail.com
-      token:
-        secret: 
-          name: cloudflare-api-token
-          key: api-token
+  gateway:
+    name: traefik-gateway
+    listener: websecure
+    namespace: gateway
+    dns:
+      certificate:
+        issuer: letsencrypt
+        secret: letsencrypt-secret
+      hostnames:
+        - "wieman.cloud"
+        - "*.wieman.cloud"
+        - "*.harbor.wieman.cloud"
+        - "wiemanboy.com"
+        - "*.wiemanboy.com"
+        - "jarnowieman.com"
+        - "*.jarnowieman.com"
+        - "jarnowieman.nl"
+        - "*.jarnowieman.nl"
+      cloudflare:
+        email: wiemanboy@gmail.com
+        token:
+          secret: 
+            name: cloudflare-api-token
+            key: api-token
 
 cert-manager:
   crds:
