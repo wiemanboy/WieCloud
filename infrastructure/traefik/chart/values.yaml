@@ -1,15 +1,15 @@
 environment: 
-  hostname: wieman.cloud
+  hostname: example.com
   gateway:
-    name: traefik-gateway
-    listener: websecure
-    namespace: gateway
+    name: example-gateway
+    listener: web-example
+    namespace: example
     authentication:
       enabled: true
       basicAuth:
-        name: basic-auth
+        name: example-auth
         secret:
-          name: server-auth-secret
+          name: example-server-auth-secret
 
 traefik:
   service:

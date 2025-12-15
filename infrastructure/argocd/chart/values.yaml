@@ -1,20 +1,15 @@
-environment:
-  hostname: wieman.cloud
+environment: 
+  hostname: example.com
   gateway:
-    name: traefik-gateway
-    listener: websecure
-    namespace: gateway
+    name: example-gateway
+    listener: web-example
+    namespace: example
 
 argo-cd:
   configs:
     params:
       server.insecure: true
     cm:
-      url: https://argo.wieman.cloud
+      url: https://argo.example.com
       exec.enabled: true
-      oidc.config: |
-        name: Keycloak
-        issuer: https://keycloak.wieman.cloud/realms/infrastructure
-        clientID: argocd
-        clientSecret: $oidc.keycloak.clientSecret
-        requestedScopes: ["openid", "profile", "email", "groups"]
+      oidc.config: "overwritten"
