@@ -28,9 +28,9 @@ metadata:
   name: keycloak
 spec:
   parentRefs:
-    - name: {{ .Values.gateway.name }}
-      sectionName: {{ .Values.gateway.listener }}
-      namespace: {{ .Values.gateway.namespace }}
+    - name: {{ .Values.environment.gateway.name }}
+      sectionName: {{ .Values.environment.gateway.listener }}
+      namespace: {{ .Values.environment.gateway.namespace }}
 
   hostnames:
     - keycloak.{{ .Values.environment.hostname }}
@@ -43,5 +43,5 @@ spec:
 
       backendRefs:
         - name: keycloak-service
-          namespace: {{ .Values.environment.namespace }}
+          namespace: {{ .Release.Namespace }}
           port: 8080
