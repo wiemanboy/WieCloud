@@ -11,7 +11,7 @@ spec:
     targetRevision: {{ .Values.infrastructure.harbor.version }}
     helm:
       values: |
-        environment: {{ .Values.environment }}
+        environment: {{ toYaml .Values.environment | nindent 8 }}
   destination:
     namespace: harbor
     server: {{ .Values.infrastructure.server }}

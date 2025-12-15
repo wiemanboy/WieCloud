@@ -11,7 +11,7 @@ spec:
     targetRevision: {{ .Values.infrastructure.argocd.version }}
     helm:
       values: |
-        environment: {{ .Values.environment }}
+        environment: {{ toYaml .Values.environment | nindent 8 }}
         argo-cd:
           configs:
             cm:
