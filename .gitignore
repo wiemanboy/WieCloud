@@ -1,5 +1,5 @@
 # Temporary files
-*.temp*
+*temp*
 
 # Environment files
 env.yaml
