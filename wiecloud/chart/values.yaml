@@ -19,10 +19,9 @@ infrastructure:
     deploy: true
     version: 0.0.0
 
-  external-dns:
+  externalDns:
     deploy: true
     version: 0.0.0
-    namespace: gateway
 
   harbor:
     deploy: true
