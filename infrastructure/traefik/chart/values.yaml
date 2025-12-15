@@ -1,5 +1,4 @@
 environment: 
-  name: prod
   hostname: wieman.cloud
   gateway:
     name: traefik-gateway

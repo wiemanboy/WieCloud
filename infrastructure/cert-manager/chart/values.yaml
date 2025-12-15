@@ -1,7 +1,5 @@
 environment: 
-  name: prod
   hostname: wieman.cloud
-  namespace: gateway
   gateway:
     name: traefik-gateway
     listener: websecure

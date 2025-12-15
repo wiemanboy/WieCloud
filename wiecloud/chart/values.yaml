@@ -4,6 +4,11 @@ environment:
     name: traefik-gateway
     listener: websecure
     namespace: gateway
+    authentication:
+      basicAuth:
+        name: basic-auth
+        secret:
+          name: server-auth-secret
 
 applications:
   website:
