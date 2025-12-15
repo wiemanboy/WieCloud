@@ -16,7 +16,8 @@ gateway:
 traefik:
   service:
     externalIps:
-      - 192.168.178.194
+      - 85.148.81.86
+    loadbalancerIp: 192.168.178.201
     annotations:
       external-dns.alpha.kubernetes.io/hostname: wieman.cloud
       external-dns.alpha.kubernetes.io/target: 85.148.81.86
