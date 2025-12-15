@@ -15,10 +15,9 @@ infrastructure:
     deploy: true
     version: 0.0.0
 
-  cert-manager:
+  certManager:
     deploy: true
     version: 0.0.0
-    namespace: gateway
 
   external-dns:
     deploy: true
@@ -49,3 +48,18 @@ infrastructure:
     deploy: true
     version: 0.0.1
     namespace: gateway
+
+  defaults:
+    project: infrastructure
+    source:
+      repoURL: harbor.wieman.cloud/infrastructure
+    destination:
+      server: https://kubernetes.default.svc
+      namespace: argocd
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+      syncOptions:
+      - CreateNamespace=true
+

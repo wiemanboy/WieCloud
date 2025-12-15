@@ -1,0 +1,17 @@
+{{- if .Values.infrastructure.certManager.deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd
+spec:
+  source:
+    chart: cert-manager
+    targetRevision: {{ .Values.infrastructure.certManager.version }}
+    helm:
+      values: 
+        environment: {{ .Values.environment }}
+  destination:
+    namespace: gateway
+  {{- toYaml .Values.infrastructure.defaults | nindent 2 }}
+{{- end }}

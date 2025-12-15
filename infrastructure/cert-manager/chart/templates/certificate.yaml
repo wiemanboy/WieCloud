@@ -2,19 +2,10 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: letsencrypt-certificate
-  namespace: {{ .Values.gateway.namespace }}
+  namespace: {{ .Values.environment.gateway.namespace }}
 spec:
-  secretName: {{ .Values.gateway.dns.certificate.secret }}
-  dnsNames:
-  - "wieman.cloud"
-  - "*.wieman.cloud"
-  - "*.harbor.wieman.cloud"
-  - "wiemanboy.com"
-  - "*.wiemanboy.com"
-  - "jarnowieman.com"
-  - "*.jarnowieman.com"
-  - "jarnowieman.nl"
-  - "*.jarnowieman.nl"
+  secretName: {{ .Values.environment.dns.certificate.secret }}
+  dnsNames: {{ .Values.environment.dns.hostnames }}
   issuerRef:
-    name: {{ .Values.gateway.dns.certificate.issuer }}
+    name: {{ .Values.environment.gateway.dns.certificate.issuer }}
     kind: ClusterIssuer
