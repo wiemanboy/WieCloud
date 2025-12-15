@@ -4,8 +4,8 @@ metadata:
   name: letsencrypt-certificate
   namespace: {{ .Values.environment.gateway.namespace }}
 spec:
-  secretName: {{ .Values.environment.dns.certificate.secret }}
-  dnsNames: {{ .Values.environment.dns.hostnames }}
+  secretName: {{ .Values.environment.gateway.dns.certificate.secret }}
+  dnsNames: {{ .Values.environment.gateway.dns.hostnames }}
   issuerRef:
     name: {{ .Values.environment.gateway.dns.certificate.issuer }}
     kind: ClusterIssuer
