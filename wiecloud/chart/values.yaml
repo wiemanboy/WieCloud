@@ -20,11 +20,11 @@ infrastructure:
     deploy: true
     version: 0.0.0
 
-  certManager:
+  certmanager:
     deploy: true
     version: 0.0.0
 
-  externalDns:
+  externaldns:
     deploy: true
     version: 0.0.0
 

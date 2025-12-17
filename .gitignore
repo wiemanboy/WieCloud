@@ -1,11 +1,11 @@
 # Temporary files
-*temp*
+*.temp*
+*temp.*
 
 # Environment files
 env.yaml
 
 # Helm files
-charts
 Chart.lock
 *.tgz
 

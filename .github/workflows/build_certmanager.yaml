@@ -1,20 +1,20 @@
-name: Build external-dns
+name: Build certmanager
 
 on:
   push:
     branches:
       - master
     paths:
-      - infrastructure/external-dns/chart**
-      - .github/workflows/build_external-dns.yaml
+      - infrastructure/certmanager/chart**
+      - .github/workflows/build_certmanager.yaml
       - .github/workflows/package_push.yaml
       - pipeline/build/scripts/**
   pull_request:
     branches:
       - master
     paths:
-      - infrastructure/external-dns/chart**
-      - .github/workflows/build_external-dns.yaml
+      - infrastructure/certmanager/chart**
+      - .github/workflows/build_certmanager.yaml
       - .github/workflows/package_push.yaml
       - pipeline/build/scripts/**
   workflow_dispatch:
@@ -24,8 +24,8 @@ jobs:
     name: Package and push
     uses: ./.github/workflows/package_push.yaml
     with:
-      chart_name: external-dns
-      chart_path: infrastructure/external-dns/chart
+      chart_name: certmanager
+      chart_path: infrastructure/certmanager/chart
       registry: oci://harbor.wieman.cloud
       repository: infrastructure
     secrets:
