@@ -67,7 +67,7 @@ jobs:
           # If the PR is a draft, use the branch name as tag
           if [ "${{ github.event.pull_request.draft }}" = "true" ]; then
             # Extract branch name from ref
-            TAG="-${GITHUB_HEAD_REF}"
+            TAG="${GITHUB_HEAD_REF}"
           fi
 
           bash ./pipeline/version/scripts/update_version.sh \
