@@ -40,12 +40,21 @@ jobs:
 
       - name: Registry Login
         run: helm registry login ${{ inputs.registry }} --username ${{ secrets.registry_username }} --password ${{ secrets.registry_password }}
+      
       - name: Package Helm Chart
         id: package
         run: |
           set -e
-          output=$(bash ./pipeline/build/scripts/package_chart.sh --path ${{ inputs.chart_path }})
+          TAG=""
+          # If the PR is a draft, use the branch name as tag
+          if [ "${{ github.event.pull_request.draft }}" = "true" ]; then
+            # Extract branch name from ref
+            TAG="${GITHUB_HEAD_REF}"
+          fi
+
+          output=$(bash ./pipeline/build/scripts/package_chart.sh --path ${{ inputs.chart_path }}) --tag $TAG
           echo "$output"
+          
           chart_path=$(echo "$output" | grep -oE '/[^ ]+\.tgz')
           echo "Packaged chart path: $chart_path"
           echo "chart_package_path=$chart_path" >> "$GITHUB_OUTPUT"

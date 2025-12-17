@@ -24,5 +24,15 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+missing=()
+[[ -z "$PACKAGE" ]] && missing+=("--package")
+[[ -z "$REGISTRY" ]] && missing+=("--registry")
+[[ -z "$REPOSITORY" ]] && missing+=("--repository")
+
+if [ ${#missing[@]} -ne 0 ]; then
+  echo "Error: Missing required parameter(s): ${missing[*]}"
+  exit 1
+fi
+
 echo "Pushing Helm chart package: ${REGISTRY}/${REPOSITORY}/${PACKAGE}"
 helm push $PACKAGE $REGISTRY/$REPOSITORY
