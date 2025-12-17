@@ -48,7 +48,7 @@ jobs:
           TAG=""
           # If PR, use the branch name as tag
           if [ "${GITHUB_EVENT_NAME}" = "pull_request" ]; then
-            TAG="${GITHUB_HEAD_REF}"
+            TAG="${GITHUB_HEAD_REF}-$(echo ${GITHUB_SHA} | cut -c1-7)"
           fi
 
           output=$(bash ./pipeline/build/scripts/package_chart.sh --path ${{ inputs.chart_path }} --tag $TAG) 
@@ -75,7 +75,7 @@ jobs:
           # If the PR is a draft, use the branch name as tag
           if [ "${{ github.event.pull_request.draft }}" = "true" ]; then
             # Extract branch name from ref
-            TAG="${GITHUB_HEAD_REF}"
+            TAG="${GITHUB_HEAD_REF}-$(echo ${GITHUB_SHA} | cut -c1-7)"
           fi
 
           bash ./pipeline/version/scripts/update_version.sh \
