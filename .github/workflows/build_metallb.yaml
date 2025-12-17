@@ -12,6 +12,8 @@ on:
   pull_request:
     branches:
     - master
+    types:
+    - ready_for_review
     paths:
     - infrastructure/metallb/chart**
     - .github/workflows/build_metallb.yaml

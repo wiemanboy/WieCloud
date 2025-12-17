@@ -1,0 +1,77 @@
+name: Package and Push Helm Chart
+
+on:
+  workflow_call:
+    inputs:
+      chart_name: 
+        description: "Name of the Helm chart"
+        required: true
+        type: string
+      chart_path:
+        description: "Path to the Helm chart to be packaged and pushed"
+        required: true
+        type: string
+      registry:
+        description: "OCI registry URL"
+        required: true
+        type: string
+      repository:
+        description: "Repository name in the OCI registry"
+        required: true
+        type: string
+    secrets:
+      registry_username:
+        description: "Username for the OCI registry"
+        required: true
+      registry_password:
+        description: "Password for the OCI registry"
+        required: true
+
+jobs:
+  package_and_push:
+    name: ${{ inputs.chart_name }} Helm Chart
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Helm
+        run: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+      - name: Registry Login
+        run: helm registry login ${{ inputs.registry }} --username ${{ secrets.registry_username }} --password ${{ secrets.registry_password }}
+      - name: Package Helm Chart
+        id: package
+        run: |
+          set -e
+          output=$(bash ./pipeline/build/scripts/package_chart.sh --path ${{ inputs.chart_path }})
+          echo "$output"
+          chart_path=$(echo "$output" | grep -oE '/[^ ]+\.tgz')
+          echo "Packaged chart path: $chart_path"
+          echo "chart_package_path=$chart_path" >> "$GITHUB_OUTPUT"
+
+      - name: Push Helm Chart
+        run: bash ./pipeline/build/scripts/push_chart.sh --package ${{ steps.package.outputs.chart_package_path }} --registry ${{ inputs.registry }} --repository ${{ inputs.repository }}
+
+  update_version:
+    name: Update version
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Update chart version
+        run: |
+          TAG=""
+          # If the PR is a draft, use the branch name as tag
+          if [ "${{ github.event.pull_request.draft }}" = "true" ]; then
+            # Extract branch name from ref
+            TAG="-${GITHUB_HEAD_REF}"
+          fi
+
+          bash ./pipeline/version/scripts/update_version.sh \
+            --path ${{ inputs.chart_path }} \
+            --project ${{ inputs.repository }} \
+            --name ${{ inputs.chart_name }} \
+            --tag "$TAG"

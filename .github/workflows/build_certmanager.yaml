@@ -12,6 +12,8 @@ on:
   pull_request:
     branches:
     - master
+    types:
+    - ready_for_review
     paths:
     - infrastructure/certmanager/chart**
     - .github/workflows/build_certmanager.yaml
