@@ -24,8 +24,8 @@ on:
 
 
 jobs:
-  package_and_push:
-    name: Package and push
+  build:
+    name: Build
     uses: ./.github/workflows/build.yaml
     with:
       chart_name: traefik
