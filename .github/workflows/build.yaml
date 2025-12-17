@@ -46,9 +46,8 @@ jobs:
         run: |
           set -e
           TAG=""
-          # If the PR is a draft, use the branch name as tag
-          if [ "${{ github.event.pull_request.draft }}" = "true" ]; then
-            # Extract branch name from ref
+          # If PR, use the branch name as tag
+          if [ "${GITHUB_EVENT_NAME}" = "pull_request" ]; then
             TAG="${GITHUB_HEAD_REF}"
           fi
 
