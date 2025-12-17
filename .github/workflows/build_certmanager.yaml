@@ -3,26 +3,27 @@ name: Build certmanager
 on:
   push:
     branches:
-      - master
+    - master
     paths:
-      - infrastructure/certmanager/chart**
-      - .github/workflows/build_certmanager.yaml
-      - .github/workflows/package_push.yaml
-      - pipeline/build/scripts/**
+    - infrastructure/certmanager/chart**
+    - .github/workflows/build_certmanager.yaml
+    - .github/workflows/build.yaml
+    - pipeline/build/scripts/**
   pull_request:
     branches:
-      - master
+    - master
     paths:
-      - infrastructure/certmanager/chart**
-      - .github/workflows/build_certmanager.yaml
-      - .github/workflows/package_push.yaml
-      - pipeline/build/scripts/**
+    - infrastructure/certmanager/chart**
+    - .github/workflows/build_certmanager.yaml
+    - .github/workflows/build.yaml
+    - pipeline/build/scripts/**
   workflow_dispatch:
+
 
 jobs:
   package_and_push:
     name: Package and push
-    uses: ./.github/workflows/package_push.yaml
+    uses: ./.github/workflows/build.yaml
     with:
       chart_name: certmanager
       chart_path: infrastructure/certmanager/chart

@@ -3,26 +3,27 @@ name: Build <chart_name>
 on:
   push:
     branches:
-      - master
+    - master
     paths:
-      - <chart_path>**
-      - .github/workflows/build_<chart_name>.yaml
-      - .github/workflows/package_push.yaml
-      - pipeline/build/scripts/**
+    - <chart_path>**
+    - .github/workflows/build_<chart_name>.yaml
+    - .github/workflows/build.yaml
+    - pipeline/build/scripts/**
   pull_request:
     branches:
-      - master
+    - master
     paths:
-      - <chart_path>**
-      - .github/workflows/build_<chart_name>.yaml
-      - .github/workflows/package_push.yaml
-      - pipeline/build/scripts/**
+    - <chart_path>**
+    - .github/workflows/build_<chart_name>.yaml
+    - .github/workflows/build.yaml
+    - pipeline/build/scripts/**
   workflow_dispatch:
+
 
 jobs:
   package_and_push:
     name: Package and push
-    uses: ./.github/workflows/package_push.yaml
+    uses: ./.github/workflows/build.yaml
     with:
       chart_name: <chart_name>
       chart_path: <chart_path>

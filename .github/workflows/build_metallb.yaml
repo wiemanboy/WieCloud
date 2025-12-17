@@ -3,26 +3,27 @@ name: Build metallb
 on:
   push:
     branches:
-      - master
+    - master
     paths:
-      - infrastructure/metallb/chart**
-      - .github/workflows/build_metallb.yaml
-      - .github/workflows/package_push.yaml
-      - pipeline/build/scripts/**
+    - infrastructure/metallb/chart**
+    - .github/workflows/build_metallb.yaml
+    - .github/workflows/build.yaml
+    - pipeline/build/scripts/**
   pull_request:
     branches:
-      - master
+    - master
     paths:
-      - infrastructure/metallb/chart**
-      - .github/workflows/build_metallb.yaml
-      - .github/workflows/package_push.yaml
-      - pipeline/build/scripts/**
+    - infrastructure/metallb/chart**
+    - .github/workflows/build_metallb.yaml
+    - .github/workflows/build.yaml
+    - pipeline/build/scripts/**
   workflow_dispatch:
+
 
 jobs:
   package_and_push:
     name: Package and push
-    uses: ./.github/workflows/package_push.yaml
+    uses: ./.github/workflows/build.yaml
     with:
       chart_name: metallb
       chart_path: infrastructure/metallb/chart
