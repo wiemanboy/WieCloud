@@ -14,6 +14,7 @@ on:
     - master
     types:
     - ready_for_review
+    - synchronize
     paths:
     - infrastructure/longhorn/chart**
     - .github/workflows/build_longhorn.yaml

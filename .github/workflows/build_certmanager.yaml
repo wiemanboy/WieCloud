@@ -14,6 +14,7 @@ on:
     - master
     types:
     - ready_for_review
+    - synchronize
     paths:
     - infrastructure/certmanager/chart**
     - .github/workflows/build_certmanager.yaml

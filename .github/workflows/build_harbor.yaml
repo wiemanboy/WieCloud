@@ -14,6 +14,7 @@ on:
     - master
     types:
     - ready_for_review
+    - synchronize
     paths:
     - infrastructure/harbor/chart**
     - .github/workflows/build_harbor.yaml
