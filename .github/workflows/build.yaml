@@ -52,9 +52,9 @@ jobs:
             TAG="${GITHUB_HEAD_REF}"
           fi
 
-          output=$(bash ./pipeline/build/scripts/package_chart.sh --path ${{ inputs.chart_path }}) --tag $TAG
+          output=$(bash ./pipeline/build/scripts/package_chart.sh --path ${{ inputs.chart_path }} --tag $TAG) 
           echo "$output"
-          
+
           chart_path=$(echo "$output" | grep -oE '/[^ ]+\.tgz')
           echo "Packaged chart path: $chart_path"
           echo "chart_package_path=$chart_path" >> "$GITHUB_OUTPUT"
