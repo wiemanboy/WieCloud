@@ -29,8 +29,8 @@ on:
       app_client_id:
         description: "App Client ID"
         required: true
-      app_client_secret:
-        description: "App Client Secret"
+      app_private_key:
+        description: "App Private Key"
         required: true
 
 jobs:
@@ -61,7 +61,7 @@ jobs:
         id: app-token
         with:
           app-id: ${{ secrets.app_client_id }}
-          private-key: ${{ secrets.app_client_secret }}
+          private-key: ${{ secrets.app_private_key }}
 
       - name: Auth GitHub CLI
         run: echo "GH_TOKEN=${{steps.app-token.outputs.token}}" >> $GITHUB_ENV
