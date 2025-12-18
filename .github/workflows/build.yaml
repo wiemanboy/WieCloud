@@ -74,7 +74,7 @@ jobs:
       - name: Commit changes
         run: | 
           git commit -a -m "UPDATE: version of ${{ inputs.chart_name }}"
-          git push
+          git push origin HEAD:${GITHUB_HEAD_REF}
 
   package_and_push:
     name: ${{ inputs.chart_name }} Helm Chart
