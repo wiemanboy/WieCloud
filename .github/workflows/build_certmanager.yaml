@@ -35,3 +35,5 @@ jobs:
     secrets:
       registry_username: ${{ secrets.OCI_REGISTRY_USERNAME }}
       registry_password: ${{ secrets.OCI_REGISTRY_PASSWORD }}
+      app_client_id: ${{ secrets.APP_CLIENT_ID }}
+      app_client_secret: ${{ secrets.APP_CLIENT_SECRET }}
