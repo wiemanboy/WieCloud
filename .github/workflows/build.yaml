@@ -39,8 +39,17 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.app_client_id }}
+          private-key: ${{ secrets.app_private_key }}
+
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          fetch-depth: 0
 
       - name: Update chart version
         run: |
@@ -56,15 +65,6 @@ jobs:
             --project ${{ inputs.repository }} \
             --name ${{ inputs.chart_name }} \
             --tag "$TAG"
-
-      - uses: actions/create-github-app-token@v1
-        id: app-token
-        with:
-          app-id: ${{ secrets.app_client_id }}
-          private-key: ${{ secrets.app_private_key }}
-
-      - name: Auth GitHub CLI
-        run: echo "GH_TOKEN=${{steps.app-token.outputs.token}}" >> $GITHUB_ENV
 
       - name: Set credentials
         run: |
