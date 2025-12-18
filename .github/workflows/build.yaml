@@ -73,7 +73,7 @@ jobs:
 
       - name: Commit changes
         run: | 
-          'git commit -a -m "UPDATE: version of ${{ inputs.chart_name }}"'
+          git commit -a -m "UPDATE: version of ${{ inputs.chart_name }}"
           git push
 
   package_and_push:
