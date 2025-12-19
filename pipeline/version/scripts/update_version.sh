@@ -35,10 +35,13 @@ missing=()
 [[ -z "$PROJECT" ]] && missing+=("--project")
 [[ -z "$NAME" ]] && missing+=("--name")
 
+
 if [ ${#missing[@]} -ne 0 ]; then
   echo "Error: Missing required parameter(s): ${missing[*]}"
   exit 1
 fi
+
+[ "$TAG" = "-" ] && TAG=""
 
 VERSION=$( yq .version $CHART_PATH/Chart.yaml )
 

@@ -1,0 +1,49 @@
+name: Update versions
+
+on:
+  pull_request:
+    branches:
+    - master
+    types:
+    - ready_for_review
+    - synchronize
+
+jobs:
+  update_version:
+    name: Update version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.APP_CLIENT_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: Update chart version
+        run: |
+          TAG=""
+          # If the PR is a draft, use the branch name as tag
+          if [ "${{ github.event.pull_request.draft }}" = "true" ]; then
+            # Extract branch name from ref
+            TAG="${GITHUB_HEAD_REF}-$(echo ${GITHUB_SHA} | cut -c1-7)"
+          fi
+
+          bash ./pipeline/version/scripts/update_versions.sh \
+            --tag "$TAG"
+
+      - name: Set credentials
+        run: |
+          git config user.name "WiemanBot"
+          git config user.email "WiemanBot@runner.wieman.cloud"
+
+      - name: Commit changes
+        run: | 
+          git commit -a -m "UPDATE: versions for changed charts"
+          git push origin HEAD:${GITHUB_HEAD_REF}
