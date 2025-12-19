@@ -14,9 +14,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-git fetch origin master --depth=1
-
-DIFF=$(git diff master --name-only | grep -E '^(infrastructure|applications)/.*/chart/')
+DIFF=$(git diff FETCH_HEAD...HEAD --name-only | grep -E '^(infrastructure|applications)/.*/chart/')
 EDITED=$(printf '%s\n' "$DIFF"| sed 's|\(.*\/chart\)/.*|\1|' | sort -u)
 
 while read -r CHART_PATH; do
