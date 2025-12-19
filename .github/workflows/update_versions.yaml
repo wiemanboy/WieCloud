@@ -35,7 +35,7 @@ jobs:
             TAG="${GITHUB_HEAD_REF}-$(echo ${GITHUB_SHA} | cut -c1-7)"
           fi
 
-          BASE_BRANCH="origin/${GITHUB_BASE_REF:-master}"
+          BASE_BRANCH="${GITHUB_BASE_REF:-master}"
           git fetch origin "$BASE_BRANCH" --depth=1
 
           bash ./pipeline/version/scripts/update_versions.sh \
