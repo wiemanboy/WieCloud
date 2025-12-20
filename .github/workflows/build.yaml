@@ -49,10 +49,7 @@ jobs:
       run: |
         set -e
 
-        echo log HEAD~1
-        git log -10 --pretty=%s HEAD
-
-        LAST_MSG=$(git log -1 --pretty=%s HEAD~1)
+        LAST_MSG=$(git log -1 --pretty=%s --skip=1 HEAD)
         echo "Last commit message: $LAST_MSG"
 
         if [[ "$LAST_MSG" == "UPDATE: versions for changed charts" ]]; then
