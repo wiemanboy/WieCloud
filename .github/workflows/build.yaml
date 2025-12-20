@@ -52,10 +52,11 @@ jobs:
         LAST_MSG=$(git log -1 --pretty=%s --skip=1 HEAD)
         echo "Last commit message: $LAST_MSG"
 
-        if [[ "$LAST_MSG" == "UPDATE: versions for changed charts" ]]; then
+        if [[ "$LAST_MSG" == "UPDATE: versions for changed charts"* ]]; then
           echo "skip=true" >> "$GITHUB_OUTPUT"
         else
           echo "skip=false" >> "$GITHUB_OUTPUT"
+          echo "tag"=$(echo "$LAST_MSG" | grep -oP '\[\K[^\]]+')
         fi
 
     - name: Set up Helm
@@ -71,13 +72,7 @@ jobs:
       id: package
       run: |
         set -e
-        TAG=""
-        # If PR, use the branch name as tag
-        if [ "${GITHUB_EVENT_NAME}" = "pull_request" ]; then
-          TAG="${GITHUB_HEAD_REF}-$(echo ${GITHUB_SHA} | cut -c1-7)"
-        fi
-
-        output=$(bash ./pipeline/build/scripts/package_chart.sh --path ${{ inputs.chart_path }} --tag $TAG) 
+        output=$(bash ./pipeline/build/scripts/package_chart.sh --path ${{ inputs.chart_path }} --tag steps.check_commit.outputs.skip.tag) 
         echo "$output"
 
         chart_path=$(echo "$output" | grep -oE '/[^ ]+\.tgz')
