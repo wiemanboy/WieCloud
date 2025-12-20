@@ -24,6 +24,17 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+missing=()
+[[ -z "$CHART_PATH" ]] && missing+=("--path")
+[[ -z "$REGISTRY" ]] && missing+=("--registry")
+[[ -z "$REPOSITORY" ]] && missing+=("--repository")
+
+
+if [ ${#missing[@]} -ne 0 ]; then
+  echo "Error: Missing required parameter(s): ${missing[*]}"
+  exit 1
+fi
+
 echo "Creating workflow for Helm chart at path: ${CHART_PATH}"
 
 
@@ -35,7 +46,7 @@ if [[ ! -f "$CHART_YAML" ]]; then
 fi
 
 # Extract chart name
-CHART_NAME=$(yq '.name' "$CHART_YAML" --raw-output)
+CHART_NAME=$(yq '.name' $CHART_YAML )
 
 # Read template and replace placeholders
 TEMPLATE_PATH="$(dirname "$0")/build_<chart_name>.yaml"
