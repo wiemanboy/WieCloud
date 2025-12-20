@@ -3,7 +3,7 @@ name: Build Helm Chart
 on:
   workflow_call:
     inputs:
-      chart_name: 
+      chart_name:
         description: "Name of the Helm chart"
         required: true
         type: string
@@ -38,31 +38,47 @@ jobs:
     name: ${{ inputs.chart_name }} Helm Chart
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
+    - name: Check out repository
+      uses: actions/checkout@v4
 
-      - name: Set up Helm
-        run: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+    - name: Check if last commit is version update
+      id: check_commit
+      run: |
+        LAST_MSG=$(git log -1 --pretty=%s)
+        echo "Last commit message: $LAST_MSG"
 
-      - name: Registry Login
-        run: helm registry login ${{ inputs.registry }} --username ${{ secrets.registry_username }} --password ${{ secrets.registry_password }}
-      
-      - name: Package Helm Chart
-        id: package
-        run: |
-          set -e
-          TAG=""
-          # If PR, use the branch name as tag
-          if [ "${GITHUB_EVENT_NAME}" = "pull_request" ]; then
-            TAG="${GITHUB_HEAD_REF}-$(echo ${GITHUB_SHA} | cut -c1-7)"
-          fi
+        if [[ "$LAST_MSG" == "UPDATE: versions for changed charts" ]]; then
+          echo "skip=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+        fi
 
-          output=$(bash ./pipeline/build/scripts/package_chart.sh --path ${{ inputs.chart_path }} --tag $TAG) 
-          echo "$output"
+    - name: Set up Helm
+      if: steps.check_commit.outputs.skip != 'false'
+      run: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
-          chart_path=$(echo "$output" | grep -oE '/[^ ]+\.tgz')
-          echo "Packaged chart path: $chart_path"
-          echo "chart_package_path=$chart_path" >> "$GITHUB_OUTPUT"
+    - name: Registry Login
+      if: steps.check_commit.outputs.skip != 'false'
+      run: helm registry login ${{ inputs.registry }} --username ${{ secrets.registry_username }} --password ${{ secrets.registry_password }}
 
-      - name: Push Helm Chart
-        run: bash ./pipeline/build/scripts/push_chart.sh --package ${{ steps.package.outputs.chart_package_path }} --registry ${{ inputs.registry }} --repository ${{ inputs.repository }}
+    - name: Package Helm Chart
+      if: steps.check_commit.outputs.skip != 'false'
+      id: package
+      run: |
+        set -e
+        TAG=""
+        # If PR, use the branch name as tag
+        if [ "${GITHUB_EVENT_NAME}" = "pull_request" ]; then
+          TAG="${GITHUB_HEAD_REF}-$(echo ${GITHUB_SHA} | cut -c1-7)"
+        fi
+
+        output=$(bash ./pipeline/build/scripts/package_chart.sh --path ${{ inputs.chart_path }} --tag $TAG) 
+        echo "$output"
+
+        chart_path=$(echo "$output" | grep -oE '/[^ ]+\.tgz')
+        echo "Packaged chart path: $chart_path"
+        echo "chart_package_path=$chart_path" >> "$GITHUB_OUTPUT"
+
+    - name: Push Helm Chart
+      if: steps.check_commit.outputs.skip != 'false'
+      run: bash ./pipeline/build/scripts/push_chart.sh --package ${{ steps.package.outputs.chart_package_path }} --registry ${{ inputs.registry }} --repository ${{ inputs.repository }}
