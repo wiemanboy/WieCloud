@@ -1,14 +1,6 @@
 name: Build traefik
 
 on:
-  push:
-    branches:
-    - master
-    paths:
-    - infrastructure/traefik/chart**
-    - .github/workflows/build_traefik.yaml
-    - .github/workflows/build.yaml
-    - pipeline/build/scripts/**
   pull_request:
     branches:
     - master
@@ -17,8 +9,6 @@ on:
     - .github/workflows/build_traefik.yaml
     - .github/workflows/build.yaml
     - pipeline/build/scripts/**
-  workflow_dispatch:
-
 
 jobs:
   build:

@@ -1,14 +1,6 @@
 name: Build metallb
 
 on:
-  push:
-    branches:
-    - master
-    paths:
-    - infrastructure/metallb/chart**
-    - .github/workflows/build_metallb.yaml
-    - .github/workflows/build.yaml
-    - pipeline/build/scripts/**
   pull_request:
     branches:
     - master
@@ -17,8 +9,6 @@ on:
     - .github/workflows/build_metallb.yaml
     - .github/workflows/build.yaml
     - pipeline/build/scripts/**
-  workflow_dispatch:
-
 
 jobs:
   build:
