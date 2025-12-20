@@ -19,6 +19,10 @@ applications:
     deploy: true
     version: 0.0.0-technitium-186b538
 
+  minecraft:
+    deploy: true
+    version: 0.0.0
+
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/applications
   defaults:
