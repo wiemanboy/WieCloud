@@ -58,6 +58,7 @@ jobs:
           echo "skip=false" >> "$GITHUB_OUTPUT"
 
           TAG=$(echo "$LAST_MSG" | grep -oP '\[\K[^\]]+')
+          echo $TAG
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
         fi
 
