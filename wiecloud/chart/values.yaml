@@ -14,6 +14,22 @@ applications:
   website:
     deploy: true
     namespace: website
+  
+  technitium:
+    deploy: true
+    version: 0.0.0
+
+  server: https://kubernetes.default.svc
+  repository: harbor.wieman.cloud/applications
+  defaults:
+    project: applications
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+      syncOptions:
+      - CreateNamespace=true
+
 
 infrastructure:
   argocd:
