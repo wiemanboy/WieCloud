@@ -54,13 +54,12 @@ jobs:
 
         if [[ "$LAST_MSG" == "UPDATE: versions for changed charts"* ]]; then
           echo "skip=true" >> "$GITHUB_OUTPUT"
-        else
-          echo "skip=false" >> "$GITHUB_OUTPUT"
-
           TAG=$(echo "$LAST_MSG" | grep -oP '\[\K[^\]]+')
-          echo $TAG
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          exit 0
         fi
+
+        echo "skip=false" >> "$GITHUB_OUTPUT"
 
     - name: Set up Helm
       if: steps.check_commit.outputs.skip != 'false'
@@ -76,13 +75,13 @@ jobs:
       run: |
         set -e
         echo ${{ steps.check_commit.outputs.tag }}
-    #     output=$(bash ./pipeline/build/scripts/package_chart.sh --path ${{ inputs.chart_path }} --tag ${{ steps.check_commit.outputs.tag }}) 
-    #     echo "$output"
+        output=$(bash ./pipeline/build/scripts/package_chart.sh --path ${{ inputs.chart_path }} --tag ${{ steps.check_commit.outputs.tag }}) 
+        echo "$output"
 
-    #     chart_path=$(echo "$output" | grep -oE '/[^ ]+\.tgz')
-    #     echo "Packaged chart path: $chart_path"
-    #     echo "chart_package_path=$chart_path" >> "$GITHUB_OUTPUT"
+        chart_path=$(echo "$output" | grep -oE '/[^ ]+\.tgz')
+        echo "Packaged chart path: $chart_path"
+        echo "chart_package_path=$chart_path" >> "$GITHUB_OUTPUT"
 
-    # - name: Push Helm Chart
-    #   if: steps.check_commit.outputs.skip != 'false'
-    #   run: bash ./pipeline/build/scripts/push_chart.sh --package ${{ steps.package.outputs.chart_package_path }} --registry ${{ inputs.registry }} --repository ${{ inputs.repository }}
+    - name: Push Helm Chart
+      if: steps.check_commit.outputs.skip != 'false'
+      run: bash ./pipeline/build/scripts/push_chart.sh --package ${{ steps.package.outputs.chart_package_path }} --registry ${{ inputs.registry }} --repository ${{ inputs.repository }}
