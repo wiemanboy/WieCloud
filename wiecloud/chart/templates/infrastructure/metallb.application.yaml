@@ -1,0 +1,19 @@
+{{- if .Values.infrastructure.metallb.deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metallb
+  namespace: argocd
+spec:
+  source:
+    chart: metallb
+    repoURL: {{ .Values.infrastructure.repository }}
+    targetRevision: {{ .Values.infrastructure.metallb.version }}
+    helm:
+      values: |
+        environment: {{ toYaml .Values.environment | nindent 10 }}
+  destination:
+    namespace: metallb-system
+    server: {{ .Values.infrastructure.server }}
+  {{- toYaml .Values.infrastructure.defaults | nindent 2 }}
+{{- end }}

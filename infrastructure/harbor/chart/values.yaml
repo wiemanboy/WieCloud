@@ -1,12 +1,9 @@
 environment: 
-  name: prod
   hostname: wieman.cloud
-  namespace: harbor
-
-gateway:
-  name: traefik-gateway
-  listener: websecure
-  namespace: gateway
+  gateway:
+    name: traefik-gateway
+    listener: websecure
+    namespace: gateway
 
 harbor:
   persistence:

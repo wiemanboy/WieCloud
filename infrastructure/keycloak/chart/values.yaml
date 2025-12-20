@@ -1,12 +1,9 @@
 environment: 
-  name: prod
-  hostname: wieman.cloud
-  namespace: keycloak
-
-gateway:
-  name: traefik-gateway
-  listener: websecure
-  namespace: gateway
+  hostname: example.com
+  gateway:
+    name: example-gateway
+    listener: web-example
+    namespace: example
 
 realm:
   clients:

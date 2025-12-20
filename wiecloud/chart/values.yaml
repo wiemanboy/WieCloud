@@ -1,49 +1,61 @@
 environment: 
-  name: prod
   hostname: wieman.cloud
-
-gateway:
-  name: traefik-gateway
-  listener: websecure
-  namespace: gateway
+  gateway:
+    name: traefik-gateway
+    listener: websecure
+    namespace: gateway
+    authentication:
+      basicAuth:
+        name: basic-auth
+        secret:
+          name: server-auth-secret
 
 applications:
+  website:
+    deploy: true
+    namespace: website
+
+infrastructure:
   argocd:
     deploy: true
-    target: 0.0.0
-    namespace: argocd
+    version: 0.0.1
 
-  cert-manager:
+  certmanager:
     deploy: true
-    target: 0.0.0
-    namespace: gateway
+    version: 0.0.1
 
-  external-dns:
+  externaldns:
     deploy: true
-    target: 0.0.0
-    namespace: gateway
+    version: 0.0.1
 
   harbor:
     deploy: true
-    target: 0.0.1
-    namespace: harbor
+    version: 0.0.2
 
   keycloak:
     deploy: true
-    target: 0.1.0
-    namespace: keycloak
+    version: 0.1.1
 
   longhorn:
     deploy: true
-    target: 0.0.0
-    namespace: longhorn-system
+    version: 0.0.1
 
   metallb:
     deploy: true
-    target: 0.0.1
-    namespace: metallb-system
+    version: 0.0.3
 
   traefik:
     deploy: true
-    target: 0.0.0
-    namespace: gateway
+    version: 0.0.2
+
+  server: https://kubernetes.default.svc
+  repository: harbor.wieman.cloud/infrastructure
+  defaults:
+    project: infrastructure
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+      syncOptions:
+      - CreateNamespace=true
+

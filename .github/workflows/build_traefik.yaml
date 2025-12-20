@@ -1,28 +1,19 @@
 name: Build traefik
 
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - infrastructure/traefik/chart**
-      - .github/workflows/build_traefik.yaml
-      - .github/workflows/package_push.yaml
-      - pipeline/build/scripts/**
   pull_request:
     branches:
-      - master
+    - master
     paths:
-      - infrastructure/traefik/chart**
-      - .github/workflows/build_traefik.yaml
-      - .github/workflows/package_push.yaml
-      - pipeline/build/scripts/**
-  workflow_dispatch:
+    - infrastructure/traefik/chart**
+    - .github/workflows/build_traefik.yaml
+    - .github/workflows/build.yaml
+    - pipeline/build/scripts/**
 
 jobs:
-  package_and_push:
-    name: Package and push
-    uses: ./.github/workflows/package_push.yaml
+  build:
+    name: Build
+    uses: ./.github/workflows/build.yaml
     with:
       chart_name: traefik
       chart_path: infrastructure/traefik/chart
@@ -31,3 +22,5 @@ jobs:
     secrets:
       registry_username: ${{ secrets.OCI_REGISTRY_USERNAME }}
       registry_password: ${{ secrets.OCI_REGISTRY_PASSWORD }}
+      app_client_id: ${{ secrets.APP_CLIENT_ID }}
+      app_private_key: ${{ secrets.APP_PRIVATE_KEY }}

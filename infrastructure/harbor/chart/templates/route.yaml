@@ -4,9 +4,9 @@ metadata:
   name: harbor-route
 spec:
   parentRefs:
-    - name: {{ .Values.gateway.name }}
-      sectionName: {{ .Values.gateway.listener }}
-      namespace: {{ .Values.gateway.namespace }}
+    - name: {{ .Values.environment.gateway.name }}
+      sectionName: {{ .Values.environment.gateway.listener }}
+      namespace: {{ .Values.environment.gateway.namespace }}
 
   hostnames:
     - harbor.{{ .Values.environment.hostname }}
@@ -18,7 +18,7 @@ spec:
             value: /
       backendRefs:
         - name: harbor-portal
-          namespace: {{ .Values.environment.namespace }}
+          namespace: {{ .Release.Namespace }}
           port: 80
 
     - matches:
@@ -27,7 +27,7 @@ spec:
             value: /api/
       backendRefs:
         - name: harbor-core
-          namespace: {{ .Values.environment.namespace }}
+          namespace: {{ .Release.Namespace }}
           port: 80
 
     - matches:
@@ -36,7 +36,7 @@ spec:
             value: /service/
       backendRefs:
         - name: harbor-core
-          namespace: {{ .Values.environment.namespace }}
+          namespace: {{ .Release.Namespace }}
           port: 80
 
     - matches:
@@ -45,7 +45,7 @@ spec:
             value: /v2/
       backendRefs:
         - name: harbor-core
-          namespace: {{ .Values.environment.namespace }}
+          namespace: {{ .Release.Namespace }}
           port: 80
 
     - matches:
@@ -54,7 +54,7 @@ spec:
             value: /chartrepo/
       backendRefs:
         - name: harbor-core
-          namespace: {{ .Values.environment.namespace }}
+          namespace: {{ .Release.Namespace }}
           port: 80
 
     - matches:
@@ -63,5 +63,5 @@ spec:
             value: /c/
       backendRefs:
         - name: harbor-core
-          namespace: {{ .Values.environment.namespace }}
+          namespace: {{ .Release.Namespace }}
           port: 80

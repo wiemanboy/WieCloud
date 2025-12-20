@@ -1,28 +1,19 @@
 name: Build longhorn
 
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - infrastructure/longhorn/chart**
-      - .github/workflows/build_longhorn.yaml
-      - .github/workflows/package_push.yaml
-      - pipeline/build/scripts/**
   pull_request:
     branches:
-      - master
+    - master
     paths:
-      - infrastructure/longhorn/chart**
-      - .github/workflows/build_longhorn.yaml
-      - .github/workflows/package_push.yaml
-      - pipeline/build/scripts/**
-  workflow_dispatch:
+    - infrastructure/longhorn/chart**
+    - .github/workflows/build_longhorn.yaml
+    - .github/workflows/build.yaml
+    - pipeline/build/scripts/**
 
 jobs:
-  package_and_push:
-    name: Package and push
-    uses: ./.github/workflows/package_push.yaml
+  build:
+    name: Build
+    uses: ./.github/workflows/build.yaml
     with:
       chart_name: longhorn
       chart_path: infrastructure/longhorn/chart
@@ -31,3 +22,5 @@ jobs:
     secrets:
       registry_username: ${{ secrets.OCI_REGISTRY_USERNAME }}
       registry_password: ${{ secrets.OCI_REGISTRY_PASSWORD }}
+      app_client_id: ${{ secrets.APP_CLIENT_ID }}
+      app_private_key: ${{ secrets.APP_PRIVATE_KEY }}

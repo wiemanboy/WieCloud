@@ -1,10 +1,15 @@
 #!/bin/bash
 CHART_PATH=""
+TAG=""
 
 while [[ $# -gt 0 ]]; do
   case $1 in
     --path)
       CHART_PATH="$2"
+      shift 2
+      ;;
+    --tag)
+      TAG="-$2"
       shift 2
       ;;
     *)
@@ -14,8 +19,18 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+missing=()
+[[ -z "$CHART_PATH" ]] && missing+=("--path")
+
+if [ ${#missing[@]} -ne 0 ]; then
+  echo "Error: Missing required parameter(s): ${missing[*]}"
+  exit 1
+fi
+
+
 echo "Building Helm chart at path: ${CHART_PATH}"
 cd ${CHART_PATH} || exit 1
+yq -i ".version = .version + \"$TAG\"" Chart.yaml
 
 echo "Updating Helm chart dependencies..."
 helm dependency list .

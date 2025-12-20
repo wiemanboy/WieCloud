@@ -1,34 +1,24 @@
 environment: 
-  name: prod
-  hostname: wieman.cloud
-  namespace: gateway
-
-gateway:
-  name: traefik-gateway
-  listener: websecure
-  namespace: gateway
-  authentication:
-    basicAuth:
-      name: basic-auth
-      secret:
-        name: server-auth-secret
+  hostname: example.com
+  gateway:
+    name: example-gateway
+    listener: web-example
+    namespace: example
+    authentication:
+      enabled: true
+      basicAuth:
+        name: example-auth
+        secret:
+          name: example-server-auth-secret
 
 traefik:
   service:
     externalIps:
-      - 192.168.178.194
+      - 85.148.81.86
+    loadbalancerIp: 192.168.178.201
     annotations:
       external-dns.alpha.kubernetes.io/hostname: wieman.cloud
       external-dns.alpha.kubernetes.io/target: 85.148.81.86
-  ingressRoute:
-    dashboard:
-      enabled: true
-      matchRule: Host(`traefik.wieman.cloud`)
-      entryPoints:
-        - web
-        - websecure
-      middlewares:
-        - name: basic-auth
   providers:
     kubernetesGateway:
       enabled: true

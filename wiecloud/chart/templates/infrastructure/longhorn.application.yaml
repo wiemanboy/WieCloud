@@ -1,0 +1,19 @@
+{{- if .Values.infrastructure.longhorn.deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: longhorn
+  namespace: argocd
+spec:
+  source:
+    chart: longhorn
+    repoURL: {{ .Values.infrastructure.repository }}
+    targetRevision: {{ .Values.infrastructure.longhorn.version }}
+    helm:
+      values: |
+        environment: {{ toYaml .Values.environment | nindent 10 }}
+  destination:
+    namespace: longhorn-system
+    server: {{ .Values.infrastructure.server }}
+  {{- toYaml .Values.infrastructure.defaults | nindent 2 }}
+{{- end }}

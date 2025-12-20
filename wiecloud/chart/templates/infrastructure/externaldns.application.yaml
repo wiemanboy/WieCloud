@@ -1,0 +1,19 @@
+{{- if .Values.infrastructure.externaldns.deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: externaldns
+  namespace: argocd
+spec:
+  source:
+    chart: externaldns
+    repoURL: {{ .Values.infrastructure.repository }}
+    targetRevision: {{ .Values.infrastructure.externaldns.version }}
+    helm:
+      values: |
+        environment: {{ toYaml .Values.environment | nindent 10 }}
+  destination:
+    namespace: gateway
+    server: {{ .Values.infrastructure.server }}
+  {{- toYaml .Values.infrastructure.defaults | nindent 2 }}
+{{- end }}
