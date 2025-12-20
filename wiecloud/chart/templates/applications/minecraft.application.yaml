@@ -1,0 +1,19 @@
+{{- if .Values.applications.minecraft.deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: minecraft
+  namespace: argocd
+spec:
+  source:
+    chart: minecraft
+    repoURL: {{ .Values.applications.repository }}
+    targetRevision: {{ .Values.applications.minecraft.version }}
+    helm:
+      values: |
+        environment: {{ toYaml .Values.environment | nindent 10 }}
+  destination:
+    namespace: gateway
+    server: {{ .Values.applications.server }}
+  {{- toYaml .Values.applications.defaults | nindent 2 }}
+{{- end }}
