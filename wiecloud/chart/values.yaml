@@ -18,35 +18,35 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.0.1-automate-versioning-2a2b4bb
+    version: 0.0.1-automate-versioning-ce745e6
 
   certmanager:
     deploy: true
-    version: 0.0.1-automate-versioning-2a2b4bb
+    version: 0.0.1-automate-versioning-ce745e6
 
   externaldns:
     deploy: true
-    version: 0.0.1-automate-versioning-2a2b4bb
+    version: 0.0.1-automate-versioning-ce745e6
 
   harbor:
     deploy: true
-    version: 0.0.2-automate-versioning-2a2b4bb
+    version: 0.0.2-automate-versioning-ce745e6
 
   keycloak:
     deploy: true
-    version: 0.1.1-automate-versioning-2a2b4bb
+    version: 0.1.1-automate-versioning-ce745e6
 
   longhorn:
     deploy: true
-    version: 0.0.1-automate-versioning-2a2b4bb
+    version: 0.0.1-automate-versioning-ce745e6
 
   metallb:
     deploy: true
-    version: 0.0.3-automate-versioning-2a2b4bb
+    version: 0.0.3-automate-versioning-ce745e6
 
   traefik:
     deploy: true
-    version: 0.0.2-automate-versioning-2a2b4bb
+    version: 0.0.2-automate-versioning-ce745e6
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/infrastructure
