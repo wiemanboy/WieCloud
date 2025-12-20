@@ -72,7 +72,7 @@ jobs:
       id: package
       run: |
         set -e
-        output=$(bash ./pipeline/build/scripts/package_chart.sh --path ${{ inputs.chart_path }} --tag steps.check_commit.outputs.tag) 
+        output=$(bash ./pipeline/build/scripts/package_chart.sh --path ${{ inputs.chart_path }} --tag {{ steps.check_commit.outputs.tag }}) 
         echo "$output"
 
         chart_path=$(echo "$output" | grep -oE '/[^ ]+\.tgz')
