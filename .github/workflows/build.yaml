@@ -56,7 +56,9 @@ jobs:
           echo "skip=true" >> "$GITHUB_OUTPUT"
         else
           echo "skip=false" >> "$GITHUB_OUTPUT"
-          echo "tag=$($LAST_MSG | grep -oP '\[\K[^\]]+')" >> "$GITHUB_OUTPUT"
+
+          TAG=$(echo "$LAST_MSG" | grep -oP '\[\K[^\]]+')
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
         fi
 
     - name: Set up Helm
