@@ -81,8 +81,14 @@ jobs:
       run: |
         set -e
         echo ${{ steps.check_commit.outputs.tag }}
-        # output=$(bash ./pipeline/build/scripts/package_chart.sh --path ${{ inputs.chart_path }} --tag ${{ steps.check_commit.outputs.tag }}) 
-        echo "$output"
+
+        cmd="bash ./pipeline/build/scripts/package_chart.sh --path ${{ inputs.chart_path }}"
+        # Add --tag only if outputs.tag is not empty
+        if [[ -n "${{ steps.check_commit.outputs.tag }}" ]]; then
+          cmd="$cmd --tag ${{ steps.check_commit.outputs.tag }}"
+        fi
+
+        output=$($cmd)
 
         chart_path=$(echo "$output" | grep -oE '/[^ ]+\.tgz')
         echo "Packaged chart path: $chart_path"
