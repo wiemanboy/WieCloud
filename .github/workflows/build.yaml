@@ -54,7 +54,7 @@ jobs:
 
         if [[ "$LAST_MSG" == "UPDATE: versions for changed charts"* ]]; then
           echo "skip=true" >> "$GITHUB_OUTPUT"
-          TAG=$(echo "$LAST_MSG" | grep -oP '\[\K[^\]]+')
+          TAG=$(echo "$LAST_MSG" | grep -oP '\[\K[^\]]*')
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
           exit 0
         fi
