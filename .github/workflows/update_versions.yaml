@@ -46,7 +46,7 @@ jobs:
         git config user.name "WiemanBot"
         git config user.email "WiemanBot@runner.wieman.cloud"
 
-    - name: Commit changes
-      run: |
-        git commit -a -m "UPDATE: versions for changed charts"
-        git push origin HEAD:${GITHUB_HEAD_REF}
+    # - name: Commit changes
+    #   run: |
+    #     git commit -a -m "UPDATE: versions for changed charts"
+    #     git push origin HEAD:${GITHUB_HEAD_REF}
