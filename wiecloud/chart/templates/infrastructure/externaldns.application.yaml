@@ -1,14 +1,14 @@
-{{- if .Values.infrastructure.certManager.deploy -}}
+{{- if .Values.infrastructure.externaldns.deploy -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cert-manager
+  name: externaldns
   namespace: argocd
 spec:
   source:
-    chart: cert-manager
+    chart: externaldns
     repoURL: {{ .Values.infrastructure.repository }}
-    targetRevision: {{ .Values.infrastructure.certManager.version }}
+    targetRevision: {{ .Values.infrastructure.externaldns.version }}
     helm:
       values: |
         environment: {{ toYaml .Values.environment | nindent 10 }}
