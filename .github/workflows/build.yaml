@@ -48,8 +48,8 @@ jobs:
       shell: bash
       run: |
         set -e
-        
-        LAST_MSG=$(git log -1 --pretty=%s HEAD~1)
+
+        LAST_MSG=$(git log -1 --pretty=%s ${GITHUB_HEAD_REF})
         echo "Last commit message: $LAST_MSG"
 
         if [[ "$LAST_MSG" == "UPDATE: versions for changed charts" ]]; then
