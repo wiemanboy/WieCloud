@@ -17,7 +17,7 @@ applications:
   
   technitium:
     deploy: true
-    version: 0.0.0
+    version: 0.0.0-technitium-186b538
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/applications
