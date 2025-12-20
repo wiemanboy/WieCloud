@@ -13,7 +13,7 @@ spec:
       values: |
         environment: {{ toYaml .Values.environment | nindent 10 }}
   destination:
-    namespace: gateway
+    namespace: minecraft
     server: {{ .Values.applications.server }}
   {{- toYaml .Values.applications.defaults | nindent 2 }}
 {{- end }}

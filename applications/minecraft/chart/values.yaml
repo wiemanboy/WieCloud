@@ -1,3 +1,4 @@
-minecraftServer:
-  eula: true
-  Difficulty: hard
+minecraft:
+  minecraftServer:
+    eula: true
+    Difficulty: hard
