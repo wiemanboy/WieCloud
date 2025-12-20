@@ -22,11 +22,11 @@ infrastructure:
 
   certmanager:
     deploy: true
-    version: 0.0.1-automate-versioning-65b6117
+    version: 0.0.1
 
   externaldns:
     deploy: true
-    version: 0.0.1-automate-versioning-65b6117
+    version: 0.0.1
 
   harbor:
     deploy: true
