@@ -49,6 +49,17 @@ jobs:
       run: |
         set -e
 
+        echo ${GITHUB_HEAD_REF}
+        echo
+        echo log 
+        git log -10 --pretty=%s
+        echo
+        echo log HEAD
+        git log -10 --pretty=%s HEAD
+        echo
+        echo log GITHUB_HEAD_REF
+        git log -10 --pretty=%s ${GITHUB_HEAD_REF}
+
         LAST_MSG=$(git log -1 --pretty=%s ${GITHUB_HEAD_REF})
         echo "Last commit message: $LAST_MSG"
 
