@@ -50,7 +50,7 @@ jobs:
         set -e
 
         echo log HEAD~1
-        git log -10 --pretty=%s HEAD~1
+        git log -10 --pretty=%s HEAD
 
         LAST_MSG=$(git log -1 --pretty=%s HEAD~1)
         echo "Last commit message: $LAST_MSG"
