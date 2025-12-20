@@ -39,6 +39,7 @@ jobs:
         fi
 
     - name: Update chart version
+      id: update
       if: steps.check_commit.outputs.skip != 'true'
       run: |
         TAG=""
@@ -51,8 +52,9 @@ jobs:
         BASE_BRANCH="${GITHUB_BASE_REF:-master}"
         git fetch origin "$BASE_BRANCH" --depth=1
 
-        bash ./pipeline/version/scripts/update_versions.sh \
-          --tag "$TAG"
+        bash ./pipeline/version/scripts/update_versions.sh --tag "$TAG"
+
+        echo "tag=$TAG" >> "$GITHUB_OUTPUT"
 
     - name: Set credentials
       if: steps.check_commit.outputs.skip != 'true'
@@ -63,5 +65,5 @@ jobs:
     - name: Commit changes
       if: steps.check_commit.outputs.skip != 'true'
       run: |
-        git commit -a -m "UPDATE: versions for changed charts [${GITHUB_HEAD_REF}-$(echo ${GITHUB_SHA} | cut -c1-7)]"
+        git commit -a -m "UPDATE: versions for changed charts [${{ steps.update.outputs.tag }}]"
         git push origin HEAD:${GITHUB_HEAD_REF}
