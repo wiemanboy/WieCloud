@@ -49,15 +49,7 @@ jobs:
       run: |
         set -e
 
-        # Default to HEAD
-        COMMIT_REF="HEAD"
-
-        # If this is a PR and HEAD is a merge commit, try HEAD~1
-        if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
-          if git rev-parse --verify HEAD~1 >/dev/null 2>&1; then
-            COMMIT_REF="HEAD~1"
-          fi
-        fi
+        git log -10 --pretty=%s
 
         LAST_MSG=$(git log -1 --pretty=%s "$COMMIT_REF")
         echo "Last commit message: $LAST_MSG"
