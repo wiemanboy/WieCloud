@@ -12,9 +12,6 @@ on:
   pull_request:
     branches:
     - master
-    types:
-    - ready_for_review
-    - synchronize
     paths:
     - <chart_path>**
     - .github/workflows/build_<chart_name>.yaml

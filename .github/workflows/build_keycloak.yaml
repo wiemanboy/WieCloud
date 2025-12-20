@@ -12,9 +12,6 @@ on:
   pull_request:
     branches:
     - master
-    types:
-    - ready_for_review
-    - synchronize
     paths:
     - infrastructure/keycloak/chart**
     - .github/workflows/build_keycloak.yaml
