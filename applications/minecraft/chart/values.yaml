@@ -8,7 +8,6 @@ environment:
 minecraft:
   minecraftServer:
     eula: true
-    icon: https://wiemanboy.com/assets/images/JW_LOGO
     motd: "§l§5WiemanServer§r\n§rWelcome to my server!"
 
     worldSaveName: test
