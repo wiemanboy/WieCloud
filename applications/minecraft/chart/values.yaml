@@ -49,3 +49,15 @@ minecraft:
       includeMods: []
       # Sets limit to how many mods can be downloaded in parallel
       parallelDownloads: 4
+  
+  persistence:
+    dataDir:
+      enabled: true
+      Size: 25Gi
+
+  mcbackup:
+    enabled: true
+    persistence:
+      dataDir:
+        enabled: true
+        Size: 25Gi
