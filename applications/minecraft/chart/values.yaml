@@ -50,9 +50,9 @@ minecraft:
       # Sets limit to how many mods can be downloaded in parallel
       parallelDownloads: 4
 
-    extraEnv:
-      EXISTING_WHITELIST_FILE: SYNCHRONIZE
-      EXISTING_OPS_FILE: SYNCHRONIZE
+  extraEnv:
+    EXISTING_WHITELIST_FILE: SYNCHRONIZE
+    EXISTING_OPS_FILE: SYNCHRONIZE
   
   persistence:
     dataDir:
