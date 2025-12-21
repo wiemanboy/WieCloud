@@ -8,9 +8,6 @@ spec:
       sectionName: minecraft
       namespace: {{ .Values.environment.gateway.namespace }}
 
-  hostnames:
-    - mc.{{ .Values.environment.hostname }}
-
   rules:
     - backendRefs:
         - name: minecraft
