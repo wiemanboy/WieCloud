@@ -22,6 +22,7 @@ traefik:
   providers:
     kubernetesGateway:
       enabled: true
+      experimentalChannel: true
   gateway:
     annotations:
       external-dns.alpha.kubernetes.io/target: wieman.cloud
