@@ -12,7 +12,7 @@ spec:
     - mc.{{ .Values.environment.hostname }}
 
   rules:
-    backendRefs:
-      - name: minecraft
-        namespace: {{ .Release.Namespace }}
-        port: 25565
+    - backendRefs:
+        - name: minecraft
+          namespace: {{ .Release.Namespace }}
+          port: 25565
