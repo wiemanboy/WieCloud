@@ -22,7 +22,7 @@ traefik:
   providers:
     kubernetesGateway:
       enabled: true
-      experimentalChannel: true
+      # experimentalChannel: true
   gateway:
     annotations:
       external-dns.alpha.kubernetes.io/target: wieman.cloud
@@ -39,11 +39,11 @@ traefik:
         certificateRefs:
           - name: letsencrypt-secret
             kind: Secret
-      minecraft:
-        port: 25565
-        protocol: TCP
-        namespacePolicy:
-          from: All 
+      # minecraft:
+      #   port: 25565
+      #   protocol: TCP
+      #   namespacePolicy:
+      #     from: All 
 
   ports:
     web:
@@ -56,8 +56,8 @@ traefik:
       port: 443
       tls:
         enabled: true
-    minecraft:
-      port: 25565
+    # minecraft:
+    #   port: 25565
 
   tlsStore:
     default:
