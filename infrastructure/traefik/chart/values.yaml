@@ -44,10 +44,6 @@ traefik:
         hostname: mc.wieman.cloud
         namespacePolicy:
           from: All 
-        mode: Terminate
-        certificateRefs:
-          - name: letsencrypt-secret
-            kind: Secret
 
   ports:
     web:
@@ -62,8 +58,6 @@ traefik:
         enabled: true
     minecraft:
       port: 25565
-      tls:
-        enabled: true
 
   tlsStore:
     default:
