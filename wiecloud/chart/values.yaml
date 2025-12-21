@@ -14,10 +14,6 @@ applications:
   website:
     deploy: true
     namespace: website
-  
-  technitium:
-    deploy: true
-    version: 0.0.0-minecraft-ffb9525
 
   minecraft:
     deploy: true
