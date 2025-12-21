@@ -38,6 +38,17 @@ traefik:
         certificateRefs:
           - name: letsencrypt-secret
             kind: Secret
+      minecraft:
+        port: 25565
+        protocol: TCP
+        hostname: mc.wieman.cloud
+        namespacePolicy:
+          from: All 
+        mode: Terminate
+        certificateRefs:
+          - name: letsencrypt-secret
+            kind: Secret
+
   ports:
     web:
       port: 80
