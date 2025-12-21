@@ -8,4 +8,44 @@ environment:
 minecraft:
   minecraftServer:
     eula: true
-    Difficulty: hard
+    icon: https://wiemanboy.com/assets/images/JW_LOGO
+    motd: "§l§5WiemanServer§r\n§rWelcome to my server!"
+
+    worldSaveName: test
+    version: "LATEST"
+    difficulty: hard
+    maxPlayers: 20
+    maxBuildHeight: 256
+    spawnProtection: 0
+    viewDistance: 20
+
+    whitelist:
+      - wiemanboy
+    ops: 
+      - wiemanboy
+    
+    type: VANILLA
+    vanillaTweaksShareCodes: []
+    modrinth:
+      projects: []
+
+    autoCurseForge:
+      apiKey:
+        existingSecret: ""
+        secretKey: cf-api-key
+      # Link to modpack in general or a specific file
+      # NOTE: In case of specific file - do not point at server file
+      pageUrl: ""
+      # Unique id of modpack, can be used instead of url
+      slug: ""
+      # Id used to specify which exact modpack file needs to be downloaded
+      # NOTE: Do not use server file id
+      fileId: ""
+      # Less restrictive way of specifying modpack version, uses substring match
+      filenameMatcher: ""
+      # List of project slugs or IDs to be excluded from modpack, useful if mod is incorrectly marked as server side
+      excludeMods: []
+      # List of project slugs or IDs to be included in modpack, useful if mod is incorrectly marked as client side only
+      includeMods: []
+      # Sets limit to how many mods can be downloaded in parallel
+      parallelDownloads: 4
