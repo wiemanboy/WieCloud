@@ -19,10 +19,9 @@ minecraft:
     spawnProtection: 0
     viewDistance: 20
 
-    whitelist:
-      - b7adf8b9-3f07-4fc8-ab03-edc5f672b611
-    ops: 
-      - b7adf8b9-3f07-4fc8-ab03-edc5f672b611
+    # whitelist:
+    # ops: 
+    #   - wiemanboy
     
     type: VANILLA
     vanillaTweaksShareCodes: []
@@ -49,10 +48,6 @@ minecraft:
       includeMods: []
       # Sets limit to how many mods can be downloaded in parallel
       parallelDownloads: 4
-
-  extraEnv:
-    EXISTING_WHITELIST_FILE: SYNCHRONIZE
-    EXISTING_OPS_FILE: SYNCHRONIZE
   
   persistence:
     dataDir:
