@@ -58,6 +58,8 @@ traefik:
         enabled: true
     minecraft:
       port: 25565
+      expose:
+        default: true
 
   tlsStore:
     default:
