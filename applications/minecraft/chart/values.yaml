@@ -20,9 +20,9 @@ minecraft:
     viewDistance: 20
 
     whitelist:
-      - wiemanboy
+      - b7adf8b9-3f07-4fc8-ab03-edc5f672b611
     ops: 
-      - wiemanboy
+      - b7adf8b9-3f07-4fc8-ab03-edc5f672b611
     
     type: VANILLA
     vanillaTweaksShareCodes: []
