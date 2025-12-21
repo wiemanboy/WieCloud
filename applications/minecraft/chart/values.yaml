@@ -53,11 +53,11 @@ minecraft:
   persistence:
     dataDir:
       enabled: true
-      Size: 25Gi
+      Size: 10Gi
 
   mcbackup:
     enabled: true
     persistence:
       dataDir:
         enabled: true
-        Size: 25Gi
+        Size: 10Gi
