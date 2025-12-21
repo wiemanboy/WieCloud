@@ -60,6 +60,11 @@ traefik:
       port: 443
       tls:
         enabled: true
+    minecraft:
+      port: 25565
+      tls:
+        enabled: true
+
   tlsStore:
     default:
       defaultCertificate:
