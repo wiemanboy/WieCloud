@@ -17,7 +17,7 @@ applications:
 
   minecraft:
     deploy: true
-    version: 0.0.0-minecraft-8b5143a
+    version: 0.0.0-minecraft-6a2e807
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/applications
@@ -62,7 +62,7 @@ infrastructure:
 
   traefik:
     deploy: true
-    version: 0.1.0-minecraft-8b5143a
+    version: 0.1.0-minecraft-6a2e807
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/infrastructure
