@@ -41,7 +41,6 @@ traefik:
       minecraft:
         port: 25565
         protocol: TCP
-        hostname: mc.wieman.cloud
         namespacePolicy:
           from: All 
 
