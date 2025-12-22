@@ -18,8 +18,8 @@ minecraft:
     spawnProtection: 0
     viewDistance: 20
 
-    whitelist:
-      - wiemanboy
+    # whitelist:
+    #   - wiemanboy
     
     type: VANILLA
     vanillaTweaksShareCodes: []
