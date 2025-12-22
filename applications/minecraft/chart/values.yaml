@@ -28,8 +28,7 @@ minecraft:
         existingSecret: curseforge-api-token
         secretKey: api-token
       # Link to modpack in general or a specific file
-      pageUrl: ""
-      slug: bluemap
+      pageUrl: https://www.curseforge.com/minecraft/mc-mods/bluemap/files/7320250
       # List of project slugs or IDs to be excluded from modpack, useful if mod is incorrectly marked as server side
       excludeMods: []
       # List of project slugs or IDs to be included in modpack, useful if mod is incorrectly marked as client side only
@@ -38,7 +37,8 @@ minecraft:
   
   extraEnv:
     ENABLE_WHITELIST: true
-    CURSEFORGE_FILES: bluemap
+    CURSEFORGE_FILES: |
+      https://www.curseforge.com/minecraft/mc-mods/bluemap/files/7320250
 
   persistence:
     dataDir:
