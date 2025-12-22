@@ -9,6 +9,7 @@ minecraft:
   minecraftServer:
     eula: true
     motd: "§l§5WiemanServer§r\n§rWelcome to my server!"
+    memory: 9G
 
     worldSaveName: test
     version: "LATEST"
@@ -54,7 +55,7 @@ minecraft:
 
   resources:
     requests:
-      memory: 9Gi
+      memory: 10Gi
       cpu: 2
 
   extraVolumes:
