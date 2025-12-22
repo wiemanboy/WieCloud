@@ -48,6 +48,9 @@ minecraft:
       # Sets limit to how many mods can be downloaded in parallel
       parallelDownloads: 4
   
+  extraEnv:
+    ENABLE_WHITELIST: false
+
   persistence:
     dataDir:
       enabled: true
