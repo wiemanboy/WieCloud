@@ -18,7 +18,7 @@ minecraft:
     spawnProtection: 0
     viewDistance: 20
     
-    type: VANILLA
+    type: AUTO_CURSEFORGE
     vanillaTweaksShareCodes: []
     modrinth:
       projects: []
