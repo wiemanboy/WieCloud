@@ -28,7 +28,7 @@ minecraft:
         existingSecret: curseforge-api-token
         secretKey: api-token
       # Link to modpack in general or a specific file
-      pageUrl: https://www.curseforge.com/minecraft/mc-mods/bluemap/files/7320250
+      pageUrl: https://www.curseforge.com/minecraft/modpacks/holiday-break-server/files/7359921
       # List of project slugs or IDs to be excluded from modpack, useful if mod is incorrectly marked as server side
       excludeMods: []
       # List of project slugs or IDs to be included in modpack, useful if mod is incorrectly marked as client side only
