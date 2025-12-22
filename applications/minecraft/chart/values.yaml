@@ -52,6 +52,11 @@ minecraft:
         enabled: true
         Size: 10Gi
 
+  resources:
+    requests:
+      memory: 9Gi
+      cpu: 2
+
   extraVolumes:
     - volumeMounts:
       - name: whitelist
