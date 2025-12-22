@@ -17,9 +17,6 @@ minecraft:
     maxBuildHeight: 256
     spawnProtection: 0
     viewDistance: 20
-
-    # whitelist:
-    #   - wiemanboy
     
     type: VANILLA
     vanillaTweaksShareCodes: []
@@ -61,3 +58,17 @@ minecraft:
       dataDir:
         enabled: true
         Size: 10Gi
+
+  extraVolumes:
+    - volumeMounts:
+      - name: whitelist
+        mountPath: /data/whitelist.json
+        subPath: whitelist.json
+        readOnly: true
+      volumes:
+        - name: whitelist
+          configMap:
+            name: whitelist
+            items:
+              - key: whitelist.json
+                path: whitelist.json
