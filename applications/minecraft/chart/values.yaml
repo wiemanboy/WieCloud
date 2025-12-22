@@ -48,7 +48,7 @@ minecraft:
       parallelDownloads: 4
   
   extraEnv:
-    ENABLE_WHITELIST: true
+    ENABLE_WHITELIST: false
 
   persistence:
     dataDir:
