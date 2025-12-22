@@ -18,7 +18,7 @@ minecraft:
     spawnProtection: 0
     viewDistance: 20
     
-    type: AUTO_CURSEFORGE
+    type: FORGE
     vanillaTweaksShareCodes: []
     modrinth:
       projects: []
@@ -28,7 +28,7 @@ minecraft:
         existingSecret: curseforge-api-token
         secretKey: api-token
       # Link to modpack in general or a specific file
-      pageUrl: https://www.curseforge.com/minecraft/modpacks/holiday-break-server/files/7359921
+      pageUrl: 
       # List of project slugs or IDs to be excluded from modpack, useful if mod is incorrectly marked as server side
       excludeMods: []
       # List of project slugs or IDs to be included in modpack, useful if mod is incorrectly marked as client side only
