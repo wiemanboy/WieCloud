@@ -18,15 +18,15 @@ minecraft:
     spawnProtection: 0
     viewDistance: 20
     
-    type: VANILLA
+    type: AUTO_CURSEFORGE
     vanillaTweaksShareCodes: []
     modrinth:
       projects: []
 
     autoCurseForge:
       apiKey:
-        existingSecret: ""
-        secretKey: cf-api-key
+        existingSecret: curseforge-api-token
+        secretKey: api-token
       # Link to modpack in general or a specific file
       # NOTE: In case of specific file - do not point at server file
       pageUrl: ""

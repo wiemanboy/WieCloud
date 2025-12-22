@@ -23,15 +23,17 @@ resource "kubernetes_manifest" "wiecloud-application" {
   manifest   = yamldecode(file("./argo/wiecloud.application.yaml"))
 
   lifecycle {
-    ignore_changes = all
+    ignore_changes  = all
+    prevent_destroy = true
   }
 }
 
 resource "kubernetes_manifest" "infrastructure-project" {
   depends_on = [helm_release.argo]
-  manifest   = yamldecode(file("./argo/wiecloud.project.yaml"))
+  manifest   = yamldecode(file("./argo/infrastructure.project.yaml"))
 
   lifecycle {
-    ignore_changes = all
+    ignore_changes  = all
+    prevent_destroy = true
   }
 }
