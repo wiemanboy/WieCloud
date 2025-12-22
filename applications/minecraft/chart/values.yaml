@@ -18,9 +18,8 @@ minecraft:
     spawnProtection: 0
     viewDistance: 20
 
-    # whitelist:
-    # ops: 
-    #   - wiemanboy
+    whitelist:
+      - wiemanboy
     
     type: VANILLA
     vanillaTweaksShareCodes: []
@@ -49,7 +48,7 @@ minecraft:
       parallelDownloads: 4
   
   extraEnv:
-    ENABLE_WHITELIST: false
+    ENABLE_WHITELIST: true
 
   persistence:
     dataDir:
