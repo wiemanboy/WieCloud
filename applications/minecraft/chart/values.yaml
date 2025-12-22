@@ -58,6 +58,10 @@ minecraft:
         mountPath: /data/whitelist.json
         subPath: whitelist.json
         readOnly: true
+      - name: bluemap-core-config
+        mountPath: /data/config/bluemap/core.conf
+        subPath: core.conf
+        readOnly: true
       volumes:
         - name: whitelist
           configMap:
@@ -65,3 +69,9 @@ minecraft:
             items:
               - key: whitelist.json
                 path: whitelist.json
+        - name: bluemap-core-config
+          configMap:
+            name: bluemap-core-config
+            items:
+              - key: core.conf
+                path: core.conf
