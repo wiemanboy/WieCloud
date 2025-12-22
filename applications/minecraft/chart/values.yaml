@@ -29,6 +29,7 @@ minecraft:
         secretKey: api-token
       # Link to modpack in general or a specific file
       pageUrl: ""
+      slug: bluemap
       # List of project slugs or IDs to be excluded from modpack, useful if mod is incorrectly marked as server side
       excludeMods: []
       # List of project slugs or IDs to be included in modpack, useful if mod is incorrectly marked as client side only
