@@ -4,6 +4,7 @@ module "proxmox_vm" {
   node    = var.node
   iso     = var.iso
   macaddr = var.macaddr
+  spec    = var.spec
 }
 
 module "talos_node" {

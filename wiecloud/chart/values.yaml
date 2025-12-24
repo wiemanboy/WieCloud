@@ -15,6 +15,22 @@ applications:
     deploy: true
     namespace: website
 
+  minecraft:
+    deploy: true
+    version: 0.0.0
+
+  server: https://kubernetes.default.svc
+  repository: harbor.wieman.cloud/applications
+  defaults:
+    project: applications
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+      syncOptions:
+      - CreateNamespace=true
+
+
 infrastructure:
   argocd:
     deploy: true
@@ -46,7 +62,7 @@ infrastructure:
 
   traefik:
     deploy: true
-    version: 0.0.2
+    version: 0.1.0
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/infrastructure

@@ -1,0 +1,83 @@
+environment: 
+  hostname: example.com
+  gateway:
+    name: example-gateway
+    listener: web-example
+    namespace: example
+
+minecraft:
+  minecraftServer:
+    eula: true
+    motd: "§l§5WiemanServer§r\n§rWelcome to my server!"
+    memory: 9G
+
+    worldSaveName: test
+    version: "LATEST"
+    difficulty: hard
+    maxPlayers: 20
+    maxBuildHeight: 256
+    spawnProtection: 0
+    viewDistance: 20
+    
+    type: FORGE
+    vanillaTweaksShareCodes: []
+    modrinth:
+      projects: []
+
+    autoCurseForge:
+      apiKey:
+        existingSecret: curseforge-api-token
+        secretKey: api-token
+      # Link to modpack in general or a specific file
+      pageUrl: 
+      # List of project slugs or IDs to be excluded from modpack, useful if mod is incorrectly marked as server side
+      excludeMods: []
+      # List of project slugs or IDs to be included in modpack, useful if mod is incorrectly marked as client side only
+      includeMods: []
+      parallelDownloads: 4
+  
+  extraEnv:
+    ENABLE_WHITELIST: true
+    CURSEFORGE_FILES: |
+      https://www.curseforge.com/minecraft/mc-mods/bluemap/files/7320250
+
+  persistence:
+    dataDir:
+      enabled: true
+      Size: 10Gi
+
+  mcbackup:
+    enabled: true
+    persistence:
+      dataDir:
+        enabled: true
+        Size: 10Gi
+
+  resources:
+    requests:
+      memory: 10Gi
+      cpu: 2
+
+  extraVolumes:
+    - volumeMounts:
+      - name: whitelist
+        mountPath: /data/whitelist.json
+        subPath: whitelist.json
+        readOnly: true
+      - name: bluemap-core-config
+        mountPath: /data/config/bluemap/core.conf
+        subPath: core.conf
+        readOnly: true
+      volumes:
+        - name: whitelist
+          configMap:
+            name: whitelist
+            items:
+              - key: whitelist.json
+                path: whitelist.json
+        - name: bluemap-core-config
+          configMap:
+            name: bluemap-core-config
+            items:
+              - key: core.conf
+                path: core.conf

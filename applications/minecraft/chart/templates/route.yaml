@@ -1,0 +1,15 @@
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: TCPRoute
+metadata:
+  name: minecraft
+spec:
+  parentRefs:
+    - name: {{ .Values.environment.gateway.name }}
+      sectionName: minecraft
+      namespace: {{ .Values.environment.gateway.namespace }}
+
+  rules:
+    - backendRefs:
+        - name: minecraft
+          namespace: {{ .Release.Namespace }}
+          port: 25565
