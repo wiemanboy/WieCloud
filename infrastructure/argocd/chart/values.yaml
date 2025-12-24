@@ -13,3 +13,7 @@ argo-cd:
       url: https://argo.example.com
       exec.enabled: true
       oidc.config: "overwritten"
+    rbac:
+      policy.default: role:readonly
+      policy.csv: |
+        g, /infra/admin, role:admin
