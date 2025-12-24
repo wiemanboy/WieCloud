@@ -1,5 +1,5 @@
 environment: 
-  hostname: wieman.cloud
+  hostname: example.com
   gateway:
     name: traefik-gateway
     listener: websecure
@@ -14,7 +14,7 @@ harbor:
     type: NodePort
     tls:
       enabled: false
-  externalURL: https://harbor.wieman.cloud
+  externalURL: https://harbor.example.com
   core:
     extraEnvVars:
     - name: OIDC_CLIENT_SECRET
@@ -38,3 +38,4 @@ harbor:
           "oidc_auto_onboard": "true",
           "oidc_user_claim": "preferred_username"
         }
+  harborAdminPassword: ""

@@ -12,6 +12,8 @@ spec:
     helm:
       values: |
         environment: {{ toYaml .Values.environment | nindent 10 }}
+        harbor:
+          externalURL: harbor.{{ .Values.environment.hostname }}
   destination:
     namespace: harbor
     server: {{ .Values.infrastructure.server }}
