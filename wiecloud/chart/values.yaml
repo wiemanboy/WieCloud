@@ -34,7 +34,7 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.1.0-argocd-oidc-358b1bf
+    version: 0.1.0-argocd-oidc-246dbaa
 
   certmanager:
     deploy: true
@@ -50,7 +50,7 @@ infrastructure:
 
   keycloak:
     deploy: true
-    version: 0.2.0-argocd-oidc-358b1bf
+    version: 0.2.0-argocd-oidc-246dbaa
 
   longhorn:
     deploy: true
