@@ -34,10 +34,6 @@ resource "kubernetes_secret_v1" "server-auth-secret" {
     username = "admin",
     password = local.env.wiecloud.basic-auth.password
   }
-
-  lifecycle {
-    ignore_changes = all
-  }
 }
 
 resource "kubernetes_secret_v1" "oidc-client-secret" {
@@ -49,10 +45,6 @@ resource "kubernetes_secret_v1" "oidc-client-secret" {
   data = {
     secret = each.value.secret
   }
-
-  lifecycle {
-    ignore_changes = all
-  }
 }
 
 resource "kubernetes_secret_v1" "oidc-client-secret-keycloak" {
@@ -63,10 +55,6 @@ resource "kubernetes_secret_v1" "oidc-client-secret-keycloak" {
   }
   data = {
     secret = each.value.secret
-  }
-
-  lifecycle {
-    ignore_changes = all
   }
 }
 
@@ -85,10 +73,6 @@ resource "kubernetes_secret_v1" "keycloak-db-secret" {
     username = "admin",
     password = random_password.keycloak-db-password.result
   }
-
-  lifecycle {
-    ignore_changes = all
-  }
 }
 
 resource "kubernetes_secret_v1" "cloudflare-api-token" {
@@ -99,10 +83,6 @@ resource "kubernetes_secret_v1" "cloudflare-api-token" {
   data = {
     api-token = local.env.wiecloud.cloudflare.token
   }
-
-  lifecycle {
-    ignore_changes = all
-  }
 }
 
 resource "kubernetes_secret_v1" "curseforge-api-token" {
@@ -112,9 +92,5 @@ resource "kubernetes_secret_v1" "curseforge-api-token" {
   }
   data = {
     api-token = local.env.wiecloud.curseforge.token
-  }
-
-  lifecycle {
-    ignore_changes = all
   }
 }
