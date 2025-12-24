@@ -12,6 +12,12 @@ spec:
     helm:
       values: |
         environment: {{ toYaml .Values.environment | nindent 10 }}
+        harbor:
+          externalURL: https://harbor.{{ .Values.environment.hostname }}
+          core:
+            extraEnvVars:
+            - name: OIDC_ENDPOINT
+              value: https://keycloak.{{ .Values.environment.hostname }}/realms/infrastructure
   destination:
     namespace: harbor
     server: {{ .Values.infrastructure.server }}
