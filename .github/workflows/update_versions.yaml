@@ -7,6 +7,11 @@ on:
     types:
     - ready_for_review
     - synchronize
+    paths:
+      - .github/workflows/update_versions.yaml
+      - applications/**
+      - infrastructure/**
+      - pipeline/build/scripts/**
 
 jobs:
   update_version:
