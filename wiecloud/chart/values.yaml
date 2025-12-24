@@ -46,7 +46,7 @@ infrastructure:
 
   harbor:
     deploy: true
-    version: 0.1.0-disable-harbor-admin-72ef4aa
+    version: 0.1.0-disable-harbor-admin-3a873e3
 
   keycloak:
     deploy: true
