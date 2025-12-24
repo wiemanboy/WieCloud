@@ -1,5 +1,5 @@
 environment: 
-  hostname: wieman.cloud
+  hostname: example.com
   gateway:
     name: traefik-gateway
     listener: websecure
@@ -14,7 +14,7 @@ harbor:
     type: NodePort
     tls:
       enabled: false
-  externalURL: https://harbor.wieman.cloud
+  externalURL: https://harbor.example.com
   core:
     extraEnvVars:
     - name: OIDC_CLIENT_SECRET
@@ -22,13 +22,14 @@ harbor:
         secretKeyRef:
           name: harbor-client-secret 
           key: secret
+    - name: OIDC_ENDPOINT
+      value: https://keycloak.example.com/realms/infrastructure
     - name: CONFIG_OVERWRITE_JSON
       value: |
         {
           "auth_mode": "oidc_auth",
           "primary_auth_mode": "true",
           "oidc_name": "keycloak",
-          "oidc_endpoint": "https://keycloak.wieman.cloud/realms/infrastructure",
           "oidc_groups_claim": "groups",
           "oidc_admin_group": "/infra/harbor/admin",
           "oidc_client_id": "harbor",
