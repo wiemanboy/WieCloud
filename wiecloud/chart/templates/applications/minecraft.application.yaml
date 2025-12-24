@@ -1,0 +1,20 @@
+{{- if .Values.applications.minecraft.deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: minecraft
+  namespace: argocd
+spec:
+  source:
+    chart: minecraft
+    repoURL: {{ .Values.applications.repository }}
+    targetRevision: {{ .Values.applications.minecraft.version }}
+    helm:
+      values: |
+        environment: {{ toYaml .Values.environment | nindent 10 }}
+  destination:
+    namespace: minecraft
+    server: {{ .Values.applications.server }}
+  {{- $cfg := merge (dict "project" "minecraft") .Values.applications.defaults }}
+  {{- toYaml $cfg | nindent 2 }}
+{{- end }}

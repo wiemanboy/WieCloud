@@ -66,6 +66,12 @@ module "talos-worker-0" {
   talos_version  = local.talos_version
   iso            = local.iso
   image          = local.image
+
+  spec = {
+    cpu_cores = 8
+    disk_size = 300
+    memory    = 32768
+  }
 }
 
 module "talos-worker-1" {
