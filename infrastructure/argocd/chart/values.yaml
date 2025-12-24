@@ -10,6 +10,11 @@ argo-cd:
     params:
       server.insecure: true
     cm:
+      admin.enabled: "false"
       url: https://argo.example.com
       exec.enabled: true
       oidc.config: "overwritten"
+    rbac:
+      policy.default: role:readonly
+      policy.csv: |
+        g, /infra/admin, role:admin

@@ -18,7 +18,7 @@ spec:
               url: https://argo.{{ .Values.environment.hostname }}
               oidc.config: |
                 name: Keycloak
-                issuer: https://keycloak.wieman.cloud/realms/infrastructure
+                issuer: https://keycloak.{{ .Values.environment.hostname }}/realms/infrastructure
                 clientID: argocd
                 clientSecret: $oidc.keycloak.clientSecret
                 requestedScopes: ["openid", "profile", "email", "groups"]

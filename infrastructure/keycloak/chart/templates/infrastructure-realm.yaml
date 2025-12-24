@@ -9,7 +9,10 @@ spec:
       secret:
         name: harbor-client-secret
         key: secret
-
+    ARGO_CLIENT_SECRET:
+      secret:
+        name: argo-client-secret
+        key: secret
   realm:
     id: 488e588f-61bf-48b9-9384-18df35686d84
     realm: infrastructure
@@ -112,31 +115,41 @@ spec:
       - id: d2c47d1b-73d9-4534-9aca-7501f792f938
         clientId: harbor
         name: Harbor
+        description: ""
         secret: ${HARBOR_CLIENT_SECRET}
         rootUrl: https://harbor.{{ .Values.environment.hostname }}
         baseUrl: https://harbor.{{ .Values.environment.hostname }}
-        enabled: true
-        clientAuthenticatorType: client-secret
         redirectUris:
         - https://harbor.{{ .Values.environment.hostname }}/c/oidc/callback
-        standardFlowEnabled: true
-        directAccessGrantsEnabled: true
-        serviceAccountsEnabled: true
+        {{- toYaml .Values.realm.clients.defaults | nindent 8 }}
+
+      - id: 5f7e7f35-f9fc-43e1-b4a7-f06ea33501d5
+        clientId: argocd
+        name: argocd
+        description: ""
+        secret: ${ARGO_CLIENT_SECRET}
+        rootUrl: https://argo.{{ .Values.environment.hostname }}
+        adminUrl: https://argo.{{ .Values.environment.hostname }}
+        baseUrl: https://argo.{{ .Values.environment.hostname }}/applications
+        redirectUris:
+          - https://argo.{{ .Values.environment.hostname }}/auth/callback
+        attributes:
+          post.logout.redirect.uris: https://argo.{{ .Values.environment.hostname }}applications
+        {{- toYaml .Values.realm.clients.defaults | nindent 8 }}
+
+
+    clientScopes:
+      - id: 16e40ee2-5b86-4aa6-805b-a8422e7a59da
+        name: groups
+        description: Group membership
         protocol: openid-connect
         protocolMappers:
-        - id: 8f6628b9-f213-476a-9584-b5b03eec578c
-          name: groups
-          protocol: openid-connect
-          protocolMapper: oidc-group-membership-mapper
-          consentRequired: false
-          config:
-            full.path: 'true'
-            introspection.token.claim: 'true'
-            userinfo.token.claim: 'true'
-            id.token.claim: 'true'
-            lightweight.claim: 'false'
-            access.token.claim: 'true'
-            claim.name: groups
+          - id: 645bd564-e1bb-47c3-8c23-2fba6e7f0613
+            name: groups
+            protocol: openid-connect
+            protocolMapper: oidc-group-membership-mapper
+            config:
+              claim.name: groups
 
     roles:
       realm:

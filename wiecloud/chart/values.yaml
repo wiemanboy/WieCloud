@@ -54,7 +54,7 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.0.1
+    version: 0.1.0
 
   certmanager:
     deploy: true
@@ -70,7 +70,7 @@ infrastructure:
 
   keycloak:
     deploy: true
-    version: 0.1.1
+    version: 0.2.0
 
   longhorn:
     deploy: true
