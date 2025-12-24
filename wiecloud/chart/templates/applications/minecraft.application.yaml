@@ -15,5 +15,6 @@ spec:
   destination:
     namespace: minecraft
     server: {{ .Values.applications.server }}
-  {{- toYaml .Values.applications.defaults | nindent 2 }}
+  {{- $cfg := merge (dict "project" "minecraft") .Values.applications.defaults }}
+  {{- toYaml $cfg | nindent 2 }}
 {{- end }}
