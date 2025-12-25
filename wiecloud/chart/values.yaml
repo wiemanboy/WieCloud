@@ -17,7 +17,7 @@ applications:
 
   technitium:
     deploy: true
-    version: 0.0.0-implement-technitium-ed0f80e
+    version: 0.0.0-implement-technitium-5afe100
 
   minecraft:
     deploy: true
