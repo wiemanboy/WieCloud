@@ -1,0 +1,20 @@
+# https://github.com/TechnitiumSoftware/DnsServer/blob/master/docker-compose.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: technitium
+  name: technitium
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: technitium
+  template:
+    metadata:
+      labels:
+        app: technitium
+    spec:
+      containers:
+      - image: technitium/dns-server:latest
+        name: dns-server
