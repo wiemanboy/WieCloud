@@ -52,6 +52,9 @@ minecraft:
   mcbackup:
     enabled: true
 
+    backupInterval: 1h
+    pruneBackupsDays: 2
+
     extraEnv:
       PRE_BACKUP_SCRIPT: |
         DATE_LOG="§l§d$(TZ="Europe/Amsterdam" date +"[%Y/%m/%d %H:%M:%S]")§r§e"
