@@ -69,7 +69,7 @@ minecraft:
         rcon-cli say "$DATE_LOG Backup complete → §c[$LATEST_BACKUP]§r§e, Next backup at: $NEXT_BACKUP_LOG" &>/dev/null &
 
     persistence:
-      dataDir:
+      backupDir:
         enabled: true
         Size: 10Gi
 
