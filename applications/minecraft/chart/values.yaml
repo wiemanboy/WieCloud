@@ -59,13 +59,13 @@ minecraft:
       PRE_BACKUP_SCRIPT: |
         DATE_LOG="§l§d$(TZ="Europe/Amsterdam" date +"[%Y/%m/%d %H:%M:%S]")§r§e"
 
-        rcon-cli say "$DATE_LOG Starting backup..."
+        rcon-cli say "$DATE_LOG Starting backup..." &>/dev/null &
       POST_BACKUP_SCRIPT: |
         DATE_LOG="§l§d$(TZ="Europe/Amsterdam" date +"[%Y/%m/%d %H:%M:%S]")§r§e"
         LATEST_BACKUP=$(ls "$DEST_DIR/${BACKUP_NAME}-"*.tgz 2>/dev/null | sort | tail -n 1)
         NEXT_BACKUP_LOG="§a§u$(TZ="Europe/Amsterdam" date -d "$(echo $BACKUP_INTERVAL | sed 's/h$//') hours" +"%H:%M")"
 
-        rcon-cli say "$DATE_LOG Backup complete → §c[$LATEST_BACKUP]§r§e, Next backup at: $NEXT_BACKUP_LOG"
+        rcon-cli say "$DATE_LOG Backup complete → §c[$LATEST_BACKUP]§r§e, Next backup at: $NEXT_BACKUP_LOG" &>/dev/null &
 
     persistence:
       dataDir:
