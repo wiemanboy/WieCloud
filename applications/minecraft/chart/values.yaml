@@ -12,7 +12,7 @@ minecraft:
     memory: 9G
 
     worldSaveName: test
-    version: "LATEST"
+    version: "1.21.11"
     difficulty: hard
     maxPlayers: 20
     maxBuildHeight: 256
