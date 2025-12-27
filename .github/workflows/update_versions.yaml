@@ -36,6 +36,8 @@ jobs:
       run: |
         LAST_MSG=$(git log -1 --pretty=%s)
         echo "Last commit message: $LAST_MSG"
+        
+        git diff --name-only FETCH_HEAD...HEAD
 
         if git diff --name-only FETCH_HEAD...HEAD | grep -qE '^(infrastructure|applications)/'; then
           echo "Skipping infrastructure or applications are not changed"
