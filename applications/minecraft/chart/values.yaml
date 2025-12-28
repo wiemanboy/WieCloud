@@ -12,7 +12,7 @@ minecraft:
     memory: 9G
 
     worldSaveName: test
-    version: "LATEST"
+    version: "1.21.11"
     difficulty: hard
     maxPlayers: 20
     maxBuildHeight: 256
@@ -20,7 +20,7 @@ minecraft:
     viewDistance: 20
     
     type: FORGE
-    vanillaTweaksShareCodes: []
+    vanillaTweaksShareCodes: [AG8Tc8]
     modrinth:
       projects: []
 
@@ -35,6 +35,9 @@ minecraft:
       # List of project slugs or IDs to be included in modpack, useful if mod is incorrectly marked as client side only
       includeMods: []
       parallelDownloads: 4
+
+    rcon:
+      enabled: true
   
   extraEnv:
     ENABLE_WHITELIST: true
@@ -48,10 +51,27 @@ minecraft:
 
   mcbackup:
     enabled: true
-    persistence:
-      dataDir:
-        enabled: true
-        Size: 10Gi
+    pauseIfNoPlayers: true
+
+    backupInterval: 1h
+    pruneBackupsDays: 2
+
+    extraEnv:
+      PRE_BACKUP_SCRIPT: |
+        DATE_LOG="§l§d$(TZ="Europe/Amsterdam" date +"[%Y/%m/%d %H:%M:%S]")§r§e"
+
+        rcon-cli say "$DATE_LOG Starting backup..." &>/dev/null &
+      POST_BACKUP_SCRIPT: |
+        DATE_LOG="§l§d$(TZ="Europe/Amsterdam" date +"[%Y/%m/%d %H:%M:%S]")§r§e"
+        LATEST_BACKUP=$(ls "$DEST_DIR/${BACKUP_NAME}-"*.tgz 2>/dev/null | sort | tail -n 1)
+        NEXT_BACKUP_LOG="§a§u$(TZ="Europe/Amsterdam" date -d "$(echo $BACKUP_INTERVAL | sed 's/h$//') hours" +"%H:%M")"
+
+        rcon-cli say "$DATE_LOG Backup complete → §c[$LATEST_BACKUP]§r§e, Next backup at: $NEXT_BACKUP_LOG" &>/dev/null &
+
+    # persistence:
+    #   backupDir:
+    #     enabled: true
+    #     Size: 10Gi
 
   resources:
     requests:
