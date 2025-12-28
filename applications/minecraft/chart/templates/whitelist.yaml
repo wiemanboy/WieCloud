@@ -6,10 +6,6 @@ data:
   whitelist.json: |
     [
       {
-        "uuid": "b7adf8b9-3f07-4fc8-ab03-edc5f672b611",
-        "name": "wiemanboy"
-      },
-      {
         "uuid": "392136e0-63c4-49e9-9d79-6e9a24ee3992",
         "name": "Yeeeesh"
       },
