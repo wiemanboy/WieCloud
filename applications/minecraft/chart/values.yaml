@@ -20,7 +20,7 @@ minecraft:
     viewDistance: 20
     
     type: FORGE
-    vanillaTweaksShareCodes: []
+    vanillaTweaksShareCodes: [AG8Tc8]
     modrinth:
       projects: []
 
