@@ -2,7 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   creationTimestamp: null
-  name: testjob
+  name: whitelist-reload
 spec:
   template:
     spec:
@@ -10,7 +10,7 @@ spec:
         checksum/whitelist: {{ include (print $.Template.BasePath "/whitelist.yaml") . | sha256sum }}
       containers:
       - image: itzg/rcon-cli:1.7.3
-        name: testjob
+        name: whitelist-reload
         args:
           - whitelist reload
         env:
