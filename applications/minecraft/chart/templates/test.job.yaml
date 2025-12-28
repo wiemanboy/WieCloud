@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: null
+  name: testjob
+spec:
+  template:
+    metadata:
+      creationTimestamp: null
+    spec:
+      containers:
+      - image: itzg/rcon-cli:1.7.3
+        name: testjob
+        command: say "test job"
+      restartPolicy: Never
