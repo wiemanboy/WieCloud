@@ -5,11 +5,21 @@ metadata:
   name: testjob
 spec:
   template:
-    metadata:
-      creationTimestamp: null
     spec:
+      annotations:
+        checksum/whitelist: {{ include (print $.Template.BasePath "/whitelist.yaml") . | sha256sum }}
       containers:
       - image: itzg/rcon-cli:1.7.3
         name: testjob
-        command: "say testjob"
+        args:
+          - whitelist reload
+        env:
+          - name: RCON_HOST
+            value: minecraft-rcon
+          - name: RCON_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: rcon-password
+                name: minecraft-rcon
+
       restartPolicy: Never
