@@ -17,7 +17,7 @@ applications:
 
   minecraft:
     deploy: true
-    version: 0.1.0-improve-minecraft-server-ops-b01087b
+    version: 0.1.0-improve-minecraft-server-ops-ba6b4e3
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/applications
