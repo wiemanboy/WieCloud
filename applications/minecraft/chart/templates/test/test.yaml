@@ -31,10 +31,10 @@ spec:
       volumeMounts:
         # Mount ConfigMap as a directory for dynamic updates
         - name: config-volume
-          mountPath: /data/config
+          mountPath: /data
         # Mount the PVC
         - name: test-pvc
-          mountPath: /data/pvc
+          mountPath: /data
   volumes:
     - name: config-volume
       configMap:
