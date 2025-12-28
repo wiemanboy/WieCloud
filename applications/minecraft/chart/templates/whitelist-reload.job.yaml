@@ -4,7 +4,7 @@ metadata:
   creationTimestamp: null
   name: whitelist-reload
   annotations:
-    checksum/whitelist: {{ .Files.Get "whitelist.yaml" | sha256sum }}
+    checksum/whitelist: {{ include (print $.Template.BasePath "/whitelist.yaml") . | sha256sum }}
 spec:
   template:
     spec:
