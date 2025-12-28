@@ -81,7 +81,8 @@ minecraft:
   extraVolumes:
     - volumeMounts:
       - name: whitelist
-        mountPath: /data
+        mountPath: /data/whitelist.json
+        subPath: whitelist.json
         readOnly: true
       - name: bluemap-core-config
         mountPath: /data/config/bluemap/core.conf
