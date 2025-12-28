@@ -4,7 +4,7 @@ metadata:
   creationTimestamp: null
   name: whitelist-reload
   annotations:
-    checksum/whitelist: {{ include (print $.Template.BasePath "/whitelist.yaml") . | sha256sum }}
+    argocd.argoproj.io/hook: PostSync
 spec:
   template:
     spec:
