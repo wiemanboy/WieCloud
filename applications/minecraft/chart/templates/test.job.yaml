@@ -11,5 +11,6 @@ spec:
       containers:
       - image: itzg/rcon-cli:1.7.3
         name: testjob
-        command: say "test job"
+        command: ["rcon-cli"]
+        args: ["say", "test job"]
       restartPolicy: Never
