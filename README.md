@@ -19,4 +19,4 @@
 
 ### DNS sinkhole
 
-- Implement a DNS sinkhole for ads (pihole, technitium)
+- [ ] Implement a DNS sinkhole for ads (pihole, technitium)
