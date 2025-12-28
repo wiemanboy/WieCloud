@@ -3,11 +3,11 @@ kind: Job
 metadata:
   creationTimestamp: null
   name: whitelist-reload
+  annotations:
+    checksum/whitelist: {{ .Files.Get "whitelist.yaml" | sha256sum }}
 spec:
   template:
     spec:
-      annotations:
-        checksum/whitelist: {{ .Files.Get "whitelist.yaml" | sha256sum }}
       containers:
       - image: itzg/rcon-cli:1.7.3
         name: whitelist-reload
