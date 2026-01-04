@@ -46,7 +46,7 @@ infrastructure:
 
   harbor:
     deploy: true
-    version: 1.0.0-tweak-storage-5738bed
+    version: 1.0.0-tweak-storage-fd501a7
 
   keycloak:
     deploy: true
