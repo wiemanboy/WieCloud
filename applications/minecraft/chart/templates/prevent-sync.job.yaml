@@ -6,8 +6,10 @@ metadata:
   annotations:
     argocd.argoproj.io/hook: PreSync
 spec:
+  backoffLimit: 0
   template:
     spec:
+      restartPolicy: Never
       containers:
       - name: prevent-sync
         image: harbor.wieman.cloud/tools/rcon-cli:1.0.0
@@ -26,6 +28,3 @@ spec:
               secretKeyRef:
                 key: rcon-password
                 name: minecraft-rcon
-
-  backoffLimit: 0
-  restartPolicy: Never
