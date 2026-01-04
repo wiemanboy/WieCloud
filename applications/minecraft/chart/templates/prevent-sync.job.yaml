@@ -11,7 +11,9 @@ spec:
       containers:
       - name: prevent-sync
         image: harbor.wieman.cloud/tools/rcon-cli:1.0.0
-        args:
+        command:
+          - sh
+          - -c
           - |
             players=$(rcon-cli list | grep -oE 'There are [0-9]+' | awk '{print $3}')
             echo "Players online: $players"
