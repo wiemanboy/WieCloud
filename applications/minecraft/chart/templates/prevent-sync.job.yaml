@@ -9,7 +9,8 @@ spec:
   template:
     spec:
       containers:
-      - image: harbor.wieman.cloud/tools/rcon-cli:1.0.0
+      - name: prevent-sync
+        image: harbor.wieman.cloud/tools/rcon-cli:1.0.0
         args:
           - |
             players=$(rcon-cli list | grep -oE 'There are [0-9]+' | awk '{print $3}')
