@@ -11,8 +11,13 @@ spec:
       containers:
       - image: itzg/rcon-cli:1.7.3
         name: prevent-sync
-        args:
-          - rcon-cli list | grep -oP 'There are \K\d+' | grep -q '[1-9]' && exit 1 || exit 0
+        command:
+          - sh
+          - -c
+          - |
+            players=$(rcon-cli list | grep -oP 'There are \K\d+')
+            echo "Players online: $players"
+            [ "$players" -gt 0 ] && exit 1 || exit 0
         env:
           - name: RCON_HOST
             value: minecraft-rcon
