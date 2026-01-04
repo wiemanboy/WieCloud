@@ -19,7 +19,6 @@ jobs:
       chart_path: infrastructure/externaldns/chart
       registry: oci://harbor.wieman.cloud
       repository: infrastructure
-      tag: ${{ inputs.tag }}
     secrets:
       registry_username: ${{ secrets.OCI_REGISTRY_USERNAME }}
       registry_password: ${{ secrets.OCI_REGISTRY_PASSWORD }}
