@@ -20,3 +20,8 @@
 ### DNS sinkhole
 
 - [ ] Implement a DNS sinkhole for ads (pihole, technitium)
+
+### Gateway
+
+- [ ] Envoy Gateway?
+- [ ] OIDC middleware
