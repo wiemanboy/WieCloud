@@ -46,6 +46,8 @@ jobs:
     - name: Check for version change
       shell: bash
       run: |
+        # Make sure no production images are overwritten
+        echo "Checking for version change"
         git fetch origin master
         git diff origin/master -- ${{ inputs.chart_path }}/Chart.yaml | grep +version || exit 1
 
@@ -60,21 +62,29 @@ jobs:
 
         # Run when version changes
         if [[ "$LAST_MSG" == "UPDATE: versions for changed charts"* ]]; then
+          echo "Last commit was version change, running build pipeline"
           echo "skip=false" >> "$GITHUB_OUTPUT"
+
           TAG=$(echo "$LAST_MSG" | grep -oP '\[\K[^\]]*')
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
           exit 0
         fi
 
+        echo "Version not changed, skipping build"
         echo "skip=true" >> "$GITHUB_OUTPUT"
 
     - name: Set up Helm
       if: steps.check_commit.outputs.skip == 'false'
-      run: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+      run: |
+        echo "Installing helm 3"
+        curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
     - name: Registry Login
       if: steps.check_commit.outputs.skip == 'false'
-      run: helm registry login ${{ inputs.registry }} --username ${{ secrets.registry_username }} --password ${{ secrets.registry_password }}
+      run: |
+        echo "Login in to ${{ inputs.registry }}"
+        helm registry login ${{ inputs.registry }} --username ${{ secrets.registry_username }} --password ${{ secrets.registry_password }}
 
     - name: Package Helm Chart
       if: steps.check_commit.outputs.skip == 'false'
