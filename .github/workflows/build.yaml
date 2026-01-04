@@ -19,10 +19,6 @@ on:
         description: "Repository name in the OCI registry"
         required: true
         type: string
-      tag:
-        description: "Tag that should be amended to the version"
-        required: false
-        type: string
     secrets:
       registry_username:
         description: "Username for the OCI registry"
@@ -58,16 +54,6 @@ jobs:
       shell: bash
       run: |
         set -e
-
-        # Run when manually dispatched
-        if [[ "${{ inputs.chart_path }} == "workflow_dispatch" ]]; then
-          echo "Workflow manually dispatched "
-          echo "skip=false" >> "$GITHUB_OUTPUT"
-
-          echo "tag=${{ inputs.tag }}" >> "$GITHUB_OUTPUT"
-
-          exit 0
-        fi
 
         LAST_MSG=$(git log -1 --pretty=%s --skip=1 HEAD)
         echo "Last commit message: $LAST_MSG"

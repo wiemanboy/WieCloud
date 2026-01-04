@@ -9,12 +9,6 @@ on:
     - .github/workflows/build_externaldns.yaml
     - .github/workflows/build.yaml
     - pipeline/build/scripts/**
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: "Tag that should be amended to the version"
-        required: false
-        type: string
 
 jobs:
   build:
