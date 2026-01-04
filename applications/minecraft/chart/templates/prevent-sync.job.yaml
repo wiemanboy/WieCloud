@@ -9,13 +9,10 @@ spec:
   template:
     spec:
       containers:
-      - image: itzg/rcon-cli:1.7.3
-        name: prevent-sync
-        command:
-          - sh
-          - -c
+      - image: harbor.wieman.cloud/tools/rcon-cli:1.0.0
+        args:
           - |
-            players=$(rcon-cli list | grep -oP 'There are \K\d+')
+            players=$(rcon-cli list | grep -oE 'There are [0-9]+' | awk '{print $3}')
             echo "Players online: $players"
             [ "$players" -gt 0 ] && exit 1 || exit 0
         env:

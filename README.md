@@ -2,16 +2,17 @@
 
 ## TODO
 
+### Automation
+
+- [ ] Automated Dockerfile builds
+
 ### Storage
 
 - [ ] Implement [Garage](https://git.deuxfleurs.fr/Deuxfleurs/garage/src/branch/main-v2/script/helm) for s3 storage
 - [ ] Figure out backup procedures
 - [ ] Link unused disks to vm's
 - [ ] Give more storage to nodes
-
-### Minecraft
-
-- [ ] Enable persistent backups
+- [ ] Set longhorn storage engine V2
 
 ### VPN
 
