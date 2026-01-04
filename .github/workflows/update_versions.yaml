@@ -39,10 +39,11 @@ jobs:
         echo 
 
         echo "Changed files:"
-        git diff --name-only FETCH_HEAD...HEAD
+        git fetch origin master
+        git diff --name-only origin/master
         echo
 
-        if ! git diff --name-only FETCH_HEAD...HEAD | grep -qE '^(infrastructure|applications)/'; then
+        if ! git diff --name-only origin/master | grep -qE '^(infrastructure|applications)/'; then
           echo "Skipping infrastructure or applications are not changed"
           echo "skip=true" >> "$GITHUB_OUTPUT"
           exit 0
