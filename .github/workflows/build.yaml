@@ -83,15 +83,15 @@ jobs:
         echo "skip=true" >> "$GITHUB_OUTPUT"
 
     - name: Set up Helm
-      if: steps.check_commit.outputs.skip = 'false'
+      if: steps.check_commit.outputs.skip == 'false'
       run: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
     - name: Registry Login
-      if: steps.check_commit.outputs.skip = 'false'
+      if: steps.check_commit.outputs.skip == 'false'
       run: helm registry login ${{ inputs.registry }} --username ${{ secrets.registry_username }} --password ${{ secrets.registry_password }}
 
     - name: Package Helm Chart
-      if: steps.check_commit.outputs.skip = 'false'
+      if: steps.check_commit.outputs.skip == 'false'
       id: package
       run: |
         set -e
@@ -110,5 +110,5 @@ jobs:
         echo "chart_package_path=$chart_path" >> "$GITHUB_OUTPUT"
 
     - name: Push Helm Chart
-      if: steps.check_commit.outputs.skip = 'false'
+      if: steps.check_commit.outputs.skip == 'false'
       run: bash ./pipeline/build/scripts/push_chart.sh --package ${{ steps.package.outputs.chart_package_path }} --registry ${{ inputs.registry }} --repository ${{ inputs.repository }}
