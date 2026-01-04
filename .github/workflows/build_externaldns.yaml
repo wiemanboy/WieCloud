@@ -9,6 +9,12 @@ on:
     - .github/workflows/build_externaldns.yaml
     - .github/workflows/build.yaml
     - pipeline/build/scripts/**
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag that should be amended to the version"
+        required: false
+        type: string
 
 jobs:
   build:
@@ -19,6 +25,7 @@ jobs:
       chart_path: infrastructure/externaldns/chart
       registry: oci://harbor.wieman.cloud
       repository: infrastructure
+      tag: ${{ inputs.tag }}
     secrets:
       registry_username: ${{ secrets.OCI_REGISTRY_USERNAME }}
       registry_password: ${{ secrets.OCI_REGISTRY_PASSWORD }}
