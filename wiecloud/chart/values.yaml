@@ -17,7 +17,7 @@ applications:
 
   minecraft:
     deploy: true
-    version: 0.2.0-enable-minecraft-persistant-backups-94f3fd8
+    version: 0.2.0-enable-minecraft-persistant-backups-72df7e0
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/applications
