@@ -46,7 +46,7 @@ infrastructure:
 
   harbor:
     deploy: true
-    version: 0.1.0
+    version: 1.0.0-tweak-storage-ed70903
 
   keycloak:
     deploy: true
