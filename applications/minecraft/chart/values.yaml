@@ -60,11 +60,13 @@ minecraft:
       PRE_BACKUP_SCRIPT: |
         DATE_LOG="§l§d$(TZ="Europe/Amsterdam" date +"[%Y/%m/%d %H:%M:%S]")§r§e"
 
+        rcon-cli bluemap stop
         rcon-cli tellraw @a "{\"text\": \"$DATE_LOG Starting backup...\"}" &>/dev/null &
       POST_BACKUP_SCRIPT: |
         DATE_LOG="§l§d$(TZ="Europe/Amsterdam" date +"[%Y/%m/%d %H:%M:%S]")§r§e"
         NEXT_BACKUP_LOG="§a§u$(TZ="Europe/Amsterdam" date -d "$(echo $BACKUP_INTERVAL | sed 's/h$//') hours" +"%H:%M")"
 
+        rcon-cli bluemap start
         rcon-cli tellraw @a "{\"text\": \"$DATE_LOG Backup complete, Next backup at: $NEXT_BACKUP_LOG\"}" &>/dev/null &
 
     persistence:
