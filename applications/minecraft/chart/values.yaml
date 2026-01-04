@@ -57,17 +57,18 @@ minecraft:
     pruneBackupsDays: 2
 
     extraEnv:
+      BACKUP_RCON_NAME: "&4&l[[BACKUP]&r"
       PRE_BACKUP_SCRIPT: |
         DATE_LOG="§l§d$(TZ="Europe/Amsterdam" date +"[%Y/%m/%d %H:%M:%S]")§r§e"
 
-        rcon-cli say "$DATE_LOG Starting backup..." &>/dev/null &
+        rcon-cli tellraw @a "{\"text\": \"$BACKUP_RCON_NAME $DATE_LOG Starting backup...\"}" &>/dev/null &
       POST_BACKUP_SCRIPT: |
         DATE_LOG="§l§d$(TZ="Europe/Amsterdam" date +"[%Y/%m/%d %H:%M:%S]")§r§e"
         LATEST_BACKUP=$(ls "$DEST_DIR/${BACKUP_NAME}-"*.tgz 2>/dev/null | sort | tail -n 1)
         NEXT_BACKUP_LOG="§a§u$(TZ="Europe/Amsterdam" date -d "$(echo $BACKUP_INTERVAL | sed 's/h$//') hours" +"%H:%M")"
 
         echo "Backed up to: ${LATEST_BACKUP}"
-        rcon-cli say "$DATE_LOG Backup complete, Next backup at: $NEXT_BACKUP_LOG" &>/dev/null &
+        rcon-cli tellraw @a "{\"text\": \"$BACKUP_RCON_NAME  $DATE_LOG Backup complete, Next backup at: $NEXT_BACKUP_LOG\"}" &>/dev/null &
 
     persistence:
       backupDir:
