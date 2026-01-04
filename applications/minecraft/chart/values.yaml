@@ -66,9 +66,8 @@ minecraft:
         LATEST_BACKUP=$(ls "$DEST_DIR/${BACKUP_NAME}-"*.tgz 2>/dev/null | sort | tail -n 1)
         NEXT_BACKUP_LOG="§a§u$(TZ="Europe/Amsterdam" date -d "$(echo $BACKUP_INTERVAL | sed 's/h$//') hours" +"%H:%M")"
 
-        rcon-cli say "$DATE_LOG Backup complete → §c[$LATEST_BACKUP]§r§e, Next backup at: $NEXT_BACKUP_LOG" &>/dev/null &
-
-      TEST: test var
+        echo "Backed up to: ${LATEST_BACKUP}"
+        rcon-cli say "$DATE_LOG Backup complete, Next backup at: $NEXT_BACKUP_LOG" &>/dev/null &
 
     persistence:
       backupDir:
