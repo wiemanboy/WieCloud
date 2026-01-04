@@ -17,7 +17,7 @@ applications:
 
   minecraft:
     deploy: true
-    version: 0.1.1-tweak-storage-0b7fd11
+    version: 0.1.1-tweak-storage-51e4988
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/applications
@@ -34,35 +34,35 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.1.1-tweak-storage-0b7fd11
+    version: 0.1.1-tweak-storage-51e4988
 
   certmanager:
     deploy: true
-    version: 0.0.2-tweak-storage-0b7fd11
+    version: 0.0.2-tweak-storage-51e4988
 
   externaldns:
     deploy: true
-    version: 0.0.2-tweak-storage-0b7fd11
+    version: 0.0.2-tweak-storage-51e4988
 
   harbor:
     deploy: true
-    version: 1.0.0-tweak-storage-0b7fd11
+    version: 1.0.0-tweak-storage-51e4988
 
   keycloak:
     deploy: true
-    version: 0.2.1-tweak-storage-0b7fd11
+    version: 0.2.1-tweak-storage-51e4988
 
   longhorn:
     deploy: true
-    version: 0.0.2-tweak-storage-0b7fd11
+    version: 0.0.2-tweak-storage-51e4988
 
   metallb:
     deploy: true
-    version: 0.0.4-tweak-storage-0b7fd11
+    version: 0.0.4-tweak-storage-51e4988
 
   traefik:
     deploy: true
-    version: 0.1.1-tweak-storage-0b7fd11
+    version: 0.1.1-tweak-storage-51e4988
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/infrastructure
