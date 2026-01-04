@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: null
+  name: prevent-sync
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: prevent-sync
+        image: harbor.wieman.cloud/tools/rcon-cli:1.0.0
+        command:
+          - sh
+          - -c
+          - |
+            players=$(rcon-cli list | grep -oE 'There are [0-9]+' | awk '{print $3}')
+            echo "Players online: $players"
+            [ "$players" -gt 0 ] && exit 1 || exit 0
+        env:
+          - name: RCON_HOST
+            value: minecraft-rcon
+          - name: RCON_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: rcon-password
+                name: minecraft-rcon
