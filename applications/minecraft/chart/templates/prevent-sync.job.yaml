@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: null
+  name: prevent-sync
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+spec:
+  template:
+    spec:
+      containers:
+      - image: itzg/rcon-cli:1.7.3
+        name: prevent-sync
+        args:
+          - rcon-cli list | grep -oP 'There are \K\d+' | grep -q '[1-9]' && exit 1 || exit 0
+        env:
+          - name: RCON_HOST
+            value: minecraft-rcon
+          - name: RCON_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: rcon-password
+                name: minecraft-rcon
+
+      restartPolicy: Never
