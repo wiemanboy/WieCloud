@@ -4,7 +4,7 @@
 
 ### Automation
 
-- Check if wiecloud chart can be build
+- [ ] Add pipeline check for wiecloud chart template
 
 ### Storage
 
