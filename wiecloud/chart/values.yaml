@@ -46,7 +46,7 @@ infrastructure:
 
   garage:
     deploy: true
-    version: 0.0.0-implement-garage-472a749
+    version: 0.0.0-implement-garage-fd2b4e9
 
   harbor:
     deploy: true
