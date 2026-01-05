@@ -44,4 +44,3 @@ VERSION=$( yq .version $CHART_PATH/Chart.yaml )
 echo "Setting chart version ${VERSION}${TAG} for ${NAME}"
 
 sed -i "/${NAME}:/,/version:/ s/^\(\s*version:\s*\).*/\1${VERSION}${TAG}/" $APP_CHART/values.yaml
-echo "DEBUG: success"

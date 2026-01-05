@@ -30,15 +30,8 @@ bash ./pipeline/version/scripts/update_chart_version.sh \
   < /dev/null
 done <<< "$EDITED_CHARTS"
 
-echo "all charts edited"
-
 DIFF=$(git diff FETCH_HEAD...HEAD --name-only | grep -E '^(infrastructure|applications)/.*/image/') || exit 0
-
-echo $DIFF
-
 EDITED_IMAGES=$(printf '%s\n' "$DIFF"| sed 's|\(.*\/image\)/.*|\1|' | sort -u)
-
-echo $EDITED_IMAGES
 
 while read -r IMAGE_PATH; do
   IFS='/' read -r -a PARTS <<< "$IMAGE_PATH"
