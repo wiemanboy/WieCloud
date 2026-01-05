@@ -60,11 +60,16 @@ jobs:
         git diff origin/master -- ${{ inputs.chart_path }}/Chart.yaml | grep +version || $(echo "Version not updated, exiting" && exit 1)
 
     - name: Check if workflow should run
-      if: ${{ inputs.external != true }}
       id: check_commit
       shell: bash
       run: |
         set -e
+
+        if [ "$EXTERNAL" = "true" ]; then
+          echo "External build, running build pipeline"
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
 
         LAST_MSG=$(git log -1 --pretty=%s --skip=1 HEAD)
         echo "Last commit message: $LAST_MSG"
