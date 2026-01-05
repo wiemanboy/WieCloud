@@ -44,6 +44,10 @@ infrastructure:
     deploy: true
     version: 0.0.3
 
+  garage:
+    deploy: true
+    version: 0.0.0
+
   harbor:
     deploy: true
     version: 1.0.1

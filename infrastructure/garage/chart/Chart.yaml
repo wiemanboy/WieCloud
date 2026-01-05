@@ -1,0 +1,8 @@
+apiVersion: v2
+name: garage
+type: application
+version: 0.0.0
+dependencies:
+- name: garage
+  version: 9.2.1
+  repository: https://harbor.wieman.cloud/external/garage:0.9.1
