@@ -20,8 +20,8 @@ jobs:
       run: |
         set -e
 
-        echo "Login in to harbor.wieman.cloud"
-        helm registry login harbor.wieman.cloud --username ${{ secrets.OCI_REGISTRY_USERNAME }} --password ${{ secrets.OCI_REGISTRY_PASSWORD }}
+        echo "Login in to oci://harbor.wieman.cloud"
+        helm registry login oci://harbor.wieman.cloud --username ${{ secrets.OCI_REGISTRY_USERNAME }} --password ${{ secrets.OCI_REGISTRY_PASSWORD }}
 
     - name: Package Helm Chart
       id: package
@@ -36,4 +36,4 @@ jobs:
         echo "chart_package_path=$chart_path" >> "$GITHUB_OUTPUT"
 
     - name: Push Helm Chart
-      run: bash ./pipeline/build/scripts/helm/helm_push.sh --package ${{ steps.package.outputs.chart_package_path }} --registry harbor.wieman.cloud --repository external
+      run: bash ./pipeline/build/scripts/helm/helm_push.sh --package ${{ steps.package.outputs.chart_package_path }} --registry oci://harbor.wieman.cloud --repository external
