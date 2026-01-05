@@ -59,7 +59,7 @@ jobs:
           exit 0
         fi
 
-        if [[ "$LAST_MSG" == "UPDATE: versions for changed charts"* ]]; then
+        if [[ "$LAST_MSG" == "UPDATE: reference versions in wiecloud/chart/values.yaml"* ]]; then
           echo "Skipping version already up to date"
           echo "skip=true" >> "$GITHUB_OUTPUT"
           exit 0
