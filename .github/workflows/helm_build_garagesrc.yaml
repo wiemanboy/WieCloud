@@ -22,14 +22,15 @@ jobs:
     - name: Clone garage repo
       id: clone
       run: |
-        git clone https://git.deuxfleurs.fr/Deuxfleurs/garage
+        git clone https://git.deuxfleurs.fr/Deuxfleurs/garage garage_repo
+        echo "garage_path=$(pwd)/garage_repo" >> $GITHUB_OUTPUT
 
   build:
     needs: prepare
     uses: ./.github/workflows/helm_build.yaml
     with:
       chart_name: garagesrc
-      chart_path: garage/scripts/helm/garage
+      chart_path: ${{ needs.prepare.outputs.garage_path }}/scripts/helm/garage
       registry: oci://harbor.wieman.cloud
       repository: src
       external: true
