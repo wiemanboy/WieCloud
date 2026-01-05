@@ -1,0 +1,104 @@
+name: Build image
+
+on:
+  workflow_call:
+    inputs:
+      image_name:
+        description: "Name of the image"
+        required: true
+        type: string
+      image_path:
+        description: "Path to the image to be build and pushed"
+        required: true
+        type: string
+      registry:
+        description: "Registry URL"
+        required: true
+        type: string
+      repository:
+        description: "Repository name in the registry"
+        required: true
+        type: string
+    secrets:
+      registry_username:
+        description: "Username for the registry"
+        required: true
+      registry_password:
+        description: "Password for the registry"
+        required: true
+      app_client_id:
+        description: "App Client ID"
+        required: true
+      app_private_key:
+        description: "App Private Key"
+        required: true
+
+jobs:
+  package_and_push:
+    name: ${{ inputs.image_name }} image
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 2
+
+    - name: Check for version change
+      shell: bash
+      run: |
+        # Make sure no production images are overwritten
+        echo "Checking for version change"
+        git fetch origin master
+        git diff origin/master -- ${{ inputs.image_path }}/Image.yaml | grep +version || exit 1
+
+    - name: Check if workflow should run
+      id: check_commit
+      shell: bash
+      run: |
+        set -e
+
+        LAST_MSG=$(git log -1 --pretty=%s --skip=1 HEAD)
+        echo "Last commit message: $LAST_MSG"
+
+        # Run when version changes
+        if [[ "$LAST_MSG" == "UPDATE: versions"* ]]; then
+          echo "Last commit was version change, running build pipeline"
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+
+          TAG=$(echo "$LAST_MSG" | grep -oP '\[\K[^\]]*')
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+          exit 0
+        fi
+
+        echo "Version not changed, skipping build"
+        echo "skip=true" >> "$GITHUB_OUTPUT"
+
+    - name: Registry Login
+      if: steps.check_commit.outputs.skip == 'false'
+      run: |
+        echo "Login in to ${{ inputs.registry }}"
+        docker login ${{ inputs.registry }} --username ${{ secrets.registry_username }} --password ${{ secrets.registry_password }}
+
+    - name: Build image
+      if: steps.check_commit.outputs.skip == 'false'
+      id: package
+      run: |
+        set -e
+        echo ${{ steps.check_commit.outputs.tag }}
+
+        CMD="bash ./pipeline/build/scripts/image/image_build.sh --path ${{ inputs.image_path }}"
+        # Add --tag only if outputs.tag is not empty
+        if [[ -n "${{ steps.check_commit.outputs.tag }}" ]]; then
+          CMD="$CMD --tag ${{ steps.check_commit.outputs.tag }}"
+        fi
+
+        OUTPUT=$($CMD)
+
+        IMAGE=$(echo "$OUTPUT" | grep -oE 'Building docker image: [^ ]+' | awk '{print $4}')
+        echo "Image: $IMAGE"
+        echo "image=$IMAGE" >> "$GITHUB_OUTPUT"
+
+    - name: Push image
+      if: steps.check_commit.outputs.skip == 'false'
+      run: bash ./pipeline/build/scripts/image/image_push.sh --image ${{ steps.build.outputs.image }} --registry ${{ inputs.registry }} --repository ${{ inputs.repository }}
