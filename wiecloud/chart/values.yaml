@@ -17,7 +17,7 @@ applications:
 
   minecraft:
     deploy: true
-    version: 0.3.0-image-build-pipeline-b7696d9
+    version: 0.3.0
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/applications
@@ -34,35 +34,35 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.1.2-image-build-pipeline-b7696d9
+    version: 0.1.2
 
   certmanager:
     deploy: true
-    version: 0.0.3-image-build-pipeline-b7696d9
+    version: 0.0.3
 
   externaldns:
     deploy: true
-    version: 0.0.3-image-build-pipeline-b7696d9
+    version: 0.0.3
 
   harbor:
     deploy: true
-    version: 1.0.1-image-build-pipeline-b7696d9
+    version: 1.0.1
 
   keycloak:
     deploy: true
-    version: 0.2.2-image-build-pipeline-b7696d9
+    version: 0.2.2
 
   longhorn:
     deploy: true
-    version: 0.0.3-image-build-pipeline-b7696d9
+    version: 0.0.3
 
   metallb:
     deploy: true
-    version: 0.0.5-image-build-pipeline-b7696d9
+    version: 0.0.5
 
   traefik:
     deploy: true
-    version: 0.1.2-image-build-pipeline-b7696d9
+    version: 0.1.2
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/infrastructure
@@ -80,4 +80,4 @@ images:
     image: 
       registry: harbor.wieman.cloud
       repository: tools/rconcli
-      version: 1.1.0-image-build-pipeline-b7696d9
+      version: 1.1.0
