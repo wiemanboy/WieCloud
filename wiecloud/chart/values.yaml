@@ -64,13 +64,6 @@ infrastructure:
     deploy: true
     version: 0.1.1
 
-images:
-  rconcli:
-    image: 
-      registry: harbor.wieman.cloud
-      repository: tools/rconcli
-      version: 1.0.0-image-build-pipeline-bae6553
-
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/infrastructure
   defaults:
@@ -81,3 +74,10 @@ images:
         selfHeal: true
       syncOptions:
       - CreateNamespace=true
+
+images:
+  rconcli:
+    image: 
+      registry: harbor.wieman.cloud
+      repository: tools/rconcli
+      version: 1.0.0-image-build-pipeline-bae6553

@@ -4,7 +4,7 @@
 
 ### Automation
 
-- [ ] Automated Dockerfile builds
+- Check if wiecloud chart can be build
 
 ### Storage
 
