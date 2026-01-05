@@ -17,7 +17,7 @@ applications:
 
   minecraft:
     deploy: true
-    version: 0.3.0-image-build-pipeline-4d889d0
+    version: 0.3.0-image-build-pipeline-ed2c454
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/applications
@@ -80,4 +80,4 @@ images:
     image: 
       registry: harbor.wieman.cloud
       repository: tools/rconcli
-      version: 1.0.0-image-build-pipeline-4d889d0
+      version: 1.0.0-image-build-pipeline-ed2c454
