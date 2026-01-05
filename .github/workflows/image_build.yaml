@@ -63,7 +63,7 @@ jobs:
         echo "Last commit message: $LAST_MSG"
 
         # Run when version changes
-        if [[ "$LAST_MSG" == "UPDATE: versions"* ]]; then
+        if [[ "$LAST_MSG" == "UPDATE: reference versions in wiecloud/chart/values.yaml"* ]]; then
           echo "Last commit was version change, running build pipeline"
           echo "skip=false" >> "$GITHUB_OUTPUT"
 

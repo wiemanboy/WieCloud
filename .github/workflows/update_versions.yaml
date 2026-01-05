@@ -100,5 +100,5 @@ jobs:
       run: |
         set -e
 
-        git commit -a -m "UPDATE: versions for changed charts [${{ steps.update.outputs.tag }}]" || true
+        git commit -a -m "UPDATE: reference versions in wiecloud/chart/values.yaml [${{ steps.update.outputs.tag }}]" || true
         git push origin HEAD:${GITHUB_HEAD_REF}
