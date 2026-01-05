@@ -46,6 +46,8 @@ jobs:
     - name: Check for version change
       shell: bash
       run: |
+        set -e
+
         # Make sure no production images are overwritten
         echo "Checking for version change"
         git fetch origin master
@@ -74,15 +76,11 @@ jobs:
         echo "Version not changed, skipping build"
         echo "skip=true" >> "$GITHUB_OUTPUT"
 
-    - name: Set up Helm
-      if: steps.check_commit.outputs.skip == 'false'
-      run: |
-        echo "Installing helm 3"
-        curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-
     - name: Registry Login
       if: steps.check_commit.outputs.skip == 'false'
       run: |
+        set -e
+
         echo "Login in to ${{ inputs.registry }}"
         helm registry login ${{ inputs.registry }} --username ${{ secrets.registry_username }} --password ${{ secrets.registry_password }}
 

@@ -36,6 +36,8 @@ jobs:
     - name: Check if workflow should run
       id: check_commit
       run: |
+        set -e
+
         LAST_MSG=$(git log -1 --pretty=%s)
         echo "Last commit message: $LAST_MSG"
         echo 
@@ -69,6 +71,8 @@ jobs:
       id: update
       if: steps.check_commit.outputs.skip != 'true'
       run: |
+        set -e
+
         TAG=""
         # If the PR is a draft, use the branch name as tag
         if [ "${{ github.event.pull_request.draft }}" = "true" ]; then
@@ -86,11 +90,15 @@ jobs:
     - name: Set credentials
       if: steps.check_commit.outputs.skip != 'true'
       run: |
+        set -e
+
         git config user.name "WiemanBot"
         git config user.email "WiemanBot@runner.wieman.cloud"
 
     - name: Commit changes
       if: steps.check_commit.outputs.skip != 'true'
       run: |
+        set -e
+        
         git commit -a -m "UPDATE: versions for changed charts [${{ steps.update.outputs.tag }}]"
         git push origin HEAD:${GITHUB_HEAD_REF}

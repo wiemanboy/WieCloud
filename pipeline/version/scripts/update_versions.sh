@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+
 TAG=""
 
 while [[ $# -gt 0 ]]; do

@@ -46,6 +46,8 @@ jobs:
     - name: Check for version change
       shell: bash
       run: |
+        set -e
+        
         # Make sure no production images are overwritten
         echo "Checking for version change"
         git fetch origin master
@@ -77,6 +79,7 @@ jobs:
     - name: Registry Login
       if: steps.check_commit.outputs.skip == 'false'
       run: |
+        set -e
         echo "Login in to ${{ inputs.registry }}"
         docker login ${{ inputs.registry }} --username ${{ secrets.registry_username }} --password ${{ secrets.registry_password }}
 
