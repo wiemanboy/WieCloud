@@ -5,7 +5,7 @@ on:
     branches:
     - master
     paths:
-    - applications/minecraft/tools/rconcli**
+    - applications/minecraft/rconcli/image**
     - .github/workflows/image_build_rconcli.yaml
     - .github/workflows/image_build.yaml
     - pipeline/build/scripts/image/**
@@ -16,7 +16,7 @@ jobs:
     uses: ./.github/workflows/image_build.yaml
     with:
       image_name: rconcli
-      image_path: applications/minecraft/tools/rconcli
+      image_path: applications/minecraft/rconcli/image
       registry: harbor.wieman.cloud
       repository: tools
     secrets:
