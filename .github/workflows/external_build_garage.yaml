@@ -20,15 +20,15 @@ jobs:
       run: |
         set -e
 
-        echo "Login in to ${{ inputs.registry }}"
-        helm registry login ${{ inputs.registry }} --username ${{ secrets.registry_username }} --password ${{ secrets.registry_password }}
+        echo "Login in to harbor.wieman.cloud"
+        helm registry login harbor.wieman.cloud --username ${{ secrets.OCI_REGISTRY_USERNAME }} --password ${{ secrets.OCI_REGISTRY_PASSWORD }}
 
     - name: Package Helm Chart
       id: package
       run: |
         set -e
 
-        cmd="bash ./pipeline/build/scripts/helm/helm_package.sh --path ${{ inputs.chart_path }}"
+        cmd="bash ./pipeline/build/scripts/helm/helm_package.sh --path garage/scripts/helm/garage"
         output=$($cmd)
 
         chart_path=$(echo "$output" | grep -oE '/[^ ]+\.tgz')
@@ -37,4 +37,4 @@ jobs:
 
     - name: Push Helm Chart
       if: steps.check_commit.outputs.skip == 'false'
-      run: bash ./pipeline/build/scripts/helm/helm_push.sh --package ${{ steps.package.outputs.chart_package_path }} --registry ${{ inputs.registry }} --repository ${{ inputs.repository }}
+      run: bash ./pipeline/build/scripts/helm/helm_push.sh --package ${{ steps.package.outputs.chart_package_path }} --registry harbor.wieman.cloud --repository external
