@@ -1,0 +1,40 @@
+name: Build garage
+
+on:
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  package_and_push:
+    name: ${{ inputs.chart_name }} Helm Chart
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v4
+
+    - name: Clone
+      run: git clone https://git.deuxfleurs.fr/Deuxfleurs/garage
+
+    - name: Registry Login
+      run: |
+        set -e
+
+        echo "Login in to ${{ inputs.registry }}"
+        helm registry login ${{ inputs.registry }} --username ${{ secrets.registry_username }} --password ${{ secrets.registry_password }}
+
+    - name: Package Helm Chart
+      id: package
+      run: |
+        set -e
+
+        cmd="bash ./pipeline/build/scripts/helm/helm_package.sh --path ${{ inputs.chart_path }}"
+        output=$($cmd)
+
+        chart_path=$(echo "$output" | grep -oE '/[^ ]+\.tgz')
+        echo "Packaged chart path: $chart_path"
+        echo "chart_package_path=$chart_path" >> "$GITHUB_OUTPUT"
+
+    - name: Push Helm Chart
+      if: steps.check_commit.outputs.skip == 'false'
+      run: bash ./pipeline/build/scripts/helm/helm_push.sh --package ${{ steps.package.outputs.chart_package_path }} --registry ${{ inputs.registry }} --repository ${{ inputs.repository }}
