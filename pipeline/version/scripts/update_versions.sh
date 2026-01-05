@@ -33,6 +33,8 @@ done <<< "$EDITED_CHARTS"
 DIFF=$(git diff FETCH_HEAD...HEAD --name-only | grep -E '^(infrastructure|applications)/.*/image/')
 EDITED_IMAGES=$(printf '%s\n' "$DIFF"| sed 's|\(.*\/image\)/.*|\1|' | sort -u)
 
+echo $EDITED_IMAGES
+
 while read -r IMAGE_PATH; do
   IFS='/' read -r -a PARTS <<< "$IMAGE_PATH"
   IMAGE_NAME="${PARTS[-1]}"
