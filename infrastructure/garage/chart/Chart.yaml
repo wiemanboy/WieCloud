@@ -5,4 +5,4 @@ version: 0.0.0
 dependencies:
 - name: garage
   version: 0.9.1
-  repository: https://harbor.wieman.cloud/external
+  repository: oci://harbor.wieman.cloud/external
