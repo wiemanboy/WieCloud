@@ -28,6 +28,16 @@ jobs:
       run: |
         set -e
 
+        ls
+        echo -> garage
+        ls garage
+        echo -> garage/scripts
+        ls garage/scripts
+        echp -> garage/scripts/helm
+        ls garage/scripts/helm
+        echo -> garage/scripts/helm/garage
+        ls garage/scripts/helm/garage
+
         cmd="bash ./pipeline/build/scripts/helm/helm_package.sh --path garage/scripts/helm/garage"
         output=$($cmd)
 
