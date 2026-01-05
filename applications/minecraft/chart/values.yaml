@@ -5,6 +5,12 @@ environment:
     listener: web-example
     namespace: example
 
+rconcli:
+  image: 
+    registry: example.com
+    repository: tools/rconcli
+    version: 0.0.0
+
 minecraft:
   minecraftServer:
     eula: true

@@ -64,6 +64,13 @@ infrastructure:
     deploy: true
     version: 0.1.1
 
+images:
+  rconcli:
+    image: 
+      registry: harbor.wieman.cloud
+      repository: tools/rconcli
+      version: 1.0.0
+
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/infrastructure
   defaults:
@@ -74,4 +81,3 @@ infrastructure:
         selfHeal: true
       syncOptions:
       - CreateNamespace=true
-

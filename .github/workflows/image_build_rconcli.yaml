@@ -1,12 +1,12 @@
-name: Build rcon-cli
+name: Build rconcli
 
 on:
   pull_request:
     branches:
     - master
     paths:
-    - applications/minecraft/tools/rcon-cli**
-    - .github/workflows/image_build_rcon-cli.yaml
+    - applications/minecraft/tools/rconcli**
+    - .github/workflows/image_build_rconcli.yaml
     - .github/workflows/image_build.yaml
     - pipeline/build/scripts/image/**
 
@@ -15,8 +15,8 @@ jobs:
     name: Build
     uses: ./.github/workflows/image_build.yaml
     with:
-      image_name: rcon-cli
-      image_path: applications/minecraft/tools/rcon-cli
+      image_name: rconcli
+      image_path: applications/minecraft/tools/rconcli
       registry: harbor.wieman.cloud
       repository: tools
     secrets:
