@@ -36,5 +36,4 @@ jobs:
         echo "chart_package_path=$chart_path" >> "$GITHUB_OUTPUT"
 
     - name: Push Helm Chart
-      if: steps.check_commit.outputs.skip == 'false'
       run: bash ./pipeline/build/scripts/helm/helm_push.sh --package ${{ steps.package.outputs.chart_package_path }} --registry harbor.wieman.cloud --repository external
