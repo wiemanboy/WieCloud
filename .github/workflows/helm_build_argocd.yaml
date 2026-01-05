@@ -1,0 +1,26 @@
+name: Build argocd
+
+on:
+  pull_request:
+    branches:
+    - master
+    paths:
+    - infrastructure/argocd/chart**
+    - .github/workflows/helm_build_argocd.yaml
+    - .github/workflows/helm_build.yaml
+    - pipeline/build/scripts/helm/**
+
+jobs:
+  build:
+    name: Build
+    uses: ./.github/workflows/helm_build.yaml
+    with:
+      chart_name: argocd
+      chart_path: infrastructure/argocd/chart
+      registry: oci://harbor.wieman.cloud
+      repository: infrastructure
+    secrets:
+      registry_username: ${{ secrets.OCI_REGISTRY_USERNAME }}
+      registry_password: ${{ secrets.OCI_REGISTRY_PASSWORD }}
+      app_client_id: ${{ secrets.APP_CLIENT_ID }}
+      app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
