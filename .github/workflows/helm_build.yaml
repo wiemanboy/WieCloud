@@ -65,7 +65,7 @@ jobs:
       run: |
         set -e
 
-        if [ "$EXTERNAL" = "true" ]; then
+        if [ ${{ inputs.external }} = "true" ]; then
           echo "External build, running build pipeline"
           echo "skip=false" >> "$GITHUB_OUTPUT"
           exit 0
