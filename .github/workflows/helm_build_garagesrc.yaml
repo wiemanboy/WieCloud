@@ -3,7 +3,7 @@ name: Build garagesrc
 on:
   pull_request:
     branches:
-      - master
+    - master
     # paths:
     #   - infrastructure/garagesrc/chart**
     #   - .github/workflows/helm_build_garagesrc.yaml
@@ -16,14 +16,14 @@ jobs:
     outputs:
       garage_path: ${{ steps.clone.outputs.garage_path }}
     steps:
-      - name: Checkout this repository
-        uses: actions/checkout@v3
+    - name: Checkout this repository
+      uses: actions/checkout@v3
 
-      - name: Clone garage repo
-        id: clone
-        run: |
-          git clone https://$GIT_TOKEN@git.deuxfleurs.fr/Deuxfleurs/garage garage-repo
-          echo "garage_path=$(pwd)/garage-repo" >> $GITHUB_OUTPUT
+    - name: Clone garage repo
+      id: clone
+      run: |
+        git clone https://$GIT_TOKEN@git.deuxfleurs.fr/Deuxfleurs/garage garage-repo
+        echo "garage_path=$(pwd)/garage-repo" >> $GITHUB_OUTPUT
 
   build:
     needs: prepare
@@ -33,6 +33,7 @@ jobs:
       chart_path: garage/scripts/helm/garage
       registry: oci://harbor.wieman.cloud
       repository: src
+      skip_version_check: true
     secrets:
       registry_username: ${{ secrets.OCI_REGISTRY_USERNAME }}
       registry_password: ${{ secrets.OCI_REGISTRY_PASSWORD }}

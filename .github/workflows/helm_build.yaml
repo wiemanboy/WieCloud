@@ -19,6 +19,11 @@ on:
         description: "Repository name in the OCI registry"
         required: true
         type: string
+      skip_version_check:
+        description: "Skip version check for building src wiecloud/chart/values.yaml"
+        required: false
+        default: false
+        type: boolean
     secrets:
       registry_username:
         description: "Username for the OCI registry"
@@ -44,6 +49,7 @@ jobs:
         fetch-depth: 2
 
     - name: Check for version change
+      if: ${{ inputs.skip_version_check }} == false
       shell: bash
       run: |
         set -e
