@@ -33,7 +33,7 @@ jobs:
       chart_path: garage/scripts/helm/garage
       registry: oci://harbor.wieman.cloud
       repository: src
-      skip_version_check: true
+      external: true
     secrets:
       registry_username: ${{ secrets.OCI_REGISTRY_USERNAME }}
       registry_password: ${{ secrets.OCI_REGISTRY_PASSWORD }}

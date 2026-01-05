@@ -19,8 +19,8 @@ on:
         description: "Repository name in the OCI registry"
         required: true
         type: string
-      skip_version_check:
-        description: "Skip version check for building src images"
+      external:
+        description: "External image don't do version checks"
         required: false
         default: false
         type: boolean
@@ -49,7 +49,7 @@ jobs:
         fetch-depth: 2
 
     - name: Check for version change
-      if: ${{ inputs.skip_version_check == false }}
+      if: ${{ inputs.external == true }}
       shell: bash
       run: |
         set -e
@@ -60,6 +60,7 @@ jobs:
         git diff origin/master -- ${{ inputs.chart_path }}/Chart.yaml | grep +version || $(echo "Version not updated, exiting" && exit 1)
 
     - name: Check if workflow should run
+      if: ${{ inputs.external == true }}
       id: check_commit
       shell: bash
       run: |
