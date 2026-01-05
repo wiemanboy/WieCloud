@@ -82,7 +82,7 @@ jobs:
 
     - name: Build image
       if: steps.check_commit.outputs.skip == 'false'
-      id: package
+      id: build
       run: |
         set -e
         echo ${{ steps.check_commit.outputs.tag }}
