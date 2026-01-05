@@ -22,8 +22,7 @@ jobs:
     - name: Clone garage repo
       id: clone
       run: |
-        git clone https://$GIT_TOKEN@git.deuxfleurs.fr/Deuxfleurs/garage garage-repo
-        echo "garage_path=$(pwd)/garage-repo" >> $GITHUB_OUTPUT
+        git clone https://git.deuxfleurs.fr/Deuxfleurs/garage
 
   build:
     needs: prepare
