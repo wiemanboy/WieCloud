@@ -49,7 +49,7 @@ jobs:
         fetch-depth: 2
 
     - name: Check for version change
-      if: ${{ inputs.skip_version_check }} == 'false'
+      if: inputs.skip_version_check == 'false'
       shell: bash
       run: |
         set -e
