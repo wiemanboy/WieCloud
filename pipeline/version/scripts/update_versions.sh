@@ -15,16 +15,30 @@ while [[ $# -gt 0 ]]; do
 done
 
 DIFF=$(git diff FETCH_HEAD...HEAD --name-only | grep -E '^(infrastructure|applications)/.*/chart/')
-EDITED=$(printf '%s\n' "$DIFF"| sed 's|\(.*\/chart\)/.*|\1|' | sort -u)
+EDITED_CHARTS=$(printf '%s\n' "$DIFF"| sed 's|\(.*\/chart\)/.*|\1|' | sort -u)
 
 while read -r CHART_PATH; do
-  IFS='/' read -r PROJECT CHART_NAME _ <<< "$CHART_PATH"
+  IFS='/' read -r _ CHART_NAME _ <<< "$CHART_PATH"
 
   echo $CHART_PATH
-bash ./pipeline/version/scripts/update_version.sh \
+bash ./pipeline/version/scripts/update_chart_version.sh \
   --path "$CHART_PATH" \
-  --project "$PROJECT" \
   --name "$CHART_NAME" \
   --tag "$TAG" \
   < /dev/null
-done <<< "$EDITED"
+done <<< "$EDITED_CHARTS"
+
+DIFF=$(git diff FETCH_HEAD...HEAD --name-only | grep -E '^(infrastructure|applications)/.*/image/')
+EDITED_IMAGES=$(printf '%s\n' "$DIFF"| sed 's|\(.*\/image\)/.*|\1|' | sort -u)
+
+while read -r IMAGE_PATH; do
+  IFS='/' read -r -a PARTS <<< "$IMAGE_PATH"
+  IMAGE_NAME="${PARTS[-1]}"
+
+  echo $IMAGE_PATH
+bash ./pipeline/version/scripts/update_image_version.sh \
+  --path "$IMAGE_PATH" \
+  --name "$IMAGE_NAME" \
+  --tag "$TAG" \
+  < /dev/null
+done <<< "$EDITED_IMAGES"
