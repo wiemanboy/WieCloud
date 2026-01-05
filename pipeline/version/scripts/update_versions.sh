@@ -30,6 +30,8 @@ bash ./pipeline/version/scripts/update_chart_version.sh \
   < /dev/null
 done <<< "$EDITED_CHARTS"
 
+echo "all charts edited"
+
 DIFF=$(git diff FETCH_HEAD...HEAD --name-only | grep -E '^(infrastructure|applications)/.*/image/')
 
 echo $DIFF
