@@ -1,24 +1,24 @@
-name: Build minecraft
+name: Build keycloak
 
 on:
   pull_request:
     branches:
     - master
     paths:
-    - applications/minecraft/chart**
-    - .github/workflows/build_minecraft.yaml
-    - .github/workflows/build.yaml
-    - pipeline/build/scripts/**
+    - infrastructure/keycloak/chart**
+    - .github/workflows/helm_build_keycloak.yaml
+    - .github/workflows/helm_build.yaml
+    - pipeline/build/scripts/helm/**
 
 jobs:
   build:
     name: Build
-    uses: ./.github/workflows/build.yaml
+    uses: ./.github/workflows/helm_build.yaml
     with:
-      chart_name: minecraft
-      chart_path: applications/minecraft/chart
+      chart_name: keycloak
+      chart_path: infrastructure/keycloak/chart
       registry: oci://harbor.wieman.cloud
-      repository: applications
+      repository: infrastructure
     secrets:
       registry_username: ${{ secrets.OCI_REGISTRY_USERNAME }}
       registry_password: ${{ secrets.OCI_REGISTRY_PASSWORD }}

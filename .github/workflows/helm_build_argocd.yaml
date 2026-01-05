@@ -1,22 +1,22 @@
-name: Build traefik
+name: Build argocd
 
 on:
   pull_request:
     branches:
     - master
     paths:
-    - infrastructure/traefik/chart**
-    - .github/workflows/build_traefik.yaml
-    - .github/workflows/build.yaml
-    - pipeline/build/scripts/**
+    - infrastructure/argocd/chart**
+    - .github/workflows/helm_build_argocd.yaml
+    - .github/workflows/helm_build.yaml
+    - pipeline/build/scripts/helm/**
 
 jobs:
   build:
     name: Build
-    uses: ./.github/workflows/build.yaml
+    uses: ./.github/workflows/helm_build.yaml
     with:
-      chart_name: traefik
-      chart_path: infrastructure/traefik/chart
+      chart_name: argocd
+      chart_path: infrastructure/argocd/chart
       registry: oci://harbor.wieman.cloud
       repository: infrastructure
     secrets:

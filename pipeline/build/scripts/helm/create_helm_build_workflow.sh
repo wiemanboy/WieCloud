@@ -51,8 +51,8 @@ fi
 CHART_NAME=$(yq '.name' $CHART_YAML )
 
 # Read template and replace placeholders
-TEMPLATE_PATH="$(dirname "$0")/build_<chart_name>.yaml"
-WORKFLOW_PATH=".github/workflows/build_${CHART_NAME}.yaml"
+TEMPLATE_PATH="$(dirname "$0")/helm_build_<chart_name>.yaml"
+WORKFLOW_PATH=".github/workflows/helm_build_${CHART_NAME}.yaml"
 
 WORKFLOW_CONTENT=$(cat "$TEMPLATE_PATH" \
   | sed "s|<chart_name>|$CHART_NAME|g" \

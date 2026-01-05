@@ -6,14 +6,14 @@ on:
     - master
     paths:
     - <chart_path>**
-    - .github/workflows/build_<chart_name>.yaml
-    - .github/workflows/build.yaml
-    - pipeline/build/scripts/**
+    - .github/workflows/helm_build_<chart_name>.yaml
+    - .github/workflows/helm_build.yaml
+    - pipeline/build/scripts/helm/**
 
 jobs:
   build:
     name: Build
-    uses: ./.github/workflows/build.yaml
+    uses: ./.github/workflows/helm_build.yaml
     with:
       chart_name: <chart_name>
       chart_path: <chart_path>

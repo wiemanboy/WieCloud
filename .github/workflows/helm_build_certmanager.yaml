@@ -1,22 +1,22 @@
-name: Build argocd
+name: Build certmanager
 
 on:
   pull_request:
     branches:
     - master
     paths:
-    - infrastructure/argocd/chart**
-    - .github/workflows/build_argocd.yaml
-    - .github/workflows/build.yaml
-    - pipeline/build/scripts/**
+    - infrastructure/certmanager/chart**
+    - .github/workflows/helm_build_certmanager.yaml
+    - .github/workflows/helm_build.yaml
+    - pipeline/build/scripts/helm/**
 
 jobs:
   build:
     name: Build
-    uses: ./.github/workflows/build.yaml
+    uses: ./.github/workflows/helm_build.yaml
     with:
-      chart_name: argocd
-      chart_path: infrastructure/argocd/chart
+      chart_name: certmanager
+      chart_path: infrastructure/certmanager/chart
       registry: oci://harbor.wieman.cloud
       repository: infrastructure
     secrets:

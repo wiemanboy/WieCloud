@@ -1,22 +1,22 @@
-name: Build longhorn
+name: Build harbor
 
 on:
   pull_request:
     branches:
     - master
     paths:
-    - infrastructure/longhorn/chart**
-    - .github/workflows/build_longhorn.yaml
-    - .github/workflows/build.yaml
-    - pipeline/build/scripts/**
+    - infrastructure/harbor/chart**
+    - .github/workflows/helm_build_harbor.yaml
+    - .github/workflows/helm_build.yaml
+    - pipeline/build/scripts/helm/**
 
 jobs:
   build:
     name: Build
-    uses: ./.github/workflows/build.yaml
+    uses: ./.github/workflows/helm_build.yaml
     with:
-      chart_name: longhorn
-      chart_path: infrastructure/longhorn/chart
+      chart_name: harbor
+      chart_path: infrastructure/harbor/chart
       registry: oci://harbor.wieman.cloud
       repository: infrastructure
     secrets:
