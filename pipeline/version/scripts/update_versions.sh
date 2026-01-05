@@ -31,6 +31,9 @@ bash ./pipeline/version/scripts/update_chart_version.sh \
 done <<< "$EDITED_CHARTS"
 
 DIFF=$(git diff FETCH_HEAD...HEAD --name-only | grep -E '^(infrastructure|applications)/.*/image/')
+
+echo $DIFF
+
 EDITED_IMAGES=$(printf '%s\n' "$DIFF"| sed 's|\(.*\/image\)/.*|\1|' | sort -u)
 
 echo $EDITED_IMAGES
