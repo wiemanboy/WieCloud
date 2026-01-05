@@ -1,7 +1,7 @@
 apiVersion: v2
 name: harbor
 type: application
-version: 1.0.0
+version: 1.0.1
 dependencies:
 - name: harbor
   version: 1.18.1
