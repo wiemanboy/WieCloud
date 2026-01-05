@@ -20,7 +20,7 @@ on:
         required: true
         type: string
       skip_version_check:
-        description: "Skip version check for building src wiecloud/chart/values.yaml"
+        description: "Skip version check for building src images"
         required: false
         default: false
         type: boolean
@@ -49,7 +49,7 @@ jobs:
         fetch-depth: 2
 
     - name: Check for version change
-      if: ${{ inputs.skip_version_check }} == false
+      if: ${{ inputs.skip_version_check }} == 'false'
       shell: bash
       run: |
         set -e
