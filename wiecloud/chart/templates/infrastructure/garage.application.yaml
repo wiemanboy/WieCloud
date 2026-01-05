@@ -13,7 +13,7 @@ spec:
       values: |
         environment: {{ toYaml .Values.environment | nindent 10 }}
   destination:
-    namespace: gateway
+    namespace: garage
     server: {{ .Values.infrastructure.server }}
   {{- toYaml .Values.infrastructure.defaults | nindent 2 }}
 {{- end }}
