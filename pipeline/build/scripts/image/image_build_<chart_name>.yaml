@@ -1,0 +1,26 @@
+name: Build <image_name>
+
+on:
+  pull_request:
+    branches:
+    - master
+    paths:
+    - <image_path>**
+    - .github/workflows/image_build_<image_name>.yaml
+    - .github/workflows/image_build.yaml
+    - pipeline/build/scripts/image/**
+
+jobs:
+  build:
+    name: Build
+    uses: ./.github/workflows/build.yaml
+    with:
+      image_name: <image_name>
+      image_path: <image_path>
+      registry: <registry>
+      repository: <repository>
+    secrets:
+      registry_username: ${{ secrets.OCI_REGISTRY_USERNAME }}
+      registry_password: ${{ secrets.OCI_REGISTRY_PASSWORD }}
+      app_client_id: ${{ secrets.APP_CLIENT_ID }}
+      app_private_key: ${{ secrets.APP_PRIVATE_KEY }}

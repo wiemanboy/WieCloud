@@ -1,12 +1,14 @@
 #!/bin/bash
-CHART_PATH=""
+set -e
+
+IMAGE_PATH=""
 REGISTRY=""
 REPOSITORY=""
 
 while [[ $# -gt 0 ]]; do
   case $1 in
     --path)
-      CHART_PATH="$2"
+      IMAGE_PATH="$2"
       shift 2
       ;;
     --registry)
@@ -25,7 +27,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 missing=()
-[[ -z "$CHART_PATH" ]] && missing+=("--path")
+[[ -z "$IMAGE_PATH" ]] && missing+=("--path")
 [[ -z "$REGISTRY" ]] && missing+=("--registry")
 [[ -z "$REPOSITORY" ]] && missing+=("--repository")
 
@@ -35,26 +37,26 @@ if [ ${#missing[@]} -ne 0 ]; then
   exit 1
 fi
 
-echo "Creating workflow for Helm chart at path: ${CHART_PATH}"
+echo "Creating workflow for image at path: ${IMAGE_PATH}"
 
 
-# Find Chart.yaml in the provided chart path
-CHART_YAML="${CHART_PATH}/Chart.yaml"
-if [[ ! -f "$CHART_YAML" ]]; then
-  echo "Chart.yaml not found at $CHART_YAML"
+# Find Image.yaml in the provided image path
+IMAGE_YAML="${IMAGE_PATH}/Image.yaml"
+if [[ ! -f "$IMAGE_YAML" ]]; then
+  echo "Image.yaml not found at $IMAGE_YAML"
   exit 1
 fi
 
 # Extract chart name
-CHART_NAME=$(yq '.name' $CHART_YAML )
+IMAGE_NAME=$(yq '.name' $IMAGE_YAML )
 
 # Read template and replace placeholders
-TEMPLATE_PATH="$(dirname "$0")/build_<chart_name>.yaml"
-WORKFLOW_PATH=".github/workflows/build_${CHART_NAME}.yaml"
+TEMPLATE_PATH="$(dirname "$0")/image_build_<chart_name>.yaml"
+WORKFLOW_PATH=".github/workflows/image_build_${IMAGE_NAME}.yaml"
 
 WORKFLOW_CONTENT=$(cat "$TEMPLATE_PATH" \
-  | sed "s|<chart_name>|$CHART_NAME|g" \
-  | sed "s|<chart_path>|$CHART_PATH|g" \
+  | sed "s|<image_name>|$IMAGE_NAME|g" \
+  | sed "s|<image_path>|$IMAGE_PATH|g" \
   | sed "s|<registry>|$REGISTRY|g" \
   | sed "s|<repository>|$REPOSITORY|g" \
 )
