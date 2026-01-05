@@ -31,13 +31,13 @@ jobs:
         echo "-> garage"
         ls garage
         echo "-> garage/scripts"
-        ls garage/scripts
-        echo "-> garage/scripts/helm"
+        ls garage/script
+        echo "-> garage/script/helm"
         ls garage/scripts/helm
         echo "-> garage/scripts/helm/garage"
         ls garage/scripts/helm/garage
 
-        cmd="bash ./pipeline/build/scripts/helm/helm_package.sh --path garage/scripts/helm/garage"
+        cmd="bash ./pipeline/build/scripts/helm/helm_package.sh --path garage/script/helm/garage"
         output=$($cmd)
 
         chart_path=$(echo "$output" | grep -oE '/[^ ]+\.tgz')
