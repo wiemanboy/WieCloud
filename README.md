@@ -4,7 +4,7 @@
 
 ### Automation
 
-- [ ] Automated Dockerfile builds
+- [ ] Add pipeline check for wiecloud chart template
 
 ### Storage
 

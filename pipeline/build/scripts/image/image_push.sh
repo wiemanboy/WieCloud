@@ -1,12 +1,14 @@
 #!/bin/bash
-PACKAGE=""
+set -e
+
+IMAGE=""
 REGISTRY=""
 REPOSITORY=""
 
 while [[ $# -gt 0 ]]; do
   case $1 in
-    --package)
-      PACKAGE="$2"
+    --image)
+      IMAGE="$2"
       shift 2
       ;;
     --registry)
@@ -25,7 +27,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 missing=()
-[[ -z "$PACKAGE" ]] && missing+=("--package")
+[[ -z "$IMAGE" ]] && missing+=("--image")
 [[ -z "$REGISTRY" ]] && missing+=("--registry")
 [[ -z "$REPOSITORY" ]] && missing+=("--repository")
 
@@ -34,5 +36,6 @@ if [ ${#missing[@]} -ne 0 ]; then
   exit 1
 fi
 
-echo "Pushing Helm chart package: ${REGISTRY}/${REPOSITORY}/${PACKAGE}"
-helm push $PACKAGE $REGISTRY/$REPOSITORY
+echo "Pushing docker image: ${REGISTRY}/${REPOSITORY}/${IMAGE}"
+docker tag $IMAGE "${REGISTRY}/${REPOSITORY}/${IMAGE}"
+docker push "${REGISTRY}/${REPOSITORY}/${IMAGE}"

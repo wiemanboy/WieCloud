@@ -13,7 +13,7 @@ spec:
       restartPolicy: Never
       containers:
       - name: prevent-sync
-        image: harbor.wieman.cloud/tools/rcon-cli:1.0.0
+        image: {{ .Values.rconcli.image.registry }}/{{ .Values.rconcli.image.repository }}:{{ .Values.rconcli.image.version }}
         command:
           - sh
           - -c

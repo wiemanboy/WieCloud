@@ -1,22 +1,22 @@
-name: Build certmanager
+name: Build longhorn
 
 on:
   pull_request:
     branches:
     - master
     paths:
-    - infrastructure/certmanager/chart**
-    - .github/workflows/build_certmanager.yaml
-    - .github/workflows/build.yaml
-    - pipeline/build/scripts/**
+    - infrastructure/longhorn/chart**
+    - .github/workflows/helm_build_longhorn.yaml
+    - .github/workflows/helm_build.yaml
+    - pipeline/build/scripts/helm/**
 
 jobs:
   build:
     name: Build
-    uses: ./.github/workflows/build.yaml
+    uses: ./.github/workflows/helm_build.yaml
     with:
-      chart_name: certmanager
-      chart_path: infrastructure/certmanager/chart
+      chart_name: longhorn
+      chart_path: infrastructure/longhorn/chart
       registry: oci://harbor.wieman.cloud
       repository: infrastructure
     secrets:

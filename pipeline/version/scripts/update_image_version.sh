@@ -1,18 +1,15 @@
 #!/bin/bash
+set -e
+
 APP_CHART="./wiecloud/chart"
-CHART_PATH=""
-PROJECT=""
+IMAGE_PATH=""
 NAME=""
 TAG=""
 
 while [[ $# -gt 0 ]]; do
   case $1 in
     --path)
-      CHART_PATH="$2"
-      shift 2
-      ;;
-    --project)
-      PROJECT="$2"
+      IMAGE_PATH="$2"
       shift 2
       ;;
     --name)
@@ -31,8 +28,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 missing=()
-[[ -z "$CHART_PATH" ]] && missing+=("--path")
-[[ -z "$PROJECT" ]] && missing+=("--project")
+[[ -z "$IMAGE_PATH" ]] && missing+=("--path")
 [[ -z "$NAME" ]] && missing+=("--name")
 
 
@@ -43,8 +39,8 @@ fi
 
 [ "$TAG" = "-" ] && TAG=""
 
-VERSION=$( yq .version $CHART_PATH/Chart.yaml )
+VERSION=$( yq .version $IMAGE_PATH/Image.yaml )
 
-echo "Setting chart version ${VERSION}${TAG} for ${NAME}"
+echo "Setting image version ${VERSION}${TAG} for ${NAME}"
 
-sed -i "/${NAME}:/,/version:/ s/^\(\s*version:\s*\).*/\1${VERSION}${TAG}/" $APP_CHART/values.yaml
+sed -i "/rconcli:/,/version:/ s/^\(\s*version:\s*\).*/\1${VERSION}${TAG}/" $APP_CHART/values.yaml

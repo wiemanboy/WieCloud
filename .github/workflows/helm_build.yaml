@@ -46,10 +46,12 @@ jobs:
     - name: Check for version change
       shell: bash
       run: |
+        set -e
+
         # Make sure no production images are overwritten
         echo "Checking for version change"
         git fetch origin master
-        git diff origin/master -- ${{ inputs.chart_path }}/Chart.yaml | grep +version || exit 1
+        git diff origin/master -- ${{ inputs.chart_path }}/Chart.yaml | grep +version || $(echo "Version not updated, exiting" && exit 1)
 
     - name: Check if workflow should run
       id: check_commit
@@ -61,7 +63,7 @@ jobs:
         echo "Last commit message: $LAST_MSG"
 
         # Run when version changes
-        if [[ "$LAST_MSG" == "UPDATE: versions for changed charts"* ]]; then
+        if [[ "$LAST_MSG" == "UPDATE: reference versions in wiecloud/chart/values.yaml"* ]]; then
           echo "Last commit was version change, running build pipeline"
           echo "skip=false" >> "$GITHUB_OUTPUT"
 
@@ -74,15 +76,11 @@ jobs:
         echo "Version not changed, skipping build"
         echo "skip=true" >> "$GITHUB_OUTPUT"
 
-    - name: Set up Helm
-      if: steps.check_commit.outputs.skip == 'false'
-      run: |
-        echo "Installing helm 3"
-        curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-
     - name: Registry Login
       if: steps.check_commit.outputs.skip == 'false'
       run: |
+        set -e
+
         echo "Login in to ${{ inputs.registry }}"
         helm registry login ${{ inputs.registry }} --username ${{ secrets.registry_username }} --password ${{ secrets.registry_password }}
 
@@ -93,7 +91,7 @@ jobs:
         set -e
         echo ${{ steps.check_commit.outputs.tag }}
 
-        cmd="bash ./pipeline/build/scripts/package_chart.sh --path ${{ inputs.chart_path }}"
+        cmd="bash ./pipeline/build/scripts/helm/helm_package.sh --path ${{ inputs.chart_path }}"
         # Add --tag only if outputs.tag is not empty
         if [[ -n "${{ steps.check_commit.outputs.tag }}" ]]; then
           cmd="$cmd --tag ${{ steps.check_commit.outputs.tag }}"
@@ -107,4 +105,4 @@ jobs:
 
     - name: Push Helm Chart
       if: steps.check_commit.outputs.skip == 'false'
-      run: bash ./pipeline/build/scripts/push_chart.sh --package ${{ steps.package.outputs.chart_package_path }} --registry ${{ inputs.registry }} --repository ${{ inputs.repository }}
+      run: bash ./pipeline/build/scripts/helm/helm_push.sh --package ${{ steps.package.outputs.chart_package_path }} --registry ${{ inputs.registry }} --repository ${{ inputs.repository }}

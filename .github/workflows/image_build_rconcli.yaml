@@ -1,0 +1,26 @@
+name: Build rconcli
+
+on:
+  pull_request:
+    branches:
+    - master
+    paths:
+    - applications/minecraft/rconcli/image**
+    - .github/workflows/image_build_rconcli.yaml
+    - .github/workflows/image_build.yaml
+    - pipeline/build/scripts/image/**
+
+jobs:
+  build:
+    name: Build
+    uses: ./.github/workflows/image_build.yaml
+    with:
+      image_name: rconcli
+      image_path: applications/minecraft/rconcli/image
+      registry: harbor.wieman.cloud
+      repository: tools
+    secrets:
+      registry_username: ${{ secrets.OCI_REGISTRY_USERNAME }}
+      registry_password: ${{ secrets.OCI_REGISTRY_PASSWORD }}
+      app_client_id: ${{ secrets.APP_CLIENT_ID }}
+      app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
