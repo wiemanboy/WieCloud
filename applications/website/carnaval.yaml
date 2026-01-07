@@ -52,6 +52,7 @@ spec:
   hostnames:
   - carnaval.wieman.cloud
   - carnaval.lol
+  - www.carnaval.lol
 
   rules:
   - matches:

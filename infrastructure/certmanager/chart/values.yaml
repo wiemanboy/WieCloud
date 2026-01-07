@@ -19,6 +19,7 @@ environment:
       - "jarnowieman.nl"
       - "*.jarnowieman.nl"
       - "carnaval.lol"
+      - "*.carnaval.lol"
       cloudflare:
         email: wiemanboy@gmail.com
         token:
