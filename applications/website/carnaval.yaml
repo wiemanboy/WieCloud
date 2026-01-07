@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: carnaval
-        image: wiemanboy/carnaval:0.0.4
+        image: wiemanboy/carnaval:0.0.5
         ports:
         - containerPort: 80
         resources:
