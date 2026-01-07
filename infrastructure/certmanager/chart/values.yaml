@@ -1,4 +1,4 @@
-environment: 
+environment:
   hostname: example.com
   gateway:
     name: example-gateway
@@ -9,19 +9,21 @@ environment:
         issuer: letsencrypt
         secret: letsencrypt-secret
       hostnames:
-        - "wieman.cloud"
-        - "*.wieman.cloud"
-        - "*.harbor.wieman.cloud"
-        - "wiemanboy.com"
-        - "*.wiemanboy.com"
-        - "jarnowieman.com"
-        - "*.jarnowieman.com"
-        - "jarnowieman.nl"
-        - "*.jarnowieman.nl"
+      - "wieman.cloud"
+      - "*.wieman.cloud"
+      - "*.harbor.wieman.cloud"
+      - "wiemanboy.com"
+      - "*.wiemanboy.com"
+      - "jarnowieman.com"
+      - "*.jarnowieman.com"
+      - "jarnowieman.nl"
+      - "*.jarnowieman.nl"
+      - "carnaval.lol"
+      - "*.carnaval.lol"
       cloudflare:
         email: wiemanboy@gmail.com
         token:
-          secret: 
+          secret:
             name: cloudflare-api-token
             key: api-token
 
