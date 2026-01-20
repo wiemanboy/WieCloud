@@ -51,7 +51,7 @@ jobs:
         # Make sure no production images are overwritten
         echo "Checking for version change"
         git fetch origin master
-        git diff origin/master -- ${{ inputs.image_path }}/Image.yaml | grep +version || exit 1
+        git diff origin/master -- ${{ inputs.image_path }}/Image.yaml | grep +version || (echo "Version not updated, exiting" && exit 1)
 
     - name: Check if workflow should run
       id: check_commit
