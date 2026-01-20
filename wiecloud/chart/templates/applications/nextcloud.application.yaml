@@ -15,6 +15,6 @@ spec:
   destination:
     namespace: nextcloud
     server: {{ .Values.applications.server }}
-  {{- $cfg := merge (dict "project" "nextcloud") .Values.applications.defaults }}
+  {{- $cfg := merge (dict "project" "applications") .Values.applications.defaults }}
   {{- toYaml $cfg | nindent 2 }}
 {{- end }}
