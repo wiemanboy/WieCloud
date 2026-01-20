@@ -1,17 +1,16 @@
-#!/bin/bash
 set -e
 
-IMAGE_PATH=""
-TAG=""
+image_path=""
+tag=""
 
 while [[ $# -gt 0 ]]; do
   case $1 in
     --path)
-      IMAGE_PATH="$2"
+      image_path="$2"
       shift 2
       ;;
     --tag)
-      TAG="-$2"
+      tag="-$2"
       shift 2
       ;;
     *)
@@ -22,17 +21,17 @@ while [[ $# -gt 0 ]]; do
 done
 
 missing=()
-[[ -z "$IMAGE_PATH" ]] && missing+=("--path")
+[[ -z "$image_path" ]] && missing+=("--path")
 
 if [ ${#missing[@]} -ne 0 ]; then
   echo "Error: Missing required parameter(s): ${missing[*]}"
   exit 1
 fi
 
-IMAGE_NAME=$(yq '.name' "$IMAGE_PATH/Image.yaml")
-IMAGE_VERSION=$(yq '.version' "$IMAGE_PATH/Image.yaml")
+image_name=$(yq '.name' "$image_path/Image.yaml")
+image_version=$(yq '.version' "$image_path/Image.yaml")
 
-IMAGE_TAG="${IMAGE_VERSION}${TAG}"
+image_tag="${image_version}${tag}"
 
-echo "Building docker image: $IMAGE_NAME:$IMAGE_TAG"
-docker build $IMAGE_PATH --tag $IMAGE_NAME:$IMAGE_TAG
+echo "Building docker image: $image_name:$image_tag"
+docker build $image_path --tag $image_name:$image_tag

@@ -38,8 +38,8 @@ jobs:
       run: |
         set -e
 
-        LAST_MSG=$(git log -1 --pretty=%s)
-        echo "Last commit message: $LAST_MSG"
+        last_msg=$(git log -1 --pretty=%s)
+        echo "Last commit message: $last_msg"
         echo 
 
         echo "Changed files:"
@@ -59,7 +59,7 @@ jobs:
           exit 0
         fi
 
-        if [[ "$LAST_MSG" == "UPDATE: reference versions in wiecloud/chart/values.yaml"* ]]; then
+        if [[ "$last_msg" == "UPDATE: reference versions in wiecloud/chart/values.yaml"* ]]; then
           echo "Skipping version already up to date"
           echo "skip=true" >> "$GITHUB_OUTPUT"
           exit 0
@@ -73,19 +73,19 @@ jobs:
       run: |
         set -e
 
-        TAG=""
+        tag=""
         # If the PR is a draft, use the branch name as tag
         if [ "${{ github.event.pull_request.draft }}" = "true" ]; then
           # Extract branch name from ref
-          TAG="${GITHUB_HEAD_REF}-$(echo ${GITHUB_SHA} | cut -c1-7)"
+          tag="${GITHUB_HEAD_REF}-$(echo ${GITHUB_SHA} | cut -c1-7)"
         fi
 
         BASE_BRANCH="${GITHUB_BASE_REF:-master}"
         git fetch origin "$BASE_BRANCH" --depth=1
 
-        bash ./pipeline/version/scripts/update_versions.sh --tag "$TAG"
+        bash ./pipeline/version/scripts/update_versions.sh --tag "$tag"
 
-        echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+        echo "tag=$tag" >> "$GITHUB_OUTPUT"
 
     - name: Set credentials
       if: steps.check_commit.outputs.skip != 'true'
