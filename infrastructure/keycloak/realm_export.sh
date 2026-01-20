@@ -1,3 +1,5 @@
+set -e
+
 REALM_NAME=""
 TARGET_DIR=./realm.export.temp
 NAMESPACE=keycloak

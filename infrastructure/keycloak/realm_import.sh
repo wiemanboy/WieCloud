@@ -1,4 +1,5 @@
-#!/bin/bash
+set -e
+
 REALM_NAME=master
 TARGET_DIR=./master-realm.temp
 NAMESPACE=keycloak

@@ -1,4 +1,3 @@
-#!/bin/bash
 set -e
 
 APP_CHART="./wiecloud/chart"
