@@ -6,5 +6,6 @@ environment:
     namespace: example
 
 nextcloud:
-  trustedDomains:
+  nextcloud:
+    trustedDomains:
     - example.com
