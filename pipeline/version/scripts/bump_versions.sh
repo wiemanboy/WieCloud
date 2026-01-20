@@ -10,7 +10,7 @@ find applications infrastructure -type f -path '*/chart/Chart.yaml' | while read
     continue
   fi
 
-  ifs='.' read -r major minor patch <<< "$version"
+  IFS='.' read -r major minor patch <<< "$version"
   new_version="${major}.${minor}.$((patch + 1))"
 
   # Replace version using sed
