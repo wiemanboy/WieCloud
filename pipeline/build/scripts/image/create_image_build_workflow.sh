@@ -46,11 +46,11 @@ if [[ ! -f "$image_yaml" ]]; then
   exit 1
 fi
 
-# Extract chart name
+# Extract image name
 image_name=$(yq '.name' $image_yaml )
 
 # Read template and replace placeholders
-template_path="$(dirname "$0")/image_build_<chart_name>.yaml"
+template_path="$(dirname "$0")/image_build_<image_name>.yaml"
 workflow_path=".github/workflows/image_build_${image_name}.yaml"
 
 workflow_content=$(cat "$template_path" \
