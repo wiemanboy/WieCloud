@@ -38,7 +38,7 @@ infrastructure:
 
   certmanager:
     deploy: true
-    version: 0.1.1
+    version: 0.2.0-make-certmanager-values-dynamic-7c0db54
     certificate:
         email: wiemanboy@gmail.com
         hostnames:
