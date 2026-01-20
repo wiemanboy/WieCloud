@@ -17,7 +17,7 @@ applications:
 
   minecraft:
     deploy: true
-    version: 0.3.0
+    version: 0.3.1
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/applications
@@ -34,35 +34,35 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.1.2
+    version: 0.1.3
 
   certmanager:
     deploy: true
-    version: 0.1.0
+    version: 0.1.1
 
   externaldns:
     deploy: true
-    version: 0.0.3
+    version: 0.0.4
 
   harbor:
     deploy: true
-    version: 1.0.1
+    version: 1.0.2
 
   keycloak:
     deploy: true
-    version: 0.2.2
+    version: 0.2.3
 
   longhorn:
     deploy: true
-    version: 0.0.3
+    version: 0.0.4
 
   metallb:
     deploy: true
-    version: 0.0.5
+    version: 0.0.6
 
   traefik:
     deploy: true
-    version: 0.1.2
+    version: 0.1.3
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/infrastructure
