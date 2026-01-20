@@ -12,6 +12,10 @@ spec:
     helm:
       values: |
         environment: {{ toYaml .Values.environment | nindent 10 }}
+        nextcloud:
+          trustedDomains:
+            - {{ .Values.environment.hostname }}
+
   destination:
     namespace: nextcloud
     server: {{ .Values.applications.server }}
