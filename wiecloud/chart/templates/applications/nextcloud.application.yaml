@@ -14,9 +14,7 @@ spec:
         environment: {{ toYaml .Values.environment | nindent 10 }}
         nextcloud:
           nextcloud:
-            trustedDomains:
-              - next.{{ .Values.environment.hostname }}
-              - nextcloud.kube.home
+            host: next.{{ .Values.environment.hostname }}
 
   destination:
     namespace: nextcloud
