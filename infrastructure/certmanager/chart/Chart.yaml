@@ -1,7 +1,7 @@
 apiVersion: v2
 name: certmanager
 type: application
-version: 0.1.1
+version: 0.2.0
 dependencies:
 - name: cert-manager
   version: 1.19.1

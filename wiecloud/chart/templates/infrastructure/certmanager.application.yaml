@@ -12,6 +12,7 @@ spec:
     helm:
       values: |
         environment: {{ toYaml .Values.environment | nindent 10 }}
+        certificate: {{ toYaml .Values.infrastructure.certmanager.certificate | nindent 10 }}
   destination:
     namespace: gateway
     server: {{ .Values.infrastructure.server }}
