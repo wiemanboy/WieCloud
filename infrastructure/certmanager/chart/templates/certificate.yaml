@@ -4,8 +4,8 @@ metadata:
   name: letsencrypt-certificate
   namespace: {{ .Values.environment.gateway.namespace }}
 spec:
-  secretName: {{ .Values.environment.gateway.dns.certificate.secret }}
-  dnsNames: {{ toYaml .Values.environment.gateway.dns.hostnames | nindent 4 }}
+  secretName: {{ .Values.certificate.secret }}
+  dnsNames: {{ toYaml .Values.certificate.hostnames | nindent 4 }}
   issuerRef:
-    name: {{ .Values.environment.gateway.dns.certificate.issuer }}
+    name: {{ .Values.certificate.issuer }}
     kind: ClusterIssuer

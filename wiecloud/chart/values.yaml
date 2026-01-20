@@ -1,4 +1,4 @@
-environment: 
+environment:
   hostname: wieman.cloud
   gateway:
     name: traefik-gateway
@@ -39,6 +39,19 @@ infrastructure:
   certmanager:
     deploy: true
     version: 0.1.1
+    certificate:
+        email: wiemanboy@gmail.com
+        hostnames:
+          - "wieman.cloud"
+          - "*.wieman.cloud"
+          - "wiemanboy.com"
+          - "*.wiemanboy.com"
+          - "jarnowieman.com"
+          - "*.jarnowieman.com"
+          - "jarnowieman.nl"
+          - "*.jarnowieman.nl"
+          - "carnaval.lol"
+          - "*.carnaval.lol"
 
   externaldns:
     deploy: true
@@ -77,7 +90,7 @@ infrastructure:
 
 images:
   rconcli:
-    image: 
+    image:
       registry: harbor.wieman.cloud
       repository: tools/rconcli
       version: 1.1.1
