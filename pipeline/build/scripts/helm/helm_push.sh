@@ -1,21 +1,21 @@
 set -e
 
-PACKAGE=""
-REGISTRY=""
-REPOSITORY=""
+package=""
+registry=""
+repository=""
 
 while [[ $# -gt 0 ]]; do
   case $1 in
     --package)
-      PACKAGE="$2"
+      package="$2"
       shift 2
       ;;
     --registry)
-      REGISTRY="$2"
+      registry="$2"
       shift 2
       ;;
     --repository)
-      REPOSITORY="$2"
+      repository="$2"
       shift 2
       ;;
     *)
@@ -26,14 +26,14 @@ while [[ $# -gt 0 ]]; do
 done
 
 missing=()
-[[ -z "$PACKAGE" ]] && missing+=("--package")
-[[ -z "$REGISTRY" ]] && missing+=("--registry")
-[[ -z "$REPOSITORY" ]] && missing+=("--repository")
+[[ -z "$package" ]] && missing+=("--package")
+[[ -z "$registry" ]] && missing+=("--registry")
+[[ -z "$repository" ]] && missing+=("--repository")
 
 if [ ${#missing[@]} -ne 0 ]; then
   echo "Error: Missing required parameter(s): ${missing[*]}"
   exit 1
 fi
 
-echo "Pushing Helm chart package: ${REGISTRY}/${REPOSITORY}/${PACKAGE}"
-helm push $PACKAGE $REGISTRY/$REPOSITORY
+echo "Pushing Helm chart package: ${registry}/${repository}/${package}"
+helm push $package $registry/$repository

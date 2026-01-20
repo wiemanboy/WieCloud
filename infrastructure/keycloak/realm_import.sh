@@ -1,10 +1,10 @@
 set -e
 
-REALM_NAME=master
-TARGET_DIR=./master-realm.temp
-NAMESPACE=keycloak
-SECRET_NAME=keycloak-${REALM_NAME}-realm
+realm_name=master
+target_dir=./master-realm.temp
+namespace=keycloak
+secret_name=keycloak-${realm_name}-realm
 
-mkdir -p "$TARGET_DIR"
+mkdir -p "$target_dir"
 
-kubectl get secret "$SECRET_NAME" -n "$NAMESPACE" -o jsonpath='{.data.master-realm\.json}' | base64 -d > "$TARGET_DIR/$REALM_NAME-realm.import.json"
+kubectl get secret "$secret_name" -n "$namespace" -o jsonpath='{.data.master-realm\.json}' | base64 -d > "$target_dir/$realm_name-realm.import.json"

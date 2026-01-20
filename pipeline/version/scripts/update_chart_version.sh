@@ -1,22 +1,22 @@
 set -e
 
-APP_CHART="./wiecloud/chart"
-CHART_PATH=""
-NAME=""
-TAG=""
+app_chart="./wiecloud/chart"
+chart_path=""
+name=""
+tag=""
 
 while [[ $# -gt 0 ]]; do
   case $1 in
     --path)
-      CHART_PATH="$2"
+      chart_path="$2"
       shift 2
       ;;
     --name)
-      NAME="$2"
+      name="$2"
       shift 2
       ;;
     --tag)
-      TAG="-$2"
+      tag="-$2"
       shift 2
       ;;
     *)
@@ -27,8 +27,8 @@ while [[ $# -gt 0 ]]; do
 done
 
 missing=()
-[[ -z "$CHART_PATH" ]] && missing+=("--path")
-[[ -z "$NAME" ]] && missing+=("--name")
+[[ -z "$chart_path" ]] && missing+=("--path")
+[[ -z "$name" ]] && missing+=("--name")
 
 
 if [ ${#missing[@]} -ne 0 ]; then
@@ -36,10 +36,10 @@ if [ ${#missing[@]} -ne 0 ]; then
   exit 1
 fi
 
-[ "$TAG" = "-" ] && TAG=""
+[ "$tag" = "-" ] && tag=""
 
-VERSION=$( yq .version $CHART_PATH/Chart.yaml )
+version=$( yq .version $chart_path/Chart.yaml )
 
-echo "Setting chart version ${VERSION}${TAG} for ${NAME}"
+echo "Setting chart version ${version}${tag} for ${name}"
 
-sed -i "/${NAME}:/,/version:/ s/^\(\s*version:\s*\).*/\1${VERSION}${TAG}/" $APP_CHART/values.yaml
+sed -i "/${name}:/,/version:/ s/^\(\s*version:\s*\).*/\1${version}${tag}/" $app_chart/values.yaml

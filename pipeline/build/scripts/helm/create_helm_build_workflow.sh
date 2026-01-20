@@ -1,21 +1,21 @@
 set -e
 
-CHART_PATH=""
-REGISTRY=""
-REPOSITORY=""
+chart_path=""
+registry=""
+repository=""
 
 while [[ $# -gt 0 ]]; do
   case $1 in
     --path)
-      CHART_PATH="$2"
+      chart_path="$2"
       shift 2
       ;;
     --registry)
-      REGISTRY="$2"
+      registry="$2"
       shift 2
       ;;
     --repository)
-      REPOSITORY="$2"
+      repository="$2"
       shift 2
       ;;
     *)
@@ -26,9 +26,9 @@ while [[ $# -gt 0 ]]; do
 done
 
 missing=()
-[[ -z "$CHART_PATH" ]] && missing+=("--path")
-[[ -z "$REGISTRY" ]] && missing+=("--registry")
-[[ -z "$REPOSITORY" ]] && missing+=("--repository")
+[[ -z "$chart_path" ]] && missing+=("--path")
+[[ -z "$registry" ]] && missing+=("--registry")
+[[ -z "$repository" ]] && missing+=("--repository")
 
 
 if [ ${#missing[@]} -ne 0 ]; then
@@ -36,31 +36,31 @@ if [ ${#missing[@]} -ne 0 ]; then
   exit 1
 fi
 
-echo "Creating workflow for Helm chart at path: ${CHART_PATH}"
+echo "Creating workflow for Helm chart at path: ${chart_path}"
 
 
 # Find Chart.yaml in the provided chart path
-CHART_YAML="${CHART_PATH}/Chart.yaml"
-if [[ ! -f "$CHART_YAML" ]]; then
-  echo "Chart.yaml not found at $CHART_YAML"
+chart_yaml="${chart_path}/Chart.yaml"
+if [[ ! -f "$chart_yaml" ]]; then
+  echo "Chart.yaml not found at $chart_yaml"
   exit 1
 fi
 
 # Extract chart name
-CHART_NAME=$(yq '.name' $CHART_YAML )
+chart_name=$(yq '.name' $chart_yaml )
 
 # Read template and replace placeholders
-TEMPLATE_PATH="$(dirname "$0")/helm_build_<chart_name>.yaml"
-WORKFLOW_PATH=".github/workflows/helm_build_${CHART_NAME}.yaml"
+template_path="$(dirname "$0")/helm_build_<chart_name>.yaml"
+workflow_path=".github/workflows/helm_build_${chart_name}.yaml"
 
-WORKFLOW_CONTENT=$(cat "$TEMPLATE_PATH" \
-  | sed "s|<chart_name>|$CHART_NAME|g" \
-  | sed "s|<chart_path>|$CHART_PATH|g" \
-  | sed "s|<registry>|$REGISTRY|g" \
-  | sed "s|<repository>|$REPOSITORY|g" \
+workflow_content=$(cat "$template_path" \
+  | sed "s|<chart_name>|$chart_name|g" \
+  | sed "s|<chart_path>|$chart_path|g" \
+  | sed "s|<registry>|$registry|g" \
+  | sed "s|<repository>|$repository|g" \
 )
 
 # Write to workflows directory
 mkdir -p .github/workflows
-echo "$WORKFLOW_CONTENT" > "$WORKFLOW_PATH"
-echo "Workflow created at $WORKFLOW_PATH"
+echo "$workflow_content" > "$workflow_path"
+echo "Workflow created at $workflow_path"

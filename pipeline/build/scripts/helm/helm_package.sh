@@ -1,16 +1,16 @@
 set -e
 
-CHART_PATH=""
-TAG=""
+chart_path=""
+tag=""
 
 while [[ $# -gt 0 ]]; do
   case $1 in
     --path)
-      CHART_PATH="$2"
+      chart_path="$2"
       shift 2
       ;;
     --tag)
-      TAG="-$2"
+      tag="-$2"
       shift 2
       ;;
     *)
@@ -21,7 +21,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 missing=()
-[[ -z "$CHART_PATH" ]] && missing+=("--path")
+[[ -z "$chart_path" ]] && missing+=("--path")
 
 if [ ${#missing[@]} -ne 0 ]; then
   echo "Error: Missing required parameter(s): ${missing[*]}"
@@ -29,9 +29,9 @@ if [ ${#missing[@]} -ne 0 ]; then
 fi
 
 
-echo "Building Helm chart at path: ${CHART_PATH}"
-cd ${CHART_PATH} || exit 1
-yq -i ".version = .version + \"$TAG\"" Chart.yaml
+echo "Building Helm chart at path: ${chart_path}"
+cd ${chart_path} || exit 1
+yq -i ".version = .version + \"$tag\"" Chart.yaml
 
 echo "Updating Helm chart dependencies..."
 helm dependency list .

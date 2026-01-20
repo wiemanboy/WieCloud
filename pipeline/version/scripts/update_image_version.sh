@@ -1,22 +1,22 @@
 set -e
 
-APP_CHART="./wiecloud/chart"
-IMAGE_PATH=""
-NAME=""
-TAG=""
+app_chart="./wiecloud/chart"
+image_path=""
+name=""
+tag=""
 
 while [[ $# -gt 0 ]]; do
   case $1 in
     --path)
-      IMAGE_PATH="$2"
+      image_path="$2"
       shift 2
       ;;
     --name)
-      NAME="$2"
+      name="$2"
       shift 2
       ;;
     --tag)
-      TAG="-$2"
+      tag="-$2"
       shift 2
       ;;
     *)
@@ -27,8 +27,8 @@ while [[ $# -gt 0 ]]; do
 done
 
 missing=()
-[[ -z "$IMAGE_PATH" ]] && missing+=("--path")
-[[ -z "$NAME" ]] && missing+=("--name")
+[[ -z "$image_path" ]] && missing+=("--path")
+[[ -z "$name" ]] && missing+=("--name")
 
 
 if [ ${#missing[@]} -ne 0 ]; then
@@ -36,10 +36,10 @@ if [ ${#missing[@]} -ne 0 ]; then
   exit 1
 fi
 
-[ "$TAG" = "-" ] && TAG=""
+[ "$tag" = "-" ] && tag=""
 
-VERSION=$( yq .version $IMAGE_PATH/Image.yaml )
+version=$( yq .version $image_path/Image.yaml )
 
-echo "Setting image version ${VERSION}${TAG} for ${NAME}"
+echo "Setting image version ${version}${tag} for ${name}"
 
-sed -i "/rconcli:/,/version:/ s/^\(\s*version:\s*\).*/\1${VERSION}${TAG}/" $APP_CHART/values.yaml
+sed -i "/rconcli:/,/version:/ s/^\(\s*version:\s*\).*/\1${version}${tag}/" $app_chart/values.yaml
