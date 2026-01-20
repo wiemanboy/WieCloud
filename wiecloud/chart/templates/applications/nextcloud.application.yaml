@@ -16,6 +16,7 @@ spec:
           nextcloud:
             trustedDomains:
               - next.{{ .Values.environment.hostname }}
+              - nextcloud.kube.home
 
   destination:
     namespace: nextcloud
