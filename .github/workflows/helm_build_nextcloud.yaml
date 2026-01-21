@@ -1,0 +1,26 @@
+name: Build nextcloud
+
+on:
+  pull_request:
+    branches:
+    - master
+    paths:
+    - ./applications/nextcloud/chart**
+    - .github/workflows/helm_build_nextcloud.yaml
+    - .github/workflows/helm_build.yaml
+    - pipeline/build/scripts/helm/**
+
+jobs:
+  build:
+    name: Build
+    uses: ./.github/workflows/helm_build.yaml
+    with:
+      chart_name: nextcloud
+      chart_path: ./applications/nextcloud/chart
+      registry: oci://harbor.wieman.cloud
+      repository: applications
+    secrets:
+      registry_username: ${{ secrets.OCI_REGISTRY_USERNAME }}
+      registry_password: ${{ secrets.OCI_REGISTRY_PASSWORD }}
+      app_client_id: ${{ secrets.APP_CLIENT_ID }}
+      app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
