@@ -6,7 +6,7 @@ data:
   oidc-setup.sh: |
     set -e
 
-    client_secret=$(cat /secrets/nextcloud-client-secret)
+    client_secret=$(cat /var/run/secrets/nextcloud-client-secret)
 
     # OIDC configuration:
     php occ config:app:set --type=string --value=0 user_oidc allow_multiple_user_backends
