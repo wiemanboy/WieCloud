@@ -10,4 +10,4 @@ data:
 
     # OIDC configuration:
     php occ config:app:set --type=string --value=0 user_oidc allow_multiple_user_backends
-    php occ user_oidc:provider keycloak --clientid="nextcloud" --clientsecret="${client_secret}" --discoveryuri="{{ .Values.environment.hostname }}/realms/infrastructure/.well-known/openid-configuration"
+    php occ user_oidc:provider {{ .Values.environment.oidc.provider }} --clientid="nextcloud" --clientsecret="${client_secret}" --discoveryuri="{{ .Values.environment.oidc.endpoint }}/.well-known/openid-configuration"

@@ -9,6 +9,9 @@ environment:
         name: basic-auth
         secret:
           name: server-auth-secret
+  oidc:
+    provider: Keycloak
+    endpoint: https://keycloak.wieman.cloud/realms/infrastructure
 
 applications:
   minecraft:

@@ -4,6 +4,9 @@ environment:
     name: example-gateway
     listener: web-example
     namespace: example
+  oidc:
+    provider: Example
+    endpoint: https://example.com
 
 nextcloud:
   nextcloud:
