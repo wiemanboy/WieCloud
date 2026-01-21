@@ -9,6 +9,30 @@ nextcloud:
   nextcloud:
     host: example.com
 
-    # Extra config files created in /var/www/html/config/
-    # ref: https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/config_sample_php_parameters.html#multiple-config-php-file
-    configs:
+    apps:
+    - name: user_oidc
+      enabled: true
+
+  extraVolumes:
+  - volumeMounts:
+    - name: app-install
+      mountPath: /docker-entrypoint-hooks.d/post-installation/app-install.sh
+      subPath: app-install.sh
+      readOnly: true
+    - name: oidc-setup
+      mountPath: /docker-entrypoint-hooks.d/post-installation/oidc-setup.sh
+      subPath: oidc-setup.sh
+      readOnly: true
+    volumes:
+    - name: app-install
+      configMap:
+        name: app-install
+        items:
+        - key: app-install.sh
+          path: app-install.sh
+    - name: oidc-setup
+      configMap:
+        name: oidc-setup
+        items:
+        - key: oidc-setup.sh
+          path: oidc-setup.sh
