@@ -17,12 +17,14 @@ nextcloud:
     - name: app-install
       configMap:
         name: app-install
+        defaultMode: 0755
         items:
         - key: app-install.sh
           path: app-install.sh
     - name: oidc-setup
       configMap:
         name: oidc-setup
+        defaultMode: 0755
         items:
         - key: oidc-setup.sh
           path: oidc-setup.sh
