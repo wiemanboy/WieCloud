@@ -1,0 +1,56 @@
+# https://github.com/TechnitiumSoftware/DnsServer/blob/master/docker-compose.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: technitium
+  name: technitium
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: technitium
+  template:
+    metadata:
+      labels:
+        app: technitium
+    spec:
+      containers:
+      - image: technitium/dns-server:latest
+        name: dns-server
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: technitium
+spec:
+  selector:
+    app: technitium
+  ports:
+    - port: 80
+      targetPort: 5380
+  type: ClusterIP
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: technitium
+spec:
+  parentRefs:
+    - name: {{ .Values.environment.gateway.name }}
+      sectionName: {{ .Values.environment.gateway.listener }}
+      namespace: {{ .Values.environment.gateway.namespace }}
+
+  hostnames:
+    - technitium.{{ .Values.environment.hostname }}
+    
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+
+      backendRefs:
+        - name: technitium
+          namespace: {{ .Release.Namespace }}
+          port: 80
