@@ -1,7 +1,7 @@
 apiVersion: v2
 name: minecraft
 type: application
-version: 0.3.1
+version: 0.3.2
 dependencies:
 - name: minecraft
   version: 5.0.0
