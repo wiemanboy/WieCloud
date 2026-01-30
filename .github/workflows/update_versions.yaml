@@ -5,13 +5,15 @@ on:
     branches:
     - master
     types:
+    - opened
+    - reopened
     - ready_for_review
     - synchronize
     paths:
     - .github/workflows/update_versions.yaml
     - applications/**
     - infrastructure/**
-    - pipeline/build/scripts/**
+    - pipeline/build/scripts/helm/**
 
 jobs:
   update_version:
@@ -31,23 +33,34 @@ jobs:
         ref: ${{ github.head_ref }}
         fetch-depth: 0
 
-    - name: Check if last commit is version update
+    - name: Check if workflow should run
       id: check_commit
       run: |
-        LAST_MSG=$(git log -1 --pretty=%s)
-        echo "Last commit message: $LAST_MSG"
+        set -e
 
-        if git diff --name-only FETCH_HEAD...HEAD | grep -qE '^(infrastructure|applications)/'; then
+        last_msg=$(git log -1 --pretty=%s)
+        echo "Last commit message: $last_msg"
+        echo 
+
+        echo "Changed files:"
+        git fetch origin master
+        git diff --name-only origin/master
+        echo
+
+        if ! git diff --name-only origin/master | grep -qE '^(infrastructure|applications)/'; then
+          echo "Skipping infrastructure or applications are not changed"
           echo "skip=true" >> "$GITHUB_OUTPUT"
           exit 0
         fi
 
         if [[ "${{ github.event.action }}" == "ready_for_review" ]]; then
+          echo "Rerunning for prod version"
           echo "skip=false" >> "$GITHUB_OUTPUT"
           exit 0
         fi
 
-        if [[ "$LAST_MSG" == "UPDATE: versions for changed charts"* ]]; then
+        if [[ "$last_msg" == "UPDATE: reference versions in wiecloud/chart/values.yaml"* ]]; then
+          echo "Skipping version already up to date"
           echo "skip=true" >> "$GITHUB_OUTPUT"
           exit 0
         fi
@@ -58,28 +71,34 @@ jobs:
       id: update
       if: steps.check_commit.outputs.skip != 'true'
       run: |
-        TAG=""
+        set -e
+
+        tag=""
         # If the PR is a draft, use the branch name as tag
         if [ "${{ github.event.pull_request.draft }}" = "true" ]; then
           # Extract branch name from ref
-          TAG="${GITHUB_HEAD_REF}-$(echo ${GITHUB_SHA} | cut -c1-7)"
+          tag="${GITHUB_HEAD_REF}-$(echo ${GITHUB_SHA} | cut -c1-7)"
         fi
 
         BASE_BRANCH="${GITHUB_BASE_REF:-master}"
         git fetch origin "$BASE_BRANCH" --depth=1
 
-        bash ./pipeline/version/scripts/update_versions.sh --tag "$TAG"
+        bash ./pipeline/version/scripts/update_versions.sh --tag "$tag"
 
-        echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+        echo "tag=$tag" >> "$GITHUB_OUTPUT"
 
     - name: Set credentials
       if: steps.check_commit.outputs.skip != 'true'
       run: |
+        set -e
+
         git config user.name "WiemanBot"
         git config user.email "WiemanBot@runner.wieman.cloud"
 
     - name: Commit changes
       if: steps.check_commit.outputs.skip != 'true'
       run: |
-        git commit -a -m "UPDATE: versions for changed charts [${{ steps.update.outputs.tag }}]"
+        set -e
+
+        git commit -a -m "UPDATE: reference versions in wiecloud/chart/values.yaml [${{ steps.update.outputs.tag }}]" || true
         git push origin HEAD:${GITHUB_HEAD_REF}

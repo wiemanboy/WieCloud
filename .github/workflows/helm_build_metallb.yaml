@@ -1,22 +1,22 @@
-name: Build harbor
+name: Build metallb
 
 on:
   pull_request:
     branches:
     - master
     paths:
-    - infrastructure/harbor/chart**
-    - .github/workflows/build_harbor.yaml
-    - .github/workflows/build.yaml
-    - pipeline/build/scripts/**
+    - infrastructure/metallb/chart**
+    - .github/workflows/helm_build_metallb.yaml
+    - .github/workflows/helm_build.yaml
+    - pipeline/build/scripts/helm/**
 
 jobs:
   build:
     name: Build
-    uses: ./.github/workflows/build.yaml
+    uses: ./.github/workflows/helm_build.yaml
     with:
-      chart_name: harbor
-      chart_path: infrastructure/harbor/chart
+      chart_name: metallb
+      chart_path: infrastructure/metallb/chart
       registry: oci://harbor.wieman.cloud
       repository: infrastructure
     secrets:

@@ -1,22 +1,22 @@
-name: Build externaldns
+name: Build traefik
 
 on:
   pull_request:
     branches:
     - master
     paths:
-    - infrastructure/externaldns/chart**
-    - .github/workflows/build_externaldns.yaml
-    - .github/workflows/build.yaml
-    - pipeline/build/scripts/**
+    - infrastructure/traefik/chart**
+    - .github/workflows/helm_build_traefik.yaml
+    - .github/workflows/helm_build.yaml
+    - pipeline/build/scripts/helm/**
 
 jobs:
   build:
     name: Build
-    uses: ./.github/workflows/build.yaml
+    uses: ./.github/workflows/helm_build.yaml
     with:
-      chart_name: externaldns
-      chart_path: infrastructure/externaldns/chart
+      chart_name: traefik
+      chart_path: infrastructure/traefik/chart
       registry: oci://harbor.wieman.cloud
       repository: infrastructure
     secrets:

@@ -1,7 +1,7 @@
 apiVersion: v2
 name: metallb
 type: application
-version: 0.0.3
+version: 0.0.7
 dependencies:
 - name: metallb
   version: 0.15.2

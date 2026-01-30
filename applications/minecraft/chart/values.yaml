@@ -5,6 +5,12 @@ environment:
     listener: web-example
     namespace: example
 
+rconcli:
+  image: 
+    registry: example.com
+    repository: tools/rconcli
+    version: 0.0.0
+
 minecraft:
   minecraftServer:
     eula: true
@@ -12,7 +18,7 @@ minecraft:
     memory: 9G
 
     worldSaveName: test
-    version: "LATEST"
+    version: "1.21.11"
     difficulty: hard
     maxPlayers: 20
     maxBuildHeight: 256
@@ -20,7 +26,7 @@ minecraft:
     viewDistance: 20
     
     type: FORGE
-    vanillaTweaksShareCodes: []
+    vanillaTweaksShareCodes: [AG8Tc8]
     modrinth:
       projects: []
 
@@ -35,6 +41,9 @@ minecraft:
       # List of project slugs or IDs to be included in modpack, useful if mod is incorrectly marked as client side only
       includeMods: []
       parallelDownloads: 4
+
+    rcon:
+      enabled: true
   
   extraEnv:
     ENABLE_WHITELIST: true
@@ -48,10 +57,28 @@ minecraft:
 
   mcbackup:
     enabled: true
+    pauseIfNoPlayers: true
+
+    backupInterval: 4h
+    pruneBackupsDays: 2
+
+    extraEnv:
+      PRE_BACKUP_SCRIPT: |
+        DATE_LOG="§l§d$(TZ="Europe/Amsterdam" date +"[%Y/%m/%d %H:%M:%S]")§r§e"
+
+        rcon-cli bluemap stop
+        rcon-cli tellraw @a "{\"text\": \"$DATE_LOG Starting backup...\"}" &>/dev/null &
+      POST_BACKUP_SCRIPT: |
+        DATE_LOG="§l§d$(TZ="Europe/Amsterdam" date +"[%Y/%m/%d %H:%M:%S]")§r§e"
+        NEXT_BACKUP_LOG="§a§u$(TZ="Europe/Amsterdam" date -d "$(echo $BACKUP_INTERVAL | sed 's/h$//') hours" +"%H:%M")"
+
+        rcon-cli bluemap start
+        rcon-cli tellraw @a "{\"text\": \"$DATE_LOG Backup complete, Next backup at: $NEXT_BACKUP_LOG\"}" &>/dev/null &
+
     persistence:
-      dataDir:
+      backupDir:
         enabled: true
-        Size: 10Gi
+        Size: 20Gi
 
   resources:
     requests:

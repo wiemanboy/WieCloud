@@ -1,24 +1,24 @@
-name: Build metallb
+name: Build minecraft
 
 on:
   pull_request:
     branches:
     - master
     paths:
-    - infrastructure/metallb/chart**
-    - .github/workflows/build_metallb.yaml
-    - .github/workflows/build.yaml
-    - pipeline/build/scripts/**
+    - applications/minecraft/chart**
+    - .github/workflows/helm_build_minecraft.yaml
+    - .github/workflows/helm_build.yaml
+    - pipeline/build/scripts/helm/**
 
 jobs:
   build:
     name: Build
-    uses: ./.github/workflows/build.yaml
+    uses: ./.github/workflows/helm_build.yaml
     with:
-      chart_name: metallb
-      chart_path: infrastructure/metallb/chart
+      chart_name: minecraft
+      chart_path: applications/minecraft/chart
       registry: oci://harbor.wieman.cloud
-      repository: infrastructure
+      repository: applications
     secrets:
       registry_username: ${{ secrets.OCI_REGISTRY_USERNAME }}
       registry_password: ${{ secrets.OCI_REGISTRY_PASSWORD }}

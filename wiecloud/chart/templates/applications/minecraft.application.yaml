@@ -12,6 +12,7 @@ spec:
     helm:
       values: |
         environment: {{ toYaml .Values.environment | nindent 10 }}
+        rconcli: {{ toYaml .Values.images.rconcli | nindent 10 }}
   destination:
     namespace: minecraft
     server: {{ .Values.applications.server }}

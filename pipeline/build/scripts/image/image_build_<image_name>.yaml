@@ -1,22 +1,22 @@
-name: Build <chart_name>
+name: Build <image_name>
 
 on:
   pull_request:
     branches:
     - master
     paths:
-    - <chart_path>**
-    - .github/workflows/build_<chart_name>.yaml
-    - .github/workflows/build.yaml
-    - pipeline/build/scripts/**
+    - <image_path>**
+    - .github/workflows/image_build_<image_name>.yaml
+    - .github/workflows/image_build.yaml
+    - pipeline/build/scripts/image/**
 
 jobs:
   build:
     name: Build
-    uses: ./.github/workflows/build.yaml
+    uses: ./.github/workflows/image_build.yaml
     with:
-      chart_name: <chart_name>
-      chart_path: <chart_path>
+      image_name: <image_name>
+      image_path: <image_path>
       registry: <registry>
       repository: <repository>
     secrets:
