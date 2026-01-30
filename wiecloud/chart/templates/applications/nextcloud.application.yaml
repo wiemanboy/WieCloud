@@ -1,0 +1,24 @@
+{{- if .Values.applications.nextcloud.deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nextcloud
+  namespace: argocd
+spec:
+  source:
+    chart: nextcloud
+    repoURL: {{ .Values.applications.repository }}
+    targetRevision: {{ .Values.applications.nextcloud.version }}
+    helm:
+      values: |
+        environment: {{ toYaml .Values.environment | nindent 10 }}
+        nextcloud:
+          nextcloud:
+            host: next.{{ .Values.environment.hostname }}
+
+  destination:
+    namespace: nextcloud
+    server: {{ .Values.applications.server }}
+  {{- $cfg := merge (dict "project" "applications") .Values.applications.defaults }}
+  {{- toYaml $cfg | nindent 2 }}
+{{- end }}

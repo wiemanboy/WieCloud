@@ -1,0 +1,43 @@
+environment:
+  hostname: example.com
+  gateway:
+    name: example-gateway
+    listener: web-example
+    namespace: example
+  oidc:
+    provider: Example
+    endpoint: https://example.com
+
+nextcloud:
+  nextcloud:
+    host: example.com
+
+    apps:
+    - name: user_oidc
+      enabled: true
+
+    extraVolumes:
+    - name: app-install
+      configMap:
+        name: app-install
+        defaultMode: 0755
+        items:
+        - key: app-install.sh
+          path: app-install.sh
+    - name: oidc-setup
+      configMap:
+        name: oidc-setup
+        defaultMode: 0755
+        items:
+        - key: oidc-setup.sh
+          path: oidc-setup.sh
+
+    extraVolumeMounts:
+    - name: app-install
+      mountPath: /docker-entrypoint-hooks.d/post-installation/app-install.sh
+      subPath: app-install.sh
+      readOnly: true
+    - name: oidc-setup
+      mountPath: /docker-entrypoint-hooks.d/post-installation/oidc-setup.sh
+      subPath: oidc-setup.sh
+      readOnly: true

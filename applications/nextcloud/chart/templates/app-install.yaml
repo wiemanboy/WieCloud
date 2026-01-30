@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-install
+data:
+  app-install.sh: |
+    set -e
+
+    # App installation:
+    {{- range .Values.nextcloud.nextcloud.apps }}
+    php occ app:install {{ .name }} && php occ app:enable {{ .name }}
+    {{- end }}

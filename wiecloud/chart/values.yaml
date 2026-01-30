@@ -9,15 +9,22 @@ environment:
         name: basic-auth
         secret:
           name: server-auth-secret
+  oidc:
+    provider: Keycloak
+    endpoint: https://keycloak.wieman.cloud/realms/infrastructure
 
 applications:
-  website:
-    deploy: true
-    namespace: website
-
   minecraft:
     deploy: true
     version: 0.3.2
+
+  nextcloud:
+    deploy: true
+    version: 0.0.0-implement-nextcloud-db7d290
+
+  website:
+    deploy: true
+    namespace: website
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/applications
