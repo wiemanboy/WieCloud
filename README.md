@@ -71,7 +71,7 @@ The projects includes some helper scripts to be run locally:
 
 ### Storage
 
-- [ ] Implement Ceph for better storage management, s3 and to torture myself
+- [ ] Implement [Rook Ceph](https://docs.siderolabs.com/kubernetes-guides/csi/ceph-with-rook) for better storage management, s3 and to torture myself
 - [ ] Figure out backup procedures
 - [ ] Link unused disks to vm's
 - [ ] Give more storage to nodes
