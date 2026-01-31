@@ -3,6 +3,6 @@ name: rookceph
 type: application
 version: 0.0.0
 dependencies:
-- name: rook
+- name: rook-release
   version: 1.19.0
   repository: https://charts.rook.io/release
