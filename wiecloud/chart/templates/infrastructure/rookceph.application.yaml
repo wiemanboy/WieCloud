@@ -12,6 +12,8 @@ spec:
     helm:
       values: |
         environment: {{ toYaml .Values.environment | nindent 10 }}
+        rook-ceph-cluster:
+          operatorNamespace: rookceph-system
   destination:
     namespace: rookceph-system
     server: {{ .Values.infrastructure.server }}
