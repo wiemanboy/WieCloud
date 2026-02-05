@@ -17,4 +17,12 @@ spec:
   destination:
     namespace: rookceph-system
     server: {{ .Values.infrastructure.server }}
+  project: infrastructure
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
 {{- end }}

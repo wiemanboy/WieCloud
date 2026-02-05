@@ -16,11 +16,6 @@ spec:
   destination:
     namespace: minecraft
     server: {{ .Values.applications.server }}
-  project: infrastructure
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-    - CreateNamespace=true
+  {{- $cfg := merge (dict "project" "minecraft") .Values.applications.defaults }}
+  {{- toYaml $cfg | nindent 2 }}
 {{- end }}
