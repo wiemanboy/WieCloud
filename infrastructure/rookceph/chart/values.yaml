@@ -1,0 +1,2 @@
+rook-ceph-cluster:
+  clusterName: rook-ceph
