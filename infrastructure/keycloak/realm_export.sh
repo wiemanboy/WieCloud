@@ -1,5 +1,3 @@
-set -e
-
 realm_name=""
 target_dir=./realm.export.temp
 namespace=keycloak
@@ -44,6 +42,6 @@ kubectl exec -i $pod_name -n $namespace -- cat /opt/keycloak/Backups/$realm_name
 # Depending on how many users there are, keycloak will create multiple export jsons for them
 FILE_COUNT=$(kubectl exec -i $pod_name -n $namespace -- ls -l /opt/keycloak/Backups/ | grep ${realm_name} | wc -l)
 for ((i=0; i<$FILE_COUNT-1; i++))
-do 
+do
    kubectl exec -i $pod_name -n $namespace -- cat /opt/keycloak/Backups/$realm_name-users-$i.json | yq -P  > $target_dir/$realm_name-users-$i.yaml
 done
