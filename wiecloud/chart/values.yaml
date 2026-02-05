@@ -67,7 +67,7 @@ infrastructure:
 
   longhorn:
     deploy: true
-    version: 0.0.5
+    version: 1.0.0-improvements-9bab5a2
 
   metallb:
     deploy: true
