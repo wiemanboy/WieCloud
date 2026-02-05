@@ -17,7 +17,4 @@ spec:
   destination:
     namespace: rookceph-system
     server: {{ .Values.infrastructure.server }}
-{{- $defaults := .Values.infrastructure.defaults }}
-{{- $cfg := merge $defaults (dict "syncPolicy" (merge $defaults.syncPolicy (dict "syncOptions" (append $defaults.syncPolicy.syncOptions "ServerSideApply=true")))) }}
-{{- toYaml $cfg | nindent 2 }}
 {{- end }}
