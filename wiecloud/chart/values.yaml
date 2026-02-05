@@ -75,7 +75,7 @@ infrastructure:
 
   rookceph:
     deploy: true
-    version: 0.0.0-implement-rookceph-c885b57
+    version: 0.0.0-implement-rookceph-b85122f
 
   traefik:
     deploy: true
