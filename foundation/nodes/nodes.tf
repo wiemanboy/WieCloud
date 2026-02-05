@@ -59,7 +59,7 @@ module "talos-worker-0" {
   cluster    = local.cluster
   role       = "worker"
 
-  ip      = "192.168.178.47"
+  ip      = "192.168.178.201"
   macaddr = "BC:24:11:CE:8D:AC"
 
   machine_secret = talos_machine_secrets.machine_secret
