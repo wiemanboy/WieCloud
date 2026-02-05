@@ -1,4 +1,4 @@
 rook-ceph-cluster:
-  clusterName: rook-ceph
+  clusterName: rookceph
   cephImage:
     imagePullPolicy: IfNotPresent
