@@ -1,3 +1,6 @@
 rook-ceph-cluster:
   cephImage:
     imagePullPolicy: IfNotPresent
+  cephClusterSpec:
+    mon:
+      count: 1
