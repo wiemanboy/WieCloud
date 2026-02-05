@@ -63,7 +63,7 @@ infrastructure:
 
   keycloak:
     deploy: true
-    version: 0.2.5-improvements-4719ec0
+    version: 0.2.5-improvements-6b3bac7
 
   longhorn:
     deploy: true
