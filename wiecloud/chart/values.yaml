@@ -63,11 +63,11 @@ infrastructure:
 
   keycloak:
     deploy: true
-    version: 0.2.4-improvements-862b247
+    version: 0.2.5-improvements-7d909f2
 
   longhorn:
     deploy: true
-    version: 1.0.0-improvements-862b247
+    version: 1.0.0-improvements-7d909f2
 
   metallb:
     deploy: true
