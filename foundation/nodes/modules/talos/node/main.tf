@@ -24,6 +24,9 @@ resource "talos_machine_configuration_apply" "config_apply" {
         install = {
           image = var.image
         }
+        network = {
+          hostname = var.name
+        }
       }
     })
   ]

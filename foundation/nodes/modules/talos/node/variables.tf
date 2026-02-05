@@ -1,3 +1,8 @@
+variable "name" {
+  description = "Name of the talos node"
+  type        = string
+}
+
 variable "endpoint" {
   description = "Endpoint of the controlplane"
   type        = string
