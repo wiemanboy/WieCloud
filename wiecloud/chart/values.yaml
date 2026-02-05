@@ -29,7 +29,7 @@ applications:
         selfHeal: true
       syncOptions:
       - CreateNamespace=true
-
+      - ServerSideApply=true
 
 infrastructure:
   argocd:
@@ -40,18 +40,18 @@ infrastructure:
     deploy: true
     version: 0.2.1
     certificate:
-        email: wiemanboy@gmail.com
-        hostnames:
-          - "wieman.cloud"
-          - "*.wieman.cloud"
-          - "wiemanboy.com"
-          - "*.wiemanboy.com"
-          - "jarnowieman.com"
-          - "*.jarnowieman.com"
-          - "jarnowieman.nl"
-          - "*.jarnowieman.nl"
-          - "carnaval.lol"
-          - "*.carnaval.lol"
+      email: wiemanboy@gmail.com
+      hostnames:
+      - "wieman.cloud"
+      - "*.wieman.cloud"
+      - "wiemanboy.com"
+      - "*.wiemanboy.com"
+      - "jarnowieman.com"
+      - "*.jarnowieman.com"
+      - "jarnowieman.nl"
+      - "*.jarnowieman.nl"
+      - "carnaval.lol"
+      - "*.carnaval.lol"
 
   externaldns:
     deploy: true
