@@ -1,4 +1,4 @@
-environment:
+environment: 
   hostname: example.com
   gateway:
     name: example-gateway
@@ -10,7 +10,3 @@ environment:
         name: example-auth
         secret:
           name: example-server-auth-secret
-
-longhorn:
-  persistence:
-    dataEngine: v2
