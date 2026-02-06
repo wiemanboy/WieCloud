@@ -73,7 +73,6 @@ The projects includes some helper scripts to be run locally:
 
 - [ ] Implement [Garage](https://garagehq.deuxfleurs.fr/) for s3
 - [ ] Figure out backup procedures
-- [ ] Link unused disks to vm's
 - [ ] Give more storage to nodes
 - [ ] Enable V2 data engine for longhorn -> requires more cpu/memory on nodes
 
