@@ -1,5 +1,5 @@
 locals {
-  namespaces            = ["gateway", "keycloak", "harbor", "longhorn-system"]
+  namespaces            = ["gateway", "keycloak", "harbor", "longhorn-system", "argocd", "minecraft"]
   basic_auth_namespaces = ["gateway", "longhorn-system"]
   oidc = {
     harbor-client-secret = {
