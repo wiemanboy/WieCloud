@@ -17,7 +17,7 @@ applications:
 
   minecraft:
     deploy: true
-    version: 0.4.3-auto-backup-restore-for-minecraft-8d0f3dc
+    version: 0.4.3-auto-backup-restore-for-minecraft-9cbbbda
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/applications
