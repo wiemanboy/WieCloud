@@ -21,7 +21,7 @@ resource "proxmox_vm_qemu" "vm" {
       scsi0 {
         disk {
           size    = var.spec.disk_size
-          storage = "local-lvm"
+          storage = var.disk
         }
       }
     }
@@ -33,9 +33,9 @@ resource "proxmox_vm_qemu" "vm" {
     bridge  = "vmbr0"
     macaddr = var.macaddr
   }
+
   lifecycle {
     ignore_changes = [
-      disks,
       network,
       tags,
       startup_shutdown

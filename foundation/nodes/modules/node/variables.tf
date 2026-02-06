@@ -41,6 +41,12 @@ variable "macaddr" {
   type        = string
 }
 
+variable "disk" {
+  description = "Disk that should be used for storage"
+  type        = string
+  default     = "local-lvm"
+}
+
 variable "machine_secret" {
   description = "Talos machine secrets"
 }

@@ -18,6 +18,12 @@ variable "macaddr" {
   type        = string
 }
 
+variable "disk" {
+  description = "Disk that should be used for storage"
+  type        = string
+  default     = "local-lvm"
+}
+
 variable "spec" {
   description = "Resources assigned to the vm"
   type = object({
