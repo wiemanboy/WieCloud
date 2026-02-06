@@ -49,6 +49,12 @@ module "talos-controlplane-0" {
   iso            = local.iso
   image          = local.image
   bootstrap      = true
+
+  spec = {
+    cpu_cores = 4
+    disk_size = 100
+    memory    = 6144
+  }
 }
 
 module "talos-worker-0" {
@@ -72,7 +78,7 @@ module "talos-worker-0" {
 
   spec = {
     cpu_cores = 8
-    disk_size = 300
+    disk_size = 800
     memory    = 32768
   }
 }
@@ -96,6 +102,12 @@ module "talos-worker-1" {
   talos_version  = local.talos_version
   iso            = local.iso
   image          = local.image
+
+  spec = {
+    cpu_cores = 6
+    disk_size = 900
+    memory    = 6144
+  }
 }
 
 module "talos-worker-2" {
@@ -117,4 +129,10 @@ module "talos-worker-2" {
   talos_version  = local.talos_version
   iso            = local.iso
   image          = local.image
+
+  spec = {
+    cpu_cores = 6
+    disk_size = 1800
+    memory    = 6144
+  }
 }
