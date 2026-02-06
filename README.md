@@ -71,10 +71,10 @@ The projects includes some helper scripts to be run locally:
 
 ### Storage
 
-- [ ] Implement [Rook Ceph](https://docs.siderolabs.com/kubernetes-guides/csi/ceph-with-rook) for better storage management, s3 and to torture myself
+- [ ] Implement [Garage](https://garagehq.deuxfleurs.fr/) for s3
 - [ ] Figure out backup procedures
-- [ ] Link unused disks to vm's
 - [ ] Give more storage to nodes
+- [ ] Enable V2 data engine for longhorn -> requires more cpu/memory on nodes
 
 ### VPN
 

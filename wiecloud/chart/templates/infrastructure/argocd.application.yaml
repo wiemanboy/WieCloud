@@ -21,7 +21,7 @@ spec:
                 issuer: https://keycloak.{{ .Values.environment.hostname }}/realms/infrastructure
                 clientID: argocd
                 clientSecret: $oidc.keycloak.clientSecret
-                requestedScopes: ["openid", "profile", "email", "groups"]
+                requestedScopes: ["openid", "profile", "email", "groups", "offline_access"]
   destination:
     namespace: argocd
     server: {{ .Values.infrastructure.server }}

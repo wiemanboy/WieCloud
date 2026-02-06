@@ -17,7 +17,7 @@ applications:
 
   minecraft:
     deploy: true
-    version: 0.3.2
+    version: 0.3.3
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/applications
@@ -34,11 +34,11 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.1.4
+    version: 0.1.5
 
   certmanager:
     deploy: true
-    version: 0.2.1
+    version: 0.2.2
     certificate:
         email: wiemanboy@gmail.com
         hostnames:
@@ -55,27 +55,27 @@ infrastructure:
 
   externaldns:
     deploy: true
-    version: 0.0.5
+    version: 0.0.6
 
   harbor:
     deploy: true
-    version: 1.0.3
+    version: 1.0.4
 
   keycloak:
     deploy: true
-    version: 0.2.4
+    version: 0.2.5
 
   longhorn:
     deploy: true
-    version: 0.0.5
+    version: 0.0.6
 
   metallb:
     deploy: true
-    version: 0.0.7
+    version: 0.0.8
 
   traefik:
     deploy: true
-    version: 0.1.4
+    version: 0.1.5
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/infrastructure
@@ -93,4 +93,4 @@ images:
     image:
       registry: harbor.wieman.cloud
       repository: tools/rconcli
-      version: 1.1.2
+      version: 1.1.3
