@@ -3,6 +3,16 @@ variable "name" {
   type        = string
 }
 
+variable "region" {
+  description = "Name of the region the node is located in"
+  type        = string
+}
+
+variable "zone" {
+  description = "Name of the zone the node is located in"
+  type        = string
+}
+
 variable "endpoint" {
   description = "Endpoint of the controlplane"
   type        = string

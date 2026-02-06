@@ -36,6 +36,7 @@ module "talos-controlplane-0" {
   source   = local.node_module_source
   name     = "talos-controlplane-0"
   node     = "gigabyte-pve-0"
+  region   = "home"
   endpoint = module.talos-controlplane-0.ip
   cluster  = local.cluster
   role     = "controlplane"
@@ -55,6 +56,7 @@ module "talos-worker-0" {
   source     = local.node_module_source
   name       = "talos-worker-0"
   node       = "gigabyte-pve-0"
+  region     = "home"
   endpoint   = module.talos-controlplane-0.ip
   cluster    = local.cluster
   role       = "worker"
@@ -79,6 +81,7 @@ module "talos-worker-1" {
   source     = local.node_module_source
   name       = "talos-worker-1"
   node       = "omen-pve-0"
+  region     = "home"
   endpoint   = module.talos-controlplane-0.ip
   cluster    = local.cluster
   role       = "worker"
@@ -97,6 +100,7 @@ module "talos-worker-2" {
   source     = local.node_module_source
   name       = "talos-worker-2"
   node       = "omen-pve-0"
+  region     = "home"
   endpoint   = module.talos-controlplane-0.ip
   cluster    = local.cluster
   role       = "worker"

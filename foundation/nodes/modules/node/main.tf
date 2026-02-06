@@ -10,6 +10,8 @@ module "proxmox_vm" {
 module "talos_node" {
   source         = "../talos/node"
   name           = var.name
+  region         = var.region
+  zone           = var.node
   endpoint       = var.endpoint
   node           = var.ip
   role           = var.role

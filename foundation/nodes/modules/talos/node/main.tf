@@ -27,6 +27,10 @@ resource "talos_machine_configuration_apply" "config_apply" {
         network = {
           hostname = var.name
         }
+        nodeLabels = {
+          "topology.kubernetes.io/region" = var.region
+          "topology.kubernetes.io/zone"   = var.zone
+        }
       }
     })
   ]

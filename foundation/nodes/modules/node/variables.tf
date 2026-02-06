@@ -8,6 +8,11 @@ variable "node" {
   type        = string
 }
 
+variable "region" {
+  description = "Name of the region the node is located in"
+  type        = string
+}
+
 variable "endpoint" {
   description = "Ip of the controlplane"
   type        = string
