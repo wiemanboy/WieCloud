@@ -1,6 +1,9 @@
 locals {
-  namespaces            = ["gateway", "keycloak", "harbor", "longhorn-system", "argocd", "minecraft"]
   basic_auth_namespaces = ["gateway", "longhorn-system"]
+
+  # TODO: Remove namespaces
+  namespaces = ["gateway", "keycloak", "harbor", "longhorn-system", "argocd", "minecraft"]
+  # TODO: Remove OIDC client secrets -> Moved to keycloak module
   oidc = {
     harbor-client-secret = {
       namespace = "harbor"
@@ -13,6 +16,7 @@ locals {
   }
 }
 
+# TODO: Remove without actually deleting in the cluster
 resource "kubernetes_namespace_v1" "namespace" {
   for_each = { for ns in local.namespaces : ns => {} }
   metadata {
@@ -36,6 +40,7 @@ resource "kubernetes_secret_v1" "server-auth-secret" {
   }
 }
 
+# TODO: Remove -> Moved to keycloak module
 resource "kubernetes_secret_v1" "oidc-client-secret" {
   for_each = local.oidc
   metadata {
@@ -47,6 +52,7 @@ resource "kubernetes_secret_v1" "oidc-client-secret" {
   }
 }
 
+# TODO: Remove -> Moved to keycloak module
 resource "kubernetes_secret_v1" "oidc-client-secret-keycloak" {
   for_each = local.oidc
   metadata {
@@ -55,23 +61,6 @@ resource "kubernetes_secret_v1" "oidc-client-secret-keycloak" {
   }
   data = {
     secret = each.value.secret
-  }
-}
-
-resource "random_password" "keycloak-db-password" {
-  length           = 16
-  special          = true
-  override_special = "!@#$%&*()-_=+[]{}<>:?"
-}
-
-resource "kubernetes_secret_v1" "keycloak-db-secret" {
-  metadata {
-    name      = "keycloak-db-secret"
-    namespace = "keycloak"
-  }
-  data = {
-    username = "admin",
-    password = random_password.keycloak-db-password.result
   }
 }
 

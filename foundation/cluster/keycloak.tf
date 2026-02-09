@@ -1,3 +1,20 @@
+resource "random_password" "keycloak-db-password" {
+  length           = 16
+  special          = true
+  override_special = "!@#$%&*()-_=+[]{}<>:?"
+}
+
+resource "kubernetes_secret_v1" "keycloak-db-secret" {
+  metadata {
+    name      = "keycloak-db-secret"
+    namespace = "keycloak"
+  }
+  data = {
+    username = "admin",
+    password = random_password.keycloak-db-password.result
+  }
+}
+
 resource "keycloak_realm" "infrastructure" {
   realm        = "infrastructure-test"
   enabled      = true
@@ -77,9 +94,9 @@ module "argocd_client" {
   namespace = "argocd-test"
   realm_id  = keycloak_realm.infrastructure.id
   urls = {
-    root     = "https://argo.wieman.cloud"
-    admin    = "https://argo.wieman.cloud"
-    base     = "https://argo.wieman.cloud/applications"
-    redirect = ["https://argo.wieman.cloud/auth/callback"]
+    root     = "https://argo.${local.values.environment.hostname}"
+    admin    = "https://argo.${local.values.environment.hostname}"
+    base     = "https://argo.${local.values.environment.hostname}/applications"
+    redirect = ["https://argo.${local.values.environment.hostname}/auth/callback"]
   }
 }
