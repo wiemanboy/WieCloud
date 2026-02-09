@@ -42,8 +42,13 @@ resource "keycloak_user" "jarno_wieman" {
   email_verified = true
   enabled        = true
   initial_password {
-    value = "temp"
+    value     = "temp"
+    temporary = true
   }
+  required_actions = [
+    "UPDATE_PASSWORD",
+    "CONFIGURE_TOTP",
+  ]
 }
 
 resource "keycloak_group_memberships" "jarno_wieman_infra_admin" {
@@ -52,13 +57,13 @@ resource "keycloak_group_memberships" "jarno_wieman_infra_admin" {
   members  = [keycloak_user.jarno_wieman.username]
 }
 
-resource "keycloak_group_memberships" "jarno_wieman_infra_admin" {
+resource "keycloak_group_memberships" "jarno_wieman_infra_harbor_admin" {
   realm_id = keycloak_realm.infrastructure.id
   group_id = keycloak_group.infra_harbor_admin.id
   members  = [keycloak_user.jarno_wieman.username]
 }
 
-resource "keycloak_group_memberships" "jarno_wieman_infra_admin" {
+resource "keycloak_group_memberships" "jarno_wieman_infra_keycloak_admin" {
   realm_id = keycloak_realm.infrastructure.id
   group_id = keycloak_group.infra_keycloak_admin.id
   members  = [keycloak_user.jarno_wieman.username]
