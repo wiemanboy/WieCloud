@@ -1,19 +1,25 @@
-commonLabels: {}
+environment:
+  hostname: example.com
+  gateway:
+    name: example-gateway
+    listener: web-example
+    namespace: example
 
 garage:
-  s3:
-    api:
-      region: "garage"
-      rootDomain: ".s3.example.com"
-    web:
-      rootDomain: ".web.s3.example.com"
+  garage:
+    s3:
+      api:
+        region: "garage"
+        rootDomain: ".s3.example.com"
+      web:
+        rootDomain: ".web.s3.example.com"
 
-persistence:
-  meta:
-    size: 100Mi
-  data:
-    size: 100Mi
+  persistence:
+    meta:
+      size: 100Mi
+    data:
+      size: 100Mi
 
-deployment:
-  kind: StatefulSet
-  replicaCount: 1
+  deployment:
+    kind: StatefulSet
+    replicaCount: 1
