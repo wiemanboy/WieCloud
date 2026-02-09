@@ -12,6 +12,14 @@ spec:
     helm:
       values: |
         environment: {{ toYaml .Values.environment | nindent 10 }}
+        garage:
+          garage:
+            s3:
+              api:
+                rootDomain: .s3.{{ .Values.environment.hostname }}
+              web:
+                rootDomain: .web.s3.{{ .Values.environment.hostname }}
+
   destination:
     namespace: garage
     server: {{ .Values.infrastructure.server }}
