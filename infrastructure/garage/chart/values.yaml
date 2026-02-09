@@ -1,1 +1,19 @@
- 
+commonLabels: {}
+
+garage:
+  s3:
+    api:
+      region: "garage"
+      rootDomain: ".s3.example.com"
+    web:
+      rootDomain: ".web.s3.example.com"
+
+persistence:
+  meta:
+    size: 100Mi
+  data:
+    size: 100Mi
+
+deployment:
+  kind: StatefulSet
+  replicaCount: 1
