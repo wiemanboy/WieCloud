@@ -12,7 +12,7 @@ garage:
         region: "garage"
         rootDomain: ".s3.example.com"
       web:
-        rootDomain: ".web.s3.example.com"
+        rootDomain: ".web.example.com"
 
   persistence:
     meta:
