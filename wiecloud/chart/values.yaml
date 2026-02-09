@@ -57,6 +57,10 @@ infrastructure:
     deploy: true
     version: 0.0.6
 
+  gitea:
+    deploy: true
+    version: 0.0.0
+
   harbor:
     deploy: true
     version: 1.0.4
