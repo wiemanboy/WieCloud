@@ -1,4 +1,4 @@
-environment: 
+environment:
   hostname: example.com
   gateway:
     name: example-gateway

@@ -51,7 +51,7 @@ jobs:
         # Make sure no production images are overwritten
         echo "Checking for version change"
         git fetch origin master
-        git diff origin/master -- ${{ inputs.chart_path }}/Chart.yaml | grep +version || $(echo "Version not updated, exiting" && exit 1)
+        git diff origin/master -- ${{ inputs.chart_path }}/Chart.yaml | grep +version || (echo "Version not updated, exiting" && exit 1)
 
     - name: Check if workflow should run
       id: check_commit
@@ -59,16 +59,16 @@ jobs:
       run: |
         set -e
 
-        LAST_MSG=$(git log -1 --pretty=%s --skip=1 HEAD)
-        echo "Last commit message: $LAST_MSG"
+        last_msg=$(git log -1 --pretty=%s --skip=1 HEAD)
+        echo "Last commit message: $last_msg"
 
         # Run when version changes
-        if [[ "$LAST_MSG" == "UPDATE: reference versions in wiecloud/chart/values.yaml"* ]]; then
+        if [[ "$last_msg" == "UPDATE: reference versions in wiecloud/chart/values.yaml"* ]]; then
           echo "Last commit was version change, running build pipeline"
           echo "skip=false" >> "$GITHUB_OUTPUT"
 
-          TAG=$(echo "$LAST_MSG" | grep -oP '\[\K[^\]]*')
-          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          tag=$(echo "$last_msg" | grep -oP '\[\K[^\]]*')
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
 
           exit 0
         fi

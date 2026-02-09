@@ -1,0 +1,64 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: backup-restore
+spec:
+  schedule: "0 0 31 2 *" # Should never run
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: mc-backup-restore
+            image: busybox:1.36
+            command:
+            - sh
+            - -c
+            - |
+              set -e
+
+              echo "Target backup: $TARGET_BACKUP"
+              echo "World name: $LEVEL"
+
+              if [ "$TARGET_BACKUP" = "latest" ]; then
+                echo "Looking for latest backup matching level '$LEVEL' in /backups..."
+                latest_backup=$(ls -1 /backups/${LEVEL}-* 2>/dev/null | sort | tail -n1)
+                if [ -z "$latest_backup" ]; then
+                  echo "No backup matching $LEVEL found. Exiting."
+                  exit 1
+                fi
+                backup_to_restore="$latest_backup"
+              else
+                backup_to_restore="/backups/$TARGET_BACKUP"
+                if [ ! -f "$backup_to_restore" ]; then
+                  echo "Specified backup $TARGET_BACKUP not found. Exiting."
+                  exit 1
+                fi
+              fi
+
+              echo "Restoring backup: $backup_to_restore"
+              echo "Extracting into /data..."
+              tar -xzf "$backup_to_restore" -C /data
+              echo "Restore complete."
+
+            env:
+            - name: TARGET_BACKUP
+              value: latest
+            - name: LEVEL
+              value: {{ .Values.minecraft.minecraftServer.worldSaveName }}
+
+            volumeMounts:
+            - name: datadir
+              mountPath: /data
+            - name: backupdir
+              mountPath: /backups
+              readOnly: true
+
+          volumes:
+          - name: datadir
+            persistentVolumeClaim:
+              claimName: minecraft-datadir
+          - name: backupdir
+            persistentVolumeClaim:
+              claimName: minecraft-backupdir

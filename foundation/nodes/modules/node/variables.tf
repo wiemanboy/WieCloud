@@ -8,6 +8,11 @@ variable "node" {
   type        = string
 }
 
+variable "region" {
+  description = "Name of the region the node is located in"
+  type        = string
+}
+
 variable "endpoint" {
   description = "Ip of the controlplane"
   type        = string
@@ -34,6 +39,12 @@ variable "ip" {
 variable "macaddr" {
   description = "Mac address of the vm"
   type        = string
+}
+
+variable "disk" {
+  description = "Disk that should be used for storage"
+  type        = string
+  default     = "local-lvm"
 }
 
 variable "machine_secret" {

@@ -137,19 +137,19 @@ spec:
           post.logout.redirect.uris: https://argo.{{ .Values.environment.hostname }}applications
         {{- toYaml .Values.realm.clients.defaults | nindent 8 }}
 
-
-    clientScopes:
-      - id: 16e40ee2-5b86-4aa6-805b-a8422e7a59da
-        name: groups
-        description: Group membership
-        protocol: openid-connect
-        protocolMappers:
-          - id: 645bd564-e1bb-47c3-8c23-2fba6e7f0613
-            name: groups
-            protocol: openid-connect
-            protocolMapper: oidc-group-membership-mapper
-            config:
-              claim.name: groups
+    # BUG: group client scope not created correctly automatically, so it should be added manually
+    # clientScopes:
+    #   - id: 16e40ee2-5b86-4aa6-805b-a8422e7a59da
+    #     name: groups
+    #     description: Group membership
+    #     protocol: openid-connect
+    #     protocolMappers:
+    #       - id: 645bd564-e1bb-47c3-8c23-2fba6e7f0613
+    #         name: groups
+    #         protocol: openid-connect
+    #         protocolMapper: oidc-group-membership-mapper
+    #         config:
+    #           claim.name: groups
 
     roles:
       realm:
@@ -168,4 +168,3 @@ spec:
             attributes: {}
             containerId: d2c47d1b-73d9-4534-9aca-7501f792f938
 
-          

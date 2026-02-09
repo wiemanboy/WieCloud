@@ -1,4 +1,4 @@
-environment: 
+environment:
   hostname: wieman.cloud
   gateway:
     name: traefik-gateway
@@ -17,7 +17,7 @@ applications:
 
   minecraft:
     deploy: true
-    version: 0.3.0
+    version: 0.4.3
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/applications
@@ -34,15 +34,28 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.1.2
+    version: 0.1.5
 
   certmanager:
     deploy: true
-    version: 0.1.0
+    version: 0.2.2
+    certificate:
+        email: wiemanboy@gmail.com
+        hostnames:
+          - "wieman.cloud"
+          - "*.wieman.cloud"
+          - "wiemanboy.com"
+          - "*.wiemanboy.com"
+          - "jarnowieman.com"
+          - "*.jarnowieman.com"
+          - "jarnowieman.nl"
+          - "*.jarnowieman.nl"
+          - "carnaval.lol"
+          - "*.carnaval.lol"
 
   externaldns:
     deploy: true
-    version: 0.0.3
+    version: 0.0.6
 
   garage:
     deploy: true
@@ -50,23 +63,23 @@ infrastructure:
 
   harbor:
     deploy: true
-    version: 1.0.1
+    version: 1.0.4
 
   keycloak:
     deploy: true
-    version: 0.2.2
+    version: 0.2.5
 
   longhorn:
     deploy: true
-    version: 0.0.3
+    version: 0.0.6
 
   metallb:
     deploy: true
-    version: 0.0.5
+    version: 0.0.8
 
   traefik:
     deploy: true
-    version: 0.1.2
+    version: 0.1.5
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/infrastructure
@@ -81,7 +94,7 @@ infrastructure:
 
 images:
   rconcli:
-    image: 
+    image:
       registry: harbor.wieman.cloud
       repository: tools/rconcli
-      version: 1.1.0
+      version: 1.1.3

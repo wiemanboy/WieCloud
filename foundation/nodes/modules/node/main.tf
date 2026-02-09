@@ -4,11 +4,15 @@ module "proxmox_vm" {
   node    = var.node
   iso     = var.iso
   macaddr = var.macaddr
+  disk    = var.disk
   spec    = var.spec
 }
 
 module "talos_node" {
   source         = "../talos/node"
+  name           = var.name
+  region         = var.region
+  zone           = var.node
   endpoint       = var.endpoint
   node           = var.ip
   role           = var.role
