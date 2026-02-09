@@ -59,7 +59,7 @@ infrastructure:
 
   garage:
     deploy: true
-    version: 0.0.0-implement-garage-eada259
+    version: 0.0.0-implement-garage-e91d465
 
   harbor:
     deploy: true
