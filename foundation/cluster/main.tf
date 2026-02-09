@@ -21,8 +21,8 @@ provider "kubernetes" {
 
 provider "keycloak" {
   client_id = "admin-cli"
-  username  = local.env.wiecloud.keycloak.admin.username
-  password  = local.env.wiecloud.keycloak.admin.password
+  username  = local.env.keycloak.admin.username
+  password  = local.env.keycloak.admin.password
   url       = "https://keycloak.${local.values.environment.hostname}"
 }
 

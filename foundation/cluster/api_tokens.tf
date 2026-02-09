@@ -4,7 +4,7 @@ resource "kubernetes_secret_v1" "cloudflare-api-token" {
     namespace = "gateway"
   }
   data = {
-    api-token = local.env.wiecloud.cloudflare.token
+    api-token = local.env.api_tokens.cloudflare.token
   }
 }
 
@@ -14,6 +14,6 @@ resource "kubernetes_secret_v1" "curseforge-api-token" {
     namespace = "minecraft"
   }
   data = {
-    api-token = local.env.wiecloud.curseforge.token
+    api-token = local.env.api_tokens.curseforge.token
   }
 }

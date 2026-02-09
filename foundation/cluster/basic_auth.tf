@@ -11,6 +11,6 @@ resource "kubernetes_secret_v1" "server-auth-secret" {
   }
   data = {
     username = "admin",
-    password = local.env.wiecloud.basic-auth.password
+    password = local.env.basic_auth.password
   }
 }
