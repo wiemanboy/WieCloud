@@ -34,7 +34,7 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.2.5-deploy-keycloak-realm-via-tofu-9d37ac5
+    version: 0.2.5-deploy-keycloak-realm-via-tofu-adfcf4d
 
   certmanager:
     deploy: true
