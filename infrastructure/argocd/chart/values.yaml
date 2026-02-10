@@ -27,11 +27,3 @@ argo-cd:
         namespace: example
       hostnames:
       - argo.example.com
-    grpcroute:
-      enabled: true
-      parentRefs:
-      - name: example-gateway
-        sectionName: web-example
-        namespace: example
-      hostnames:
-      - argo.example.com
