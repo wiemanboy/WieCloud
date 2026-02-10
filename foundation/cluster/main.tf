@@ -19,11 +19,4 @@ provider "kubernetes" {
   config_path = "../config/kubeconfig"
 }
 
-provider "keycloak" {
-  client_id = "admin-cli"
-  username  = local.env.keycloak.admin.username
-  password  = local.env.keycloak.admin.password
-  url       = "https://keycloak.${local.values.environment.hostname}"
-}
-
 provider "random" {}
