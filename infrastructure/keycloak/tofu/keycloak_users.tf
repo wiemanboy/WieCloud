@@ -70,6 +70,10 @@ resource "keycloak_group_roles" "infra_keycloak_admin_roles" {
   ]
 }
 
+resource "random_password" "jarno_wieman_password" {
+  length = 20
+}
+
 resource "keycloak_user" "jarno_wieman" {
   realm_id       = keycloak_realm.infrastructure.id
   username       = "jarno_wieman"
@@ -78,10 +82,12 @@ resource "keycloak_user" "jarno_wieman" {
   email          = "wiemanboy@gmail.com"
   email_verified = true
   enabled        = true
+
   initial_password {
-    value     = "temp"
+    value     = random_password.jarno_wieman_password.result
     temporary = true
   }
+
   required_actions = [
     "UPDATE_PASSWORD",
     "CONFIGURE_TOTP",
