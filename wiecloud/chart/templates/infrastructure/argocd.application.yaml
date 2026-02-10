@@ -22,6 +22,21 @@ spec:
                 clientID: argocd
                 clientSecret: $oidc.keycloak.clientSecret
                 requestedScopes: ["openid", "profile", "email", "groups", "offline_access"]
+          server:
+            httproute:
+              parentRefs:
+              - name: {{ .Values.environment.gateway.name }}
+                sectionName: {{ .Values.environment.gateway.listener }}
+                namespace: {{ .Values.environment.gateway.namespace }}
+              hostnames:
+              - argo.{{ .Values.environment.hostname }}
+            grpcroute:
+              parentRefs:
+              - name: {{ .Values.environment.gateway.name }}
+                sectionName: {{ .Values.environment.gateway.listener }}
+                namespace: {{ .Values.environment.gateway.namespace }}
+              hostnames:
+              - argo.{{ .Values.environment.hostname }}
   destination:
     namespace: argocd
     server: {{ .Values.infrastructure.server }}

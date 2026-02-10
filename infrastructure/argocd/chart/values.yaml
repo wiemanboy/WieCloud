@@ -1,4 +1,4 @@
-environment: 
+environment:
   hostname: example.com
   gateway:
     name: example-gateway
@@ -18,3 +18,20 @@ argo-cd:
       policy.default: role:readonly
       policy.csv: |
         g, /infra/admin, role:admin
+  server:
+    httproute:
+      enabled: true
+      parentRefs:
+      - name: example-gateway
+        sectionName: web-example
+        namespace: example
+      hostnames:
+      - argo.example.com
+    grpcroute:
+      enabled: true
+      parentRefs:
+      - name: example-gateway
+        sectionName: web-example
+        namespace: example
+      hostnames:
+      - argo.example.com
