@@ -12,8 +12,8 @@ resource "keycloak_openid_group_membership_protocol_mapper" "group_membership_ma
 }
 
 module "argocd_client" {
-  source    = "./modules/keycloak/client"
-  realm_id  = keycloak_realm.infrastructure.id
+  source   = "./modules/keycloak/client"
+  realm_id = keycloak_realm.infrastructure.id
 
   name      = "argocd-test"
   namespace = "oidc-test"
@@ -27,8 +27,8 @@ module "argocd_client" {
 }
 
 module "harbor_client" {
-  source    = "./modules/keycloak/client"
-  realm_id  = keycloak_realm.infrastructure.id
+  source   = "./modules/keycloak/client"
+  realm_id = keycloak_realm.infrastructure.id
 
   name      = "harbor-test"
   namespace = "oidc-test"

@@ -33,6 +33,43 @@ resource "keycloak_group" "infra_keycloak_admin" {
   name      = "admin"
 }
 
+module "realm_admin_role" {
+  source   = "./modules/keycloak/realm_roles"
+  realm_id = keycloak_realm.infrastructure.id
+
+  name        = "admin"
+  description = "Admin role for the realm"
+
+  realm_permissions = [
+    "view-clients",
+    "manage-realm",
+    "view-users",
+    "create-client",
+    "manage-users",
+    "query-users",
+    "view-identity-providers",
+    "manage-identity-providers",
+    "view-events",
+    "view-authorization",
+    "manage-clients",
+    "query-clients",
+    "view-realm",
+    "manage-events",
+    "impersonation",
+    "query-realms",
+    "manage-authorization",
+    "query-groups",
+  ]
+}
+
+resource "keycloak_group_roles" "infra_keycloak_admin_roles" {
+  realm_id = keycloak_realm.infrastructure.id
+  group_id = keycloak_group.infra_keycloak_admin.id
+  role_ids = [
+    module.realm_admin_role.id
+  ]
+}
+
 resource "keycloak_user" "jarno_wieman" {
   realm_id       = keycloak_realm.infrastructure.id
   username       = "jarno_wieman"
