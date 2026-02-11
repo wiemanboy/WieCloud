@@ -9,9 +9,9 @@ output "talosconfig" {
     contexts = {
       "${module.talos-controlplane-0.cluster}" = {
         endpoints = [module.talos-controlplane-0.ip]
-        ca = talos_machine_secrets.machine_secret.client_configuration.ca_certificate
-        crt = talos_machine_secrets.machine_secret.client_configuration.client_certificate
-        key =  talos_machine_secrets.machine_secret.client_configuration.client_key
+        ca        = talos_machine_secrets.machine_secret.client_configuration.ca_certificate
+        crt       = talos_machine_secrets.machine_secret.client_configuration.client_certificate
+        key       = talos_machine_secrets.machine_secret.client_configuration.client_key
       }
     }
   })
