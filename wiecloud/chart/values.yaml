@@ -34,7 +34,7 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.2.5-deploy-keycloak-realm-via-tofu-5367f82
+    version: 0.2.5-deploy-keycloak-realm-via-tofu-d2f91bd
 
   certmanager:
     deploy: true
@@ -59,11 +59,11 @@ infrastructure:
 
   harbor:
     deploy: true
-    version: 1.0.5-deploy-keycloak-realm-via-tofu-5367f82
+    version: 1.0.5-deploy-keycloak-realm-via-tofu-d2f91bd
 
   keycloak:
     deploy: true
-    version: 1.0.0-deploy-keycloak-realm-via-tofu-5367f82
+    version: 1.0.0-deploy-keycloak-realm-via-tofu-d2f91bd
 
   longhorn:
     deploy: true
