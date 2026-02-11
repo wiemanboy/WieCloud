@@ -4,18 +4,19 @@ variable "env_file" {
   default     = "../../env.yaml"
 }
 
+variable "values_file" {
+  description = "Path to values.yaml"
+  type        = string
+  default     = "../../wiecloud/chart/values.yaml"
+}
+
 locals {
-  env = yamldecode(file(var.env_file))
+  env    = yamldecode(file(var.env_file))
+  values = yamldecode(file(var.values_file))
 }
 
 provider "kubernetes" {
-    config_path = "../config/kubeconfig"
-}
-
-provider "helm" {
-    kubernetes = {
-      config_path = "../config/kubeconfig"
-    }
+  config_path = "../config/kubeconfig"
 }
 
 provider "random" {}
