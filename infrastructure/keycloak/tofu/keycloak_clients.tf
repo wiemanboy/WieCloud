@@ -15,8 +15,8 @@ module "argocd_client" {
   source   = "./modules/keycloak/client"
   realm_id = keycloak_realm.infrastructure.id
 
-  name      = "argocd-test"
-  namespace = "oidc-test"
+  name      = "argocd"
+  namespace = "argocd"
 
   urls = {
     root     = "https://argo.${local.values.environment.hostname}"
@@ -30,8 +30,8 @@ module "harbor_client" {
   source   = "./modules/keycloak/client"
   realm_id = keycloak_realm.infrastructure.id
 
-  name      = "harbor-test"
-  namespace = "oidc-test"
+  name      = "harbor"
+  namespace = "harbor"
 
   urls = {
     root     = "https://harbor.${local.values.environment.hostname}"

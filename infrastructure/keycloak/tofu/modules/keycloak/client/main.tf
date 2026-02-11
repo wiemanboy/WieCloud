@@ -8,16 +8,6 @@ resource "kubernetes_secret_v1" "oidc_client_secret" {
   }
 }
 
-resource "kubernetes_secret_v1" "oidc_client_secret_keycloak" {
-  metadata {
-    name      = "${var.name}-client-secret"
-    namespace = "keycloak"
-  }
-  data = {
-    secret = keycloak_openid_client.oidc_client.client_secret
-  }
-}
-
 resource "keycloak_openid_client" "oidc_client" {
   access_type                  = "CONFIDENTIAL"
   realm_id                     = var.realm_id
