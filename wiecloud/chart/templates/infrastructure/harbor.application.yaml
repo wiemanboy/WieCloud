@@ -16,8 +16,27 @@ spec:
           externalURL: https://harbor.{{ .Values.environment.hostname }}
           core:
             extraEnvVars:
-            - name: OIDC_ENDPOINT
-              value: https://keycloak.{{ .Values.environment.hostname }}/realms/infrastructure
+            - name: OIDC_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: harbor-client-secret
+                  key: secret
+            - name: CONFIG_OVERWRITE_JSON
+              value: |
+                {
+                  "auth_mode": "oidc_auth",
+                  "primary_auth_mode": "true",
+                  "oidc_name": "keycloak",
+                  "oidc_groups_claim": "groups",
+                  "oidc_admin_group": "/infra/harbor/admin",
+                  "oidc_client_id": "harbor",
+                  "oidc_endpoint": "https://keycloak.{{ .Values.environment.hostname }}/realms/infrastructure",
+                  "oidc_client_secret": "$(OIDC_CLIENT_SECRET)",
+                  "oidc_scope": "openid,email,profile,offline_access",
+                  "oidc_verify_cert": "true",
+                  "oidc_auto_onboard": "true",
+                  "oidc_user_claim": "preferred_username"
+                }
   destination:
     namespace: harbor
     server: {{ .Values.infrastructure.server }}

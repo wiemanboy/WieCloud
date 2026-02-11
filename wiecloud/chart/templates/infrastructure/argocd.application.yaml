@@ -22,8 +22,23 @@ spec:
                 clientID: argocd
                 clientSecret: $oidc.keycloak.clientSecret
                 requestedScopes: ["openid", "profile", "email", "groups", "offline_access"]
+          server:
+            httproute:
+              parentRefs:
+              - name: {{ .Values.environment.gateway.name }}
+                sectionName: {{ .Values.environment.gateway.listener }}
+                namespace: {{ .Values.environment.gateway.namespace }}
+              hostnames:
+              - argo.{{ .Values.environment.hostname }}
   destination:
     namespace: argocd
     server: {{ .Values.infrastructure.server }}
-  {{- toYaml .Values.infrastructure.defaults | nindent 2 }}
+  project: infrastructure
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
 {{- end }}
