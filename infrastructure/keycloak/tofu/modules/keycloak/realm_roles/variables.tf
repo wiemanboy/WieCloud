@@ -14,6 +14,6 @@ variable "realm_id" {
 }
 
 variable "realm_permissions" {
-  description = "Permissions to give to the realm_role"
+  description = "Permissions to give to the realm role"
   type        = list(string)
 }
