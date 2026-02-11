@@ -36,6 +36,7 @@ module "talos-controlplane-0" {
   source   = local.node_module_source
   name     = "talos-controlplane-0"
   node     = "gigabyte-pve-0"
+  region   = "home"
   endpoint = module.talos-controlplane-0.ip
   cluster  = local.cluster
   role     = "controlplane"
@@ -48,18 +49,26 @@ module "talos-controlplane-0" {
   iso            = local.iso
   image          = local.image
   bootstrap      = true
+
+  spec = {
+    cpu_cores = 4
+    disk_size = 100
+    memory    = 6144
+  }
 }
 
 module "talos-worker-0" {
   depends_on = [module.talos-controlplane-0]
   source     = local.node_module_source
-  name       = "talos-worker-0"
-  node       = "gigabyte-pve-0"
-  endpoint   = module.talos-controlplane-0.ip
-  cluster    = local.cluster
-  role       = "worker"
 
-  ip      = "192.168.178.47"
+  name     = "talos-worker-0"
+  node     = "gigabyte-pve-0"
+  region   = "home"
+  endpoint = module.talos-controlplane-0.ip
+  cluster  = local.cluster
+  role     = "worker"
+
+  ip      = "192.168.178.201"
   macaddr = "BC:24:11:CE:8D:AC"
 
   machine_secret = talos_machine_secrets.machine_secret
@@ -69,7 +78,7 @@ module "talos-worker-0" {
 
   spec = {
     cpu_cores = 8
-    disk_size = 300
+    disk_size = 800
     memory    = 32768
   }
 }
@@ -77,36 +86,53 @@ module "talos-worker-0" {
 module "talos-worker-1" {
   depends_on = [module.talos-controlplane-0]
   source     = local.node_module_source
-  name       = "talos-worker-1"
-  node       = "omen-pve-0"
-  endpoint   = module.talos-controlplane-0.ip
-  cluster    = local.cluster
-  role       = "worker"
+
+  name     = "talos-worker-1"
+  node     = "omen-pve-0"
+  region   = "home"
+  endpoint = module.talos-controlplane-0.ip
+  cluster  = local.cluster
+  role     = "worker"
 
   ip      = "192.168.178.41"
   macaddr = "BC:24:11:D1:76:E5"
+  disk    = "disk-1tb-0"
 
   machine_secret = talos_machine_secrets.machine_secret
   talos_version  = local.talos_version
   iso            = local.iso
   image          = local.image
+
+  spec = {
+    cpu_cores = 6
+    disk_size = 900
+    memory    = 6144
+  }
 }
 
 module "talos-worker-2" {
   depends_on = [module.talos-controlplane-0]
   source     = local.node_module_source
-  name       = "talos-worker-2"
-  node       = "omen-pve-0"
-  endpoint   = module.talos-controlplane-0.ip
-  cluster    = local.cluster
-  role       = "worker"
+
+  name     = "talos-worker-2"
+  node     = "omen-pve-0"
+  region   = "home"
+  endpoint = module.talos-controlplane-0.ip
+  cluster  = local.cluster
+  role     = "worker"
 
   ip      = "192.168.178.48"
   macaddr = "BC:24:11:E8:B7:F5"
+  disk    = "disk-2tb-0"
 
   machine_secret = talos_machine_secrets.machine_secret
   talos_version  = local.talos_version
   iso            = local.iso
   image          = local.image
-  bootstrap      = false
+
+  spec = {
+    cpu_cores = 6
+    disk_size = 1800
+    memory    = 6144
+  }
 }

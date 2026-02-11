@@ -24,6 +24,13 @@ resource "talos_machine_configuration_apply" "config_apply" {
         install = {
           image = var.image
         }
+        network = {
+          hostname = var.name
+        }
+        nodeLabels = {
+          "topology.kubernetes.io/region" = var.region
+          "topology.kubernetes.io/zone"   = var.zone
+        }
       }
     })
   ]
@@ -35,8 +42,6 @@ resource "talos_machine_bootstrap" "bootstrap" {
   node                 = var.node
   client_configuration = var.machine_secret.client_configuration
 }
-
-// talos_client_configuration.client_config.talos_config
 
 resource "talos_cluster_kubeconfig" "kubeconfig" {
   depends_on = [

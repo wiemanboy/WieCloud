@@ -1,7 +1,6 @@
 # Cluster setup
 
 1. run `./setup.sh`
-2. run `tofu apply`
 
 ```bash
 kubectl port-forward -n argocd svc/argocd-server 8080:80
