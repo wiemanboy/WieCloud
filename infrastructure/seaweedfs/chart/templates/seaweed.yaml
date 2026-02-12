@@ -94,3 +94,30 @@ spec:
         - name: seaweed-volume-0
           namespace: {{ .Release.Namespace }}
           port: 8444
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-patch-ownerrefs
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      serviceAccountName: default
+      containers:
+      - name: patch-ownerrefs
+        image: alpine/kubectl:1.34.0
+        command:
+          - /bin/sh
+          - -c
+          - |
+            # Get the Seaweed CR UID
+            SEAWEED_UID=$(kubectl get seaweed {{ .Release.Name }} -o jsonpath='{.metadata.uid}')
+
+            # Patch HTTPRoutes to add ownerReference
+            for hr in seaweed-filer seaweed-s3 seaweed-volume-0; do
+              kubectl patch httproute $hr -n {{ .Release.Namespace }} --type=json -p "[{\"op\":\"add\",\"path\":\"/metadata/ownerReferences/-\",\"value\":{\"apiVersion\":\"seaweed.seaweedfs.com/v1\",\"kind\":\"Seaweed\",\"name\":\"{{ .Release.Name }}\",\"uid\":\"$SEAWEED_UID\",\"controller\":true,\"blockOwnerDeletion\":true}}]"
+            done
