@@ -6,6 +6,10 @@ environment:
     namespace: example
 
 garage:
+  service:
+    type: "LoadBalancer"
+    loadbalancerIp: 192.168.178.202
+
   garage:
     s3:
       api:
