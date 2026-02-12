@@ -3,10 +3,15 @@ kind: Seaweed
 metadata:
   name: seaweed
 spec:
-  image: chrislusf/seaweedfs:latest
-  volumeServerDiskCount: 1
   hostSuffix: seaweed.{{ .Values.environment.hostname }}
+  master:
+    replicas: 1
+    volumeSizeLimitMB: 1024
   volume:
     replicas: 1
     requests:
       storage: 2Gi
+  filer:
+    replicas: 1
+    s3:
+      enabled: true
