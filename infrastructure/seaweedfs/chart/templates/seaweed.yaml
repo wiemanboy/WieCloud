@@ -114,10 +114,10 @@ spec:
           - /bin/sh
           - -c
           - |
-            # Get the Seaweed CR UID
-            SEAWEED_UID=$(kubectl get seaweed {{ .Release.Name }} -o jsonpath='{.metadata.uid}')
+            # Get the Seaweed UID
+            SEAWEED_UID=$(kubectl get seaweed seaweed -o jsonpath='{.metadata.uid}')
 
             # Patch HTTPRoutes to add ownerReference
             for hr in seaweed-filer seaweed-s3 seaweed-volume-0; do
-              kubectl patch httproute $hr -n {{ .Release.Namespace }} --type=json -p "[{\"op\":\"add\",\"path\":\"/metadata/ownerReferences/-\",\"value\":{\"apiVersion\":\"seaweed.seaweedfs.com/v1\",\"kind\":\"Seaweed\",\"name\":\"{{ .Release.Name }}\",\"uid\":\"$SEAWEED_UID\",\"controller\":true,\"blockOwnerDeletion\":true}}]"
+              kubectl patch httproute $hr -n {{ .Release.Namespace }} --type=json -p "[{\"op\":\"add\",\"path\":\"/metadata/ownerReferences/-\",\"value\":{\"apiVersion\":\"seaweed.seaweedfs.com/v1\",\"kind\":\"Seaweed\",\"name\":\"seaweed\",\"uid\":\"$SEAWEED_UID\"}}]"
             done
