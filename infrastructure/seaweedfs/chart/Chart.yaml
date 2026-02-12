@@ -1,0 +1,8 @@
+apiVersion: v2
+name: seaweedfs
+type: application
+version: 0.0.0
+dependencies:
+  - name: seaweedfs-operator
+    version: 1.5.8
+    repository: https://nnstd.github.io/seaweedfs-operator

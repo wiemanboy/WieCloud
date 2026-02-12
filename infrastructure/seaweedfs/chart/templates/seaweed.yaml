@@ -1,0 +1,14 @@
+apiVersion: seaweed.seaweedfs.com/v1
+kind: Seaweed
+metadata:
+  name: seaweed
+spec:
+  image: chrislusf/seaweedfs:latest
+  volumeServerDiskCount: 1
+  hostSuffix: seaweed.{{ .Values.environment.hostname }}
+  master:
+    replicas: 1
+  filer:
+    replicas: 1
+    s3:
+      enabled: true
