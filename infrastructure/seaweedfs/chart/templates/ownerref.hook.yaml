@@ -22,5 +22,18 @@ spec:
 
             # Patch HTTPRoutes to add ownerReference
             for hr in seaweed-filer seaweed-s3 seaweed-volume-0; do
-              kubectl patch httproute $hr -n {{ .Release.Namespace }} --type=json -p "[{\"op\":\"add\",\"path\":\"/metadata/ownerReferences/-\",\"value\":{\"apiVersion\":\"seaweed.seaweedfs.com/v1\",\"kind\":\"Seaweed\",\"name\":\"seaweed\",\"uid\":\"$SEAWEED_UID\"}}]"
+              kubectl patch httproute $hr -n {{ .Release.Namespace }} --type=json -p "[
+                {
+                  \"op\": \"add\",
+                  \"path\": \"/metadata/ownerReferences/-\",
+                  \"value\": {
+                    \"apiVersion\": \"seaweed.seaweedfs.com/v1\",
+                    \"kind\": \"Seaweed\",
+                    \"name\": \"seaweed\",
+                    \"uid\": \"$SEAWEED_UID\",
+                    \"controller\": true,
+                    \"blockOwnerDeletion\": true
+                  }
+                }
+              ]"
             done
