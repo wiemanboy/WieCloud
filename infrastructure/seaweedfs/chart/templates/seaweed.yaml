@@ -6,9 +6,7 @@ spec:
   image: chrislusf/seaweedfs:latest
   volumeServerDiskCount: 1
   hostSuffix: seaweed.{{ .Values.environment.hostname }}
-  master:
+  volume:
     replicas: 1
-  filer:
-    replicas: 1
-    s3:
-      enabled: true
+    requests:
+      storage: 2Gi
