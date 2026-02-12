@@ -17,23 +17,24 @@ spec:
           - /bin/sh
           - -c
           - |
-            # Get the Seaweed UID
-            SEAWEED_UID=$(kubectl get seaweed seaweed -o jsonpath='{.metadata.uid}')
+            NAMESPACE={{ .Release.Namespace }}
+            SEAWEED_UID=$(kubectl get seaweed seaweed -n $NAMESPACE -o jsonpath='{.metadata.uid}')
 
-            # Patch HTTPRoutes to add ownerReference
             for hr in seaweed-filer seaweed-s3 seaweed-volume-0; do
-              kubectl patch httproute $hr -n {{ .Release.Namespace }} --type=json -p "[
+              kubectl patch httproute $hr -n $NAMESPACE --type=json -p "[
                 {
                   \"op\": \"add\",
-                  \"path\": \"/metadata/ownerReferences/-\",
-                  \"value\": {
-                    \"apiVersion\": \"seaweed.seaweedfs.com/v1\",
-                    \"kind\": \"Seaweed\",
-                    \"name\": \"seaweed\",
-                    \"uid\": \"$SEAWEED_UID\",
-                    \"controller\": true,
-                    \"blockOwnerDeletion\": true
-                  }
+                  \"path\": \"/metadata/ownerReferences\",
+                  \"value\": [
+                    {
+                      \"apiVersion\": \"seaweed.seaweedfs.com/v1\",
+                      \"kind\": \"Seaweed\",
+                      \"name\": \"seaweed\",
+                      \"uid\": \"$SEAWEED_UID\",
+                      \"controller\": true,
+                      \"blockOwnerDeletion\": true
+                    }
+                  ]
                 }
               ]"
             done
