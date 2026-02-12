@@ -4,7 +4,6 @@ metadata:
   name: seaweed
 spec:
   image: chrislusf/seaweedfs:latest
-  hostSuffix: {{ .Values.environment.hostname }}
   master:
     replicas: 1
     volumeSizeLimitMB: 1024
