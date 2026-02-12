@@ -10,7 +10,6 @@ spec:
     spec:
       serviceAccountName: {{ .Release.Name }}-patch-ownerrefs-sa
       restartPolicy: Never
-      serviceAccountName: default
       containers:
       - name: patch-ownerrefs
         image: alpine/kubectl:1.34.0
