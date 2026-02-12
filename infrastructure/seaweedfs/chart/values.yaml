@@ -4,3 +4,7 @@ environment:
     name: example-gateway
     listener: web-example
     namespace: example
+
+seaweedfs-operator:
+  webhook:
+    enabled: false
