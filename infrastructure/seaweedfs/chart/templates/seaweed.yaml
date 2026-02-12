@@ -3,6 +3,7 @@ kind: Seaweed
 metadata:
   name: seaweed
 spec:
+  volumeServerDiskCount: 1
   hostSuffix: seaweed.{{ .Values.environment.hostname }}
   master:
     replicas: 1
