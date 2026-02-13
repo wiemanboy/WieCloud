@@ -79,7 +79,7 @@ infrastructure:
 
   seaweedfs:
     deploy: true
-    version: 0.0.0-implement-seeweedfs-c56b8a1
+    version: 0.0.0-implement-seeweedfs-5f2ef93
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/infrastructure
