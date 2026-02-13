@@ -8,3 +8,9 @@ environment:
 seaweedfs-operator:
   webhook:
     enabled: true
+
+seaweedfs:
+  name:
+  
+
+

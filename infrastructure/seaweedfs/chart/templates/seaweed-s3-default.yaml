@@ -1,7 +1,7 @@
 apiVersion: seaweed.seaweedfs.com/v1
 kind: Seaweed
 metadata:
-  name: seaweed-s3-default
+  name: {{ .Values.seaweedfs.name }}
 spec:
   image: chrislusf/seaweedfs:latest
   master:
@@ -26,7 +26,7 @@ spec:
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: seaweed-s3
+  name: {{ .Values.seaweedfs.name }}
 spec:
   parentRefs:
     - name: {{ .Values.environment.gateway.name }}
@@ -43,6 +43,6 @@ spec:
             value: /
 
       backendRefs:
-        - name: seaweed-filer
+        - name: {{ .Values.seaweedfs.name }}-filer
           namespace: {{ .Release.Namespace }}
           port: 8333
