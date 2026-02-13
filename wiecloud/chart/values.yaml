@@ -43,6 +43,7 @@ infrastructure:
       hostnames:
       - "wieman.cloud"
       - "*.wieman.cloud"
+      - "*.s3.wieman.cloud"
       - "wiemanboy.com"
       - "*.wiemanboy.com"
       - "jarnowieman.com"
