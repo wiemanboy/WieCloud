@@ -10,7 +10,4 @@ seaweedfs-operator:
     enabled: true
 
 seaweedfs:
-  name:
-  
-
-
+  name: seaweed-s3-default
