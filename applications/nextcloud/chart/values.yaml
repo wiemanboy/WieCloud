@@ -39,6 +39,10 @@ nextcloud:
           accessKey: "access_key"
           secretKey: "secret_key"
 
+    primary:
+      persistence:
+        enabled: true
+
     extraVolumes:
     - name: app-install
       configMap:
