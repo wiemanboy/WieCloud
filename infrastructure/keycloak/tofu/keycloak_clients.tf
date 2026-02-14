@@ -20,7 +20,6 @@ module "argocd_client" {
 
   urls = {
     root     = "https://argo.${local.values.environment.hostname}"
-    admin    = "https://argo.${local.values.environment.hostname}"
     base     = "https://argo.${local.values.environment.hostname}/applications"
     redirect = ["https://argo.${local.values.environment.hostname}/auth/callback"]
   }
@@ -35,8 +34,6 @@ module "harbor_client" {
 
   urls = {
     root     = "https://harbor.${local.values.environment.hostname}"
-    admin    = "https://harbor.${local.values.environment.hostname}"
-    base     = "https://harbor.${local.values.environment.hostname}"
     redirect = ["https://harbor.${local.values.environment.hostname}/c/oidc/callback"]
   }
 }
@@ -49,9 +46,8 @@ module "nextcloud_client" {
   namespace = "nextcloud"
 
   urls = {
-    root     = "https://next.${local.values.environment.hostname}"
-    admin    = "https://next.${local.values.environment.hostname}"
-    base     = "https://next.${local.values.environment.hostname}"
-    redirect = ["http://next.${local.values.environment.hostname}/apps/user_oidc/code"]
+    root                 = "https://next.${local.values.environment.hostname}"
+    redirect             = ["http://next.${local.values.environment.hostname}/apps/user_oidc/code"]
+    post_logout_redirect = ["http://next.${local.values.environment.hostname}/"]
   }
 }
