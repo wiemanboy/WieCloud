@@ -37,7 +37,6 @@ applications:
       syncOptions:
       - CreateNamespace=true
 
-
 infrastructure:
   argocd:
     deploy: true
@@ -47,18 +46,19 @@ infrastructure:
     deploy: true
     version: 0.2.2
     certificate:
-        email: wiemanboy@gmail.com
-        hostnames:
-          - "wieman.cloud"
-          - "*.wieman.cloud"
-          - "wiemanboy.com"
-          - "*.wiemanboy.com"
-          - "jarnowieman.com"
-          - "*.jarnowieman.com"
-          - "jarnowieman.nl"
-          - "*.jarnowieman.nl"
-          - "carnaval.lol"
-          - "*.carnaval.lol"
+      email: wiemanboy@gmail.com
+      hostnames:
+      - "wieman.cloud"
+      - "*.wieman.cloud"
+      - "*.s3.wieman.cloud"
+      - "wiemanboy.com"
+      - "*.wiemanboy.com"
+      - "jarnowieman.com"
+      - "*.jarnowieman.com"
+      - "jarnowieman.nl"
+      - "*.jarnowieman.nl"
+      - "carnaval.lol"
+      - "*.carnaval.lol"
 
   externaldns:
     deploy: true
@@ -83,6 +83,10 @@ infrastructure:
   traefik:
     deploy: true
     version: 0.1.5
+
+  seaweedfs:
+    deploy: true
+    version: 0.0.0
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/infrastructure
