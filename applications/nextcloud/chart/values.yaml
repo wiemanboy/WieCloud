@@ -19,10 +19,9 @@ nextcloud:
     configs:
       oidc.config.php: |-
         <?php
-            $CONFIG = array (
-              'allow_local_remote_servers' => true,
-            );
-          );
+        $CONFIG = array (
+          'allow_local_remote_servers' => true,
+        );
 
     extraVolumes:
     - name: app-install
