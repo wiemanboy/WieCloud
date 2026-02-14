@@ -40,3 +40,18 @@ module "harbor_client" {
     redirect = ["https://harbor.${local.values.environment.hostname}/c/oidc/callback"]
   }
 }
+
+module "nextcloud_client" {
+  source   = "./modules/keycloak/client"
+  realm_id = keycloak_realm.infrastructure.id
+
+  name      = "nextcloud"
+  namespace = "nextcloud"
+
+  urls = {
+    root     = "https://next.${local.values.environment.hostname}"
+    admin    = "https://next.${local.values.environment.hostname}"
+    base     = "https://next.${local.values.environment.hostname}"
+    redirect = ["https://next.${local.values.environment.hostname}/*"]
+  }
+}

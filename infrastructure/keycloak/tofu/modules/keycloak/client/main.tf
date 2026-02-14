@@ -33,7 +33,6 @@ resource "keycloak_openid_client_default_scopes" "client_default_scopes" {
     "groups",
     "profile",
     "roles",
-    "service-account",
     "web-origins"
   ]
 }

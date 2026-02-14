@@ -20,17 +20,23 @@ nextcloud:
     - name: app-install
       configMap:
         name: app-install
-        defaultMode: 0755
+        defaultMode: 755
         items:
         - key: app-install.sh
           path: app-install.sh
     - name: oidc-setup
       configMap:
         name: oidc-setup
-        defaultMode: 0755
+        defaultMode: 755
         items:
         - key: oidc-setup.sh
           path: oidc-setup.sh
+    - name: nextcloud-client-secret
+      secret:
+        name: nextcloud-client-secret
+        items:
+        - key: secret
+          path: nextcloud-client-secret
 
     extraVolumeMounts:
     - name: app-install
@@ -40,4 +46,8 @@ nextcloud:
     - name: oidc-setup
       mountPath: /docker-entrypoint-hooks.d/post-installation/oidc-setup.sh
       subPath: oidc-setup.sh
+      readOnly: true
+    - name: nextcloud-client-secret
+      mountPath: /var/run/secrets/nextcloud-client-secret
+      subPath: nextcloud-client-secret
       readOnly: true

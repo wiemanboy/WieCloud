@@ -92,6 +92,12 @@ resource "keycloak_user" "jarno_wieman" {
     "UPDATE_PASSWORD",
     "CONFIGURE_TOTP",
   ]
+
+  lifecycle {
+    ignore_changes = [
+      required_actions
+    ]
+  }
 }
 
 resource "keycloak_group_memberships" "jarno_wieman_infra_admin" {
