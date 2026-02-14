@@ -47,7 +47,7 @@ module "nextcloud_client" {
 
   urls = {
     root                 = "https://next.${local.values.environment.hostname}"
-    redirect             = ["http://next.${local.values.environment.hostname}/apps/user_oidc/code"]
-    post_logout_redirect = ["http://next.${local.values.environment.hostname}/"]
+    redirect             = ["https://next.${local.values.environment.hostname}/apps/user_oidc/code"]
+    post_logout_redirect = ["https://next.${local.values.environment.hostname}/"]
   }
 }
