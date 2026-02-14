@@ -9,6 +9,10 @@ environment:
     endpoint: https://example.com
 
 nextcloud:
+  phpClientHttpsFix:
+    enabled: true
+    protocol: https
+
   nextcloud:
     host: example.com
 
