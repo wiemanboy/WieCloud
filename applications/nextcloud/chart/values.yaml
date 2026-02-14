@@ -27,17 +27,17 @@ nextcloud:
           'skeletondirectory' => '',
         );
 
-    # objectStore:
-    #   s3:
-    #     name: seaweedfs-nextcloud
-    #     enabled: true
-    #     host: next.s3.example.com
-    #     bucket: nextcloud-bucket
-    #     autoCreate: true
-    #     existingSecret: s3-secret
-    #     secretKeys:
-    #       accessKey: "access_key"
-    #       secretKey: "secret_key"
+    objectStore:
+      s3:
+        enabled: false
+        name: seaweedfs-nextcloud
+        host: next.s3.example.com
+        bucket: nextcloud-bucket
+        autoCreate: true
+        existingSecret: s3-secret
+        secretKeys:
+          accessKey: "access_key"
+          secretKey: "secret_key"
 
     extraVolumes:
     - name: app-install
