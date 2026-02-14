@@ -13,6 +13,9 @@ nextcloud:
     enabled: true
     protocol: https
 
+  nextcloudData:
+    enabled: true
+
   nextcloud:
     host: example.com
 
@@ -38,10 +41,6 @@ nextcloud:
         secretKeys:
           accessKey: "access_key"
           secretKey: "secret_key"
-
-    primary:
-      persistence:
-        enabled: true
 
     extraVolumes:
     - name: app-install
