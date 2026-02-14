@@ -14,9 +14,3 @@ resource "keycloak_group" "app_nextcloud" {
   parent_id = keycloak_group.app.id
   name      = "nextcloud"
 }
-
-resource "keycloak_group" "app_nextcloud_admin" {
-  realm_id  = keycloak_realm.infrastructure.id
-  parent_id = keycloak_group.app_nextcloud.id
-  name      = "admin"
-}

@@ -10,4 +10,9 @@ data:
 
     # OIDC configuration:
     php occ config:app:set --type=string --value=0 user_oidc allow_multiple_user_backends
-    php occ user_oidc:provider {{ .Values.environment.oidc.provider }} --clientid="nextcloud" --clientsecret="${client_secret}" --discoveryuri="{{ .Values.environment.oidc.endpoint }}/.well-known/openid-configuration"
+    php occ user_oidc:provider {{ .Values.environment.oidc.provider }} \
+      --clientid="nextcloud" \
+      --clientsecret="${client_secret}" \
+      --discoveryuri="{{ .Values.environment.oidc.endpoint }}/.well-known/openid-configuration" \
+      --scope="openid email profile groups offline_access"
+      # --group-whitelist-regex=GROUP-WHITELIST-REGEX -> maybe in the future only allow nextcloud users

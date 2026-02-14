@@ -52,8 +52,8 @@ resource "keycloak_group_memberships" "app_admin_members" {
   members  = [keycloak_user.jarno_wieman.username]
 }
 
-resource "keycloak_group_memberships" "app_nextcloud_admin_members" {
+resource "keycloak_group_memberships" "app_nextcloud_members" {
   realm_id = keycloak_realm.infrastructure.id
-  group_id = keycloak_group.app_nextcloud_admin.id
+  group_id = keycloak_group.app_nextcloud.id
   members  = [keycloak_user.jarno_wieman.username]
 }
