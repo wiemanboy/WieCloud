@@ -33,7 +33,7 @@ nextcloud:
           path: oidc-setup.sh
     - name: nextcloud-client-secret
       secret:
-        name: nextcloud-client-secret
+        secretName: nextcloud-client-secret
         items:
         - key: secret
           path: nextcloud-client-secret
