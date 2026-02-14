@@ -20,6 +20,13 @@ nextcloud:
     - name: user_oidc
       enabled: true
 
+    configs:
+      setup.config.php: |-
+        <?php
+        $CONFIG = array (
+          'skeletondirectory' => '',
+        );
+
     extraVolumes:
     - name: app-install
       configMap:
