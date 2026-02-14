@@ -15,10 +15,9 @@ spec:
         nextcloud:
           nextcloud:
             host: next.{{ .Values.environment.hostname }}
-            objectStore:
-              s3:
-                host: nextcloud.s3.{{ .Values.environment.hostname }}
-
+            # objectStore:
+            #   s3:
+            #     host: nextcloud.s3.{{ .Values.environment.hostname }}
 
   destination:
     namespace: nextcloud
