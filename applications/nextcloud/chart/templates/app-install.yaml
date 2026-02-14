@@ -8,5 +8,5 @@ data:
 
     # App installation:
     {{- range .Values.nextcloud.nextcloud.apps }}
-    php occ app:install {{ .name }} && php occ app:enable {{ .name }}
+    php occ app:install {{ .name }} && php occ app:{{ ternary "enable" "disable" .enabled}} {{ .name }}
     {{- end }}
