@@ -52,6 +52,6 @@ module "nextcloud_client" {
     root     = "https://next.${local.values.environment.hostname}"
     admin    = "https://next.${local.values.environment.hostname}"
     base     = "https://next.${local.values.environment.hostname}"
-    redirect = ["https://next.${local.values.environment.hostname}/index.php/apps/user_oidc/code"]
+    redirect = ["http://next.${local.values.environment.hostname}/apps/user_oidc/code"]
   }
 }
