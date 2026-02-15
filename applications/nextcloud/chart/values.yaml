@@ -57,7 +57,7 @@ nextcloud:
 
     - name: metadata
       enabled: true
-      
+
     - name: onlyoffice
       enabled: true
 
@@ -108,11 +108,11 @@ nextcloud:
 
     extraVolumeMounts:
     - name: app-install
-      mountPath: /docker-entrypoint-hooks.d/post-installation/app-install.sh
+      mountPath: /docker-entrypoint-hooks.d/before-starting/app-install.sh
       subPath: app-install.sh
       readOnly: true
     - name: oidc-setup
-      mountPath: /docker-entrypoint-hooks.d/post-installation/oidc-setup.sh
+      mountPath: /docker-entrypoint-hooks.d/before-starting/oidc-setup.sh
       subPath: oidc-setup.sh
       readOnly: true
     - name: nextcloud-client-secret
