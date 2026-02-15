@@ -108,15 +108,6 @@ nextcloud:
 
     extraVolumeMounts:
     - name: app-install
-      mountPath: /docker-entrypoint-hooks.d/post-installation/app-install.sh
-      subPath: app-install.sh
-      readOnly: true
-    - name: oidc-setup
-      mountPath: /docker-entrypoint-hooks.d/post-installation/oidc-setup.sh
-      subPath: oidc-setup.sh
-      readOnly: true
-
-    - name: app-install
       mountPath: /docker-entrypoint-hooks.d/before-starting/app-install.sh
       subPath: app-install.sh
       readOnly: true
