@@ -6,5 +6,6 @@ data:
   app-install.sh: |
     # App installation:
     {{- range .Values.nextcloud.nextcloud.apps }}
-    php occ app:install {{ .name }} && php occ app:{{ ternary "enable" "disable" .enabled}} {{ .name }}
+    php occ app:install {{ .name }} || true
+    php occ app:{{ ternary "enable" "disable" .enabled}} {{ .name }} || true
     {{- end }}
