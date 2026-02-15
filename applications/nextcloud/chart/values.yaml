@@ -1,0 +1,122 @@
+environment:
+  hostname: example.com
+  gateway:
+    name: example-gateway
+    listener: web-example
+    namespace: example
+  oidc:
+    provider: Example
+    endpoint: https://example.com
+
+nextcloud:
+  phpClientHttpsFix:
+    enabled: true
+    protocol: https
+
+  persistence:
+    enabled: true
+    nextcloudData:
+      enabled: true
+
+  nextcloud:
+    host: example.com
+
+    apps:
+    - name: user_oidc
+      enabled: true
+
+    - name: contacts
+      enabled: true
+
+    - name: deck
+      enabled: true
+
+    - name: maps
+      enabled: true
+
+    - name: calendar
+      enabled: true
+
+    - name: whiteboard
+      enabled: true
+
+    - name: notes
+      enabled: true
+
+    - name: memories
+      enabled: true
+
+    - name: forms
+      enabled: true
+
+    - name: tasks
+      enabled: true
+
+    - name: drawio
+      enabled: true
+
+    - name: metadata
+      enabled: true
+
+    - name: onlyoffice
+      enabled: true
+
+    configs:
+      setup.config.php: |-
+        <?php
+        $CONFIG = array (
+          'skeletondirectory' => '',
+        );
+
+    objectStore:
+      s3:
+        enabled: true
+        name: seaweedfs-nextcloud
+        host: next.s3.example.com
+
+        bucket: nextcloud-bucket
+        autoCreate: true
+
+        usePathStyle: true
+
+        existingSecret: s3-secret
+        secretKeys:
+          accessKey: "access_key"
+          secretKey: "secret_key"
+
+    extraVolumes:
+    - name: app-install
+      configMap:
+        name: app-install
+        defaultMode: 493
+        items:
+        - key: app-install.sh
+          path: app-install.sh
+    - name: oidc-setup
+      configMap:
+        name: oidc-setup
+        defaultMode: 493
+        items:
+        - key: oidc-setup.sh
+          path: oidc-setup.sh
+    - name: nextcloud-client-secret
+      secret:
+        secretName: nextcloud-client-secret
+        items:
+        - key: secret
+          path: nextcloud-client-secret
+
+    extraVolumeMounts:
+    - name: app-install
+      mountPath: /docker-entrypoint-hooks.d/before-starting/app-install.sh
+      subPath: app-install.sh
+      readOnly: true
+    - name: oidc-setup
+      mountPath: /docker-entrypoint-hooks.d/before-starting/oidc-setup.sh
+      subPath: oidc-setup.sh
+      readOnly: true
+
+    - name: nextcloud-client-secret
+      mountPath: /var/run/secrets/nextcloud-client-secret
+      subPath: nextcloud-client-secret
+      readOnly: true
