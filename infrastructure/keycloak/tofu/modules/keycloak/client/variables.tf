@@ -16,9 +16,10 @@ variable "realm_id" {
 variable "urls" {
   description = "Urls to use for the client, should contain root_url, admin_url, base_url and valid_redirect_uris"
   type = object({
-    root     = string
-    admin    = string
-    base     = string
-    redirect = list(string)
+    root                 = string
+    admin                = optional(string)
+    base                 = optional(string)
+    redirect             = list(string)
+    post_logout_redirect = optional(list(string))
   })
 }

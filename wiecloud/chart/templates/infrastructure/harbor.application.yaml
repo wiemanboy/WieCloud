@@ -26,11 +26,11 @@ spec:
                 {
                   "auth_mode": "oidc_auth",
                   "primary_auth_mode": "true",
-                  "oidc_name": "keycloak",
+                  "oidc_name": "{{ .Values.environment.oidc.provider }}",
                   "oidc_groups_claim": "groups",
                   "oidc_admin_group": "/infra/harbor/admin",
                   "oidc_client_id": "harbor",
-                  "oidc_endpoint": "https://keycloak.{{ .Values.environment.hostname }}/realms/infrastructure",
+                  "oidc_endpoint": "{{ .Values.environment.oidc.endpoint }}",
                   "oidc_client_secret": "$(OIDC_CLIENT_SECRET)",
                   "oidc_scope": "openid,email,profile,offline_access",
                   "oidc_verify_cert": "true",

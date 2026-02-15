@@ -9,19 +9,26 @@ environment:
         name: basic-auth
         secret:
           name: server-auth-secret
+  oidc:
+    provider: Keycloak
+    endpoint: https://keycloak.wieman.cloud/realms/infrastructure
 
 applications:
-  website:
+  minecraft:
     deploy: true
-    namespace: website
+    version: 0.4.3
+
+  nextcloud:
+    deploy: true
+    version: 0.0.0
 
   technitium:
     deploy: true
     version: 0.0.0-implement-technitium-16108c3
 
-  minecraft:
+  website:
     deploy: true
-    version: 0.4.3
+    namespace: website
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/applications
@@ -34,7 +41,6 @@ applications:
       syncOptions:
       - CreateNamespace=true
 
-
 infrastructure:
   argocd:
     deploy: true
@@ -44,18 +50,32 @@ infrastructure:
     deploy: true
     version: 0.2.2
     certificate:
-        email: wiemanboy@gmail.com
-        hostnames:
-          - "wieman.cloud"
-          - "*.wieman.cloud"
-          - "wiemanboy.com"
-          - "*.wiemanboy.com"
-          - "jarnowieman.com"
-          - "*.jarnowieman.com"
-          - "jarnowieman.nl"
-          - "*.jarnowieman.nl"
-          - "carnaval.lol"
-          - "*.carnaval.lol"
+      email: wiemanboy@gmail.com
+      hostnames:
+      - "wieman.cloud"
+      - "*.wieman.cloud"
+      - "*.s3.wieman.cloud"
+      - "wiemanboy.com"
+      - "*.wiemanboy.com"
+      - "jarnowieman.com"
+      - "*.jarnowieman.com"
+      - "jarnowieman.nl"
+      - "*.jarnowieman.nl"
+      - "carnaval.lol"
+      - "*.carnaval.lol"
+      email: wiemanboy@gmail.com
+      hostnames:
+      - "wieman.cloud"
+      - "*.wieman.cloud"
+      - "*.s3.wieman.cloud"
+      - "wiemanboy.com"
+      - "*.wiemanboy.com"
+      - "jarnowieman.com"
+      - "*.jarnowieman.com"
+      - "jarnowieman.nl"
+      - "*.jarnowieman.nl"
+      - "carnaval.lol"
+      - "*.carnaval.lol"
 
   externaldns:
     deploy: true
@@ -80,6 +100,14 @@ infrastructure:
   traefik:
     deploy: true
     version: 0.1.5
+
+  seaweedfs:
+    deploy: true
+    version: 0.0.0
+
+  seaweedfs:
+    deploy: true
+    version: 0.0.0
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/infrastructure

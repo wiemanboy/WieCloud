@@ -17,8 +17,8 @@ spec:
             cm:
               url: https://argo.{{ .Values.environment.hostname }}
               oidc.config: |
-                name: Keycloak
-                issuer: https://keycloak.{{ .Values.environment.hostname }}/realms/infrastructure
+                name: {{ .Values.environment.oidc.provider }}
+                issuer: {{ .Values.environment.oidc.endpoint }}
                 clientID: argocd
                 clientSecret: $oidc.keycloak.clientSecret
                 requestedScopes: ["openid", "profile", "email", "groups", "offline_access"]
