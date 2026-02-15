@@ -63,19 +63,6 @@ infrastructure:
       - "*.jarnowieman.nl"
       - "carnaval.lol"
       - "*.carnaval.lol"
-      email: wiemanboy@gmail.com
-      hostnames:
-      - "wieman.cloud"
-      - "*.wieman.cloud"
-      - "*.s3.wieman.cloud"
-      - "wiemanboy.com"
-      - "*.wiemanboy.com"
-      - "jarnowieman.com"
-      - "*.jarnowieman.com"
-      - "jarnowieman.nl"
-      - "*.jarnowieman.nl"
-      - "carnaval.lol"
-      - "*.carnaval.lol"
 
   externaldns:
     deploy: true
