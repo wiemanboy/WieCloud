@@ -20,7 +20,7 @@ applications:
 
   nextcloud:
     deploy: true
-    version: 0.0.0-implement-nextcloud-c1381f2
+    version: 0.0.0-implement-nextcloud-03b0f0f
 
   website:
     deploy: true
