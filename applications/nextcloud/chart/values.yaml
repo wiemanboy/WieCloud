@@ -13,8 +13,10 @@ nextcloud:
     enabled: true
     protocol: https
 
-  nextcloudData:
+  persistence:
     enabled: true
+    nextcloudData:
+      enabled: true
 
   nextcloud:
     host: example.com
