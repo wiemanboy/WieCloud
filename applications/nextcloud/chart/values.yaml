@@ -107,14 +107,24 @@ nextcloud:
           path: nextcloud-client-secret
 
     extraVolumeMounts:
-    - name: app-install
+    - name: app-install-post-install
+      mountPath: /docker-entrypoint-hooks.d/post-installation/app-install.sh
+      subPath: app-install.sh
+      readOnly: true
+    - name: oidc-setup-post-install
+      mountPath: /docker-entrypoint-hooks.d/post-installation/oidc-setup.sh
+      subPath: oidc-setup.sh
+      readOnly: true
+
+    - name: app-install-before-starting
       mountPath: /docker-entrypoint-hooks.d/before-starting/app-install.sh
       subPath: app-install.sh
       readOnly: true
-    - name: oidc-setup
+    - name: oidc-setup-before-starting
       mountPath: /docker-entrypoint-hooks.d/before-starting/oidc-setup.sh
       subPath: oidc-setup.sh
       readOnly: true
+
     - name: nextcloud-client-secret
       mountPath: /var/run/secrets/nextcloud-client-secret
       subPath: nextcloud-client-secret
