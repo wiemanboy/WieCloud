@@ -24,7 +24,7 @@ applications:
 
   technitium:
     deploy: true
-    version: 0.0.0-implement-technitium-71c10a8
+    version: 0.0.0-implement-technitium-f9bafe3
 
   website:
     deploy: true
