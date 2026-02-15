@@ -25,6 +25,42 @@ nextcloud:
     - name: user_oidc
       enabled: true
 
+    - name: contacts
+      enabled: true
+
+    - name: deck
+      enabled: true
+
+    - name: maps
+      enabled: true
+
+    - name: calendar
+      enabled: true
+
+    - name: whiteboard
+      enabled: true
+
+    - name: notes
+      enabled: true
+
+    - name: memories
+      enabled: true
+
+    - name: forms
+      enabled: true
+
+    - name: tasks
+      enabled: true
+
+    - name: drawio
+      enabled: true
+
+    - name: metadata
+      enabled: true
+      
+    - name: onlyoffice
+      enabled: true
+
     configs:
       setup.config.php: |-
         <?php
