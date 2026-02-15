@@ -65,7 +65,5 @@ module "realm_admin_role" {
 resource "keycloak_group_roles" "infra_keycloak_admin_roles" {
   realm_id = keycloak_realm.infrastructure.id
   group_id = keycloak_group.infra_keycloak_admin.id
-  role_ids = [
-    module.realm_admin_role.id
-  ]
+  role_ids = [module.realm_admin_role.id]
 }
