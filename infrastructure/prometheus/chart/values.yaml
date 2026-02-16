@@ -21,8 +21,6 @@ kube-prometheus-stack:
             key: secret
 
     grafana.ini:
-      server:
-        domain: https://grafana.example.com
       auth.generic_oauth:
         enabled: true
 
