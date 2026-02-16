@@ -15,11 +15,21 @@ spec:
         kube-prometheus-stack:
           grafana:
             grafana.ini:
+              server:
+                root_url: grafana.{{ .Values.environment.hostname }}
               auth.generic_oauth:
                 name: {{ .Values.environment.oidc.provider }}
                 auth_url: {{ .Values.environment.oidc.endpoint }}/protocol/openid-connect/auth
                 token_url: {{ .Values.environment.oidc.endpoint }}/protocol/openid-connect/token
                 api_url: {{ .Values.environment.oidc.endpoint }}/protocol/openid-connect/userinfo
+            route:
+              main:
+                parentRefs:
+                - name: {{ .Values.environment.gateway.name }}
+                  sectionName: {{ .Values.environment.gateway.listener }}
+                  namespace: {{ .Values.environment.gateway.namespace }}
+                hostnames:
+                - grafana.{{ .Values.environment.hostname }}
   destination:
     namespace: prometheus
     server: {{ .Values.infrastructure.server }}

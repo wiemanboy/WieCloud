@@ -21,6 +21,8 @@ kube-prometheus-stack:
             key: secret
 
     grafana.ini:
+      server:
+        root_url: grafana.example.com
       auth.generic_oauth:
         enabled: true
 
@@ -35,3 +37,7 @@ kube-prometheus-stack:
 
         allow_assign_grafana_admin: false
         groups_attribute_path: groups
+
+    route:
+      main:
+        enabled: true
