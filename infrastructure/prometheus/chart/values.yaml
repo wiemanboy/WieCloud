@@ -13,11 +13,7 @@ kube-prometheus-stack:
     namespaceOverride: "node-system"
 
   grafana:
-    env:
-      GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET:
-        secretKeyRef:
-          name: grafana-client-secret
-          key: secret
+    envFromSecret: grafana-client-secret
 
     grafana.ini:
       auth.generic_oauth:
@@ -25,6 +21,7 @@ kube-prometheus-stack:
 
         name: Example
         client_id: grafana
+        client_secret: $__env{SECRET}
         scopes: openid email profile groups offline_access
 
         auth_url: https://<PROVIDER_DOMAIN>/realms/<REALM_NAME>/protocol/openid-connect/auth
