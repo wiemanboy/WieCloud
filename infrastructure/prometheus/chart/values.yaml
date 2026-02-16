@@ -11,3 +11,27 @@ environment:
 kube-prometheus-stack:
   prometheus-node-exporter:
     namespaceOverride: "node-system"
+
+  grafana:
+    env:
+      CLIENT_SECRET:
+        valueFrom:
+          secretKeyRef:
+            name: grafana-client-secret
+            key: secret
+
+    grafana.ini:
+      auth.generic_oauth:
+        enabled: true
+
+        name: Example
+        client_id: grafana
+        client_secret: $__env{CLIENT_SECRET}
+        scopes: openid email profile groups offline_access
+
+        auth_url: https://<PROVIDER_DOMAIN>/realms/<REALM_NAME>/protocol/openid-connect/auth
+        token_url: https://<PROVIDER_DOMAIN>/realms/<REALM_NAME>/protocol/openid-connect/token
+        api_url: https://<PROVIDER_DOMAIN>/realms/<REALM_NAME>/protocol/openid-connect/userinfo
+
+        allow_assign_grafana_admin: false
+        groups_attribute_path: groups

@@ -12,6 +12,14 @@ spec:
     helm:
       values: |
         environment: {{ toYaml .Values.environment | nindent 10 }}
+        kube-prometheus-stack:
+          grafana:
+            grafana.ini:
+              auth.generic_oauth:
+                name: {{ .Values.environment.oidc.provider }}
+                auth_url: {{ .Values.environment.oidc.endpoint }}/protocol/openid-connect/auth
+                token_url: {{ .Values.environment.oidc.endpoint }}/protocol/openid-connect/token
+                api_url: {{ .Values.environment.oidc.endpoint }}/protocol/openid-connect/userinfo
   destination:
     namespace: prometheus
     server: {{ .Values.infrastructure.server }}
