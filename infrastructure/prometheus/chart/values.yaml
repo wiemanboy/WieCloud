@@ -13,12 +13,11 @@ kube-prometheus-stack:
     namespaceOverride: "node-system"
 
   grafana:
-    env:
+    envValueFrom:
       GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET:
-        valueFrom:
-          secretKeyRef:
-            name: grafana-client-secret
-            key: secret
+        secretKeyRef:
+          name: grafana-client-secret
+          key: secret
 
     grafana.ini:
       auth.generic_oauth:
