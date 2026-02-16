@@ -8,4 +8,6 @@ environment:
     provider: Example
     endpoint: https://example.com
 
-kube-prometheus-stack: {}
+kube-prometheus-stack:
+  prometheus-node-exporter:
+    namespaceOverride: "node-system"
