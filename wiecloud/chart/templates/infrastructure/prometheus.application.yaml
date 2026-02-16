@@ -15,5 +15,12 @@ spec:
   destination:
     namespace: prometheus
     server: {{ .Values.infrastructure.server }}
-  {{- toYaml .Values.infrastructure.defaults | nindent 2 }}
+  project: infrastructure
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
 {{- end }}
