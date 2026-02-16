@@ -8,4 +8,4 @@ environment:
     provider: Example
     endpoint: https://example.com
 
-kube-prometheus-stack:
+kube-prometheus-stack: {}

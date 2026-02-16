@@ -5,4 +5,4 @@ version: 0.0.0
 dependencies:
 - name: kube-prometheus-stack
   version: 82.0.0
-  repository: oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack
+  repository: oci://ghcr.io/prometheus-community/charts
