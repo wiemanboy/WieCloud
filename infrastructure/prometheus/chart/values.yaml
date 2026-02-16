@@ -22,7 +22,7 @@ kube-prometheus-stack:
 
     grafana.ini:
       server:
-        root_url: grafana.example.com
+        domain: grafana.example.com
       auth.generic_oauth:
         enabled: true
 
