@@ -21,7 +21,7 @@ kube-prometheus-stack:
 
         name: Example
         client_id: grafana
-        client_secret: $__env{SECRET}
+        client_secret: $__env{secret}
         scopes: openid email profile groups offline_access
 
         auth_url: https://<PROVIDER_DOMAIN>/realms/<REALM_NAME>/protocol/openid-connect/auth
