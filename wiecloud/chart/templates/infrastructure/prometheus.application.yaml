@@ -1,0 +1,19 @@
+{{- if .Values.infrastructure.prometheus.deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus
+  namespace: argocd
+spec:
+  source:
+    chart: prometheus
+    repoURL: {{ .Values.infrastructure.repository }}
+    targetRevision: {{ .Values.infrastructure.prometheus.version }}
+    helm:
+      values: |
+        environment: {{ toYaml .Values.environment | nindent 10 }}
+  destination:
+    namespace: gateway
+    server: {{ .Values.infrastructure.server }}
+  {{- toYaml .Values.infrastructure.defaults | nindent 2 }}
+{{- end }}

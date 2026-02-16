@@ -80,6 +80,10 @@ infrastructure:
     deploy: true
     version: 0.0.8
 
+  prometheus:
+    deploy: true
+    version: 0.0.0
+
   traefik:
     deploy: true
     version: 0.1.5
