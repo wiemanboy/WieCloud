@@ -82,7 +82,7 @@ infrastructure:
 
   prometheus:
     deploy: true
-    version: 0.0.0-implement-prometheus-stack-8bd7c8a
+    version: 0.0.0-implement-prometheus-stack-8bb9897
 
   traefik:
     deploy: true
