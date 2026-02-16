@@ -61,6 +61,6 @@ module "grafana_client" {
 
   urls = {
     root     = "https://grafana.${local.values.environment.hostname}"
-    redirect = ["https://next.${local.values.environment.hostname}/login/generic_oauth"]
+    redirect = ["https://grafana.${local.values.environment.hostname}/login/generic_oauth"]
   }
 }

@@ -16,7 +16,7 @@ spec:
           grafana:
             grafana.ini:
               server:
-                domain: grafana.{{ .Values.environment.hostname }}
+                domain: https://grafana.{{ .Values.environment.hostname }}
               auth.generic_oauth:
                 name: {{ .Values.environment.oidc.provider }}
                 auth_url: {{ .Values.environment.oidc.endpoint }}/protocol/openid-connect/auth
