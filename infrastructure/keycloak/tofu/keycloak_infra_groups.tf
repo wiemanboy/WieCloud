@@ -18,6 +18,13 @@ module "infra_keycloak_group" {
   name      = "keycloak"
 }
 
+module "infra_grafana_group" {
+  source    = "./modules/keycloak/user_group"
+  realm_id  = keycloak_realm.infrastructure.id
+  parent_id = module.infra_group.id
+  name      = "grafana"
+}
+
 module "realm_admin_role" {
   source   = "./modules/keycloak/realm_roles"
   realm_id = keycloak_realm.infrastructure.id
