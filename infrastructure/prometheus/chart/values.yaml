@@ -31,8 +31,10 @@ kube-prometheus-stack:
         token_url: https://<PROVIDER_DOMAIN>/realms/<REALM_NAME>/protocol/openid-connect/token
         api_url: https://<PROVIDER_DOMAIN>/realms/<REALM_NAME>/protocol/openid-connect/userinfo
 
-        allow_assign_grafana_admin: false
+        allow_assign_grafana_admin: true
         groups_attribute_path: groups
+        allowed_groups: /infra/grafana/admin /infra/grafana/user
+        role_attribute_path: contains(groups[*], '/infra/grafana/admin') && 'GrafanaAdmin' || contains(groups[*], '/infra/grafana/user') && 'Editor' || 'Viewer'
 
     route:
       main:
