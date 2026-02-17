@@ -30,30 +30,30 @@ resource "keycloak_user" "jarno_wieman" {
 
 resource "keycloak_group_memberships" "infra_admin_members" {
   realm_id = keycloak_realm.infrastructure.id
-  group_id = keycloak_group.infra_admin.id
+  group_id = module.infra_group.child_groups.admin.id
   members  = [keycloak_user.jarno_wieman.username]
 }
 
 resource "keycloak_group_memberships" "infra_harbor_admin_members" {
   realm_id = keycloak_realm.infrastructure.id
-  group_id = keycloak_group.infra_harbor_admin.id
+  group_id = module.infra_harbor_group.child_groups.admin.id
   members  = [keycloak_user.jarno_wieman.username]
 }
 
 resource "keycloak_group_memberships" "infra_keycloak_admin_members" {
   realm_id = keycloak_realm.infrastructure.id
-  group_id = keycloak_group.infra_keycloak_admin.id
+  group_id = module.infra_keycloak_group.child_groups.admin.id
   members  = [keycloak_user.jarno_wieman.username]
 }
 
 resource "keycloak_group_memberships" "app_admin_members" {
   realm_id = keycloak_realm.infrastructure.id
-  group_id = keycloak_group.app_admin.id
+  group_id = module.app_group.child_groups.admin.id
   members  = [keycloak_user.jarno_wieman.username]
 }
 
 resource "keycloak_group_memberships" "app_nextcloud_members" {
   realm_id = keycloak_realm.infrastructure.id
-  group_id = keycloak_group.app_nextcloud.id
+  group_id = module.app_nextcloud_group.child_groups.admin.id
   members  = [keycloak_user.jarno_wieman.username]
 }
