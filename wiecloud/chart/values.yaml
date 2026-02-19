@@ -60,6 +60,10 @@ infrastructure:
     deploy: true
     version: 1.0.5
 
+  k8up:
+    deploy: true
+    version: 0.0.0
+
   keycloak:
     deploy: true
     version: 1.0.0
