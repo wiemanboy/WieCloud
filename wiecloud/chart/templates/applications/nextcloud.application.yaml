@@ -22,6 +22,12 @@ spec:
   destination:
     namespace: nextcloud
     server: {{ .Values.applications.server }}
-  {{- $cfg := merge (dict "project" "applications") .Values.applications.defaults }}
-  {{- toYaml $cfg | nindent 2 }}
+  project: applications
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
 {{- end }}

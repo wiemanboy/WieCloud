@@ -28,14 +28,6 @@ applications:
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/applications
-  defaults:
-    project: applications
-    syncPolicy:
-      automated:
-        prune: true
-        selfHeal: true
-      syncOptions:
-      - CreateNamespace=true
 
 infrastructure:
   argocd:
@@ -94,14 +86,6 @@ infrastructure:
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/infrastructure
-  defaults:
-    project: infrastructure
-    syncPolicy:
-      automated:
-        prune: true
-        selfHeal: true
-      syncOptions:
-      - CreateNamespace=true
 
 images:
   rconcli:
