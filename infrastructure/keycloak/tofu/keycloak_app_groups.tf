@@ -1,16 +1,12 @@
-resource "keycloak_group" "app" {
+module "app_group" {
+  source   = "./modules/keycloak/user_group"
   realm_id = keycloak_realm.infrastructure.id
   name     = "app"
 }
 
-resource "keycloak_group" "app_admin" {
+module "app_nextcloud_group" {
+  source    = "./modules/keycloak/user_group"
   realm_id  = keycloak_realm.infrastructure.id
-  parent_id = keycloak_group.app.id
-  name      = "admin"
-}
-
-resource "keycloak_group" "app_nextcloud" {
-  realm_id  = keycloak_realm.infrastructure.id
-  parent_id = keycloak_group.app.id
+  parent_id = module.app_group.id
   name      = "nextcloud"
 }

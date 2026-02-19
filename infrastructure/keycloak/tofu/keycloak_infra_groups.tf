@@ -1,36 +1,28 @@
-resource "keycloak_group" "infra" {
+module "infra_group" {
+  source   = "./modules/keycloak/user_group"
   realm_id = keycloak_realm.infrastructure.id
   name     = "infra"
 }
 
-resource "keycloak_group" "infra_admin" {
+module "infra_harbor_group" {
+  source    = "./modules/keycloak/user_group"
   realm_id  = keycloak_realm.infrastructure.id
-  parent_id = keycloak_group.infra.id
-  name      = "admin"
-}
-
-resource "keycloak_group" "infra_harbor" {
-  realm_id  = keycloak_realm.infrastructure.id
-  parent_id = keycloak_group.infra.id
+  parent_id = module.infra_group.id
   name      = "harbor"
 }
 
-resource "keycloak_group" "infra_harbor_admin" {
+module "infra_keycloak_group" {
+  source    = "./modules/keycloak/user_group"
   realm_id  = keycloak_realm.infrastructure.id
-  parent_id = keycloak_group.infra_harbor.id
-  name      = "admin"
-}
-
-resource "keycloak_group" "infra_keycloak" {
-  realm_id  = keycloak_realm.infrastructure.id
-  parent_id = keycloak_group.infra.id
+  parent_id = module.infra_group.id
   name      = "keycloak"
 }
 
-resource "keycloak_group" "infra_keycloak_admin" {
+module "infra_grafana_group" {
+  source    = "./modules/keycloak/user_group"
   realm_id  = keycloak_realm.infrastructure.id
-  parent_id = keycloak_group.infra_keycloak.id
-  name      = "admin"
+  parent_id = module.infra_group.id
+  name      = "grafana"
 }
 
 module "realm_admin_role" {
@@ -64,6 +56,6 @@ module "realm_admin_role" {
 
 resource "keycloak_group_roles" "infra_keycloak_admin_roles" {
   realm_id = keycloak_realm.infrastructure.id
-  group_id = keycloak_group.infra_keycloak_admin.id
+  group_id = module.infra_keycloak_group.child_groups.admin.id
   role_ids = [module.realm_admin_role.id]
 }

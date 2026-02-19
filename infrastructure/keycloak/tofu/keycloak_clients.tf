@@ -51,3 +51,16 @@ module "nextcloud_client" {
     post_logout_redirect = ["https://next.${local.values.environment.hostname}/"]
   }
 }
+
+module "grafana_client" {
+  source   = "./modules/keycloak/client"
+  realm_id = keycloak_realm.infrastructure.id
+
+  name      = "grafana"
+  namespace = "prometheus"
+
+  urls = {
+    root     = "https://grafana.${local.values.environment.hostname}"
+    redirect = ["https://grafana.${local.values.environment.hostname}/login/generic_oauth"]
+  }
+}

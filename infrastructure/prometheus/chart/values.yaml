@@ -1,0 +1,41 @@
+environment:
+  hostname: example.com
+  gateway:
+    name: example-gateway
+    listener: web-example
+    namespace: example
+  oidc:
+    provider: Example
+    endpoint: https://example.com
+
+kube-prometheus-stack:
+  prometheus-node-exporter:
+    namespaceOverride: "node-system"
+
+  grafana:
+    envFromSecret: grafana-client-secret
+
+    grafana.ini:
+      auth.basic:
+        enabled: false
+        disable_login_form: true
+      auth.generic_oauth:
+        enabled: true
+
+        name: Example
+        client_id: grafana
+        client_secret: $__env{secret}
+        scopes: openid email profile groups offline_access
+
+        auth_url: https://<PROVIDER_DOMAIN>/realms/<REALM_NAME>/protocol/openid-connect/auth
+        token_url: https://<PROVIDER_DOMAIN>/realms/<REALM_NAME>/protocol/openid-connect/token
+        api_url: https://<PROVIDER_DOMAIN>/realms/<REALM_NAME>/protocol/openid-connect/userinfo
+
+        allow_assign_grafana_admin: true
+        groups_attribute_path: groups
+        allowed_groups: /infra/grafana/admin /infra/grafana/user
+        role_attribute_path: contains(groups[*], '/infra/grafana/admin') && 'GrafanaAdmin' || contains(groups[*], '/infra/grafana/user') && 'Editor' || 'Viewer'
+
+    route:
+      main:
+        enabled: true
