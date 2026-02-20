@@ -1,0 +1,21 @@
+apiVersion: k8up.io/v1
+kind: Backup
+metadata:
+  name: backup-test
+spec:
+  failedJobsHistoryLimit: 2
+  successfulJobsHistoryLimit: 2
+  backend:
+    repoPasswordSecretRef:
+      name: backup-repo
+      key: password
+    s3:
+      endpoint: http://{{ .Values.backend.s3.endpoint }}
+      bucket: {{ .Values.backend.s3.bucket }}
+      accessKeyIDSecretRef:
+        name: {{ .Values.backend.s3.secret.name }}
+        key: {{ .Values.backend.s3.secret.accessKey }}
+      secretAccessKeySecretRef:
+        name: {{ .Values.backend.s3.secret.name }}
+        key: {{ .Values.backend.s3.secret.secretKey }}
+---

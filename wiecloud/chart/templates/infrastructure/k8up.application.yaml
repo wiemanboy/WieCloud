@@ -12,6 +12,9 @@ spec:
     helm:
       values: |
         environment: {{ toYaml .Values.environment | nindent 10 }}
+        backend:
+          s3:
+            endpoint: k8up.s3.{{ .Values.environment.hostname }}
   destination:
     namespace: k8up
     server: {{ .Values.infrastructure.server }}
