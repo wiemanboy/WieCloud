@@ -10,7 +10,7 @@ spec:
       name: backup-repo
       key: password
     s3:
-      endpoint: http://{{ .Values.backend.s3.endpoint }}
+      endpoint: https://{{ .Values.backend.s3.endpoint }}
       bucket: {{ .Values.backend.s3.bucket }}
       accessKeyIDSecretRef:
         name: {{ .Values.backend.s3.secret.name }}

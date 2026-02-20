@@ -20,7 +20,7 @@ provider "aws" {
 
   s3_use_path_style = true
   endpoints {
-    s3 = "https://${local.values.backend.s3.endpoint}"
+    s3 = "https://k8up.s3.wieman.cloud"
   }
 }
 
