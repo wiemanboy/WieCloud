@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: busybox-pvc
   labels:
-    k8up.io/backup: "true"
+    wieman.cloud/backup: "true"
 spec:
   accessModes:
     - ReadWriteOnce

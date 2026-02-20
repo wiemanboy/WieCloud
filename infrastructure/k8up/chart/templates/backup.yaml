@@ -8,7 +8,7 @@ spec:
 
   labelSelectors:
     - matchExpressions:
-      - key: k8up.io/backup
+      - key: wieman.cloud/backup
         operator: In
         values:
           - "true"
