@@ -5,7 +5,7 @@ metadata:
 spec:
   restoreMethod:
     folder:
-      claimName: mfw-restore
+      claimName: busybox-pvc
   backend:
     repoPasswordSecretRef:
       name: backup-repo
