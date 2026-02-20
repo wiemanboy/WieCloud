@@ -11,7 +11,7 @@ spec:
       - key: k8up.io/backup
         operator: In
         values:
-          - true
+          - "true"
 
   backend:
     repoPasswordSecretRef:
