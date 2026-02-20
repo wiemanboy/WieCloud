@@ -5,10 +5,14 @@ metadata:
 spec:
   failedJobsHistoryLimit: 2
   successfulJobsHistoryLimit: 2
-  backup:
-    labelSelector:
-      matchLabels:
-        k8up.io/backup: "true"
+
+  labelSelector:
+    - matchExpressions:
+      - key: k8up.io/backup
+        operator: In
+        values:
+          - true
+
   backend:
     repoPasswordSecretRef:
       name: backup-repo
