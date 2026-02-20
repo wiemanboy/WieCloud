@@ -1,8 +1,16 @@
+environment:
+  hostname: example.com
+  gateway:
+    name: example-gateway
+    listener: web-example
+    namespace: example
+
 backend:
   repoPasswordSecretRef:
     name: backup-repo
     key: password
   s3:
+    name: backup-s3
     endpoint: k8up.s3.example.com
     bucket: backup-bucket
     secret:

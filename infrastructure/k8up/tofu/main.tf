@@ -1,7 +1,7 @@
 variable "values_file" {
   description = "Path to YAML configuration file"
   type        = string
-  default     = "../values.yaml"
+  default     = "../chart/values.yaml"
 }
 
 locals {
