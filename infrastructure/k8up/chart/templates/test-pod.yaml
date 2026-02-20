@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: busybox-pvc
   annotations:
-    k8up.syn.tools/backup: "true"
+    k8up.io/backup: "true"
 spec:
   accessModes:
     - ReadWriteOnce
