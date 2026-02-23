@@ -54,7 +54,7 @@ kind: Secret
 metadata:
   name: {{ .Values.seaweedfs.secret.name }}
 type: Opaque
-data:
+stringData:
   seaweedfs_s3_config.json: |
     {
       "identities": [
