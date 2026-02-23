@@ -8,8 +8,8 @@ spec:
       claimName: busybox-pvc
   backend:
     repoPasswordSecretRef:
-      name: backup-repo
       key: password
+      name: backup-repo
     s3:
       endpoint: https://{{ .Values.seaweedfs.endpoint }}
       bucket: {{ .Values.seaweedfs.bucket }}

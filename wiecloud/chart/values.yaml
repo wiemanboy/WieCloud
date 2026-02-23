@@ -64,6 +64,45 @@ infrastructure:
     deploy: true
     version: 0.0.0-implement-k8up-5cd4b2a
 
+    default:
+      schedule:
+        backup: "*/5 * * * *"
+        check: "0 1 * * 1"
+        prune: "0 1 * * 0"
+      retention:
+        keepLast: 5
+        keepDaily: 14
+
+    backups:
+    - name: minecraft
+      namespace: minecraft
+
+    - name: nextcloud
+      namespace: nextcloud
+
+    - name: harbor
+      namespace: harbor
+
+    - name: keycloak
+      namespace: keycloak
+
+    # - name: example
+    #   namespace: example
+    #   schedule:
+    #     backup: "*/5 * * * *"
+    #     check: "0 1 * * 1"
+    #     prune: "0 1 * * 0"
+    #   retention:
+    #     keepLast: 5
+    #     keepDaily: 14
+
+    restores: []
+    # - name: example-restore
+    #   namespace: example-namespace
+    #   newClaim: false
+    #   claimName: example-pvc
+    #   snapshot: example-snapshot # Defaults to latest
+
   keycloak:
     deploy: true
     version: 1.0.0

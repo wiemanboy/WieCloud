@@ -11,11 +11,38 @@ seaweedfs:
   bucket: backup-bucket
   secret:
     name: s3-secret
-    accessKey: access_key
-    secretKey: secret_key
+    accessKey: accessKey
+    secretKey: secretKey
 
 k8up:
   backend:
     repoPasswordSecretRef:
       name: backup-repo
       key: password
+
+  default:
+    schedule:
+      backup: "*/5 * * * *"
+      check: "0 1 * * 1"
+      prune: "0 1 * * 0"
+    retention:
+      keepLast: 5
+      keepDaily: 14
+
+  backups:
+  - name: example-backup
+    namespace: default
+  #   schedule:
+  #     backup: "*/5 * * * *"
+  #     check: "0 1 * * 1"
+  #     prune: "0 1 * * 0"
+  #   retention:
+  #     keepLast: 5
+  #     keepDaily: 14
+
+  restores:
+  - name: example-restore
+    namespace: default
+  #   newClaim: false
+  #   claimName: example-pvc
+  #   snapshot: example-snapshot # Defaults to latest
