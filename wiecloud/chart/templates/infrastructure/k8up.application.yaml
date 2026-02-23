@@ -30,7 +30,7 @@ spec:
   - group: ""
     kind: Secret
     jqPathExpressions:
-    - ".metadata.labels[\"wieman.cloud/random-secret\"] == \"true\""
+    - '.metadata.labels["wieman.cloud/random-secret"] != null'
     jsonPointers:
     - /data
   syncPolicy:
