@@ -62,7 +62,7 @@ infrastructure:
 
   k8up:
     deploy: true
-    version: 0.0.0-implement-k8up-0853036
+    version: 0.0.0-implement-k8up-39904c8
 
     default:
       schedule:
