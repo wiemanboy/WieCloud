@@ -2,6 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: busybox-pvc
+  namespace: default
   labels:
     wieman.cloud/backup: "true"
 spec:
@@ -15,6 +16,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: busybox-pod
+  namespace: default
 spec:
   containers:
     - name: busybox
