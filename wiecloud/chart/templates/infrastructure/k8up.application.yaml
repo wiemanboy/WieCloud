@@ -19,11 +19,11 @@ spec:
           {{ toYaml .Values.infrastructure.k8up.default | nindent 12 }}
           {{- if .Values.infrastructure.k8up.backups }}
           backups:
-          {{ toYaml .Values.infrastructure.k8up.backups | nindent 10 }}
+          {{ toYaml .Values.infrastructure.k8up.backups | nindent 12 }}
           {{- end }}
           {{- if .Values.infrastructure.k8up.restores }}
           restores:
-          {{ toYaml .Values.infrastructure.k8up.restores | nindent 10 }}
+          {{ toYaml .Values.infrastructure.k8up.restores | nindent 12 }}
           {{- end }}
   destination:
     namespace: k8up

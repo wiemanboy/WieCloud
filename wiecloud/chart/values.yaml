@@ -76,7 +76,7 @@ infrastructure:
     backups:
     - name: keycloak
       namespace: keycloak
-      
+
     - name: minecraft
       namespace: minecraft
 
