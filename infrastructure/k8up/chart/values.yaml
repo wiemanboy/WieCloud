@@ -27,9 +27,9 @@ k8up:
       keepLast: 5
       keepDaily: 14
 
-  backups:
-  - name: example-backup
-    namespace: default
+  # backups:
+  # - name: example-backup
+  #   namespace: default
   #   schedule:
   #     backup: "*/5 * * * *"
   #     check: "0 1 * * 1"
@@ -38,16 +38,16 @@ k8up:
   #     keepLast: 5
   #     keepDaily: 14
 
-  restores:
-  - name: example-restore
-    namespace: default
-    snapshot: example-snapshot # Defaults to latest
-    claim:
-      name: example-pvc
-      deploy: true
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: 1Gi
+  # restores:
+  # - name: example-restore
+  #   namespace: default
+  #   snapshot: example-snapshot # Defaults to latest
+  #   claim:
+  #     name: example-pvc
+  #     deploy: true
+  #     spec:
+  #       accessModes:
+  #         - ReadWriteOnce
+  #       resources:
+  #         requests:
+  #           storage: 1Gi
