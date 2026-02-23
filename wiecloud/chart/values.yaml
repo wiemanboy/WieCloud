@@ -62,7 +62,7 @@ infrastructure:
 
   k8up:
     deploy: true
-    version: 0.0.0-implement-k8up-19454f8
+    version: 0.0.0-implement-k8up-5cd4b2a
 
   keycloak:
     deploy: true
