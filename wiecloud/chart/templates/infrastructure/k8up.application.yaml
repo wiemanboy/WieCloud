@@ -29,6 +29,11 @@ spec:
     namespace: k8up
     server: {{ .Values.infrastructure.server }}
   project: infrastructure
+  ignoreDifferences:
+  - group: ""
+    kind: Secret
+    jsonPointers:
+    - /data
   syncPolicy:
     automated:
       prune: true
