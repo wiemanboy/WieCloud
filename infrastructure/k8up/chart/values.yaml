@@ -27,19 +27,6 @@ k8up:
       keepLast: 5
       keepDaily: 14
 
-  backups:
-  - name: keycloak
-    namespace: keycloak
-
-  - name: minecraft
-    namespace: minecraft
-
-  - name: nextcloud
-    namespace: nextcloud
-
-  - name: harbor
-    namespace: harbor
-
   # backups:
   # - name: example-backup
   #   namespace: default

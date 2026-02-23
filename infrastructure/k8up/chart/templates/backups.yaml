@@ -27,4 +27,5 @@ spec:
       secretAccessKeySecretRef:
         name: {{ printf "%s-%s" $backup.name "s3-backup-secret" }}
         key: secretKey
+---
 {{- end }}
