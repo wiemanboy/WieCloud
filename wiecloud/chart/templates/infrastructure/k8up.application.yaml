@@ -12,9 +12,15 @@ spec:
     helm:
       values: |
         environment: {{ toYaml .Values.environment | nindent 10 }}
-        backend:
-          s3:
-            endpoint: k8up.s3.{{ .Values.environment.hostname }}
+        seaweedfs:
+          endpoint: k8up.s3.{{ .Values.environment.hostname }}
+        k8up:
+          default:
+          {{ toYaml .Values.infrastructure.k8up.default | nindent 12 }}
+          backups:
+          {{ toYaml .Values.infrastructure.k8up.backups | nindent 12 }}
+          restores:
+          {{ toYaml .Values.infrastructure.k8up.restores | nindent 12 }}
   destination:
     namespace: k8up
     server: {{ .Values.infrastructure.server }}

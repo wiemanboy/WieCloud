@@ -11,8 +11,6 @@ seaweedfs:
   bucket: backup-bucket
   secret:
     name: s3-secret
-    accessKey: accessKey
-    secretKey: secretKey
 
 k8up:
   backend:
@@ -43,6 +41,13 @@ k8up:
   restores:
   - name: example-restore
     namespace: default
-  #   newClaim: false
-  #   claimName: example-pvc
-  #   snapshot: example-snapshot # Defaults to latest
+    snapshot: example-snapshot # Defaults to latest
+    claim:
+      name: example-pvc
+      deploy: true
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi

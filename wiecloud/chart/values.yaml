@@ -86,8 +86,8 @@ infrastructure:
     - name: keycloak
       namespace: keycloak
 
-    # - name: example
-    #   namespace: example
+    # - name: example-backup
+    #   namespace: default
     #   schedule:
     #     backup: "*/5 * * * *"
     #     check: "0 1 * * 1"
@@ -96,12 +96,19 @@ infrastructure:
     #     keepLast: 5
     #     keepDaily: 14
 
-    restores: []
+    restores:
     # - name: example-restore
-    #   namespace: example-namespace
-    #   newClaim: false
-    #   claimName: example-pvc
+    #   namespace: default
     #   snapshot: example-snapshot # Defaults to latest
+    #   claim:
+    #     name: example-pvc
+    #     deploy: true
+    #     spec:
+    #       accessModes:
+    #         - ReadWriteOnce
+    #       resources:
+    #         requests:
+    #           storage: 1Gi
 
   keycloak:
     deploy: true
