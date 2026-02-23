@@ -96,7 +96,7 @@ infrastructure:
     #     keepLast: 5
     #     keepDaily: 14
 
-    restores:
+    # restores:
     # - name: example-restore
     #   namespace: default
     #   snapshot: example-snapshot # Defaults to latest

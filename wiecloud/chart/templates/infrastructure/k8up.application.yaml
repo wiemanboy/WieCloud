@@ -16,11 +16,15 @@ spec:
           endpoint: k8up.s3.{{ .Values.environment.hostname }}
         k8up:
           default:
-          {{ toYaml .Values.infrastructure.k8up.default | nindent 12 }}
+          {{ toYaml .Values.infrastructure.k8up.default | nindent 10 }}
+          {{- if .Values.infrastructure.k8up.backups }}
           backups:
-          {{ toYaml .Values.infrastructure.k8up.backups | nindent 12 }}
+          {{ toYaml .Values.infrastructure.k8up.backups | nindent 10 }}
+          {{- end }}
+          {{- if .Values.infrastructure.k8up.restores }}
           restores:
-          {{ toYaml .Values.infrastructure.k8up.restores | nindent 12 }}
+          {{ toYaml .Values.infrastructure.k8up.restores | nindent 10 }}
+          {{- end }}
   destination:
     namespace: k8up
     server: {{ .Values.infrastructure.server }}
