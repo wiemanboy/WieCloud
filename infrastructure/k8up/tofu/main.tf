@@ -1,17 +1,6 @@
-variable "values_file" {
-  description = "Path to YAML configuration file"
-  type        = string
-  default     = "../chart/values.yaml"
-}
-
-locals {
-  values = yamldecode(file(var.values_file))
-}
-
-
 provider "aws" {
-  access_key = random_password.s3_deploy_access_key.result
-  secret_key = random_password.s3_deploy_secret_key.result
+  access_key = var.access_key
+  secret_key = var.secret_key
 
   skip_credentials_validation = true
   skip_requesting_account_id  = true
@@ -24,8 +13,6 @@ provider "aws" {
   }
 }
 
-provider "kubernetes" {
-  config_path = "../../../foundation/config/kubeconfig"
+resource "aws_s3_bucket" "s3_bucket" {
+  bucket = "backup-bucket"
 }
-
-provider "random" {}
