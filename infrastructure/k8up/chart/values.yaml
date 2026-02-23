@@ -5,15 +5,17 @@ environment:
     listener: web-example
     namespace: example
 
-backend:
-  repoPasswordSecretRef:
-    name: backup-repo
-    key: password
-  s3:
-    name: backup-s3
-    endpoint: k8up.s3.example.com
-    bucket: backup-bucket
-    secret:
-      name: s3-secret
-      accessKey: access_key
-      secretKey: secret_key
+seaweedfs:
+  name: backup-s3
+  endpoint: k8up.s3.example.com
+  bucket: backup-bucket
+  secret:
+    name: s3-secret
+    accessKey: access_key
+    secretKey: secret_key
+
+k8up:
+  backend:
+    repoPasswordSecretRef:
+      name: backup-repo
+      key: password

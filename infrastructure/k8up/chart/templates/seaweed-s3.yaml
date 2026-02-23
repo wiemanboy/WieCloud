@@ -1,7 +1,7 @@
 apiVersion: seaweed.seaweedfs.com/v1
 kind: Seaweed
 metadata:
-  name: {{ .Values.backend.s3.name }}
+  name: {{ .Values.seaweedfs.name }}
 spec:
   image: chrislusf/seaweedfs:latest
   master:
@@ -16,7 +16,7 @@ spec:
     s3:
       enabled: true
       configSecret:
-        name: {{ .Values.backend.s3.secret.name }}
+        name: {{ .Values.seaweedfs.secret.name }}
         key: seaweedfs_s3_config.json
     config: |
       [leveldb2]
@@ -26,7 +26,7 @@ spec:
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: {{ .Values.backend.s3.name }}
+  name: {{ .Values.seaweedfs.name }}
 spec:
   parentRefs:
     - name: {{ .Values.environment.gateway.name }}
@@ -34,7 +34,7 @@ spec:
       namespace: {{ .Values.environment.gateway.namespace }}
 
   hostnames:
-    - {{ .Values.backend.s3.endpoint }}
+    - {{ .Values.seaweedfs.endpoint }}
 
   rules:
     - matches:
@@ -43,6 +43,47 @@ spec:
             value: /
 
       backendRefs:
-        - name: "{{ .Values.backend.s3.name }}-filer"
+        - name: "{{ .Values.seaweedfs.name }}-filer"
           namespace: {{ .Release.Namespace }}
           port: 8333
+---
+{{- if not (lookup "v1" "Secret" .Release.Namespace .Values.seaweedfs.secret.name) }}
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ .Values.seaweedfs.secret.name }}
+type: Opaque
+data:
+  seaweedfs_s3_config.json: |
+    {
+      "identities": [
+        {
+          "actions": [
+            "Read",
+            "List",
+            "Write"
+          ],
+          "credentials": [
+            {
+              "accessKey": {{ randAlphaNum 50 | quote }},
+              "secretKey": {{ randAlphaNum 50 | quote }}
+            }
+          ],
+          "name": "k8up-s3-user"
+        },
+        {
+          "actions": [
+            "Admin"
+          ],
+          "credentials": [
+            {
+              "accessKey": {{ randAlphaNum 50 | quote }},
+              "secretKey": {{ randAlphaNum 50 | quote }}
+            }
+          ],
+          "name": "deploy-s3-user"
+        }
+      ]
+    }
+{{- end }}

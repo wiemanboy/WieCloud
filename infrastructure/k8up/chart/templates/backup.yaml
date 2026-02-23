@@ -18,12 +18,12 @@ spec:
       name: backup-repo
       key: password
     s3:
-      endpoint: https://{{ .Values.backend.s3.endpoint }}
-      bucket: {{ .Values.backend.s3.bucket }}
+      endpoint: https://{{ .Values.seaweedfs.endpoint }}
+      bucket: {{ .Values.seaweedfs.bucket }}
       accessKeyIDSecretRef:
-        name: {{ .Values.backend.s3.secret.name }}
-        key: {{ .Values.backend.s3.secret.accessKey }}
+        name: {{ .Values.seaweedfs.secret.name }}
+        key: {{ .Values.seaweedfs.secret.accessKey }}
       secretAccessKeySecretRef:
-        name: {{ .Values.backend.s3.secret.name }}
-        key: {{ .Values.backend.s3.secret.secretKey }}
+        name: {{ .Values.seaweedfs.secret.name }}
+        key: {{ .Values.seaweedfs.secret.secretKey }}
 ---
