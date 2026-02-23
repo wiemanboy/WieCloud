@@ -32,6 +32,8 @@ spec:
   ignoreDifferences:
   - group: ""
     kind: Secret
+    jqPathExpressions:
+    - ".metadata.labels[wieman.cloud/random-secret] == true"
     jsonPointers:
     - /data
   syncPolicy:
