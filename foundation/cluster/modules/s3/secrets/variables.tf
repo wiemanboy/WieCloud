@@ -14,9 +14,5 @@ variable "identities" {
     name       = string
     namespaces = optional(list(string))
     type       = string
-    credentials = optional(list(object({
-      accessKey = string
-      secretKey = string
-    })))
   }))
 }

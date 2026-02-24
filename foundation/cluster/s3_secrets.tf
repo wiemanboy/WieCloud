@@ -4,7 +4,7 @@ module "backup_s3_secret" {
   namespace = "k8up"
   identities = [
     {
-      name       = "deploy-secret"
+      name       = "deploy-s3-secret"
       namespaces = ["k8up"]
       type       = "Admin"
     },

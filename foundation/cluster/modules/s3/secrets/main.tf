@@ -40,12 +40,12 @@ resource "kubernetes_secret_v1" "s3_config" {
         for id in var.identities : {
           name    = id.name
           actions = try(id.type, "") == "Admin" ? local.deployer_actions : try(id.type, "") == "Write" ? local.writer_actions : local.reader_actions
-          credentials = try(id.credentials, [
+          credentials = [
             {
               accessKey = random_password.access_key[id.name].result
               secretKey = random_password.secret_key[id.name].result
             }
-          ])
+          ]
         }
       ]
     })
