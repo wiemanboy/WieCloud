@@ -23,15 +23,15 @@ spec:
         key: secretKey
 
   backup:
-    schedule: {{ $schedule.backup | default $.Values.k8up.default.schedule.backup }}
+    schedule: {{ $schedule.backup | default $.Values.k8up.default.schedule.backup | quote }}
     failedJobsHistoryLimit: 2
     successfulJobsHistoryLimit: 0
 
   check:
-    schedule: {{ $schedule.check | default $.Values.k8up.default.schedule.check }}
+    schedule: {{ $schedule.check | default $.Values.k8up.default.schedule.check | quote }}
 
   prune:
-    schedule: {{ $schedule.prune | default $.Values.k8up.default.schedule.prune }}
+    schedule: {{ $schedule.prune | default $.Values.k8up.default.schedule.prune | quote }}
     retention:
       keepLast: {{ $retention.keepLast | default $.Values.k8up.default.retention.keepLast }}
       keepDaily: {{ $retention.keepDaily | default $.Values.k8up.default.retention.keepDaily }}

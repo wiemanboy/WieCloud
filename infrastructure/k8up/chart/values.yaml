@@ -27,16 +27,16 @@ k8up:
       keepLast: 5
       keepDaily: 14
 
-  # backups:
-  # - name: example-backup
-  #   namespace: default
-  #   schedule:
-  #     backup: "*/5 * * * *"
-  #     check: "0 1 * * 1"
-  #     prune: "0 1 * * 0"
-  #   retention:
-  #     keepLast: 5
-  #     keepDaily: 14
+  backups:
+  - name: example-backup
+    namespace: default
+    schedule:
+      backup: "*/5 * * * *"
+      check: "0 1 * * 1"
+      prune: "0 1 * * 0"
+    retention:
+      keepLast: 5
+      keepDaily: 14
 
   # restores:
   # - name: example-restore
