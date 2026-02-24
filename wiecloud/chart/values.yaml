@@ -74,9 +74,6 @@ infrastructure:
         keepDaily: 14
 
     backups:
-    - name: keycloak
-      namespace: keycloak
-
     - name: minecraft
       namespace: minecraft
 
@@ -85,6 +82,12 @@ infrastructure:
 
     - name: harbor
       namespace: harbor
+
+    - name: keycloak
+      namespace: keycloak
+
+    - name: test
+      namespace: default
 
     # - name: example-backup
     #   namespace: default
