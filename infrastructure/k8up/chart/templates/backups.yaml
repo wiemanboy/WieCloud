@@ -27,6 +27,13 @@ spec:
     failedJobsHistoryLimit: 2
     successfulJobsHistoryLimit: 0
 
+    labelSelectors:
+      - matchExpressions:
+        - key: wieman.cloud/backup
+          operator: In
+          values:
+            - "true"
+
   check:
     schedule: {{ $schedule.check | default $.Values.k8up.default.schedule.check | quote }}
 
