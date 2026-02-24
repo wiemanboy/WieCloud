@@ -22,6 +22,10 @@ applications:
     deploy: true
     version: 0.0.0
 
+  technitium:
+    deploy: true
+    version: 0.0.0-implement-technitium-315db56
+
   website:
     deploy: true
     namespace: website
