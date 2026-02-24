@@ -16,10 +16,10 @@ spec:
       endpoint: https://{{ $.Values.seaweedfs.endpoint }}
       bucket: {{ $.Values.seaweedfs.bucket }}
       accessKeyIDSecretRef:
-        name: {{ printf "%s-%s" $restore.name "s3-backup-secret" }}
+        name: backup-s3-secret
         key: accessKey
       secretAccessKeySecretRef:
-        name: {{ printf "%s-%s" $restore.name "s3-backup-secret" }}
+        name: backup-s3-secret
         key: secretKey
 ---
 {{- if $restore.claim.deploy }}

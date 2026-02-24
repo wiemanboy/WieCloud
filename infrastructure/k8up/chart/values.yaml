@@ -10,12 +10,12 @@ seaweedfs:
   endpoint: k8up.s3.example.com
   bucket: backup-bucket
   secret:
-    name: s3-secret
+    name: s3-config-secret
 
 k8up:
   backend:
     repoPasswordSecretRef:
-      name: backup-repo
+      name: repo-password-secret
       key: password
 
   default:
