@@ -1,4 +1,8 @@
 {{- range $index, $backup := .Values.k8up.backups }}
+
+{{- $schedule := default dict $backup.schedule }}
+{{- $retention := default dict $backup.retention }}
+
 apiVersion: k8up.io/v1
 kind: Schedule
 metadata:
@@ -17,18 +21,19 @@ spec:
       secretAccessKeySecretRef:
         name: {{ printf "%s-%s" $backup.name "s3-backup-secret" }}
         key: secretKey
+
   backup:
-    schedule: {{ $backup.schedule.backup | default $.Values.k8up.default.schedule.backup }}
+    schedule: {{ $schedule.backup | default $.Values.k8up.default.schedule.backup }}
     failedJobsHistoryLimit: 2
     successfulJobsHistoryLimit: 0
 
   check:
-    schedule: {{ $backup.schedule.check | default $.Values.k8up.default.schedule.check }}
+    schedule: {{ $schedule.check | default $.Values.k8up.default.schedule.check }}
 
   prune:
-    schedule: {{ $backup.schedule.prune | default $.Values.k8up.default.schedule.prune }}
+    schedule: {{ $schedule.prune | default $.Values.k8up.default.schedule.prune }}
     retention:
-      keepLast: {{ $backup.retention.keepLast | default $.Values.k8up.default.retention.keepLast }}
-      keepDaily: {{ $backup.retention.keepDaily | default $.Values.k8up.default.retention.keepDaily }}
+      keepLast: {{ $retention.keepLast | default $.Values.k8up.default.retention.keepLast }}
+      keepDaily: {{ $retention.keepDaily | default $.Values.k8up.default.retention.keepDaily }}
 ---
 {{- end }}
