@@ -1,4 +1,4 @@
-environment: 
+environment:
   hostname: example.com
   gateway:
     name: example-gateway
@@ -6,7 +6,7 @@ environment:
     namespace: example
 
 rconcli:
-  image: 
+  image:
     registry: example.com
     repository: tools/rconcli
     version: 0.0.0
@@ -14,7 +14,9 @@ rconcli:
 minecraft:
   minecraftServer:
     eula: true
-    motd: "§l§5WiemanServer§r\n§rWelcome to my server!"
+    motd: "§l§5WiemanServer§r
+
+      §rWelcome to my server!"
     memory: 9G
 
     worldSaveName: test
@@ -24,9 +26,9 @@ minecraft:
     maxBuildHeight: 256
     spawnProtection: 0
     viewDistance: 20
-    
+
     type: FORGE
-    vanillaTweaksShareCodes: [AG8Tc8]
+    vanillaTweaksShareCodes: [ AG8Tc8 ]
     modrinth:
       projects: []
 
@@ -35,8 +37,8 @@ minecraft:
         existingSecret: curseforge-api-token
         secretKey: api-token
       # Link to modpack in general or a specific file
-      pageUrl: 
-      # List of project slugs or IDs to be excluded from modpack, useful if mod is incorrectly marked as server side
+      pageUrl: # List of project slugs or IDs to be excluded from modpack, useful if mod is incorrectly marked as server side
+
       excludeMods: []
       # List of project slugs or IDs to be included in modpack, useful if mod is incorrectly marked as client side only
       includeMods: []
@@ -44,13 +46,15 @@ minecraft:
 
     rcon:
       enabled: true
-  
+
   extraEnv:
     ENABLE_WHITELIST: true
     CURSEFORGE_FILES: |
       https://www.curseforge.com/minecraft/mc-mods/bluemap/files/7320250
 
   persistence:
+    labels:
+      wieman.cloud/backup: "true"
     dataDir:
       enabled: true
       Size: 10Gi
@@ -86,25 +90,25 @@ minecraft:
       cpu: 2
 
   extraVolumes:
-    - volumeMounts:
-      - name: whitelist
-        mountPath: /data/whitelist.json
-        subPath: whitelist.json
-        readOnly: true
-      - name: bluemap-core-config
-        mountPath: /data/config/bluemap/core.conf
-        subPath: core.conf
-        readOnly: true
-      volumes:
-        - name: whitelist
-          configMap:
-            name: whitelist
-            items:
-              - key: whitelist.json
-                path: whitelist.json
-        - name: bluemap-core-config
-          configMap:
-            name: bluemap-core-config
-            items:
-              - key: core.conf
-                path: core.conf
+  - volumeMounts:
+    - name: whitelist
+      mountPath: /data/whitelist.json
+      subPath: whitelist.json
+      readOnly: true
+    - name: bluemap-core-config
+      mountPath: /data/config/bluemap/core.conf
+      subPath: core.conf
+      readOnly: true
+    volumes:
+    - name: whitelist
+      configMap:
+        name: whitelist
+        items:
+        - key: whitelist.json
+          path: whitelist.json
+    - name: bluemap-core-config
+      configMap:
+        name: bluemap-core-config
+        items:
+        - key: core.conf
+          path: core.conf
