@@ -8,8 +8,13 @@ environment:
 harbor:
   persistence:
     persistentVolumeClaim:
+      database:
+        annotations:
+          k8up.io/backup: "true"
       registry:
         size: 10Gi
+        annotations:
+          k8up.io/backup: "true"
   expose:
     type: NodePort
     tls:
