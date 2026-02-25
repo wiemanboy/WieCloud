@@ -5,7 +5,7 @@ on:
     branches:
     - master
     paths:
-    - ./applications/nextcloud/chart**
+    - applications/nextcloud/chart**
     - .github/workflows/helm_build_nextcloud.yaml
     - .github/workflows/helm_build.yaml
     - pipeline/build/scripts/helm/**
