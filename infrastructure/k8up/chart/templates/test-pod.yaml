@@ -3,8 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: busybox-pvc
   namespace: default
-  labels:
-    wieman.cloud/backup: "true"
+  annotations:
+    k8up.io/backup: "true"
 spec:
   accessModes:
     - ReadWriteOnce

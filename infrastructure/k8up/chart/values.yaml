@@ -13,6 +13,9 @@ seaweedfs:
     name: s3-config-secret
 
 k8up:
+  k8up:
+    skipWithoutAnnotation: true
+
   backend:
     repoPasswordSecretRef:
       name: repo-password-secret
@@ -26,7 +29,6 @@ k8up:
     retention:
       keepLast: 5
       keepDaily: 14
-
   # backups:
   # - name: example-backup
   #   namespace: default

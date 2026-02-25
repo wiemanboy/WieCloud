@@ -53,8 +53,8 @@ minecraft:
       https://www.curseforge.com/minecraft/mc-mods/bluemap/files/7320250
 
   persistence:
-    labels:
-      wieman.cloud/backup: "true"
+    annotations:
+      k8up.io/backup: "true"
     dataDir:
       enabled: true
       Size: 10Gi
