@@ -15,8 +15,12 @@ nextcloud:
 
   persistence:
     enabled: true
+    annotations:
+      k8up.io/backup: "true"
     nextcloudData:
       enabled: true
+      annotations:
+        k8up.io/backup: "true"
 
   nextcloud:
     host: example.com
