@@ -38,6 +38,8 @@ spec:
   volumeClaimTemplates:
     - metadata:
         name: data
+        annotations:
+          k8up.io/backup: "true"
       spec:
         accessModes:
           - ReadWriteOnce
