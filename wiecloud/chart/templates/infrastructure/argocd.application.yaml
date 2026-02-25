@@ -21,6 +21,7 @@ spec:
                 issuer: {{ .Values.environment.oidc.endpoint }}
                 clientID: argocd
                 clientSecret: $oidc.keycloak.clientSecret
+                refreshTokenThreshold: 2m
                 requestedScopes: ["openid", "profile", "email", "groups", "offline_access"]
           server:
             httproute:
