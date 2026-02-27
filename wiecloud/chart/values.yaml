@@ -104,14 +104,8 @@ infrastructure:
       namespace: default
       claim:
         name: busybox-pvc
-        deploy: true
-        spec:
-          accessModes:
-            - ReadWriteOnce
-          resources:
-            requests:
-              storage: 1Gi
-              
+        deploy: false
+
     # - name: example-restore
     #   namespace: default
     #   snapshot: example-snapshot # Defaults to latest

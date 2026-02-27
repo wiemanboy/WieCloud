@@ -9,7 +9,9 @@ spec:
     folder:
       claimName: {{ $restore.claim.name }}
   backend:
+    {{- if ne ($restore.snapshot | default "") "" }}
     snapshot: {{ $restore.snapshot }}
+    {{- end }}
     repoPasswordSecretRef:
       {{ toYaml $.Values.k8up.backend.repoPasswordSecretRef | nindent 6 }}
     s3:
