@@ -106,6 +106,12 @@ infrastructure:
         name: busybox-pvc
         deploy: false
 
+    - name: keycloak-postgres-restore
+      namespace: keycloak
+      claim:
+        name: data-postgresql-db-0
+        deploy: false
+
     # - name: example-restore
     #   namespace: default
     #   snapshot: example-snapshot # Defaults to latest
