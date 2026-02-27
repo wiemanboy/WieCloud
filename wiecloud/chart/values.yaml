@@ -99,7 +99,19 @@ infrastructure:
     #     keepLast: 5
     #     keepDaily: 14
 
-    # restores:
+    restores:
+    - name: busybox-restore
+      namespace: default
+      claim:
+        name: busybox-pvc
+        deploy: true
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi
+              
     # - name: example-restore
     #   namespace: default
     #   snapshot: example-snapshot # Defaults to latest
