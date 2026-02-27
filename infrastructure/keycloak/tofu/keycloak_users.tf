@@ -3,7 +3,7 @@ resource "random_password" "jarno_wieman_password" {
 }
 
 resource "keycloak_user" "jarno_wieman" {
-  realm_id       = keycloak_realm.infrastructure.id
+  realm_id       = keycloak_realm.wiecloud.id
   username       = "jarno_wieman"
   first_name     = "Jarno"
   last_name      = "Wieman"
@@ -31,7 +31,7 @@ resource "keycloak_user" "jarno_wieman" {
 module "admin_memberships" {
   source = "./modules/keycloak/groups_memberships"
 
-  realm_id = keycloak_realm.infrastructure.id
+  realm_id = keycloak_realm.wiecloud.id
   groups = [
     module.app_group.child_groups.admin.id,
     module.app_nextcloud_group.child_groups.admin.id,
