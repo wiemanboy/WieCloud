@@ -5,6 +5,9 @@ metadata:
   name: {{ $restore.name }}
   namespace: {{ $restore.namespace }}
 spec:
+  podSecurityContext:
+    fsGroup: 65532
+    fsGroupChangePolicy: OnRootMismatch
   restoreMethod:
     folder:
       claimName: {{ $restore.claim.name }}
