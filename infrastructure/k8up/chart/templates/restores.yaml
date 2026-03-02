@@ -33,6 +33,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ $restore.claim.name }}
   namespace: {{ $restore.namespace }}
+  annotations:
+    k8up.io/backup: {{ $restore.claim.backup | default "false" }}
 spec:
 {{ toYaml $restore.claim.spec | indent 4 }}
 ---

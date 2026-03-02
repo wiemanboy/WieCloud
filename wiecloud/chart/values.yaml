@@ -110,24 +110,13 @@ infrastructure:
       claim:
         name: data-postgresql-db-0
         deploy: true
+        backup: true
         spec:
           accessModes:
           - ReadWriteOnce
           resources:
             requests:
               storage: 1Gi
-    # - name: example-restore
-    #   namespace: default
-    #   snapshot: example-snapshot # Defaults to latest
-    #   claim:
-    #     name: example-pvc
-    #     deploy: true
-    #     spec:
-    #       accessModes:
-    #         - ReadWriteOnce
-    #       resources:
-    #         requests:
-    #           storage: 1Gi
 
   keycloak:
     deploy: true
