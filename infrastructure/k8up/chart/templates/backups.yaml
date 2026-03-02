@@ -26,6 +26,9 @@ spec:
     schedule: {{ $schedule.backup | default $.Values.k8up.default.schedule.backup | quote }}
     failedJobsHistoryLimit: 2
     successfulJobsHistoryLimit: 0
+    podSecurityContext:
+      fsGroup: 65532
+      fsGroupChangePolicy: OnRootMismatch
 
   check:
     schedule: {{ $schedule.check | default $.Values.k8up.default.schedule.check | quote }}
