@@ -27,7 +27,8 @@ spec:
     failedJobsHistoryLimit: 2
     successfulJobsHistoryLimit: 0
     podSecurityContext:
-      fsGroup: 65532
+      runAsUser: 0
+      fsGroup: 999
       fsGroupChangePolicy: OnRootMismatch
 
   check:

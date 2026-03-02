@@ -66,7 +66,7 @@ infrastructure:
 
     default:
       schedule:
-        backup: "*/5 * * * *"
+        backup: "*/2 * * * *"
         check: "0 1 * * 1"
         prune: "0 1 * * 0"
       retention:
