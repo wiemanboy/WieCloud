@@ -35,6 +35,7 @@ metadata:
   namespace: {{ $restore.namespace }}
   annotations:
     k8up.io/backup: {{ $restore.claim.backup | default "false" }}
+    argocd.argoproj.io/sync-options: Prune=false
 spec:
 {{ toYaml $restore.claim.spec | indent 4 }}
 ---

@@ -27,12 +27,11 @@ spec:
     server: {{ .Values.infrastructure.server }}
   project: infrastructure
   ignoreDifferences:
-  - group: ""
-    kind: Secret
-    jqPathExpressions:
-    - '.metadata.labels["wieman.cloud/random-secret"] != null'
-    jsonPointers:
-    - /data
+    - group: ""
+      kind: PersistentVolumeClaim
+      jsonPointers:
+        - /spec
+        - /metadata/annotations
   syncPolicy:
     automated:
       prune: true
