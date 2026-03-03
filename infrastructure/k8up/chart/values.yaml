@@ -8,7 +8,6 @@ environment:
 seaweedfs:
   name: backup-s3
   endpoint: k8up.s3.example.com
-  bucket: backup-bucket
   secret:
     name: s3-config-secret
 
@@ -32,6 +31,7 @@ k8up:
   # backups:
   # - name: example-backup
   #   namespace: default
+  #   bucket: example-bucket
   #   schedule:
   #     backup: "*/5 * * * *"
   #     check: "0 1 * * 1"
@@ -43,6 +43,7 @@ k8up:
   # restores:
   # - name: example-restore
   #   namespace: default
+  #   bucket: example-bucket
   #   snapshot: example-snapshot # Defaults to latest
   #   claim:
   #     name: example-pvc

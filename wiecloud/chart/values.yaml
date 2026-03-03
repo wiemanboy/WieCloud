@@ -76,15 +76,19 @@ infrastructure:
     backups:
     - name: minecraft
       namespace: minecraft
+      bucket: minecraft-backups
 
     - name: nextcloud
       namespace: nextcloud
+      bucket: nextcloud-backups
 
     - name: harbor
       namespace: harbor
+      bucket: harbor-backups
 
     - name: keycloak
       namespace: keycloak
+      bucket: keycloak-backups
     # - name: example-backup
     #   namespace: default
     #   schedule:
@@ -99,6 +103,7 @@ infrastructure:
 
     - name: keycloak-postgres-restore
       namespace: keycloak
+      bucket: keycloak-backups
       claim:
         name: data-postgresql-db-0
         deploy: true
@@ -112,6 +117,7 @@ infrastructure:
 
     - name: harbor-registry-restore
       namespace: harbor
+      bucket: harbor-backups
       claim:
         name: harbor-registry-restore-test
         deploy: true
@@ -125,6 +131,7 @@ infrastructure:
 
     - name: harbor-database-restore
       namespace: harbor
+      bucket: harbor-backups
       claim:
         name: database-data-harbor-database-0-restore-test
         deploy: true

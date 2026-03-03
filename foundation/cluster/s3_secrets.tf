@@ -6,12 +6,12 @@ module "backup_s3_secret" {
     {
       name       = "deploy-s3-secret"
       namespaces = ["k8up"]
-      type       = "Admin"
+      actions    = ["Admin"]
     },
     {
       name       = "backup-s3-secret"
       namespaces = ["minecraft", "nextcloud", "harbor", "keycloak", "default"]
-      type       = "Write"
+      actions    = ["Admin"]
     }
   ]
 }

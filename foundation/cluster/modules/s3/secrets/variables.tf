@@ -13,6 +13,6 @@ variable "identities" {
   type = list(object({
     name       = string
     namespaces = optional(list(string))
-    type       = string
+    actions    = list(string)
   }))
 }

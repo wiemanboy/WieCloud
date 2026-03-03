@@ -1,8 +1,4 @@
 locals {
-  deployer_actions = ["Admin"]
-  writer_actions   = ["Read", "List", "Write"]
-  reader_actions   = ["Read", "List"]
-
   identity_ns_pairs = flatten([
     for id in var.identities : [
       for ns in try(id.namespaces, [var.namespace]) : {
@@ -39,7 +35,7 @@ resource "kubernetes_secret_v1" "s3_config" {
       identities = [
         for id in var.identities : {
           name    = id.name
-          actions = try(id.type, "") == "Admin" ? local.deployer_actions : try(id.type, "") == "Write" ? local.writer_actions : local.reader_actions
+          actions = id.actions
           credentials = [
             {
               accessKey = random_password.access_key[id.name].result

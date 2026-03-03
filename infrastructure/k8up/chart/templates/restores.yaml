@@ -19,7 +19,7 @@ spec:
       {{ toYaml $.Values.k8up.backend.repoPasswordSecretRef | nindent 6 }}
     s3:
       endpoint: https://{{ $.Values.seaweedfs.endpoint }}
-      bucket: {{ $.Values.seaweedfs.bucket }}
+      bucket: {{ $restore.bucket }}
       accessKeyIDSecretRef:
         name: backup-s3-secret
         key: accessKey
