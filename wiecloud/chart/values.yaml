@@ -16,11 +16,11 @@ environment:
 applications:
   minecraft:
     deploy: true
-    version: 0.5.0-implement-k8up-9012d2b
+    version: 0.5.0-implement-k8up-f9e870b
 
   nextcloud:
     deploy: true
-    version: 0.1.0-implement-k8up-9012d2b
+    version: 0.1.0-implement-k8up-f9e870b
 
   website:
     deploy: true
@@ -58,11 +58,11 @@ infrastructure:
 
   harbor:
     deploy: true
-    version: 1.1.0-implement-k8up-9012d2b
+    version: 1.1.0-implement-k8up-f9e870b
 
   k8up:
     deploy: true
-    version: 0.0.0-implement-k8up-9012d2b
+    version: 0.0.0-implement-k8up-f9e870b
 
     default:
       schedule:
@@ -138,7 +138,7 @@ infrastructure:
 
   keycloak:
     deploy: true
-    version: 1.1.0-implement-k8up-9012d2b
+    version: 1.1.0-implement-k8up-f9e870b
 
   longhorn:
     deploy: true
