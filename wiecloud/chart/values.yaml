@@ -85,9 +85,6 @@ infrastructure:
 
     - name: keycloak
       namespace: keycloak
-
-    - name: test
-      namespace: default
     # - name: example-backup
     #   namespace: default
     #   schedule:
@@ -99,12 +96,6 @@ infrastructure:
     #     keepDaily: 14
 
     restores:
-    - name: busybox-restore
-      namespace: default
-      claim:
-        name: busybox-pvc
-        deploy: false
-
     - name: keycloak-postgres-restore
       namespace: keycloak
       claim:
