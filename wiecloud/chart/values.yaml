@@ -101,11 +101,11 @@ infrastructure:
 
     restores:
 
-    - name: keycloak-postgres-restore
-      namespace: keycloak
-      bucket: keycloak-backups
+    - name: minecraft-datadir-restore
+      namespace: minecraft
+      bucket: minecraft-backups
       claim:
-        name: data-postgresql-db-0
+        name: minecraft-datadir-restore-test
         deploy: true
         backup: true
         spec:
@@ -113,7 +113,63 @@ infrastructure:
           - ReadWriteOnce
           resources:
             requests:
-              storage: 1Gi
+              storage: 10Gi
+
+    - name: nextcloud-restore
+      namespace: nextcloud
+      bucket: nextcloud-backups
+      claim:
+        name: nextcloud-restore-test
+        deploy: true
+        backup: true
+        spec:
+          accessModes:
+          - ReadWriteOnce
+          resources:
+            requests:
+              storage: 8Gi
+
+    - name: nextcloud-data-restore
+      namespace: nextcloud
+      bucket: nextcloud-backups
+      claim:
+        name: nextcloud-data-restore-test
+        deploy: true
+        backup: true
+        spec:
+          accessModes:
+          - ReadWriteOnce
+          resources:
+            requests:
+              storage: 8Gi
+
+    - name: nextcloud-seaweedfs-filer-restore
+      namespace: nextcloud
+      bucket: nextcloud-backups
+      claim:
+        name: seaweedfs-nextcloud-filer-seaweedfs-nextcloud-filer-0
+        deploy: true
+        backup: true
+        spec:
+          accessModes:
+          - ReadWriteOnce
+          resources:
+            requests:
+              storage: 5Gi
+
+    - name: nextcloud-seaweedfs-volume-restore
+      namespace: nextcloud
+      bucket: nextcloud-backups
+      claim:
+        name: mount0-seaweedfs-nextcloud-volume-0
+        deploy: true
+        backup: true
+        spec:
+          accessModes:
+          - ReadWriteOnce
+          resources:
+            requests:
+              storage: 100Gi
 
     - name: harbor-registry-restore
       namespace: harbor
@@ -134,6 +190,20 @@ infrastructure:
       bucket: harbor-backups
       claim:
         name: database-data-harbor-database-0-restore-test
+        deploy: true
+        backup: true
+        spec:
+          accessModes:
+          - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi
+
+    - name: keycloak-postgres-restore
+      namespace: keycloak
+      bucket: keycloak-backups
+      claim:
+        name: data-postgresql-db-0
         deploy: true
         backup: true
         spec:
