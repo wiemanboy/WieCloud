@@ -18,8 +18,6 @@ spec:
       resources:
         requests:
           storage: 5Gi
-      annotations:
-        k8up.io/backup: "true"
     s3:
       enabled: true
       configSecret:
