@@ -15,8 +15,9 @@ spec:
     replicas: 1
     persistence:
       enabled: true
-      requests:
-        storage: 5Gi
+      resources:
+        requests:
+          storage: 5Gi
     s3:
       enabled: true
       configSecret:
