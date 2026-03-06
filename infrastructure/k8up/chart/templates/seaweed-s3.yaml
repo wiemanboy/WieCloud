@@ -13,6 +13,9 @@ spec:
       storage: 100Gi
   filer:
     replicas: 1
+    persistence:
+      enabled: true
+      size: 5Gi
     s3:
       enabled: true
       configSecret:
