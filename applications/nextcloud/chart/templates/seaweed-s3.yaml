@@ -15,6 +15,13 @@ spec:
       k8up.io/backup: "true"
   filer:
     replicas: 1
+    persistence:
+      enabled: true
+      resources:
+        requests:
+          storage: 5Gi
+      annotations:
+        k8up.io/backup: "true"
     s3:
       enabled: true
       configSecret:
