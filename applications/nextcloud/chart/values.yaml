@@ -9,6 +9,9 @@ environment:
     endpoint: https://example.com
 
 nextcloud:
+  readinessProbe:
+    enabled: false
+
   phpClientHttpsFix:
     enabled: true
     protocol: https
