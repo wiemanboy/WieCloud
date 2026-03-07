@@ -105,7 +105,7 @@ infrastructure:
       namespace: minecraft
       bucket: minecraft-backups
       claim:
-        name: minecraft-datadir-restore-test
+        name: minecraft-datadir
         deploy: true
         backup: true
         spec:
@@ -119,7 +119,7 @@ infrastructure:
       namespace: nextcloud
       bucket: nextcloud-backups
       claim:
-        name: nextcloud-restore-test
+        name: nextcloud-nextcloud
         deploy: true
         backup: true
         spec:
@@ -175,7 +175,7 @@ infrastructure:
       namespace: harbor
       bucket: harbor-backups
       claim:
-        name: harbor-registry-restore-test
+        name: harbor-registry
         deploy: true
         backup: true
         spec:
@@ -189,7 +189,7 @@ infrastructure:
       namespace: harbor
       bucket: harbor-backups
       claim:
-        name: database-data-harbor-database-0-restore-test
+        name: database-data-harbor-database-0
         deploy: true
         backup: true
         spec:
