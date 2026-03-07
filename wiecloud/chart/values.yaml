@@ -129,11 +129,11 @@ infrastructure:
             requests:
               storage: 8Gi
 
-    - name: nextcloud-data-restore
+    - name: nextcloud-postgres-restore
       namespace: nextcloud
       bucket: nextcloud-backups
       claim:
-        name: nextcloud-data-restore-test
+        name: data-postgresql-db-0
         deploy: true
         backup: true
         spec:
@@ -141,7 +141,7 @@ infrastructure:
           - ReadWriteOnce
           resources:
             requests:
-              storage: 8Gi
+              storage: 20Gi
 
     - name: nextcloud-seaweedfs-filer-restore
       namespace: nextcloud
