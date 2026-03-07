@@ -12,6 +12,12 @@ nextcloud:
   readinessProbe:
     enabled: false
 
+  startupProbe:
+    enabled: true
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    failureThreshold: 120
+
   phpClientHttpsFix:
     enabled: true
     protocol: https
