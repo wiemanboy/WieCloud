@@ -9,6 +9,9 @@ environment:
     endpoint: https://example.com
 
 nextcloud:
+  nodeSelector:
+    topology.kubernetes.io/zone: gigabyte-pve-0
+
   readinessProbe:
     enabled: false
 
