@@ -17,13 +17,23 @@ nextcloud:
     protocol: https
 
   persistence:
-    enabled: true
+    enabled: false
     annotations:
       k8up.io/backup: "true"
     nextcloudData:
-      enabled: true
+      enabled: false
       annotations:
         k8up.io/backup: "true"
+
+  externalDatabase:
+    enabled: true
+    type: postgres
+    host: postgresql-db-service
+    existingSecret:
+      enabled: true
+      secretName: nextcloud-db-secret
+      usernameKey: username
+      passwordKey: password
 
   nextcloud:
     host: example.com
