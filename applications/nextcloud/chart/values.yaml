@@ -25,6 +25,8 @@ nextcloud:
       annotations:
         k8up.io/backup: "true"
 
+  internalDatabase:
+    enabled: false
   externalDatabase:
     enabled: true
     type: postgres
