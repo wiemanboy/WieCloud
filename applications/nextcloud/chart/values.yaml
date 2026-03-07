@@ -109,39 +109,39 @@ nextcloud:
           accessKey: "access_key"
           secretKey: "secret_key"
 
-    extraVolumes:
-    - name: app-install
-      configMap:
-        name: app-install
-        defaultMode: 493
-        items:
-        - key: app-install.sh
-          path: app-install.sh
-    - name: oidc-setup
-      configMap:
-        name: oidc-setup
-        defaultMode: 493
-        items:
-        - key: oidc-setup.sh
-          path: oidc-setup.sh
-    - name: nextcloud-client-secret
-      secret:
-        secretName: nextcloud-client-secret
-        items:
-        - key: secret
-          path: nextcloud-client-secret
+    # extraVolumes:
+    # - name: app-install
+    #   configMap:
+    #     name: app-install
+    #     defaultMode: 493
+    #     items:
+    #     - key: app-install.sh
+    #       path: app-install.sh
+    # - name: oidc-setup
+    #   configMap:
+    #     name: oidc-setup
+    #     defaultMode: 493
+    #     items:
+    #     - key: oidc-setup.sh
+    #       path: oidc-setup.sh
+    # - name: nextcloud-client-secret
+    #   secret:
+    #     secretName: nextcloud-client-secret
+    #     items:
+    #     - key: secret
+    #       path: nextcloud-client-secret
 
-    extraVolumeMounts:
-    - name: app-install
-      mountPath: /docker-entrypoint-hooks.d/before-starting/app-install.sh
-      subPath: app-install.sh
-      readOnly: true
-    - name: oidc-setup
-      mountPath: /docker-entrypoint-hooks.d/before-starting/oidc-setup.sh
-      subPath: oidc-setup.sh
-      readOnly: true
+    # extraVolumeMounts:
+    # - name: app-install
+    #   mountPath: /docker-entrypoint-hooks.d/before-starting/app-install.sh
+    #   subPath: app-install.sh
+    #   readOnly: true
+    # - name: oidc-setup
+    #   mountPath: /docker-entrypoint-hooks.d/before-starting/oidc-setup.sh
+    #   subPath: oidc-setup.sh
+    #   readOnly: true
 
-    - name: nextcloud-client-secret
-      mountPath: /var/run/secrets/nextcloud-client-secret
-      subPath: nextcloud-client-secret
-      readOnly: true
+    # - name: nextcloud-client-secret
+    #   mountPath: /var/run/secrets/nextcloud-client-secret
+    #   subPath: nextcloud-client-secret
+    #   readOnly: true
