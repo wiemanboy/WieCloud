@@ -12,6 +12,7 @@ spec:
     helm:
       values: |
         environment: {{ toYaml .Values.environment | nindent 10 }}
+        backups: {{ toYaml .Values.backups | nindent 10 }}
   destination:
     namespace: keycloak
     server: {{ .Values.infrastructure.server }}
