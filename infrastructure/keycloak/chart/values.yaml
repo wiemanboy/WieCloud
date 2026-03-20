@@ -5,31 +5,26 @@ environment:
     listener: web-example
     namespace: example
 
-realm:
-  clients:
-    defaults:
-      enabled: true
-      alwaysDisplayInConsole: true
-      clientAuthenticatorType: client-secret
-      standardFlowEnabled: true
-      directAccessGrantsEnabled: true
-      serviceAccountsEnabled: true
-      protocol: openid-connect
-      defaultClientScopes:
-        - web-origins
-        - service_account
-        - acr
-        - profile
-        - roles
-        - groups
-        - basic
-        - email
-      optionalClientScopes:
-        - address
-        - phone
-        - organization
-        - offline_access
-        - microprofile-jwt
+backups:
+- name: example
+  s3:
+    endpoint: https://k8up.s3.example.com
+    secret:
+      name: backup-s3-secret
+      accessKey: accessKey
+      secretKey: secretKey
+  repo:
+    secret:
+      name: repo-password-secret
+      key: password
+  default:
+    schedule:
+      backup: "*/2 * * * *"
+      check: "0 1 * * 1"
+      prune: "0 1 * * 0"
+    retention:
+      keepLast: 5
+      keepDaily: 14
 
 keycloak:
   db:

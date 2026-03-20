@@ -1,3 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.keycloak.db.host }}
+spec:
+  selector:
+    app: postgresql-db
+  type: ClusterIP
+  ports:
+  - port: 5432
+    targetPort: 5432
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -49,13 +61,48 @@ spec:
 
 ---
 apiVersion: v1
-kind: Service
+kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Values.keycloak.db.host }}
+  name: data-postgresql-db-0
+  annotations:
+    k8up.io/backup: true
+---
+{{- range $index, $backup := .Values.backups }}
+apiVersion: k8up.io/v1
+kind: Schedule
+metadata:
+  name: {{ $backup.name }}
 spec:
-  selector:
-    app: postgresql-db
-  type: ClusterIP
-  ports:
-  - port: 5432
-    targetPort: 5432
+  backend:
+    repoPasswordSecretRef:
+      name: {{ $backup.repo.secret.name }}
+      key: {{ $backup.repo.secret.key }}
+    s3:
+      endpoint: {{ $backup.s3.endpoint }}
+      bucket: keycloak-backups
+      accessKeyIDSecretRef:
+        name: {{ $backup.s3.secret.name }}
+        key: {{ $backup.s3.secret.accessKey }}
+      secretAccessKeySecretRef:
+        name: {{ $backup.s3.secret.name }}
+        key: {{ $backup.s3.secret.secretKey }}
+
+  backup:
+    schedule: {{ $backup.default.schedule.backup | quote }}
+    failedJobsHistoryLimit: 2
+    successfulJobsHistoryLimit: 0
+    podSecurityContext:
+      runAsUser: 0
+      fsGroup: 999
+      fsGroupChangePolicy: OnRootMismatch
+
+  check:
+    schedule: {{ $backup.default.schedule.check | quote }}
+
+  prune:
+    schedule: {{ $backup.default.schedule.prune | quote }}
+    retention:
+      keepLast: {{ $backup.default.retention.keepLast }}
+      keepDaily: {{ $backup.default.retention.keepDaily }}
+---
+{{- end }}

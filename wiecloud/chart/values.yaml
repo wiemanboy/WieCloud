@@ -13,6 +13,27 @@ environment:
     provider: Keycloak
     endpoint: https://keycloak.wieman.cloud/realms/wiecloud
 
+backups:
+- name: local
+  s3:
+    endpoint: https://k8up.s3.wieman.cloud
+    secret:
+      name: backup-s3-secret
+      accessKey: accessKey
+      secretKey: secretKey
+  repo:
+    secret:
+      name: repo-password-secret
+      key: password
+  default:
+    schedule:
+      backup: "*/2 * * * *"
+      check: "0 1 * * 1"
+      prune: "0 1 * * 0"
+    retention:
+      keepLast: 5
+      keepDaily: 14
+
 applications:
   minecraft:
     deploy: true
@@ -63,155 +84,6 @@ infrastructure:
   k8up:
     deploy: true
     version: 0.0.0-implement-k8up-5b8c3dc
-
-    default:
-      schedule:
-        backup: "*/2 * * * *"
-        check: "0 1 * * 1"
-        prune: "0 1 * * 0"
-      retention:
-        keepLast: 5
-        keepDaily: 14
-
-    backups:
-    - name: minecraft
-      namespace: minecraft
-      bucket: minecraft-backups
-
-    - name: nextcloud
-      namespace: nextcloud
-      bucket: nextcloud-backups
-
-    - name: harbor
-      namespace: harbor
-      bucket: harbor-backups
-
-    - name: keycloak
-      namespace: keycloak
-      bucket: keycloak-backups
-    # - name: example-backup
-    #   namespace: default
-    #   schedule:
-    #     backup: "*/5 * * * *"
-    #     check: "0 1 * * 1"
-    #     prune: "0 1 * * 0"
-    #   retention:
-    #     keepLast: 5
-    #     keepDaily: 14
-
-    restores:
-
-    - name: minecraft-datadir-restore
-      namespace: minecraft
-      bucket: minecraft-backups
-      claim:
-        name: minecraft-datadir
-        deploy: true
-        backup: true
-        spec:
-          accessModes:
-          - ReadWriteOnce
-          resources:
-            requests:
-              storage: 10Gi
-
-    - name: nextcloud-restore
-      namespace: nextcloud
-      bucket: nextcloud-backups
-      claim:
-        name: nextcloud-nextcloud
-        deploy: true
-        backup: true
-        spec:
-          accessModes:
-          - ReadWriteOnce
-          resources:
-            requests:
-              storage: 8Gi
-
-    - name: nextcloud-postgres-restore
-      namespace: nextcloud
-      bucket: nextcloud-backups
-      claim:
-        name: data-postgresql-db-0
-        deploy: true
-        backup: true
-        spec:
-          accessModes:
-          - ReadWriteOnce
-          resources:
-            requests:
-              storage: 20Gi
-
-    - name: nextcloud-seaweedfs-filer-restore
-      namespace: nextcloud
-      bucket: nextcloud-backups
-      claim:
-        name: seaweedfs-nextcloud-filer-seaweedfs-nextcloud-filer-0
-        deploy: true
-        backup: true
-        spec:
-          accessModes:
-          - ReadWriteOnce
-          resources:
-            requests:
-              storage: 5Gi
-
-    - name: nextcloud-seaweedfs-volume-restore
-      namespace: nextcloud
-      bucket: nextcloud-backups
-      claim:
-        name: mount0-seaweedfs-nextcloud-volume-0
-        deploy: true
-        backup: true
-        spec:
-          accessModes:
-          - ReadWriteOnce
-          resources:
-            requests:
-              storage: 100Gi
-
-    - name: harbor-registry-restore
-      namespace: harbor
-      bucket: harbor-backups
-      claim:
-        name: harbor-registry
-        deploy: true
-        backup: true
-        spec:
-          accessModes:
-          - ReadWriteOnce
-          resources:
-            requests:
-              storage: 10Gi
-
-    - name: harbor-database-restore
-      namespace: harbor
-      bucket: harbor-backups
-      claim:
-        name: database-data-harbor-database-0
-        deploy: true
-        backup: true
-        spec:
-          accessModes:
-          - ReadWriteOnce
-          resources:
-            requests:
-              storage: 1Gi
-
-    - name: keycloak-postgres-restore
-      namespace: keycloak
-      bucket: keycloak-backups
-      claim:
-        name: data-postgresql-db-0
-        deploy: true
-        backup: true
-        spec:
-          accessModes:
-          - ReadWriteOnce
-          resources:
-            requests:
-              storage: 1Gi
 
   keycloak:
     deploy: true

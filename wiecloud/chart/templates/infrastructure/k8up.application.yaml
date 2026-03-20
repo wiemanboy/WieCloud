@@ -14,14 +14,7 @@ spec:
         environment: {{ toYaml .Values.environment | nindent 10 }}
         seaweedfs:
           endpoint: k8up.s3.{{ .Values.environment.hostname }}
-        k8up:
-          default: {{ toYaml .Values.infrastructure.k8up.default | nindent 12 }}
-          {{- if .Values.infrastructure.k8up.backups }}
-          backups: {{ toYaml .Values.infrastructure.k8up.backups | nindent 12 }}
-          {{- end }}
-          {{- if .Values.infrastructure.k8up.restores }}
-          restores: {{ toYaml .Values.infrastructure.k8up.restores | nindent 12 }}
-          {{- end }}
+
   destination:
     namespace: k8up
     server: {{ .Values.infrastructure.server }}
