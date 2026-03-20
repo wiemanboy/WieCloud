@@ -26,6 +26,14 @@ backups:
       keepLast: 5
       keepDaily: 14
 
+restores:
+- name: example
+  claim:
+    name: data-postgresql-db-0
+  enabled: true
+  fromBackup: example
+  snapshot: snapshot
+
 keycloak:
   db:
     vendor: postgres
