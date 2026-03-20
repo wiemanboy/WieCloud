@@ -37,11 +37,11 @@ backups:
 applications:
   minecraft:
     deploy: true
-    version: 0.5.0-implement-k8up-b5364c0
+    version: 0.5.0-implement-k8up-693e3ac
 
   nextcloud:
     deploy: true
-    version: 0.1.0-implement-k8up-b5364c0
+    version: 0.1.0-implement-k8up-693e3ac
 
   website:
     deploy: true
@@ -79,15 +79,15 @@ infrastructure:
 
   harbor:
     deploy: true
-    version: 1.1.0-implement-k8up-b5364c0
+    version: 1.1.0-implement-k8up-693e3ac
 
   k8up:
     deploy: true
-    version: 0.0.0-implement-k8up-b5364c0
+    version: 0.0.0-implement-k8up-693e3ac
 
   keycloak:
     deploy: true
-    version: 1.1.0-implement-k8up-b5364c0
+    version: 1.1.0-implement-k8up-693e3ac
 
   longhorn:
     deploy: true
