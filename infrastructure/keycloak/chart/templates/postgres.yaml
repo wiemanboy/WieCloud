@@ -103,7 +103,7 @@ spec:
       keepDaily: {{ $backup.default.retention.keepDaily }}
 ---
 {{- range $index, $restore := $.Values.restores }}
-{{- if $restore.enabled and eq $restore.fromBackup $backup.name }}
+{{- if and ($restore.enabled) (eq $restore.fromBackup $backup.name) }}
 apiVersion: k8up.io/v1
 kind: Restore
 metadata:
