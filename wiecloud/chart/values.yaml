@@ -27,9 +27,9 @@ backups:
       key: password
   default:
     schedule:
-      backup: "*/2 * * * *"
-      check: "0 1 * * 1"
-      prune: "0 1 * * 0"
+      backup: "0 12 * * *"
+      check: "30 12 * * *"
+      prune: "0 13 * * *"
     retention:
       keepLast: 5
       keepDaily: 14
