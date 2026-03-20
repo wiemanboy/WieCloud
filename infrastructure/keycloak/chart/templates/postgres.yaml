@@ -46,19 +46,6 @@ spec:
               value: keycloak
             - name: PGDATA
               value: /data/pgdata
-
-  volumeClaimTemplates:
-    - metadata:
-        name: data
-        annotations:
-          k8up.io/backup: "true"
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: 1Gi
-
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -66,6 +53,12 @@ metadata:
   name: data-postgresql-db-0
   annotations:
     k8up.io/backup: true
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
 ---
 {{- range $index, $backup := .Values.backups }}
 apiVersion: k8up.io/v1
