@@ -115,10 +115,10 @@ spec:
   restoreMethod:
     folder:
       claimName: {{ $restore.claim.name }}
+  {{- if ne ($restore.snapshot | default "") "" }}
+  snapshot: {{ $restore.snapshot }}
+  {{- end }}
   backend:
-    {{- if ne ($restore.snapshot | default "") "" }}
-    snapshot: {{ $restore.snapshot }}
-    {{- end }}
     repoPasswordSecretRef:
       name: {{ $backup.repo.secret.name }}
       key: {{ $backup.repo.secret.key }}
