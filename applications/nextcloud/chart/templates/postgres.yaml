@@ -55,8 +55,8 @@ spec:
             - sh
             - -c
             - |
-              if [ ${#sql_files[@]} -lt 0 ]; then
-                  echo "No restores found continuing"
+              if [ -z "$(ls /restore/*.sql 2>/dev/null)" ]; then
+                  echo "No restores found, continuing"
                   exit 0
               fi
 
