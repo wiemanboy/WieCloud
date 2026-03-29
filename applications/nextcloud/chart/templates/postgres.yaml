@@ -29,7 +29,7 @@ spec:
         k8up.io/file-extension: .sql
     spec:
       initContainers:
-        - name: postgresql-db
+        - name: postgresql-restore
           image: postgres:18.1
           volumeMounts:
             - name: data
