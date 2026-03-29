@@ -44,7 +44,7 @@ applications:
     version: 0.1.0-implement-k8up-269dca9
     restores:
     - name: postgresql-local-restore
-      enabled: false
+      enabled: true
       fromBackup: local
       claim:
         name: data-postgresql-db-0
