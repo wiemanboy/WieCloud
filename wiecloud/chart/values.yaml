@@ -46,6 +46,7 @@ applications:
     - name: postgresql-local-restore
       enabled: true
       fromBackup: local
+      snapshot: b6b3a737
       claim:
         name: restore-postgresql-db-0
 

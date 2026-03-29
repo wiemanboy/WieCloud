@@ -28,6 +28,42 @@ spec:
         k8up.io/backupcommand: sh -c 'PGDATABASE="$POSTGRES_DB" PGUSER="$POSTGRES_USER" PGPASSWORD="$POSTGRES_PASSWORD" pg_dump --clean'
         k8up.io/file-extension: .sql
     spec:
+      initContainers:
+        - name: postgresql-db
+          image: postgres:18.1
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: restore
+              mountPath: /restore
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.nextcloud.externalDatabase.existingSecret.secretName }}
+                  key: {{ .Values.nextcloud.externalDatabase.existingSecret.usernameKey }}
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.nextcloud.externalDatabase.existingSecret.secretName }}
+                  key: {{ .Values.nextcloud.externalDatabase.existingSecret.passwordKey }}
+            - name: POSTGRES_DB
+              value: nextcloud
+            - name: PGDATA
+              value: /data/pgdata
+          command:
+            - sh
+            - -c
+            - |
+              if [ ${#sql_files[@]} -lt 0 ]; then
+                  echo "No restores found continuing"
+                  exit 0
+              fi
+
+              echo "Restore found, executing backup restore"
+              pg_restore -U "$POSTGRES_USER" -d "$POSTGRES_DB" /restore/nextcloud-postgresql-db.sql
+              rm -r /restore
+
       containers:
         - name: postgresql-db
           image: postgres:18.1
