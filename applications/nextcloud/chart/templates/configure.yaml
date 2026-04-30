@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configure
+data:
+  configure.sh: |
+    # Configuration:
+    # sed -i "s/'dbpassword' => '.*'/'dbpassword' => '$POSTGRES_PASSWORD'/" config/config.php
+    echo "test test"
