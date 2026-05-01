@@ -93,20 +93,13 @@ nextcloud:
         );
 
     extraVolumes:
-    - name: app-install
+    - name: configure
       configMap:
-        name: app-install
+        name: configure
         defaultMode: 493
         items:
-        - key: app-install.sh
-          path: app-install.sh
-    - name: oidc-setup
-      configMap:
-        name: oidc-setup
-        defaultMode: 493
-        items:
-        - key: oidc-setup.sh
-          path: oidc-setup.sh
+        - key: configure.sh
+          path: configure.sh
     - name: nextcloud-client-secret
       secret:
         secretName: nextcloud-client-secret
@@ -115,13 +108,13 @@ nextcloud:
           path: nextcloud-client-secret
 
     extraVolumeMounts:
-    - name: app-install
-      mountPath: /docker-entrypoint-hooks.d/post-installation/app-install.sh
-      subPath: app-install.sh
+    - name: configure-post-installation
+      mountPath: /docker-entrypoint-hooks.d/post-installation/configure.sh
+      subPath: configure.sh
       readOnly: true
-    - name: oidc-setup
-      mountPath: /docker-entrypoint-hooks.d/post-installation/oidc-setup.sh
-      subPath: oidc-setup.sh
+    - name: configure-before-starting
+      mountPath: /docker-entrypoint-hooks.d/before-starting/configure.sh
+      subPath: configure.sh
       readOnly: true
 
     - name: nextcloud-client-secret

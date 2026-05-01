@@ -5,5 +5,23 @@ metadata:
 data:
   configure.sh: |
     # Configuration:
-    # sed -i "s/'dbpassword' => '.*'/'dbpassword' => '$POSTGRES_PASSWORD'/" config/config.php
-    echo "test test"
+    sed -i "s/'dbpassword' => '.*'/'dbpassword' => '$POSTGRES_PASSWORD'/" config/config.php
+
+    php occ list || echo "nextcloud not configured yet, skipping app configuration" && exit 0
+
+    # App installation:
+    {{- range .Values.nextcloud.nextcloud.apps }}
+    php occ app:install {{ .name }} || true
+    php occ app:{{ ternary "enable" "disable" .enabled}} {{ .name }} || true
+    {{- end }}
+
+    # OIDC configuration:
+    client_secret=$(cat /var/run/secrets/nextcloud-client-secret)
+    php occ config:app:set --type=string --value=0 user_oidc allow_multiple_user_backends || true
+    php occ user_oidc:provider {{ .Values.environment.oidc.provider }} \
+      --clientid="nextcloud" \
+      --clientsecret="${client_secret}" \
+      --discoveryuri="{{ .Values.environment.oidc.endpoint }}/.well-known/openid-configuration" \
+      --scope="openid email profile groups offline_access" \
+      || true
+      # --group-whitelist-regex=GROUP-WHITELIST-REGEX -> maybe in the future only allow nextcloud users
