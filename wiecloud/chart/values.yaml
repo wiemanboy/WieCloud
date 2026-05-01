@@ -43,10 +43,14 @@ applications:
     deploy: true
     version: 0.1.0-implement-k8up-a942009
     restores:
-    - name: postgresql-local-restore
-      enabled: true
+    - name: nextcloud-local-restore
+      enabled: false
       fromBackup: local
-      snapshot: b6b3a737
+      claim:
+        name: nextcloud-nextcloud
+    - name: postgresql-local-restore
+      enabled: false
+      fromBackup: local
       claim:
         name: restore-postgresql-db-0
 
