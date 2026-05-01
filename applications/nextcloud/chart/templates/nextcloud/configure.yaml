@@ -5,18 +5,22 @@ metadata:
 data:
   configure.sh: |
     # Configuration:
+    echo "Configuring database credentials"
     sed -i "s/'dbuser' => '.*'/'dbuser' => '$POSTGRES_USER'/" config/config.php
     sed -i "s/'dbpassword' => '.*'/'dbpassword' => '$POSTGRES_PASSWORD'/" config/config.php
 
+    echo "Checking nextcloud readiness"
     php occ version -q || echo "nextcloud not configured yet, skipping app configuration" && exit 0
 
     # App installation:
+    echo "Installing and enabling apps"
     {{- range .Values.nextcloud.nextcloud.apps }}
     php occ app:install {{ .name }} || true
     php occ app:{{ ternary "enable" "disable" .enabled}} {{ .name }} || true
     {{- end }}
 
     # OIDC configuration:
+    echo "Configuring OIDC provider"
     client_secret=$(cat /var/run/secrets/nextcloud-client-secret)
     php occ config:app:set --type=string --value=0 user_oidc allow_multiple_user_backends || true
     php occ user_oidc:provider {{ .Values.environment.oidc.provider }} \
