@@ -28,42 +28,6 @@ spec:
         k8up.io/backupcommand: sh -c 'PGDATABASE="$POSTGRES_DB" PGUSER="$POSTGRES_USER" PGPASSWORD="$POSTGRES_PASSWORD" pg_dump --clean'
         k8up.io/file-extension: .sql
     spec:
-      initContainers:
-        - name: postgresql-restore
-          image: postgres:18.1
-          volumeMounts:
-            - name: data
-              mountPath: /data
-            - name: restore
-              mountPath: /restore
-          env:
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.nextcloud.externalDatabase.existingSecret.secretName }}
-                  key: {{ .Values.nextcloud.externalDatabase.existingSecret.usernameKey }}
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.nextcloud.externalDatabase.existingSecret.secretName }}
-                  key: {{ .Values.nextcloud.externalDatabase.existingSecret.passwordKey }}
-            - name: POSTGRES_DB
-              value: nextcloud
-            - name: PGDATA
-              value: /data/pgdata
-          command:
-            - sh
-            - -c
-            - |
-              if [ -z "$(ls /restore/*.sql 2>/dev/null)" ]; then
-                  echo "No restores found, continuing"
-                  exit 0
-              fi
-
-              echo "Restore found, executing backup restore"
-              pg_restore -U "$POSTGRES_USER" -d "$POSTGRES_DB" /restore/nextcloud-postgresql-db.sql
-              rm -r /restore
-
       containers:
         - name: postgresql-db
           image: postgres:18.1
@@ -89,9 +53,6 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: data-postgresql-db-0
-        - name: restore
-          persistentVolumeClaim:
-            claimName: restore-postgresql-db-0
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -103,15 +64,3 @@ spec:
   resources:
     requests:
       storage: 20Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: restore-postgresql-db-0
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 20Gi
-
