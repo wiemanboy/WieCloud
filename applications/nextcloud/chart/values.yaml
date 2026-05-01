@@ -27,6 +27,7 @@ nextcloud:
 
   persistence:
     enabled: true
+    size: 50Gi
     annotations:
       k8up.io/backup: "true"
 
