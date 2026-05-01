@@ -108,11 +108,11 @@ nextcloud:
           path: nextcloud-client-secret
 
     extraVolumeMounts:
-    - name: configure-post-installation
+    - name: configure
       mountPath: /docker-entrypoint-hooks.d/post-installation/configure.sh
       subPath: configure.sh
       readOnly: true
-    - name: configure-before-starting
+    - name: configure
       mountPath: /docker-entrypoint-hooks.d/before-starting/configure.sh
       subPath: configure.sh
       readOnly: true
