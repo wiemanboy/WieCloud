@@ -37,11 +37,11 @@ backups:
 applications:
   minecraft:
     deploy: true
-    version: 0.5.0-implement-k8up-15a14ed
+    version: 0.5.0-implement-k8up-8f2fbcc
 
   nextcloud:
     deploy: true
-    version: 0.1.0-implement-k8up-15a14ed
+    version: 0.1.0-implement-k8up-8f2fbcc
     restores:
     - name: postgresql-local-restore
       enabled: true
@@ -86,15 +86,15 @@ infrastructure:
 
   harbor:
     deploy: true
-    version: 1.1.0-implement-k8up-15a14ed
+    version: 1.1.0-implement-k8up-8f2fbcc
 
   k8up:
     deploy: true
-    version: 0.0.0-implement-k8up-15a14ed
+    version: 0.0.0-implement-k8up-8f2fbcc
 
   keycloak:
     deploy: true
-    version: 1.1.0-implement-k8up-15a14ed
+    version: 1.1.0-implement-k8up-8f2fbcc
     restores:
     - name: postgresql-local-restore
       enabled: false
