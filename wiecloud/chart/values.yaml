@@ -38,6 +38,12 @@ applications:
   minecraft:
     deploy: true
     version: 0.5.0-implement-k8up-45c7084
+    restores:
+    - name: minecraft-local-restore
+      enabled: false
+      fromBackup: local
+      claim:
+        name: minecraft-datadir
 
   nextcloud:
     deploy: true
