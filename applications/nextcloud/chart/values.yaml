@@ -31,7 +31,7 @@ nextcloud:
     annotations:
       k8up.io/backup: "true"
     labels:
-      workload: "postgres"
+      next.wieman.cloud/workload: "nextcloud"
 
   internalDatabase:
     enabled: false

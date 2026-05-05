@@ -28,7 +28,7 @@ spec:
       fsGroupChangePolicy: OnRootMismatch
     labelSelectors:
       - matchExpressions:
-        - key: workload
+        - key: next.wieman.cloud/workload
           operator: NotIn
           values:
             - nextcloud
@@ -71,7 +71,7 @@ spec:
       fsGroupChangePolicy: OnRootMismatch
     labelSelectors:
       - matchExpressions:
-        - key: workload
+        - key: next.wieman.cloud/workload
           operator: In
           values:
             - nextcloud

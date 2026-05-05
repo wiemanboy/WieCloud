@@ -59,7 +59,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: data-postgresql-db-0
   labels:
-    workload: "postgres"
+    next.wieman.cloud/workload: "postgres"
 spec:
   accessModes:
     - ReadWriteOnce
