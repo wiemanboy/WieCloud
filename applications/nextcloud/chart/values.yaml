@@ -30,6 +30,8 @@ nextcloud:
     size: 50Gi
     annotations:
       k8up.io/backup: "true"
+    labels:
+      workload: "postgres"
 
   internalDatabase:
     enabled: false
