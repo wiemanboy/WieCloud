@@ -58,7 +58,7 @@ applications:
       enabled: true
       fromBackup: local
       claim:
-        name: restore-postgresql-db-0
+        name: data-postgresql-db-0
 
   website:
     deploy: true
