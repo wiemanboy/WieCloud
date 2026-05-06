@@ -50,12 +50,12 @@ applications:
     version: 0.1.0-implement-k8up-7c0c0b2
     restores:
     - name: nextcloud-local-restore
-      enabled: false
+      enabled: true
       fromBackup: local
       claim:
         name: nextcloud-nextcloud
     - name: postgresql-local-restore
-      enabled: false
+      enabled: true
       fromBackup: local
       claim:
         name: restore-postgresql-db-0
