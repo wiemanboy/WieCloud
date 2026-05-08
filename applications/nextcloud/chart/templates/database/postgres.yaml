@@ -48,6 +48,7 @@ spec:
               value: /data/pgdata
   volumeClaimTemplates:
   - metadata:
+      name: data
       annotations:
         k8up.io/backup: "true"
       labels:
