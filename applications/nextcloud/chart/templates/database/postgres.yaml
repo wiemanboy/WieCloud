@@ -46,20 +46,15 @@ spec:
               value: nextcloud
             - name: PGDATA
               value: /data/pgdata
-      volumes:
-        - name: data
-          persistentVolumeClaim:
-            claimName: data-postgresql-db-0
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: data-postgresql-db-0
-  labels:
-    next.wieman.cloud/workload: "postgres"
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 20Gi
+  volumeClaimTemplates:
+  - metadata:
+      annotations:
+        k8up.io/backup: "true"
+      labels:
+        next.wieman.cloud/workload: "postgres"
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 20Gi
