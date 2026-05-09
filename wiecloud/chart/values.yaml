@@ -52,11 +52,13 @@ applications:
     - name: nextcloud-local-restore
       enabled: true
       fromBackup: local
+      snapshot: "fefd9d8b"
       claim:
         name: nextcloud-nextcloud
     - name: postgresql-local-restore
       enabled: true
       fromBackup: local
+      snapshot: "e3ed8379"
       claim:
         name: data-postgresql-db-0
 
