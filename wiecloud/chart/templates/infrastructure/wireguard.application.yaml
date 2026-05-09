@@ -13,7 +13,7 @@ spec:
       values: |
         environment: {{ toYaml .Values.environment | nindent 10 }}
   destination:
-    namespace: wireguard # or maybe wireguard-system
+    namespace: wireguard-system
     server: {{ .Values.infrastructure.server }}
   project: infrastructure
   syncPolicy:
