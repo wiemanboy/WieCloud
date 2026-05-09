@@ -1,5 +1,5 @@
-resource "keycloak_realm" "infrastructure" {
-  realm        = "infrastructure"
+resource "keycloak_realm" "wiecloud" {
+  realm        = "wiecloud"
   enabled      = true
   display_name = "WieCloud"
 }

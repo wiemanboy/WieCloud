@@ -9,14 +9,32 @@ environment:
     endpoint: https://example.com
 
 nextcloud:
+  nodeSelector:
+    topology.kubernetes.io/zone: gigabyte-pve-0
+
   phpClientHttpsFix:
     enabled: true
     protocol: https
 
   persistence:
     enabled: true
-    nextcloudData:
+    size: 50Gi
+    annotations:
+      k8up.io/backup: "true"
+    labels:
+      next.wieman.cloud/workload: "nextcloud"
+
+  internalDatabase:
+    enabled: false
+  externalDatabase:
+    enabled: true
+    type: postgresql
+    host: postgresql-db-service
+    existingSecret:
       enabled: true
+      secretName: nextcloud-db-secret
+      usernameKey: username
+      passwordKey: password
 
   nextcloud:
     host: example.com
@@ -68,37 +86,14 @@ nextcloud:
           'skeletondirectory' => '',
         );
 
-    objectStore:
-      s3:
-        enabled: true
-        name: seaweedfs-nextcloud
-        host: next.s3.example.com
-
-        bucket: nextcloud-bucket
-        autoCreate: true
-
-        usePathStyle: true
-
-        existingSecret: s3-secret
-        secretKeys:
-          accessKey: "access_key"
-          secretKey: "secret_key"
-
     extraVolumes:
-    - name: app-install
+    - name: configure
       configMap:
-        name: app-install
+        name: configure
         defaultMode: 493
         items:
-        - key: app-install.sh
-          path: app-install.sh
-    - name: oidc-setup
-      configMap:
-        name: oidc-setup
-        defaultMode: 493
-        items:
-        - key: oidc-setup.sh
-          path: oidc-setup.sh
+        - key: configure.sh
+          path: configure.sh
     - name: nextcloud-client-secret
       secret:
         secretName: nextcloud-client-secret
@@ -107,13 +102,13 @@ nextcloud:
           path: nextcloud-client-secret
 
     extraVolumeMounts:
-    - name: app-install
-      mountPath: /docker-entrypoint-hooks.d/before-starting/app-install.sh
-      subPath: app-install.sh
+    - name: configure
+      mountPath: /docker-entrypoint-hooks.d/post-installation/configure.sh
+      subPath: configure.sh
       readOnly: true
-    - name: oidc-setup
-      mountPath: /docker-entrypoint-hooks.d/before-starting/oidc-setup.sh
-      subPath: oidc-setup.sh
+    - name: configure
+      mountPath: /docker-entrypoint-hooks.d/before-starting/configure.sh
+      subPath: configure.sh
       readOnly: true
 
     - name: nextcloud-client-secret

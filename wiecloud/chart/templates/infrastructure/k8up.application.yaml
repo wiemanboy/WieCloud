@@ -1,25 +1,35 @@
-{{- if .Values.infrastructure.seaweedfs.deploy -}}
+{{- if .Values.infrastructure.k8up.deploy -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: seaweedfs
+  name: k8up
   namespace: argocd
 spec:
   source:
-    chart: seaweedfs
+    chart: k8up
     repoURL: {{ .Values.infrastructure.repository }}
-    targetRevision: {{ .Values.infrastructure.seaweedfs.version }}
+    targetRevision: {{ .Values.infrastructure.k8up.version }}
     helm:
       values: |
         environment: {{ toYaml .Values.environment | nindent 10 }}
+        seaweedfs:
+          endpoint: k8up.s3.{{ .Values.environment.hostname }}
+
   destination:
-    namespace: seaweedfs
+    namespace: k8up
     server: {{ .Values.infrastructure.server }}
   project: infrastructure
+  ignoreDifferences:
+    - group: ""
+      kind: PersistentVolumeClaim
+      jsonPointers:
+        - /spec
+        - /metadata/annotations
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
     - CreateNamespace=true
+    - ServerSideApply=true
 {{- end }}

@@ -12,6 +12,7 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: website
+  project: applications
   syncPolicy:
     automated:
       prune: true

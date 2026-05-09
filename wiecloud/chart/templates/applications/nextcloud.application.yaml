@@ -12,16 +12,21 @@ spec:
     helm:
       values: |
         environment: {{ toYaml .Values.environment | nindent 10 }}
+        backups: {{ toYaml .Values.backups | nindent 10 }}
+        restores: {{ toYaml .Values.applications.nextcloud.restores | nindent 10 }}
         nextcloud:
           nextcloud:
             host: next.{{ .Values.environment.hostname }}
-            objectStore:
-              s3:
-                host: nextcloud.s3.{{ .Values.environment.hostname }}
 
   destination:
     namespace: nextcloud
     server: {{ .Values.applications.server }}
-  {{- $cfg := merge (dict "project" "applications") .Values.applications.defaults }}
-  {{- toYaml $cfg | nindent 2 }}
+  project: applications
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
 {{- end }}

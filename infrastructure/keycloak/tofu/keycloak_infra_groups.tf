@@ -1,33 +1,33 @@
 module "infra_group" {
   source   = "./modules/keycloak/user_group"
-  realm_id = keycloak_realm.infrastructure.id
+  realm_id = keycloak_realm.wiecloud.id
   name     = "infra"
 }
 
 module "infra_harbor_group" {
   source    = "./modules/keycloak/user_group"
-  realm_id  = keycloak_realm.infrastructure.id
+  realm_id  = keycloak_realm.wiecloud.id
   parent_id = module.infra_group.id
   name      = "harbor"
 }
 
 module "infra_keycloak_group" {
   source    = "./modules/keycloak/user_group"
-  realm_id  = keycloak_realm.infrastructure.id
+  realm_id  = keycloak_realm.wiecloud.id
   parent_id = module.infra_group.id
   name      = "keycloak"
 }
 
 module "infra_grafana_group" {
   source    = "./modules/keycloak/user_group"
-  realm_id  = keycloak_realm.infrastructure.id
+  realm_id  = keycloak_realm.wiecloud.id
   parent_id = module.infra_group.id
   name      = "grafana"
 }
 
 module "realm_admin_role" {
   source   = "./modules/keycloak/realm_roles"
-  realm_id = keycloak_realm.infrastructure.id
+  realm_id = keycloak_realm.wiecloud.id
 
   name        = "admin"
   description = "Admin role for the realm"
@@ -55,7 +55,7 @@ module "realm_admin_role" {
 }
 
 resource "keycloak_group_roles" "infra_keycloak_admin_roles" {
-  realm_id = keycloak_realm.infrastructure.id
+  realm_id = keycloak_realm.wiecloud.id
   group_id = module.infra_keycloak_group.child_groups.admin.id
   role_ids = [module.realm_admin_role.id]
 }

@@ -1,0 +1,43 @@
+# {{- range $index, $restore := .Values.k8up.restores }}
+# apiVersion: k8up.io/v1
+# kind: Restore
+# metadata:
+#   name: {{ $restore.name }}
+#   namespace: {{ $restore.namespace }}
+# spec:
+#   podSecurityContext:
+#     fsGroup: 65532
+#     fsGroupChangePolicy: OnRootMismatch
+#   restoreMethod:
+#     folder:
+#       claimName: {{ $restore.claim.name }}
+#   backend:
+#     {{- if ne ($restore.snapshot | default "") "" }}
+#     snapshot: {{ $restore.snapshot }}
+#     {{- end }}
+#     repoPasswordSecretRef:
+#       {{ toYaml $.Values.k8up.backend.repoPasswordSecretRef | nindent 6 }}
+#     s3:
+#       endpoint: https://{{ $.Values.seaweedfs.endpoint }}
+#       bucket: {{ $restore.bucket }}
+#       accessKeyIDSecretRef:
+#         name: backup-s3-secret
+#         key: accessKey
+#       secretAccessKeySecretRef:
+#         name: backup-s3-secret
+#         key: secretKey
+# ---
+# {{- if $restore.claim.deploy }}
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: {{ $restore.claim.name }}
+#   namespace: {{ $restore.namespace }}
+#   annotations:
+#     k8up.io/backup: {{ $restore.claim.backup | default false | quote }}
+#     argocd.argoproj.io/sync-options: Prune=false
+# spec:
+# {{ toYaml $restore.claim.spec | indent 4 }}
+# ---
+# {{- end -}}
+# {{- end }}

@@ -60,5 +60,15 @@ There are three main pipelines used in the project:
 The projects includes some helper scripts to be run locally:
 
 - `pipeline/build/scripts/helm/create_helm_build_workflow.sh`: creates a build workflow file for a defined chart using `pipeline/build/scripts/helm/helm_build_<chart_name>.yaml`
+
+```bash
+./pipeline/build/scripts/helm/create_helm_build_workflow.sh --path <project_name>/<application_name>/chart --registry oci://harbor.wieman.cloud --repository <project_name>
+```
+
 - `pipeline/build/scripts/image/create_image_build_workflow.sh`: creates a build workflow file for a defined chart using `pipeline/build/scripts/image/image_build_<image_name>.yaml`
+
+```bash
+./pipeline/build/scripts/image/create_image_build_workflow.sh --path <path_to_image>/image --registry harbor.wieman.cloud --repository <project_name>
+```
+
 - `pipeline/version/scripts/bump_versions.sh`: bumps the versions of all charts and images by one patch version, used when pipelines are edited

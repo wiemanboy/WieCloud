@@ -1,0 +1,16 @@
+environment:
+  hostname: example.com
+  gateway:
+    name: example-gateway
+    listener: web-example
+    namespace: example
+
+seaweedfs:
+  name: backup-s3
+  endpoint: k8up.s3.example.com
+  secret:
+    name: s3-config-secret
+
+k8up:
+  k8up:
+    skipWithoutAnnotation: true

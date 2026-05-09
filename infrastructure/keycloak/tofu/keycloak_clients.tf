@@ -1,10 +1,10 @@
 resource "keycloak_openid_client_scope" "client_scope" {
-  realm_id = keycloak_realm.infrastructure.id
+  realm_id = keycloak_realm.wiecloud.id
   name     = "groups"
 }
 
 resource "keycloak_openid_group_membership_protocol_mapper" "group_membership_mapper" {
-  realm_id        = keycloak_realm.infrastructure.id
+  realm_id        = keycloak_realm.wiecloud.id
   client_scope_id = keycloak_openid_client_scope.client_scope.id
   name            = "group-membership-mapper"
 
@@ -13,7 +13,7 @@ resource "keycloak_openid_group_membership_protocol_mapper" "group_membership_ma
 
 module "argocd_client" {
   source   = "./modules/keycloak/client"
-  realm_id = keycloak_realm.infrastructure.id
+  realm_id = keycloak_realm.wiecloud.id
 
   name      = "argocd"
   namespace = "argocd"
@@ -27,7 +27,7 @@ module "argocd_client" {
 
 module "harbor_client" {
   source   = "./modules/keycloak/client"
-  realm_id = keycloak_realm.infrastructure.id
+  realm_id = keycloak_realm.wiecloud.id
 
   name      = "harbor"
   namespace = "harbor"
@@ -40,7 +40,7 @@ module "harbor_client" {
 
 module "nextcloud_client" {
   source   = "./modules/keycloak/client"
-  realm_id = keycloak_realm.infrastructure.id
+  realm_id = keycloak_realm.wiecloud.id
 
   name      = "nextcloud"
   namespace = "nextcloud"
@@ -54,7 +54,7 @@ module "nextcloud_client" {
 
 module "grafana_client" {
   source   = "./modules/keycloak/client"
-  realm_id = keycloak_realm.infrastructure.id
+  realm_id = keycloak_realm.wiecloud.id
 
   name      = "grafana"
   namespace = "prometheus"

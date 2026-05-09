@@ -12,10 +12,17 @@ spec:
     helm:
       values: |
         environment: {{ toYaml .Values.environment | nindent 10 }}
+        backups: {{ toYaml .Values.backups | nindent 10 }}
+        restores: {{ toYaml .Values.applications.minecraft.restores | nindent 10 }}
         rconcli: {{ toYaml .Values.images.rconcli | nindent 10 }}
   destination:
     namespace: minecraft
     server: {{ .Values.applications.server }}
-  {{- $cfg := merge (dict "project" "minecraft") .Values.applications.defaults }}
-  {{- toYaml $cfg | nindent 2 }}
+  project: minecraft
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
 {{- end }}

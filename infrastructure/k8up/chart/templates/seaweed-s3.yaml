@@ -1,7 +1,7 @@
 apiVersion: seaweed.seaweedfs.com/v1
 kind: Seaweed
 metadata:
-  name: {{ .Values.nextcloud.nextcloud.objectStore.s3.name }}
+  name: {{ .Values.seaweedfs.name }}
 spec:
   image: chrislusf/seaweedfs:latest
   master:
@@ -13,10 +13,15 @@ spec:
       storage: 100Gi
   filer:
     replicas: 1
+    persistence:
+      enabled: true
+      resources:
+        requests:
+          storage: 5Gi
     s3:
       enabled: true
       configSecret:
-        name: {{ .Values.nextcloud.nextcloud.objectStore.s3.existingSecret }}
+        name: {{ .Values.seaweedfs.secret.name }}
         key: seaweedfs_s3_config.json
     config: |
       [leveldb2]
@@ -26,7 +31,7 @@ spec:
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: {{ .Values.nextcloud.nextcloud.objectStore.s3.name }}
+  name: {{ .Values.seaweedfs.name }}
 spec:
   parentRefs:
     - name: {{ .Values.environment.gateway.name }}
@@ -34,7 +39,7 @@ spec:
       namespace: {{ .Values.environment.gateway.namespace }}
 
   hostnames:
-    - {{ .Values.nextcloud.nextcloud.objectStore.s3.host }}
+    - {{ .Values.seaweedfs.endpoint }}
 
   rules:
     - matches:
@@ -43,6 +48,6 @@ spec:
             value: /
 
       backendRefs:
-        - name: {{ .Values.nextcloud.nextcloud.objectStore.s3.name }}-filer
+        - name: "{{ .Values.seaweedfs.name }}-filer"
           namespace: {{ .Release.Namespace }}
           port: 8333

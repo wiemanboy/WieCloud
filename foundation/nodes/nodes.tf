@@ -104,9 +104,9 @@ module "talos-worker-1" {
   image          = local.image
 
   spec = {
-    cpu_cores = 6
+    cpu_cores = 8
     disk_size = 900
-    memory    = 6144
+    memory    = 7168
   }
 }
 
@@ -131,8 +131,8 @@ module "talos-worker-2" {
   image          = local.image
 
   spec = {
-    cpu_cores = 6
+    cpu_cores = 8
     disk_size = 1800
-    memory    = 6144
+    memory    = 9216
   }
 }
