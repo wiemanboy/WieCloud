@@ -12,15 +12,6 @@ nextcloud:
   nodeSelector:
     topology.kubernetes.io/zone: gigabyte-pve-0
 
-  readinessProbe:
-    enabled: false
-
-  startupProbe:
-    enabled: true
-    initialDelaySeconds: 60
-    periodSeconds: 10
-    failureThreshold: 120
-
   phpClientHttpsFix:
     enabled: true
     protocol: https
