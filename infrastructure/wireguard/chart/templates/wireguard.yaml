@@ -27,35 +27,11 @@ metadata:
     app: wireguard
   name: wireguard
 spec:
+  type: LoadBalancer
+  loadbalancerIp: 192.168.178.202
   ports:
-  - name: 51820
-    port: 51820
-    protocol: UDP
+  - port: 51820
     targetPort: 51820
+    protocol: UDP
   selector:
     app: wireguard
-  type: ClusterIP
----
-apiVersion: gateway.networking.k8s.io/v1
-kind: UDPRoute
-metadata:
-  name: wireguard
-spec:
-  parentRefs:
-    - name: {{ .Values.environment.gateway.name }}
-      sectionName: {{ .Values.environment.gateway.listener }}
-      namespace: {{ .Values.environment.gateway.namespace }}
-
-  hostnames:
-    - wireguard.{{ .Values.environment.hostname }}
-
-  rules:
-    - matches:
-        - path:
-            type: PathPrefix
-            value: /
-
-      backendRefs:
-        - name: wireguard
-          namespace: {{ .Release.Namespace }}
-          port: 51820
