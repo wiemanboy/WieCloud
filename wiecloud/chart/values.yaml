@@ -151,7 +151,7 @@ infrastructure:
 
   wireguard:
     deploy: true
-    version: 0.0.0-implement-wireguard-73ff246
+    version: 0.0.0-implement-wireguard-2ab7b96
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/infrastructure
