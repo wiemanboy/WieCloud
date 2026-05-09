@@ -1,0 +1,6 @@
+environment:
+  hostname: example.com
+  gateway:
+    name: example-gateway
+    listener: web-example
+    namespace: example
