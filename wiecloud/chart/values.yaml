@@ -42,23 +42,24 @@ applications:
     - name: minecraft-local-restore
       enabled: false
       fromBackup: local
+      snapshot: ""
       claim:
         name: minecraft-datadir
 
   nextcloud:
     deploy: true
-    version: 0.1.1
+    version: 0.1.2
     restores:
     - name: nextcloud-local-restore
-      enabled: true
+      enabled: false
       fromBackup: local
-      snapshot: "fefd9d8b"
+      snapshot: ""
       claim:
         name: nextcloud-nextcloud
     - name: postgresql-local-restore
-      enabled: true
+      enabled: false
       fromBackup: local
-      snapshot: "e3ed8379"
+      snapshot: ""
       claim:
         name: data-postgresql-db-0
 
@@ -103,11 +104,13 @@ infrastructure:
     - name: harbor-registry-local-restore
       enabled: false
       fromBackup: local
+      snapshot: ""
       claim:
         name: harbor-registry
     - name: harbor-database-local-restore
       enabled: false
       fromBackup: local
+      snapshot: ""
       claim:
         name: database-data-harbor-database-0
 
@@ -122,6 +125,7 @@ infrastructure:
     - name: postgresql-local-restore
       enabled: false
       fromBackup: local
+      snapshot: ""
       claim:
         name: data-postgresql-db-0
 
