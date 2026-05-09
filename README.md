@@ -65,10 +65,10 @@ The projects includes some helper scripts to be run locally:
 ./helper/helm/create_helm_build_workflow.sh --path <project_name>/<application_name>/chart --registry oci://harbor.wieman.cloud --repository <project_name>
 ```
 
-- `./helper/create_image_build_workflow.sh`: creates a build workflow file for a defined chart using `./helper/image/image_build_<image_name>.yaml`
+- `./helper/image/create_image_build_workflow.sh`: creates a build workflow file for a defined chart using `./helper/image/image_build_<image_name>.yaml`
 
 ```bash
 ./helper/image/create_image_build_workflow.sh --path <path_to_image>/image --registry harbor.wieman.cloud --repository <project_name>
 ```
 
-- `pipeline/version/scripts/bump_versions.sh`: bumps the versions of all charts and images by one patch version, used when pipelines are edited
+- `./helper/version/bump_versions.sh`: bumps the versions of all charts and images by one patch version, used when pipelines are edited
