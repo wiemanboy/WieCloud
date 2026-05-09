@@ -26,6 +26,11 @@ spec:
           value: "1.1.1.1"
         - name: LOG_CONFS
           value: true
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+              - NET_ADMIN
 ---
 apiVersion: v1
 kind: Service
