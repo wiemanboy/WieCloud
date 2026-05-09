@@ -1,27 +1,16 @@
 machine:
   kubelet:
     extraMounts:
-    - destination: /var/lib/longhorn
-      type: bind
-      source: /var/lib/longhorn
-      options:
-      - bind
-      - rshared
-      - rw
-    # Test without first
-    # - destination: /dev/net/tun
-    #   type: bind
-    #   source: /dev/net/tun
-    #   options:
-    #   - bind
-    #   - rw
-
+      - destination: /var/lib/longhorn
+        type: bind
+        source: /var/lib/longhorn
+        options:
+          - bind
+          - rshared
+          - rw
   sysctls:
     vm.nr_hugepages: "1024"
-    net.ipv4.ip_forward: "1"
-
   kernel:
     modules:
-    - name: nvme_tcp
-    - name: vfio_pci
-    - name: tun
+      - name: nvme_tcp
+      - name: vfio_pci
