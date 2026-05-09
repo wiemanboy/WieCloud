@@ -25,7 +25,7 @@ spec:
         - name: PEERDNS
           value: "1.1.1.1"
         - name: LOG_CONFS
-          value: true
+          value: "true"
 ---
 apiVersion: v1
 kind: Service
