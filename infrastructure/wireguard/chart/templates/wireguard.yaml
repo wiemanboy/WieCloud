@@ -21,7 +21,7 @@ spec:
         - name:  SERVERURL
           value: wireguard.{{ .Values.environment.hostname }}
         - name: PEERS
-          value: 1
+          value: "1"
         - name: PEERDNS
           value: "1.1.1.1"
         - name: LOG_CONFS
