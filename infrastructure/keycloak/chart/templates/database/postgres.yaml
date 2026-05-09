@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.nextcloud.externalDatabase.host }}
+  name: {{ .Values.keycloak.db.host }}
 spec:
   selector:
     app: postgresql-db
@@ -15,7 +15,7 @@ kind: StatefulSet
 metadata:
   name: postgresql-db
 spec:
-  serviceName: {{ .Values.nextcloud.externalDatabase.host }}
+  serviceName: postgresql-db-service
   replicas: 1
   selector:
     matchLabels:
@@ -35,15 +35,15 @@ spec:
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.nextcloud.externalDatabase.existingSecret.secretName }}
-                  key: {{ .Values.nextcloud.externalDatabase.existingSecret.usernameKey }}
+                  name: {{ .Values.keycloak.db.username.secret }}
+                  key: {{ .Values.keycloak.db.username.key }}
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.nextcloud.externalDatabase.existingSecret.secretName }}
-                  key: {{ .Values.nextcloud.externalDatabase.existingSecret.passwordKey }}
+                  name: {{ .Values.keycloak.db.password.secret }}
+                  key: {{ .Values.keycloak.db.password.key }}
             - name: POSTGRES_DB
-              value: nextcloud
+              value: keycloak
             - name: PGDATA
               value: /data/pgdata
   volumeClaimTemplates:
@@ -58,4 +58,4 @@ spec:
         - ReadWriteOnce
       resources:
         requests:
-          storage: 20Gi
+          storage: 1Gi
