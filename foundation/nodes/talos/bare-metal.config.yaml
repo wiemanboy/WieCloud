@@ -8,8 +8,18 @@ machine:
       - bind
       - rshared
       - rw
+    # Test without first
+    # - destination: /dev/net/tun
+    #   type: bind
+    #   source: /dev/net/tun
+    #   options:
+    #   - bind
+    #   - rw
+
   sysctls:
     vm.nr_hugepages: "1024"
+    net.ipv4.ip_forward: "1"
+
   kernel:
     modules:
     - name: nvme_tcp
