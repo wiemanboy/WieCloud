@@ -18,14 +18,18 @@ spec:
       - image: linuxserver/wireguard:1.0.20250521
         name: wireguard
         env:
-          SERVERURL: wireguard.{{ .Values.environment.hostname }}
+        - name:  SERVERURL
+          value: wireguard.{{ .Values.environment.hostname }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
+  name: wireguard
   labels:
     app: wireguard
-  name: wireguard
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: wireguard.{{ .Values.environment.hostname }}
+    external-dns.alpha.kubernetes.io/target: wieman.cloud
 spec:
   type: LoadBalancer
   loadbalancerIp: 192.168.178.202
