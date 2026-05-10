@@ -14,7 +14,6 @@ spec:
       labels:
         app: wireguard
     spec:
-      hostNetwork: false
       nodeName: talos-worker-0
       containers:
       - image: linuxserver/wireguard:1.0.20250521
@@ -33,3 +32,20 @@ spec:
           capabilities:
             add:
               - NET_ADMIN
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wireguard
+  labels:
+    app: wireguard
+spec:
+  type: NodePort
+  selector:
+    app: wireguard
+  ports:
+    - name: wireguard
+      port: 51820
+      targetPort: 51820
+      protocol: UDP
+      nodePort: 51820
