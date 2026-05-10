@@ -14,6 +14,7 @@ spec:
       labels:
         app: wireguard
     spec:
+      hostNetwork: true
       containers:
       - image: linuxserver/wireguard:1.0.20250521
         name: wireguard
@@ -32,21 +33,21 @@ spec:
             add:
               - NET_ADMIN
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: wireguard
-  labels:
-    app: wireguard
-  annotations:
-    external-dns.alpha.kubernetes.io/hostname: wireguard.{{ .Values.environment.hostname }}
-    external-dns.alpha.kubernetes.io/target: wieman.cloud
-spec:
-  type: LoadBalancer
-  loadbalancerIp: 192.168.178.202
-  ports:
-  - port: 51820
-    targetPort: 51820
-    protocol: UDP
-  selector:
-    app: wireguard
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: wireguard
+#   labels:
+#     app: wireguard
+#   annotations:
+#     external-dns.alpha.kubernetes.io/hostname: wireguard.{{ .Values.environment.hostname }}
+#     external-dns.alpha.kubernetes.io/target: wieman.cloud
+# spec:
+#   type: LoadBalancer
+#   loadbalancerIp: 192.168.178.202
+#   ports:
+#   - port: 51820
+#     targetPort: 51820
+#     protocol: UDP
+#   selector:
+#     app: wireguard
