@@ -14,7 +14,7 @@ spec:
       labels:
         app: wireguard
     spec:
-      hostNetwork: true
+      hostNetwork: false
       nodeName: talos-worker-0
       containers:
       - image: linuxserver/wireguard:1.0.20250521
