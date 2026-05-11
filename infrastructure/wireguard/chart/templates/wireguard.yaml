@@ -32,13 +32,13 @@ spec:
           capabilities:
             add:
               - NET_ADMIN
-      volumeMounts:
+        volumeMounts:
+        - name: config
+          mountPath: /config
+      volumes:
       - name: config
-        mountPath: /config
-    volumes:
-    - name: config
-      persistentVolumeClaim:
-        claimName: wireguard-config
+        persistentVolumeClaim:
+          claimName: wireguard-config
 ---
 apiVersion: v1
 kind: Service
