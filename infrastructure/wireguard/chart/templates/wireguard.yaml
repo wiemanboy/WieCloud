@@ -22,7 +22,7 @@ spec:
         - name:  SERVERURL
           value: wireguard.{{ .Values.environment.hostname }}
         - name: PEERS
-          value: "jarno-pc,jarno-laptop,jarno-s24-ultra"
+          value: "pc,laptop,s24ultra"
         - name: PEERDNS
           value: "1.1.1.1"
         - name: LOG_CONFS
