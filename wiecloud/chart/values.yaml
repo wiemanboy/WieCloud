@@ -34,6 +34,15 @@ backups:
       keepLast: 5
       keepDaily: 14
 
+vpn:
+  peers:
+  - pc
+  - laptop
+  - s24ultra
+  dns:
+  - "1.1.1.1"
+  - "8.8.8.8"
+
 applications:
   minecraft:
     deploy: true

@@ -12,6 +12,7 @@ spec:
     helm:
       values: |
         environment: {{ toYaml .Values.environment | nindent 10 }}
+        vpn: {{ toYaml .Values.vpn | nindent 10 }}
   destination:
     namespace: wireguard-system
     server: {{ .Values.infrastructure.server }}

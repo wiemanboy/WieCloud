@@ -22,11 +22,11 @@ spec:
         - name:  SERVERURL
           value: wireguard.{{ .Values.environment.hostname }}
         - name: PEERS
-          value: "pc,laptop,s24ultra"
+          value: {{ .Values.vpn.peers | join "," | quote }}
         - name: PEERDNS
-          value: "1.1.1.1"
+          value: {{ .Values.vpn.dns | join "," | quote }}
         - name: LOG_CONFS
-          value: "true"
+          value: "false"
         securityContext:
           privileged: true
           capabilities:
