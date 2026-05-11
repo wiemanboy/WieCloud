@@ -32,6 +32,14 @@ spec:
           capabilities:
             add:
               - NET_ADMIN
+        volumeMounts:
+          - name: config
+            mountPath: /config/wg_confs/wg0.conf
+            subPath: wg0.conf
+      volumes:
+        - name: config
+          secret:
+            secretName: wireguard-config
 ---
 apiVersion: v1
 kind: Service
