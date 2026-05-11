@@ -22,7 +22,7 @@ spec:
         - name:  SERVERURL
           value: wireguard.{{ .Values.environment.hostname }}
         - name: PEERS
-          value: "1"
+          value: "jarno-pc,jarno-laptop,jarno-s24-ultra"
         - name: PEERDNS
           value: "1.1.1.1"
         - name: LOG_CONFS
@@ -32,14 +32,13 @@ spec:
           capabilities:
             add:
               - NET_ADMIN
-        volumeMounts:
-          - name: config
-            mountPath: /config/wg_confs/wg0.conf
-            subPath: wg0.conf
-      volumes:
-        - name: config
-          secret:
-            secretName: wireguard-config
+      volumeMounts:
+      - name: config
+        mountPath: /config
+    volumes:
+    - name: config
+      persistentVolumeClaim:
+        claimName: wireguard-config
 ---
 apiVersion: v1
 kind: Service
@@ -57,3 +56,14 @@ spec:
       targetPort: 51820
       protocol: UDP
       nodePort: 30000
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wireguard-config
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
