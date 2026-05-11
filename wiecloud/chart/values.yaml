@@ -34,6 +34,15 @@ backups:
       keepLast: 5
       keepDaily: 14
 
+vpn:
+  peers:
+  - pc
+  - laptop
+  - s24ultra
+  dns:
+  - "1.1.1.1"
+  - "8.8.8.8"
+
 applications:
   minecraft:
     deploy: true
@@ -148,6 +157,10 @@ infrastructure:
   seaweedfs:
     deploy: true
     version: 0.0.1
+
+  wireguard:
+    deploy: true
+    version: 0.0.0
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/infrastructure

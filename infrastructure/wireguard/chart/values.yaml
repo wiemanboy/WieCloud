@@ -1,0 +1,14 @@
+environment:
+  hostname: example.com
+  gateway:
+    name: example-gateway
+    listener: web-example
+    namespace: example
+
+vpn:
+  peers:
+  - peer1
+  - peer2
+  dns:
+  - "0.0.0.0"
+  - "0.0.0.1"
