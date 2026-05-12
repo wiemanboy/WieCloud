@@ -103,7 +103,7 @@ infrastructure:
       - "*.carnaval.lol"
 
   _common:
-    version: 0.0.0
+    version: 0.0.0-created-shared-chart-a55565f
 
   externaldns:
     deploy: true
