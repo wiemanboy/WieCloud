@@ -1,0 +1,33 @@
+{{- if .Values.infrastructure.crossplane.deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: crossplane
+  namespace: argocd
+spec:
+  source:
+    chart: crossplane
+    repoURL: {{ .Values.infrastructure.repository }}
+    targetRevision: {{ .Values.infrastructure.crossplane.version }}
+    helm:
+      values: |
+        environment: {{ toYaml .Values.environment | nindent 10 }}
+
+  destination:
+    namespace: crossplane
+    server: {{ .Values.infrastructure.server }}
+  project: infrastructure
+  ignoreDifferences:
+    - group: ""
+      kind: PersistentVolumeClaim
+      jsonPointers:
+        - /spec
+        - /metadata/annotations
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
+{{- end }}
