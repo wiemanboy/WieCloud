@@ -104,7 +104,7 @@ infrastructure:
 
   crossplane:
     deploy: true
-    version: 0.0.0-implement-crossplane-aa7771f
+    version: 0.0.0-implement-crossplane-0cbfb9a
 
   externaldns:
     deploy: true
