@@ -80,9 +80,6 @@ applications:
   repository: harbor.wieman.cloud/applications
 
 infrastructure:
-  _common:
-    version: 0.0.0-created-shared-chart-48bdb28
-
   argocd:
     deploy: true
     version: 0.3.0
@@ -104,6 +101,9 @@ infrastructure:
       - "*.jarnowieman.nl"
       - "carnaval.lol"
       - "*.carnaval.lol"
+
+  _common:
+    version: 0.0.0
 
   externaldns:
     deploy: true
