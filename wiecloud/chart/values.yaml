@@ -82,7 +82,7 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.3.0
+    version: 0.3.1-implement-crossplane-d52a7fd
 
   certmanager:
     deploy: true
@@ -104,7 +104,7 @@ infrastructure:
 
   crossplane:
     deploy: true
-    version: 0.0.0-implement-crossplane-cb81c48
+    version: 0.0.0-implement-crossplane-d52a7fd
 
   externaldns:
     deploy: true
