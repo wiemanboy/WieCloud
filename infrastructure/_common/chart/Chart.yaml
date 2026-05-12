@@ -1,4 +1,4 @@
 apiVersion: v2
-name: common
+name: _common
 type: application
 version: 0.0.0
