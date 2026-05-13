@@ -1,7 +1,7 @@
 apiVersion: s3.aws.m.upbound.io/v1beta1
 kind: Bucket
 metadata:
-  generateName: crossplane-bucket-
+  name: {{ printf "crossplane-bucket-%s" (sha256sum "wiemancloud" | trunc 6)}}
 spec:
   forProvider:
     region: eu-central-1
