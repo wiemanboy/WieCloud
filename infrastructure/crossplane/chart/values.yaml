@@ -6,5 +6,4 @@ crossplane:
     - xpkg.upbound.io/upbound/provider-opentofu:v1.1.2
 
     # AWS providers
-    - xpkg.upbound.io/upbound/provider-family-aws:v2.5.3
     - xpkg.crossplane.io/crossplane-contrib/provider-aws-s3:v2.0.0
