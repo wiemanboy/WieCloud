@@ -14,11 +14,10 @@ argo-cd:
       url: https://argo.example.com
       exec.enabled: true
       oidc.config: "overwritten"
-      resource.customizations: |
-        "*/*":
-          ignoreDifferences: |
-            jsonPointers:
-              - /metadata/managedFields
+      resource.customizations.ignoreDifferences.all: |
+        managedFieldsManagers:
+          - kube-controller-manager
+          - kubelet
     rbac:
       policy.default: role:readonly
       policy.csv: |
