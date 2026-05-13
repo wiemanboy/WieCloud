@@ -6,6 +6,6 @@ spec:
   credentials:
     source: Secret
     secretRef:
-      namespace: {{ .Release.namespace }}
+      namespace: {{ .Release.Namespace }}
       name: aws-deploy-secret
       key: credentials
