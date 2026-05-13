@@ -1,0 +1,11 @@
+apiVersion: aws.m.upbound.io/v1beta1
+kind: ClusterProviderConfig
+metadata:
+  name: aws-deployer
+spec:
+  credentials:
+    source: Secret
+    secretRef:
+      namespace: {{ .Release.namespace }}
+      name: aws-deploy-secret
+      key: credentials

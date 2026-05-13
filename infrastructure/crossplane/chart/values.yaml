@@ -3,5 +3,8 @@ crossplane:
     packages:
     - xpkg.crossplane.io/crossplane-contrib/provider-kubernetes:v1.0.0
     - xpkg.upbound.io/crossplane-contrib/provider-keycloak:v2.9.0
-    - xpkg.upbound.io/upbound/provider-family-aws:v2.5.3
     - xpkg.upbound.io/upbound/provider-opentofu:v1.1.2
+
+    # AWS providers
+    - xpkg.upbound.io/upbound/provider-family-aws:v2.5.3
+    - xpkg.crossplane.io/crossplane-contrib/provider-aws-s3:v2.0.0
