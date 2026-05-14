@@ -37,7 +37,7 @@ metadata:
   name: tofudeployer
 rules:
 - apiGroups: [""]
-  resources: ["secret"]
+  resources: ["secrets"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 ---
 apiVersion: v1
