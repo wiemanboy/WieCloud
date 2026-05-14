@@ -8,6 +8,7 @@ spec:
     metadata:
       name: tofudeployer
     spec:
+      backoffLimit: 1
       template:
         spec:
           containers:
@@ -25,5 +26,4 @@ spec:
             - name: TOFU_PATH
               value: infrastructure/k8up/tofu
           restartPolicy: Never
-          backoffLimit: 1
   schedule: 0/3 * * * * *
