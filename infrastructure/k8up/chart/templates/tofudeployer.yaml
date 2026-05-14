@@ -7,7 +7,7 @@ spec:
     spec:
       containers:
       - name: tofudeployer
-        {{- with .Values.images.tofudeployer.image }}
+        {{- with .Values.tofudeployer.image }}
         image: {{ .registry }}/{{ .repository }}:{{ .version }}
         {{- end }}
         env:
