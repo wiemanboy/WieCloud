@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"strconv"
 
@@ -47,37 +48,31 @@ func main() {
 	})
 
 	if err != nil {
-		panic(err)
+		panic(fmt.Errorf("git clone failed: %w", err))
 	}
 
 	err = os.Chdir(cloneTarget + "/" + path)
 
 	if err != nil {
-		panic(err)
+		panic(fmt.Errorf("dir not found: %w", err))
 	}
 
-	// tofu init
 	_, err = tofu.Init()
-
 	if err != nil {
-		panic(err)
+		panic(fmt.Errorf("tofu init clone failed: %w", err))
 	}
 
-	// tofu plan -> exit on fail or dry run
 	_, err = tofu.Plan()
-
 	if err != nil {
-		panic(err)
+		panic(fmt.Errorf("tofu plan failed: %w", err))
 	}
 
 	if dryRun {
 		return
 	}
 
-	// tofu apply
 	_, err = tofu.Apply()
-
 	if err != nil {
-		panic(err)
+		panic(fmt.Errorf("tofu apply clone failed: %w", err))
 	}
 }

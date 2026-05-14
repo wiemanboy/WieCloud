@@ -27,7 +27,7 @@ func printHeader(header string) {
 
 func run(command string, args ...string) ([]byte, error) {
 	cmd := exec.Command(command, args...)
-	output, err := cmd.Output()
+	output, err := cmd.CombinedOutput()
 	fmt.Println(string(output))
 	return output, err
 }
