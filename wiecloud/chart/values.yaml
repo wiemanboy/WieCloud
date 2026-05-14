@@ -43,6 +43,10 @@ vpn:
   - "1.1.1.1"
   - "8.8.8.8"
 
+targetRepository:
+  url: https://github.com/wiemanboy/WieCloud.git
+  branch: create-tofudeployer
+
 applications:
   minecraft:
     deploy: true

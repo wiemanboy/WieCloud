@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: tofudeployer
+spec:
+  template:
+    spec:
+      containers:
+      - name: tofudeployer
+        {{- with .Values.images.tofudeployer.image }}
+        image: {{ .registry }}/{{ .repository }}:{{ .version }}
+        {{- end }}
+        env:
+        - name: DRY_RUN
+          value: "false"
+        - name: REPOSITORY_URL
+          value: {{ .Values.targetRepository.url }}
+        - name: REPOSITORY_BRANCH
+          value: {{ .Values.targetRepository.branch }}
+        - name: TOFU_PATH
+          value: infrastructure/k8up/tofu
+      restartPolicy: Never
