@@ -1,0 +1,26 @@
+name: Build tofudeployer
+
+on:
+  pull_request:
+    branches:
+    - master
+    paths:
+    - products/tofudeployer/image**
+    - .github/workflows/image_build_tofudeployer.yaml
+    - .github/workflows/image_build.yaml
+    - pipeline/build/scripts/image/**
+
+jobs:
+  build:
+    name: Build
+    uses: ./.github/workflows/image_build.yaml
+    with:
+      image_name: tofudeployer
+      image_path: products/tofudeployer/image
+      registry: harbor.wieman.cloud
+      repository: products
+    secrets:
+      registry_username: ${{ secrets.OCI_REGISTRY_USERNAME }}
+      registry_password: ${{ secrets.OCI_REGISTRY_PASSWORD }}
+      app_client_id: ${{ secrets.APP_CLIENT_ID }}
+      app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
