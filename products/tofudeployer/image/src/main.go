@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"strconv"
 
 	"github.com/go-git/go-git/v6"
 	"github.com/go-git/go-git/v6/plumbing"
@@ -9,11 +10,33 @@ import (
 )
 
 func main() {
-	dryRun := true
-	repo := "https://github.com/wiemanboy/WieCloud.git"
-	branch := "create-tofudeployer"
+
+	dryRunStr := os.Getenv("DRY_RUN")
+	dryRun := false
+
+	if dryRunStr != "" {
+		parsed, err := strconv.ParseBool(dryRunStr)
+		if err == nil {
+			dryRun = parsed
+		}
+	}
+
+	repo := os.Getenv("REPOSITORY_URL")
+	if repo == "" {
+		panic("ERROR: repository url is required")
+	}
+
+	branch := os.Getenv("REPOSITORY_BRANCH")
+	if branch == "" {
+		panic("ERROR: repository branch is required")
+	}
+
+	path := os.Getenv("TOFU_PATH")
+	if path == "" {
+		panic("ERROR: tofu path is required")
+	}
+
 	cloneTarget := "output"
-	path := "products/tofudeployer/image/tofu"
 
 	// stage files
 	_, err := git.PlainClone(cloneTarget, &git.CloneOptions{
