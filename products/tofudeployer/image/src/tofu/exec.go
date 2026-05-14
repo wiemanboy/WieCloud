@@ -6,21 +6,28 @@ import (
 )
 
 func Init() ([]byte, error) {
-	fmt.Println("init")
+	printHeader("Init")
 	return run("tofu", "init")
 }
 
 func Plan() ([]byte, error) {
-	fmt.Println("plan")
+	printHeader("Plan")
 	return run("tofu", "plan")
 }
 
 func Apply() ([]byte, error) {
-	fmt.Println("apply")
+	printHeader("Apply")
 	return run("tofu", "apply")
+}
+
+func printHeader(header string) {
+	fmt.Printf("\x1b[34m%s\x1b[0m\n", header)
+	fmt.Printf("\x1b[34m%s\x1b[0m\n", "────────────────────────────────────────────────────────────────────────────")
 }
 
 func run(command string, args ...string) ([]byte, error) {
 	cmd := exec.Command(command, args...)
-	return cmd.Output()
+	output, err := cmd.Output()
+	fmt.Println(string(output))
+	return output, err
 }
