@@ -26,4 +26,4 @@ spec:
             - name: TOFU_PATH
               value: infrastructure/k8up/tofu
           restartPolicy: Never
-  schedule: 0/3 * * * * *
+  schedule: "0/3 * * * *"
