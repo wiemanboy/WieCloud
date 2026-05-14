@@ -5,27 +5,22 @@ import (
 	"os/exec"
 )
 
-func Init() {
+func Init() ([]byte, error) {
 	fmt.Println("init")
-	// run("tofu", "init")
+	return run("tofu", "init")
 }
 
-func Plan() {
+func Plan() ([]byte, error) {
 	fmt.Println("plan")
-	// run("tofu", "plan")
+	return run("tofu", "plan")
 }
 
-func Apply() {
+func Apply() ([]byte, error) {
 	fmt.Println("apply")
-	// run("tofu", "apply")
+	return run("tofu", "apply")
 }
 
-func run(command string, args ...string) {
+func run(command string, args ...string) ([]byte, error) {
 	cmd := exec.Command(command, args...)
-	output, err := cmd.Output()
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
-	}
-	fmt.Println(string(output))
+	return cmd.Output()
 }

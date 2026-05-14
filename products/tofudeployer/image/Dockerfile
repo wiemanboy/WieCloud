@@ -17,5 +17,5 @@ FROM alpine
 COPY --from=tofu /usr/local/bin/tofu /usr/local/bin/tofu
 COPY --from=builder /app/.build /build
 
-ENTRYPOINT ["/app/build/tofudeployer"]
+ENTRYPOINT ["/build/tofudeployer"]
 

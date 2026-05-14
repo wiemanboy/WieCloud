@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/go-git/go-git/v6"
 	"github.com/go-git/go-git/v6/plumbing"
 	"wieman.cloud/tofudeployer/tofu"
@@ -9,27 +11,50 @@ import (
 func main() {
 	dryRun := true
 	repo := "https://github.com/wiemanboy/WieCloud.git"
-	branch := "master"
-	// path := "products/tofudeployer/image/tofu"
+	branch := "create-tofudeployer"
+	cloneTarget := "output"
+	path := "products/tofudeployer/image/tofu"
 
 	// stage files
-	git.PlainClone("output", &git.CloneOptions{
+	_, err := git.PlainClone(cloneTarget, &git.CloneOptions{
 		URL:           repo,
 		ReferenceName: plumbing.NewBranchReferenceName(branch),
 		Depth:         1,
 		SingleBranch:  true,
 	})
 
+	if err != nil {
+		panic(err)
+	}
+
+	err = os.Chdir(cloneTarget + "/" + path)
+
+	if err != nil {
+		panic(err)
+	}
+
 	// tofu init
-	tofu.Init()
+	_, err = tofu.Init()
+
+	if err != nil {
+		panic(err)
+	}
 
 	// tofu plan -> exit on fail or dry run
-	tofu.Plan()
+	_, err = tofu.Plan()
+
+	if err != nil {
+		panic(err)
+	}
 
 	if dryRun {
 		return
 	}
 
 	// tofu apply
-	tofu.Apply()
+	_, err = tofu.Apply()
+
+	if err != nil {
+		panic(err)
+	}
 }
