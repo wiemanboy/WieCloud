@@ -12,7 +12,7 @@ import (
 func main() {
 
 	dryRunStr := os.Getenv("DRY_RUN")
-	dryRun := false
+	dryRun := true
 
 	if dryRunStr != "" {
 		parsed, err := strconv.ParseBool(dryRunStr)
