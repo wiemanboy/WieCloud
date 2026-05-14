@@ -17,7 +17,7 @@ func Plan() ([]byte, error) {
 
 func Apply() ([]byte, error) {
 	printHeader("Apply")
-	return run("tofu", "apply", "-y")
+	return run("tofu", "apply", "-auto-approve")
 }
 
 func printHeader(header string) {
