@@ -59,7 +59,7 @@ func main() {
 
 	_, err = tofu.Init()
 	if err != nil {
-		panic(fmt.Errorf("tofu init clone failed: %w", err))
+		panic(fmt.Errorf("tofu init failed: %w", err))
 	}
 
 	_, err = tofu.Plan()
@@ -73,6 +73,6 @@ func main() {
 
 	_, err = tofu.Apply()
 	if err != nil {
-		panic(fmt.Errorf("tofu apply clone failed: %w", err))
+		panic(fmt.Errorf("tofu apply failed: %w", err))
 	}
 }
