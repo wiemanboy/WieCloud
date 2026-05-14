@@ -129,7 +129,7 @@ infrastructure:
 
   k8up:
     deploy: true
-    version: 0.1.0-create-tofudeployer-a5ddc2f
+    version: 0.1.0-create-tofudeployer-1e65786
 
   keycloak:
     deploy: true
