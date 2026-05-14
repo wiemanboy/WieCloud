@@ -10,7 +10,7 @@ COPY ./build.sh ./
 COPY ./src ./src
 RUN ./build.sh
 
-FROM ghcr.io/opentofu/opentofu:minimal AS tofu
+FROM ghcr.io/opentofu/opentofu:1.11.5-minimal AS tofu
 
 FROM alpine
 
