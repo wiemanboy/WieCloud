@@ -129,7 +129,7 @@ infrastructure:
 
   k8up:
     deploy: true
-    version: 0.1.0-create-tofudeployer-10cc206
+    version: 0.1.0-create-tofudeployer-4966e74
 
   keycloak:
     deploy: true
@@ -174,10 +174,10 @@ images:
     image:
       registry: harbor.wieman.cloud
       repository: tools/rconcli
-      version: 0.0.0-create-tofudeployer-10cc206
+      version: 0.0.0-create-tofudeployer-4966e74
 
   tofudeployer:
     image:
       registry: harbor.wieman.cloud
       repository: products/tofudeployer
-      version: 0.0.0-create-tofudeployer-10cc206
+      version: 0.0.0-create-tofudeployer-4966e74
