@@ -27,6 +27,8 @@ spec:
               value: {{ .Values.targetRepository.branch }}
             - name: TOFU_PATH
               value: infrastructure/k8up/tofu
+            - name: TF_VAR_namespace
+              value: {{ .Release.Namespace }}
           restartPolicy: Never
 ---
 apiVersion: rbac.authorization.k8s.io/v1
