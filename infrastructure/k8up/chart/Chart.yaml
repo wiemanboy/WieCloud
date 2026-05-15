@@ -1,7 +1,7 @@
 apiVersion: v2
 name: k8up
 type: application
-version: 0.0.1
+version: 0.1.0
 dependencies:
 - name: k8up
   version: 4.8.6

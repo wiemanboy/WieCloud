@@ -15,7 +15,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-diff=$(git diff FETCH_HEAD...HEAD --name-only | grep -E '^(infrastructure|applications)/.*/chart/') || exit 0
+diff=$(git diff FETCH_HEAD...HEAD --name-only | grep -E '^(infrastructure|applications|products)/.*/chart/') || exit 0
 edited_charts=$(printf '%s\n' "$diff"| sed 's|\(.*\/chart\)/.*|\1|' | sort -u)
 
 while read -r chart_path; do
@@ -29,7 +29,7 @@ bash ./pipeline/version/scripts/update_chart_version.sh \
   < /dev/null
 done <<< "$edited_charts"
 
-diff=$(git diff FETCH_HEAD...HEAD --name-only | grep -E '^(infrastructure|applications)/.*/image/') || exit 0
+diff=$(git diff FETCH_HEAD...HEAD --name-only | grep -E '^(infrastructure|applications|products)/.*/image/') || exit 0
 edited_images=$(printf '%s\n' "$diff"| sed 's|\(.*\/image\)/.*|\1|' | sort -u)
 
 while read -r image_path; do

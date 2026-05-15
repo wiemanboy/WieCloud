@@ -5,6 +5,16 @@ environment:
     listener: web-example
     namespace: example
 
+targetRepository:
+  url: https://repo.git
+  branch: example
+
+tofudeployer:
+  image:
+    registry: example.com
+    repository: products/tofudeployer
+    version: 0.0.0
+
 seaweedfs:
   name: backup-s3
   endpoint: k8up.s3.example.com

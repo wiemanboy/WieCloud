@@ -43,6 +43,10 @@ vpn:
   - "1.1.1.1"
   - "8.8.8.8"
 
+targetRepository:
+  url: https://github.com/wiemanboy/WieCloud.git
+  branch: master
+
 applications:
   minecraft:
     deploy: true
@@ -125,7 +129,7 @@ infrastructure:
 
   k8up:
     deploy: true
-    version: 0.0.1
+    version: 0.1.0
 
   keycloak:
     deploy: true
@@ -170,4 +174,10 @@ images:
     image:
       registry: harbor.wieman.cloud
       repository: tools/rconcli
-      version: 1.1.4
+      version: 0.0.0
+
+  tofudeployer:
+    image:
+      registry: harbor.wieman.cloud
+      repository: products/tofudeployer
+      version: 0.0.0

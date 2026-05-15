@@ -12,6 +12,8 @@ spec:
     helm:
       values: |
         environment: {{ toYaml .Values.environment | nindent 10 }}
+        targetRepository: {{ toYaml .Values.targetRepository | nindent 10 }}
+        tofudeployer: {{ toYaml .Values.images.tofudeployer | nindent 10 }}
         seaweedfs:
           endpoint: k8up.s3.{{ .Values.environment.hostname }}
 
