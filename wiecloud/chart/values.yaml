@@ -45,7 +45,7 @@ vpn:
 
 targetRepository:
   url: https://github.com/wiemanboy/WieCloud.git
-  branch: create-tofudeployer
+  branch: master
 
 applications:
   minecraft:
