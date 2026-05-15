@@ -29,6 +29,16 @@ spec:
               value: infrastructure/k8up/tofu
             - name: TF_VAR_namespace
               value: {{ .Release.Namespace }}
+            - name: TF_VAR_aws_access_key
+              valueFrom:
+                secretKeyRef:
+                  name: tofudeployer-aws-credentials
+                  key: accessKey
+            - name: TF_VAR_aws_secret_key
+              valueFrom:
+                secretKeyRef:
+                  name: tofudeployer-aws-credentials
+                  key: secretKey
           restartPolicy: Never
 ---
 apiVersion: rbac.authorization.k8s.io/v1
