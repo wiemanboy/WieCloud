@@ -5,11 +5,12 @@
 ### Global
 
 - `foundation/`: Deployment of underlying nodes and cluster configuration
+- `helper/`: Helper scripts for local use
 - `infrastructure/`: Helm charts for infrastructure, used to keep applications running
 - `applications/`: Helm charts for applications, used by end users
-- `pipelines/`: Helper scripts and CI/CD pipelines
+- `pipelines/`: CI/CD pipeline scripts
+- `products/`: Helm charts and images for products, can be used by different projects
 - `wiecloud/`: Deployment chart looked at by ArgoCD to deploy the whole stack
-- `env.yaml`: Environment configuration for tofu (will probably be moved in the future)
 
 ### Chart
 
