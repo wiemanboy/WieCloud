@@ -15,26 +15,27 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-diff=$(git diff FETCH_HEAD...HEAD --name-only | grep -E '^(infrastructure|applications|products)/.*/chart/') || exit 0
+diff=$(git diff master --name-only | grep -E '^(infrastructure|applications|products)/.*/chart/') || diff=""
 edited_charts=$(printf '%s\n' "$diff"| sed 's|\(.*\/chart\)/.*|\1|' | sort -u)
 
-while read -r chart_path; do
-  IFS='/' read -r _ chart_name _ <<< "$chart_path"
+if [ -n "$edited_charts" ]; then
+  while read -r chart_path; do
+    IFS='/' read -r _ chart_name _ <<< "$chart_path"
 
-  echo $chart_path
-bash ./pipeline/version/scripts/update_chart_version.sh \
-  --path "$chart_path" \
-  --name "$chart_name" \
-  --tag "$tag" \
-  < /dev/null
-done <<< "$edited_charts"
+    echo $chart_path
+  bash ./pipeline/version/scripts/update_chart_version.sh \
+    --path "$chart_path" \
+    --name "$chart_name" \
+    --tag "$tag" \
+    < /dev/null
+  done <<< "$edited_charts"
+fi
 
-diff=$(git diff FETCH_HEAD...HEAD --name-only | grep -E '^(infrastructure|applications|products)/.*/image/') || exit 0
+diff=$(git diff master --name-only | grep -E '^(infrastructure|applications|products)/.*/image/') || exit 0
 edited_images=$(printf '%s\n' "$diff"| sed 's|\(.*\/image\)/.*|\1|' | sort -u)
 
 while read -r image_path; do
-  IFS='/' read -r -a PARTS <<< "$image_path"
-  image_name="${PARTS[-1]}"
+  IFS='/' read -r _ image_name _  <<< "$image_path"
 
   echo $image_path
 bash ./pipeline/version/scripts/update_image_version.sh \
