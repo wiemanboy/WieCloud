@@ -63,7 +63,7 @@ minecraft:
   mcbackup:
     enabled: true
     pauseIfNoPlayers: true
-
+1
     backupInterval: 4h
     pruneBackupsDays: 2
 
@@ -100,10 +100,6 @@ minecraft:
       mountPath: /data/config/bluemap/core.conf
       subPath: core.conf
       readOnly: true
-    - name: mod-manifest
-      mountPath: /manifests/manifest.json
-      subPath: manifest.json
-      readOnly: true
 
     volumes:
     - name: whitelist
@@ -118,12 +114,25 @@ minecraft:
         items:
         - key: core.conf
           path: core.conf
-    - name: mod-manifest
-      configMap:
-        name: mod-manifest
-        items:
-        - key: manifest.json
-          path: manifest.json
 
-curseforge:
-  modManifest: {}
+initContainers:
+  - name: download-zip
+    image: curlimages/curl:8.10.1
+    env:
+      - name: ZIP_URL
+        valueFrom:
+          configMapKeyRef:
+            name: config
+            key: zip
+    command: ["/bin/sh", "-c"]
+    args:
+      - |
+        set -e
+
+        echo "Downloading ZIP from: $ZIP_URL"
+        curl -L "$ZIP_URL" -o /zip/server.zip
+        echo "Download complete: /zip/server.zip"
+
+    volumeMounts:
+      - name: minecraft-datadir
+        mountPath: /zip

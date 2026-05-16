@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: mod-manifest
-data:
-  manifest.json: {{ toJson .Values.curseforge.modManifest | indent 4 }}

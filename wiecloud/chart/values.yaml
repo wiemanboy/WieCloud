@@ -69,8 +69,9 @@ applications:
       modrinth:
         projects: []
       curseforge:
-        manifest:
+        zip:
           deploy: true
+          file: https://next.wieman.cloud/public.php/dav/files/HxMebrnGZSXoSQF/Jarno%20server-1.2.0.zip
         pageUrl: ""
         excludeMods: []
         includeMods: []
