@@ -15,7 +15,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-diff=$(git diff master --name-only | grep -E '^(infrastructure|applications|products)/.*/chart/') || diff=""
+diff=$(git diff origin/master --name-only | grep -E '^(infrastructure|applications|products)/.*/chart/') || diff=""
 edited_charts=$(printf '%s\n' "$diff"| sed 's|\(.*\/chart\)/.*|\1|' | sort -u)
 
 if [ -n "$edited_charts" ]; then
@@ -31,7 +31,7 @@ if [ -n "$edited_charts" ]; then
   done <<< "$edited_charts"
 fi
 
-diff=$(git diff master --name-only | grep -E '^(infrastructure|applications|products)/.*/image/') || exit 0
+diff=$(git diff origin/master --name-only | grep -E '^(infrastructure|applications|products)/.*/image/') || exit 0
 edited_images=$(printf '%s\n' "$diff"| sed 's|\(.*\/image\)/.*|\1|' | sort -u)
 
 while read -r image_path; do
