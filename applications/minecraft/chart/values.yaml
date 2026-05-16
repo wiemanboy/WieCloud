@@ -12,6 +12,8 @@ rconcli:
     version: 0.0.0
 
 minecraft:
+  image:
+    tag: java17
   minecraftServer:
     eula: true
     motd: "§l§5WiemanServer§r
@@ -19,16 +21,16 @@ minecraft:
       §rWelcome to my server!"
     memory: 9G
 
-    worldSaveName: test
-    version: "1.21.11"
+    worldSaveName: example
+    version: "0.0.0"
     difficulty: hard
     maxPlayers: 20
     maxBuildHeight: 256
     spawnProtection: 0
     viewDistance: 20
 
-    type: FORGE
-    vanillaTweaksShareCodes: [ AG8Tc8 ]
+    type: EXAMPLE
+    vanillaTweaksShareCodes: []
     modrinth:
       projects: []
 
@@ -37,9 +39,11 @@ minecraft:
         existingSecret: curseforge-api-token
         secretKey: api-token
       # Link to modpack in general or a specific file
-      pageUrl: # List of project slugs or IDs to be excluded from modpack, useful if mod is incorrectly marked as server side
+      pageUrl: ""
 
+      # List of project slugs or IDs to be excluded from modpack, useful if mod is incorrectly marked as server side
       excludeMods: []
+
       # List of project slugs or IDs to be included in modpack, useful if mod is incorrectly marked as client side only
       includeMods: []
       parallelDownloads: 4
@@ -49,8 +53,7 @@ minecraft:
 
   extraEnv:
     ENABLE_WHITELIST: true
-    CURSEFORGE_FILES: |
-      https://www.curseforge.com/minecraft/mc-mods/bluemap/files/7320250
+    CURSEFORGE_FILES: ""
 
   persistence:
     annotations:
@@ -99,6 +102,7 @@ minecraft:
       mountPath: /data/config/bluemap/core.conf
       subPath: core.conf
       readOnly: true
+
     volumes:
     - name: whitelist
       configMap:
@@ -112,3 +116,37 @@ minecraft:
         items:
         - key: core.conf
           path: core.conf
+
+  initContainers:
+  - name: download-zip
+    image: curlimages/curl:8.20.0
+    env:
+    - name: ZIP_URL
+      valueFrom:
+        configMapKeyRef:
+          name: app-config
+          key: zip
+    command: [ "/bin/sh", "-c" ]
+    args:
+    - |
+      set -e
+
+      mkdir -p /data/zip
+
+      if [ -z "$ZIP_URL" ]; then
+        echo "No ZIP URL provided, skipping download."
+        exit 0
+      fi
+
+      echo "Downloading ZIP from: $ZIP_URL"
+      curl -L "$ZIP_URL" -o /data/zip/server.zip
+
+      echo "Download complete:"
+      ls -lah /data/zip
+
+    volumeMounts:
+    - name: datadir
+      mountPath: /data
+
+curseforge:
+  zip: ""
