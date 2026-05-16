@@ -48,7 +48,7 @@ jobs:
         git diff --name-only origin/master
         echo
 
-        if ! git diff --name-only origin/master | grep -qE '^(infrastructure|applications)/'; then
+        if ! git diff --name-only origin/master | grep -qE '^(infrastructure|applications|products)/'; then
           echo "Skipping infrastructure or applications are not changed"
           echo "skip=true" >> "$GITHUB_OUTPUT"
           exit 0
