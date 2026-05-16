@@ -50,7 +50,7 @@ targetRepository:
 applications:
   minecraft:
     deploy: true
-    version: 1.0.0-new-mc-modpack-c34feb8
+    version: 1.0.0-new-mc-modpack-2e060c8
     restores:
     - name: minecraft-local-restore
       enabled: false
