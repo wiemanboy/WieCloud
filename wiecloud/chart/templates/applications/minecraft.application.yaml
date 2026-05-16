@@ -28,14 +28,14 @@ spec:
               excludeMods: {{ toYaml .Values.applications.minecraft.mods.curseforge.excludeMods | nindent 16 }}
               includeMods: {{ toYaml .Values.applications.minecraft.mods.curseforge.includeMods | nindent 16 }}
           extraEnv:
-            CURSEFORGE_FILES: | {{- .Values.applications.minecraft.bluemap.file | nindent 12 }}
+            CURSEFORGE_FILES: | {{- .Values.applications.minecraft.bluemap.file | nindent 14 }}
             {{- if .Values.applications.minecraft.mods.curseforge.manifest.deploy}}
             CF_MODPACK_MANIFEST: /manifests/manifest.json
             CF_SLUG: "custom"
             {{- end}}
           curseforge:
             {{- if .Values.applications.minecraft.mods.curseforge.manifest.deploy}}
-            modManifest: | {{ .Files.Get "files/minecraft/mod-manifest.json" | nindent 12 }}
+            modManifest: | {{ .Files.Get "files/minecraft/mod-manifest.json" | nindent 14 }}
             {{- end}}
   destination:
     namespace: minecraft
