@@ -33,10 +33,10 @@ spec:
             CF_MODPACK_MANIFEST: /manifests/manifest.json
             CF_SLUG: "custom"
             {{- end}}
-          curseforge:
-            {{- if .Values.applications.minecraft.mods.curseforge.manifest.deploy}}
-            modManifest: | {{ .Files.Get "files/minecraft/mod-manifest.json" | nindent 14 }}
-            {{- end}}
+        curseforge:
+          {{- if .Values.applications.minecraft.mods.curseforge.manifest.deploy}}
+          modManifest: | {{ .Files.Get "files/minecraft/mod-manifest.json" | nindent 12 }}
+          {{- end}}
   destination:
     namespace: minecraft
     server: {{ .Values.applications.server }}
