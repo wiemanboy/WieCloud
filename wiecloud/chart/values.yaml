@@ -199,4 +199,4 @@ images:
     image:
       registry: harbor.wieman.cloud
       repository: products/tofudeployer
-      version: 0.0.0
+      version: 1.1.5
