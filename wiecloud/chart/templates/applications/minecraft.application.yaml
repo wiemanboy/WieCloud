@@ -16,10 +16,12 @@ spec:
         restores: {{ toYaml .Values.applications.minecraft.restores | nindent 10 }}
         rconcli: {{ toYaml .Values.images.rconcli | nindent 10 }}
         minecraft:
+          image:
+            tag: {{ .Values.applications.minecraft.server.version }}
           minecraftServer:
             worldSaveName: {{ .Values.applications.minecraft.world.name }}
             version: {{ .Values.applications.minecraft.world.version }}
-            type: {{ .Values.applications.minecraft.launcher }}
+            type: {{ .Values.applications.minecraft.server.launcher }}
             vanillaTweaksShareCodes: {{ toYaml .Values.applications.minecraft.mods.vanillaTweaks | nindent 16 }}
             modrinth:
               projects: {{ toYaml .Values.applications.minecraft.mods.modrinth.projects | nindent 16 }}

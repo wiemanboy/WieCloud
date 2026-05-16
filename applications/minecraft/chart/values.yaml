@@ -12,6 +12,8 @@ rconcli:
     version: 0.0.0
 
 minecraft:
+  image:
+    tag: java17
   minecraftServer:
     eula: true
     motd: "§l§5WiemanServer§r
