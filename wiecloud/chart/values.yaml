@@ -58,6 +58,17 @@ applications:
       snapshot: ""
       claim:
         name: minecraft-datadir
+    launcher: AUTO_CURSEFORGE
+    bluemap:
+      file: https://www.curseforge.com/minecraft/mc-mods/bluemap/files/7057487
+    mods:
+      vanillaTweaks: []
+      modrinth:
+        projects: []
+      curseforge:
+        pageUrl: https://www.curseforge.com/minecraft/share/pVSx_JwS
+        excludeMods: []
+        includeMods: []
 
   nextcloud:
     deploy: true

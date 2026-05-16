@@ -15,7 +15,18 @@ spec:
         backups: {{ toYaml .Values.backups | nindent 10 }}
         restores: {{ toYaml .Values.applications.minecraft.restores | nindent 10 }}
         rconcli: {{ toYaml .Values.images.rconcli | nindent 10 }}
-  destination:
+        minecraft:
+          minecraftServer:
+            type: {{ .Values.applications.minecraft.launcher }}
+            vanillaTweaksShareCodes
+            modrinth:
+              projects: {{ toYaml .Values.applications.minecraft.mods.modrinth.projects | nindent 16 }}
+            autoCurseForge:
+              pageUrl: {{ .Values.applications.minecraft.mods.curseforge.pageUrl }}
+              excludeMods: {{ toYaml .Values.applications.minecraft.mods.curseforge.excludeMods | nindent 16 }}
+              includeMods: {{ toYaml .Values.applications.minecraft.mods.curseforge.includeMods | nindent 16 }}
+        extraEnv:
+          CURSEFORGE_FILES: | {{- .Values.applications.minecraft.bluemap.file | nindent 12 }}
     namespace: minecraft
     server: {{ .Values.applications.server }}
   project: minecraft
