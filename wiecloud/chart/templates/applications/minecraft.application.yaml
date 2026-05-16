@@ -20,11 +20,11 @@ spec:
             type: {{ .Values.applications.minecraft.launcher }}
             vanillaTweaksShareCodes
             modrinth:
-              projects: {{ toYaml .Values.applications.minecraft.mods.modrinth.projects | nindent 16 }}
+              projects: {{ toYaml .Values.applications.minecraft.mods.modrinth.projects }}
             autoCurseForge:
               pageUrl: {{ .Values.applications.minecraft.mods.curseforge.pageUrl }}
-              excludeMods: {{ toYaml .Values.applications.minecraft.mods.curseforge.excludeMods | nindent 16 }}
-              includeMods: {{ toYaml .Values.applications.minecraft.mods.curseforge.includeMods | nindent 16 }}
+              excludeMods: {{ toYaml .Values.applications.minecraft.mods.curseforge.excludeMods }}
+              includeMods: {{ toYaml .Values.applications.minecraft.mods.curseforge.includeMods}}
         extraEnv:
           CURSEFORGE_FILES: | {{- .Values.applications.minecraft.bluemap.file | nindent 12 }}
   destination:
