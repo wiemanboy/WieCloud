@@ -122,7 +122,7 @@ minecraft:
     - name: ZIP_URL
       valueFrom:
         configMapKeyRef:
-          name: config
+          name: app-config
           key: zip
     command: [ "/bin/sh", "-c" ]
     args:
