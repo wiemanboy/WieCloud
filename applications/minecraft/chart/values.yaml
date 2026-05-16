@@ -116,23 +116,26 @@ minecraft:
           path: core.conf
 
 initContainers:
-  - name: download-zip
-    image: curlimages/curl:8.10.1
-    env:
-      - name: ZIP_URL
-        valueFrom:
-          configMapKeyRef:
-            name: config
-            key: zip
-    command: ["/bin/sh", "-c"]
-    args:
-      - |
-        set -e
+- name: download-zip
+  image: curlimages/curl:8.10.1
+  env:
+  - name: ZIP_URL
+    valueFrom:
+      configMapKeyRef:
+        name: config
+        key: zip
+  command: [ "/bin/sh", "-c" ]
+  args:
+  - |
+    set -e
 
-        echo "Downloading ZIP from: $ZIP_URL"
-        curl -L "$ZIP_URL" -o /zip/server.zip
-        echo "Download complete: /zip/server.zip"
+    echo "Downloading ZIP from: $ZIP_URL"
+    curl -L "$ZIP_URL" -o /zip/server.zip
+    echo "Download complete: /zip/server.zip"
 
-    volumeMounts:
-      - name: minecraft-datadir
-        mountPath: /zip
+  volumeMounts:
+  - name: minecraft-datadir
+    mountPath: /zip
+
+curseforge:
+  zip: ""
