@@ -63,7 +63,7 @@ applications:
       version: 1.20.1
     server:
       launcher: AUTO_CURSEFORGE
-      version: java1
+      version: java17
     bluemap:
       file: https://www.curseforge.com/minecraft/mc-mods/bluemap/files/7057487
     mods:
