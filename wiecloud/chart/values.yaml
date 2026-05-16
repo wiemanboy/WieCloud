@@ -50,7 +50,7 @@ targetRepository:
 applications:
   minecraft:
     deploy: true
-    version: 1.0.0-new-mc-modpack-d98fccf
+    version: 1.0.0-new-mc-modpack-2f33825
     restores:
     - name: minecraft-local-restore
       enabled: false
@@ -191,10 +191,10 @@ images:
     image:
       registry: harbor.wieman.cloud
       repository: tools/rconcli
-      version: 1.1.5-new-mc-modpack-d98fccf
+      version: 1.1.5-new-mc-modpack-2f33825
 
   tofudeployer:
     image:
       registry: harbor.wieman.cloud
       repository: products/tofudeployer
-      version: 1.1.5-new-mc-modpack-d98fccf
+      version: 1.1.5-new-mc-modpack-2f33825
