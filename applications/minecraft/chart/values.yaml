@@ -19,15 +19,15 @@ minecraft:
       §rWelcome to my server!"
     memory: 9G
 
-    worldSaveName: test
-    version: "1.20.1"
+    worldSaveName: example
+    version: "0.0.0"
     difficulty: hard
     maxPlayers: 20
     maxBuildHeight: 256
     spawnProtection: 0
     viewDistance: 20
 
-    type: AUTO_CURSEFORGE
+    type: EXAMPLE
     vanillaTweaksShareCodes: []
     modrinth:
       projects: []
@@ -37,7 +37,7 @@ minecraft:
         existingSecret: curseforge-api-token
         secretKey: api-token
       # Link to modpack in general or a specific file
-      pageUrl: https://www.curseforge.com/minecraft/share/pVSx_JwS
+      pageUrl: ""
 
       # List of project slugs or IDs to be excluded from modpack, useful if mod is incorrectly marked as server side
       excludeMods: []
@@ -51,8 +51,7 @@ minecraft:
 
   extraEnv:
     ENABLE_WHITELIST: true
-    CURSEFORGE_FILES: |
-      https://www.curseforge.com/minecraft/mc-mods/bluemap/files/7057487
+    CURSEFORGE_FILES: ""
 
   persistence:
     annotations:
