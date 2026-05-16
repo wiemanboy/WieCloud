@@ -129,6 +129,8 @@ minecraft:
     - |
       set -e
 
+      mkdir zip || true
+
       echo "Downloading ZIP from: $ZIP_URL"
       curl -L "$ZIP_URL" -o /data/zip/server.zip
       echo "Download complete: /data/zip/server.zip"
