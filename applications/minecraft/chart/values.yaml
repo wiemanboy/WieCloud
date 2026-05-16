@@ -117,7 +117,7 @@ minecraft:
 
   initContainers:
   - name: download-zip
-    image: curlimages/curl:8.10.1
+    image: curlimages/curl:8.20.0
     env:
     - name: ZIP_URL
       valueFrom:
