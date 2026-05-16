@@ -58,6 +58,9 @@ applications:
       snapshot: ""
       claim:
         name: minecraft-datadir
+    world:
+      name: minecraft-for-the-gurls
+      version: 1.20.1
     launcher: AUTO_CURSEFORGE
     bluemap:
       file: https://www.curseforge.com/minecraft/mc-mods/bluemap/files/7057487

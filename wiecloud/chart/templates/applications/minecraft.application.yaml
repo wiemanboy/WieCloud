@@ -17,6 +17,8 @@ spec:
         rconcli: {{ toYaml .Values.images.rconcli | nindent 10 }}
         minecraft:
           minecraftServer:
+            worldSaveName: {{ .Values.applications.minecraft.world.name }}
+            version: {{ .Values.applications.minecraft.world.version }}
             type: {{ .Values.applications.minecraft.launcher }}
             vanillaTweaksShareCodes: {{ toYaml .Values.applications.minecraft.mods.vanillaTweaks | nindent 16 }}
             modrinth:
