@@ -27,6 +27,7 @@ spec:
               includeMods: {{ toYaml .Values.applications.minecraft.mods.curseforge.includeMods | nindent 16 }}
         extraEnv:
           CURSEFORGE_FILES: | {{- .Values.applications.minecraft.bluemap.file | nindent 12 }}
+  destination:
     namespace: minecraft
     server: {{ .Values.applications.server }}
   project: minecraft
