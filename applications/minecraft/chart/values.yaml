@@ -133,6 +133,11 @@ minecraft:
 
       mkdir -p /data/zip
 
+      if [ -z "$ZIP_URL" ]; then
+        echo "No ZIP URL provided, skipping download."
+        exit 0
+      fi
+
       echo "Downloading ZIP from: $ZIP_URL"
       curl -L "$ZIP_URL" -o /data/zip/server.zip
 
