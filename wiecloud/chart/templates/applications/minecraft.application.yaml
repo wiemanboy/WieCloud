@@ -18,13 +18,13 @@ spec:
         minecraft:
           minecraftServer:
             type: {{ .Values.applications.minecraft.launcher }}
-            vanillaTweaksShareCodes
+            vanillaTweaksShareCodes: {{ toYaml .Values.applications.minecraft.mods.vanillaTweaks | nindent 16 }}
             modrinth:
-              projects: {{ toYaml .Values.applications.minecraft.mods.modrinth.projects }}
+              projects: {{ toYaml .Values.applications.minecraft.mods.modrinth.projects | nindent 16 }}
             autoCurseForge:
               pageUrl: {{ .Values.applications.minecraft.mods.curseforge.pageUrl }}
-              excludeMods: {{ toYaml .Values.applications.minecraft.mods.curseforge.excludeMods }}
-              includeMods: {{ toYaml .Values.applications.minecraft.mods.curseforge.includeMods}}
+              excludeMods: {{ toYaml .Values.applications.minecraft.mods.curseforge.excludeMods | nindent 16 }}
+              includeMods: {{ toYaml .Values.applications.minecraft.mods.curseforge.includeMods | nindent 16 }}
         extraEnv:
           CURSEFORGE_FILES: | {{- .Values.applications.minecraft.bluemap.file | nindent 12 }}
   destination:
