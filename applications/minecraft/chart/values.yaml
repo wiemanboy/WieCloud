@@ -101,6 +101,11 @@ minecraft:
       mountPath: /data/config/bluemap/core.conf
       subPath: core.conf
       readOnly: true
+    - name: mod-manifest
+      mountPath: /manifests/manifest.json
+      subPath: manifest.json
+      readOnly: true
+
     volumes:
     - name: whitelist
       configMap:
@@ -114,3 +119,12 @@ minecraft:
         items:
         - key: core.conf
           path: core.conf
+    - name: mod-manifest
+      configMap:
+        name: mod-manifest
+        items:
+        - key: manifest.json
+          path: manifest.json
+
+curseforge:
+  modManifest: {}

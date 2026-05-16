@@ -69,7 +69,9 @@ applications:
       modrinth:
         projects: []
       curseforge:
-        pageUrl: https://www.curseforge.com/minecraft/share/pVSx_JwS
+        manifest:
+          deploy: true
+        pageUrl: ""
         excludeMods: []
         includeMods: []
 
