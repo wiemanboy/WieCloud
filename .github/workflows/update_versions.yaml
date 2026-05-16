@@ -13,6 +13,7 @@ on:
     - .github/workflows/update_versions.yaml
     - applications/**
     - infrastructure/**
+    - products/**
     - pipeline/build/scripts/helm/**
 
 jobs:
@@ -40,14 +41,14 @@ jobs:
 
         last_msg=$(git log -1 --pretty=%s)
         echo "Last commit message: $last_msg"
-        echo 
+        echo
 
         echo "Changed files:"
         git fetch origin master
         git diff --name-only origin/master
         echo
 
-        if ! git diff --name-only origin/master | grep -qE '^(infrastructure|applications)/'; then
+        if ! git diff --name-only origin/master | grep -qE '^(infrastructure|applications|products)/'; then
           echo "Skipping infrastructure or applications are not changed"
           echo "skip=true" >> "$GITHUB_OUTPUT"
           exit 0
