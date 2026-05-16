@@ -174,7 +174,7 @@ images:
     image:
       registry: harbor.wieman.cloud
       repository: tools/rconcli
-      version: 0.0.0
+      version: 1.1.4
 
   tofudeployer:
     image:

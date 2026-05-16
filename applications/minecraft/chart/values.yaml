@@ -20,15 +20,15 @@ minecraft:
     memory: 9G
 
     worldSaveName: test
-    version: "1.21.11"
+    version: "1.20.1"
     difficulty: hard
     maxPlayers: 20
     maxBuildHeight: 256
     spawnProtection: 0
     viewDistance: 20
 
-    type: FORGE
-    vanillaTweaksShareCodes: [ AG8Tc8 ]
+    type: AUTO_CURSEFORGE
+    vanillaTweaksShareCodes: []
     modrinth:
       projects: []
 
@@ -37,9 +37,11 @@ minecraft:
         existingSecret: curseforge-api-token
         secretKey: api-token
       # Link to modpack in general or a specific file
-      pageUrl: # List of project slugs or IDs to be excluded from modpack, useful if mod is incorrectly marked as server side
+      pageUrl: https://www.curseforge.com/minecraft/share/pVSx_JwS
 
+      # List of project slugs or IDs to be excluded from modpack, useful if mod is incorrectly marked as server side
       excludeMods: []
+
       # List of project slugs or IDs to be included in modpack, useful if mod is incorrectly marked as client side only
       includeMods: []
       parallelDownloads: 4
@@ -50,7 +52,7 @@ minecraft:
   extraEnv:
     ENABLE_WHITELIST: true
     CURSEFORGE_FILES: |
-      https://www.curseforge.com/minecraft/mc-mods/bluemap/files/7320250
+      https://www.curseforge.com/minecraft/mc-mods/bluemap/files/7057487
 
   persistence:
     annotations:
