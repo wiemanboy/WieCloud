@@ -30,7 +30,7 @@ spec:
           extraEnv:
             CURSEFORGE_FILES: | {{- .Values.applications.minecraft.bluemap.file | nindent 14 }}
             {{- if .Values.applications.minecraft.mods.curseforge.zip.deploy}}
-            CF_MODPACK_ZIP: /zip/server.zip
+            CF_MODPACK_ZIP: /data/zip/server.zip
             CF_SLUG: "custom"
             {{- end}}
         curseforge:

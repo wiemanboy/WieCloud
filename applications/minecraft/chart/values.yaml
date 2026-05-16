@@ -130,12 +130,12 @@ minecraft:
       set -e
 
       echo "Downloading ZIP from: $ZIP_URL"
-      curl -L "$ZIP_URL" -o /zip/server.zip
-      echo "Download complete: /zip/server.zip"
+      curl -L "$ZIP_URL" -o /data/zip/server.zip
+      echo "Download complete: /data/zip/server.zip"
 
     volumeMounts:
     - name: datadir
-      mountPath: /zip
+      mountPath: /data/zip
 
 curseforge:
   zip: ""
