@@ -135,7 +135,7 @@ minecraft:
 
     volumeMounts:
     - name: datadir
-      mountPath: /data/zip
+      mountPath: /data
 
 curseforge:
   zip: ""
