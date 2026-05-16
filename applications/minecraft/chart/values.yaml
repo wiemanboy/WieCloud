@@ -63,7 +63,7 @@ minecraft:
   mcbackup:
     enabled: true
     pauseIfNoPlayers: true
-1
+
     backupInterval: 4h
     pruneBackupsDays: 2
 
