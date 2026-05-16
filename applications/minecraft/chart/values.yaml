@@ -134,7 +134,7 @@ minecraft:
       echo "Download complete: /zip/server.zip"
 
     volumeMounts:
-    - name: minecraft-datadir
+    - name: datadir
       mountPath: /zip
 
 curseforge:
