@@ -50,7 +50,7 @@ targetRepository:
 applications:
   minecraft:
     deploy: true
-    version: 1.0.1-add-vienna-to-whitelist-736fe17
+    version: 1.0.1
     restores:
     - name: minecraft-local-restore
       enabled: false
