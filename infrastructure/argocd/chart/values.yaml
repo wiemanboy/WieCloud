@@ -9,6 +9,7 @@ argo-cd:
   configs:
     params:
       server.insecure: true
+      controller.diff.server.side: true
     cm:
       admin.enabled: "false"
       url: https://argo.example.com
@@ -22,8 +23,8 @@ argo-cd:
     httproute:
       enabled: true
       parentRefs:
-      - name: example-gateway
-        sectionName: web-example
-        namespace: example
+        - name: example-gateway
+          sectionName: web-example
+          namespace: example
       hostnames:
-      - argo.example.com
+        - argo.example.com
