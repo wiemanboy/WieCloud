@@ -14,34 +14,34 @@ environment:
     endpoint: https://keycloak.wieman.cloud/realms/wiecloud
 
 backups:
-- name: local
-  s3:
-    endpoint: https://k8up.s3.wieman.cloud
-    secret:
-      name: backup-s3-secret
-      accessKey: accessKey
-      secretKey: secretKey
-  repo:
-    secret:
-      name: repo-password-secret
-      key: password
-  default:
-    schedule:
-      backup: "0 12 * * *"
-      check: "30 12 * * *"
-      prune: "0 13 * * *"
-    retention:
-      keepLast: 5
-      keepDaily: 14
+  - name: local
+    s3:
+      endpoint: https://k8up.s3.wieman.cloud
+      secret:
+        name: backup-s3-secret
+        accessKey: accessKey
+        secretKey: secretKey
+    repo:
+      secret:
+        name: repo-password-secret
+        key: password
+    default:
+      schedule:
+        backup: "0 12 * * *"
+        check: "30 12 * * *"
+        prune: "0 13 * * *"
+      retention:
+        keepLast: 5
+        keepDaily: 14
 
 vpn:
   peers:
-  - pc
-  - laptop
-  - s24ultra
+    - pc
+    - laptop
+    - s24ultra
   dns:
-  - "1.1.1.1"
-  - "8.8.8.8"
+    - "1.1.1.1"
+    - "8.8.8.8"
 
 targetRepository:
   url: https://github.com/wiemanboy/WieCloud.git
@@ -52,12 +52,12 @@ applications:
     deploy: true
     version: 1.0.1
     restores:
-    - name: minecraft-local-restore
-      enabled: false
-      fromBackup: local
-      snapshot: ""
-      claim:
-        name: minecraft-datadir
+      - name: minecraft-local-restore
+        enabled: false
+        fromBackup: local
+        snapshot: ""
+        claim:
+          name: minecraft-datadir
     world:
       name: minecraft-for-the-gurls
       version: 1.20.1
@@ -82,18 +82,18 @@ applications:
     deploy: true
     version: 0.1.2
     restores:
-    - name: nextcloud-local-restore
-      enabled: false
-      fromBackup: local
-      snapshot: ""
-      claim:
-        name: nextcloud-nextcloud
-    - name: postgresql-local-restore
-      enabled: false
-      fromBackup: local
-      snapshot: ""
-      claim:
-        name: data-postgresql-db-0
+      - name: nextcloud-local-restore
+        enabled: false
+        fromBackup: local
+        snapshot: ""
+        claim:
+          name: nextcloud-nextcloud
+      - name: postgresql-local-restore
+        enabled: false
+        fromBackup: local
+        snapshot: ""
+        claim:
+          name: data-postgresql-db-0
 
   website:
     deploy: true
@@ -113,38 +113,42 @@ infrastructure:
     certificate:
       email: wiemanboy@gmail.com
       hostnames:
-      - "wieman.cloud"
-      - "*.wieman.cloud"
-      - "*.s3.wieman.cloud"
-      - "wiemanboy.com"
-      - "*.wiemanboy.com"
-      - "jarnowieman.com"
-      - "*.jarnowieman.com"
-      - "jarnowieman.nl"
-      - "*.jarnowieman.nl"
-      - "carnaval.lol"
-      - "*.carnaval.lol"
+        - "wieman.cloud"
+        - "*.wieman.cloud"
+        - "*.s3.wieman.cloud"
+        - "wiemanboy.com"
+        - "*.wiemanboy.com"
+        - "jarnowieman.com"
+        - "*.jarnowieman.com"
+        - "jarnowieman.nl"
+        - "*.jarnowieman.nl"
+        - "carnaval.lol"
+        - "*.carnaval.lol"
 
   externaldns:
     deploy: true
     version: 0.0.7
 
+  externalsecrets:
+    deploy: true
+    version: 0.0.0
+
   harbor:
     deploy: true
     version: 1.2.0
     restores:
-    - name: harbor-registry-local-restore
-      enabled: false
-      fromBackup: local
-      snapshot: ""
-      claim:
-        name: harbor-registry
-    - name: harbor-database-local-restore
-      enabled: false
-      fromBackup: local
-      snapshot: ""
-      claim:
-        name: database-data-harbor-database-0
+      - name: harbor-registry-local-restore
+        enabled: false
+        fromBackup: local
+        snapshot: ""
+        claim:
+          name: harbor-registry
+      - name: harbor-database-local-restore
+        enabled: false
+        fromBackup: local
+        snapshot: ""
+        claim:
+          name: database-data-harbor-database-0
 
   k8up:
     deploy: true
@@ -154,12 +158,12 @@ infrastructure:
     deploy: true
     version: 1.1.1
     restores:
-    - name: postgresql-local-restore
-      enabled: false
-      fromBackup: local
-      snapshot: ""
-      claim:
-        name: data-postgresql-db-0
+      - name: postgresql-local-restore
+        enabled: false
+        fromBackup: local
+        snapshot: ""
+        claim:
+          name: data-postgresql-db-0
 
   longhorn:
     deploy: true
