@@ -131,7 +131,7 @@ infrastructure:
 
   externalsecrets:
     deploy: true
-    version: 0.0.0
+    version: 0.0.0-implement-external-secrets-4194bfb
 
   harbor:
     deploy: true
