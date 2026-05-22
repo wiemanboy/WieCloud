@@ -21,6 +21,10 @@ seaweedfs:
   secret:
     name: s3-config-secret
 
+externalsecrets:
+  k8sSecretStore:
+    name: k8s-secret-store
+
 k8up:
   k8up:
     skipWithoutAnnotation: true
