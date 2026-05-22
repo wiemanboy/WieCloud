@@ -11,7 +11,9 @@ spec:
         secretRef:
           accessKeyIDSecretRef:
             name: aws-secret
+            namespace: {{ .Release.Namespace }}
             key: access-key
           secretAccessKeySecretRef:
             name: aws-secret
+            namespace: {{ .Release.Namespace }}
             key: secret-key

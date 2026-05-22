@@ -17,4 +17,4 @@ spec:
         key: aws
   dataFrom:
   - extract:
-      key: cloudflare-api-token
+      key: {{ $name | quote }}
