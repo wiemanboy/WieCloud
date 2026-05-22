@@ -1,7 +1,7 @@
 apiVersion: external-secrets.io/v1
-kind: SecretStore
+kind: ClusterSecretStore
 metadata:
-  name: aws-secretsmanager
+  name: aws
 spec:
   provider:
     aws:
@@ -11,7 +11,7 @@ spec:
         secretRef:
           accessKeyIDSecretRef:
             name: aws-secret
-            key: accessKey
+            key: access-key
           secretAccessKeySecretRef:
             name: aws-secret
-            key: secretKey
+            key: secret-key
