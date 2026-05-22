@@ -105,7 +105,7 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.3.1-implement-external-secrets-dd063fb
+    version: 0.3.1-implement-external-secrets-8791f26
 
   certmanager:
     deploy: true
@@ -131,7 +131,7 @@ infrastructure:
 
   externalsecrets:
     deploy: true
-    version: 0.0.0-implement-external-secrets-dd063fb
+    version: 0.0.0-implement-external-secrets-8791f26
 
   harbor:
     deploy: true
