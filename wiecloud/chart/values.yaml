@@ -105,7 +105,7 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.3.1-implement-external-secrets-bd4f7b9
+    version: 0.3.1-implement-external-secrets-676e2bb
 
   certmanager:
     deploy: true
@@ -131,7 +131,7 @@ infrastructure:
 
   externalsecrets:
     deploy: true
-    version: 0.0.0-implement-external-secrets-bd4f7b9
+    version: 0.0.0-implement-external-secrets-676e2bb
 
   harbor:
     deploy: true
@@ -152,7 +152,7 @@ infrastructure:
 
   k8up:
     deploy: true
-    version: 1.0.0-implement-external-secrets-bd4f7b9
+    version: 1.0.0-implement-external-secrets-676e2bb
 
   keycloak:
     deploy: true
