@@ -14,7 +14,4 @@ spec:
   data:
     - secretKey: {{ $key | quote }}
       remoteRef:
-        key: aws
-  dataFrom:
-  - extract:
-      key: {{ $name | quote }}
+        key: {{ $name | quote }}
