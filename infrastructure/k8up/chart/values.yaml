@@ -23,7 +23,7 @@ seaweedfs:
 
 externalsecrets:
   k8sSecretStore:
-    name: k8s-secret-store
+    name: local-backup-s3-secret-store
 
 k8up:
   k8up:
