@@ -20,7 +20,7 @@ spec:
         name: wireguard
         env:
         - name:  SERVERURL
-          value: wireguard.{{ .Values.environment.hostname }}
+          value: wireguard.{{ .Values.network.hostname }}
         - name: PEERS
           value: {{ .Values.vpn.peers | join "," | quote }}
         - name: PEERDNS

@@ -24,6 +24,7 @@ spec:
           gateway:
             annotations:
               external-dns.alpha.kubernetes.io/target: {{ $.Values.network.hostname }}
+
   destination:
     namespace: gateway
     server: https://kubernetes.default.svc
@@ -34,5 +35,6 @@ spec:
       selfHeal: true
     syncOptions:
     - CreateNamespace=true
+    - ServerSideApply=true
 {{- end -}}
 {{- end -}}

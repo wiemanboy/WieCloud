@@ -59,15 +59,6 @@ backups:
         keepLast: 5
         keepDaily: 14
 
-vpn:
-  peers:
-    - pc
-    - laptop
-    - s24ultra
-  dns:
-    - "1.1.1.1"
-    - "8.8.8.8"
-
 targetRepository:
   url: https://github.com/wiemanboy/WieCloud.git
   branch: master
@@ -213,6 +204,14 @@ infrastructure:
   wireguard:
     deploy: true
     version: 0.0.0
+    vpn:
+      peers:
+        - pc
+        - laptop
+        - s24ultra
+      dns:
+        - "1.1.1.1"
+        - "8.8.8.8"
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/infrastructure
