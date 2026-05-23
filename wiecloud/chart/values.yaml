@@ -15,6 +15,8 @@ environment:
 
 network:
   hostname: wieman.cloud
+  ipPool:
+    - 192.168.178.201 - 192.168.178.210
   gateway:
     name: traefik-gateway
     listener: websecure

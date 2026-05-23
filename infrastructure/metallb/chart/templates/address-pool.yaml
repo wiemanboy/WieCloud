@@ -3,8 +3,7 @@ kind: IPAddressPool
 metadata:
   name: default-pool
 spec:
-  addresses:
-  - 192.168.178.201 - 192.168.178.210
+  addresses: {{ toYaml .Values.network.ipPool | nindent 4}}
 ---
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
