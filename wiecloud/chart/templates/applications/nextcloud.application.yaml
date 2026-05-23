@@ -1,4 +1,5 @@
-{{- if .Values.applications.nextcloud.deploy -}}
+{{- with .Values.applications.nextcloud -}}
+{{- if .deploy -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -7,17 +8,17 @@ metadata:
 spec:
   source:
     chart: nextcloud
-    repoURL: {{ .Values.applications.repository }}
-    targetRevision: {{ .Values.applications.nextcloud.version }}
+    repoURL: {{ $.Values.applications.repository }}
+    targetRevision: {{ $.version }}
     helm:
-      values: |
-        network: {{ toYaml .Values.network | nindent 10 }}
-        backups: {{ toYaml .Values.backups | nindent 10 }}
-        restores: {{ toYaml .Values.applications.nextcloud.restores | nindent 10 }}
+      valuesObject:
+        network: {{ toYaml $.Values.network | nindent 10 }}
+        backups: {{ toYaml $.Values.backups | nindent 10 }}
+        restores: {{ toYaml .restores | nindent 10 }}
 
         nextcloud:
           nextcloud:
-            host: next.{{ .Values.environment.hostname }}
+            host: next.{{ $.Values.network.hostname }}
 
   destination:
     namespace: nextcloud
@@ -30,4 +31,5 @@ spec:
     syncOptions:
     - CreateNamespace=true
     - ServerSideApply=true
-{{- end }}
+{{- end -}}
+{{- end -}}
