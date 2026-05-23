@@ -1,31 +1,18 @@
-environment: 
-  hostname: example.com
-  gateway:
-    name: example-gateway
-    listener: web-example
-    namespace: example
-    authentication:
-      enabled: true
-      basicAuth:
-        name: example-auth
-        secret:
-          name: example-server-auth-secret
-
 traefik:
   service:
     externalIps:
-      - 85.148.81.86
-    loadbalancerIp: 192.168.178.201
+      - 0.0.0.0
+    loadbalancerIp: 0.0.0.0
     annotations:
-      external-dns.alpha.kubernetes.io/hostname: wieman.cloud
-      external-dns.alpha.kubernetes.io/target: 85.148.81.86
+      external-dns.alpha.kubernetes.io/hostname: example.com
+      external-dns.alpha.kubernetes.io/target: 0.0.0.0
   providers:
     kubernetesGateway:
       enabled: true
       experimentalChannel: true
   gateway:
     annotations:
-      external-dns.alpha.kubernetes.io/target: wieman.cloud
+      external-dns.alpha.kubernetes.io/target: example.com
     listeners:
       web:
         port: 80
@@ -34,7 +21,7 @@ traefik:
         port: 443
         protocol: HTTPS
         namespacePolicy:
-          from: All 
+          from: All
         mode: Terminate
         certificateRefs:
           - name: letsencrypt-secret
@@ -43,7 +30,7 @@ traefik:
         port: 25565
         protocol: TCP
         namespacePolicy:
-          from: All 
+          from: All
 
   ports:
     web:
