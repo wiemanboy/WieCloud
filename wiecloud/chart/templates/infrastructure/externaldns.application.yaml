@@ -1,4 +1,5 @@
-{{- if .Values.infrastructure.externaldns.deploy -}}
+{{- with .Values.infrastructure.externaldns -}}
+{{- if .deploy -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -7,11 +8,8 @@ metadata:
 spec:
   source:
     chart: externaldns
-    repoURL: {{ .Values.infrastructure.repository }}
-    targetRevision: {{ .Values.infrastructure.externaldns.version }}
-    helm:
-      values: |
-        environment: {{ toYaml .Values.environment | nindent 10 }}
+    repoURL: {{ $.Values.infrastructure.repository }}
+    targetRevision: {{ .version }}
   destination:
     namespace: gateway
     server: https://kubernetes.default.svc
@@ -22,4 +20,6 @@ spec:
       selfHeal: true
     syncOptions:
     - CreateNamespace=true
-{{- end }}
+    - ServerSideApply=true
+{{- end -}}
+{{- end -}}
