@@ -226,3 +226,9 @@ images:
       registry: harbor.wieman.cloud
       repository: products/tofudeployer
       version: 0.0.1
+
+  postgres:
+    image:
+      registry: docker.io
+      repository: library/postgres
+      version: 18.4
