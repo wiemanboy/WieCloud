@@ -5,35 +5,6 @@ environment:
     listener: web-example
     namespace: example
 
-backups:
-- name: example
-  s3:
-    endpoint: https://k8up.s3.example.com
-    secret:
-      name: backup-s3-secret
-      accessKey: accessKey
-      secretKey: secretKey
-  repo:
-    secret:
-      name: repo-password-secret
-      key: password
-  default:
-    schedule:
-      backup: "*/2 * * * *"
-      check: "0 1 * * 1"
-      prune: "0 1 * * 0"
-    retention:
-      keepLast: 5
-      keepDaily: 14
-
-restores:
-- name: example
-  claim:
-    name: data-postgresql-db-0
-  enabled: true
-  fromBackup: example
-  snapshot: snapshot
-
 keycloak:
   db:
     vendor: postgres
