@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: app-config
 data:
-  zip: {{ .Values.curseforge.zip }}
+  zip: {{ .Values.minecraft.minecraftServer.autoCurseForge.zipUrl }}

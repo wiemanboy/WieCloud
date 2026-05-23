@@ -1,15 +1,9 @@
-environment:
+network:
   hostname: example.com
   gateway:
     name: example-gateway
     listener: web-example
     namespace: example
-
-rconcli:
-  image:
-    registry: example.com
-    repository: tools/rconcli
-    version: 0.0.0
 
 minecraft:
   image:
@@ -40,6 +34,7 @@ minecraft:
         secretKey: api-token
       # Link to modpack in general or a specific file
       pageUrl: ""
+      zipUrl: ""
 
       # List of project slugs or IDs to be excluded from modpack, useful if mod is incorrectly marked as server side
       excludeMods: []
@@ -93,60 +88,64 @@ minecraft:
       cpu: 2
 
   extraVolumes:
-  - volumeMounts:
-    - name: whitelist
-      mountPath: /data/whitelist.json
-      subPath: whitelist.json
-      readOnly: true
-    - name: bluemap-core-config
-      mountPath: /data/config/bluemap/core.conf
-      subPath: core.conf
-      readOnly: true
+    - volumeMounts:
+        - name: whitelist
+          mountPath: /data/whitelist.json
+          subPath: whitelist.json
+          readOnly: true
+        - name: bluemap-core-config
+          mountPath: /data/config/bluemap/core.conf
+          subPath: core.conf
+          readOnly: true
 
-    volumes:
-    - name: whitelist
-      configMap:
-        name: whitelist
-        items:
-        - key: whitelist.json
-          path: whitelist.json
-    - name: bluemap-core-config
-      configMap:
-        name: bluemap-core-config
-        items:
-        - key: core.conf
-          path: core.conf
+      volumes:
+        - name: whitelist
+          configMap:
+            name: whitelist
+            items:
+              - key: whitelist.json
+                path: whitelist.json
+        - name: bluemap-core-config
+          configMap:
+            name: bluemap-core-config
+            items:
+              - key: core.conf
+                path: core.conf
 
   initContainers:
-  - name: download-zip
-    image: curlimages/curl:8.20.0
-    env:
-    - name: ZIP_URL
-      valueFrom:
-        configMapKeyRef:
-          name: app-config
-          key: zip
-    command: [ "/bin/sh", "-c" ]
-    args:
-    - |
-      set -e
+    - name: download-zip
+      image: curlimages/curl:8.20.0
+      env:
+        - name: ZIP_URL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: zip
+      command: [ "/bin/sh", "-c" ]
+      args:
+        - |
+          set -e
 
-      mkdir -p /data/zip
+          mkdir -p /data/zip
 
-      if [ -z "$ZIP_URL" ]; then
-        echo "No ZIP URL provided, skipping download."
-        exit 0
-      fi
+          if [ -z "$ZIP_URL" ]; then
+            echo "No ZIP URL provided, skipping download."
+            exit 0
+          fi
 
-      echo "Downloading ZIP from: $ZIP_URL"
-      curl -L "$ZIP_URL" -o /data/zip/server.zip
+          echo "Downloading ZIP from: $ZIP_URL"
+          curl -L "$ZIP_URL" -o /data/zip/server.zip
 
-      echo "Download complete:"
-      ls -lah /data/zip
+          echo "Download complete:"
+          ls -lah /data/zip
 
-    volumeMounts:
-    - name: datadir
-      mountPath: /data
+      volumeMounts:
+        - name: datadir
+          mountPath: /data
 
-curseforge:
-  zip: ""
+images:
+  rconcli:
+    image:
+      registry: example.com
+      repository: tools/rconcli
+      version: 0.0.0

@@ -20,8 +20,8 @@ network:
     listener: websecure
     namespace: gateway
 
-authentication:
-  basicAuth:
+auth:
+  basic:
     name: basic-auth
     secret:
       name: server-auth-secret
