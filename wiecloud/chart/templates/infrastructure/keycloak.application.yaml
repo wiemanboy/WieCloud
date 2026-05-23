@@ -16,7 +16,7 @@ spec:
         restores: {{ toYaml .Values.infrastructure.keycloak.restores | nindent 10 }}
   destination:
     namespace: keycloak
-    server: {{ .Values.infrastructure.server }}
+    server: https://kubernetes.default.svc
   project: infrastructure
   syncPolicy:
     automated:

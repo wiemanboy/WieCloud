@@ -19,7 +19,7 @@ spec:
 
   destination:
     namespace: k8up
-    server: {{ .Values.infrastructure.server }}
+    server: https://kubernetes.default.svc
   project: infrastructure
   ignoreDifferences:
     - group: ""

@@ -13,6 +13,22 @@ environment:
     provider: Keycloak
     endpoint: https://keycloak.wieman.cloud/realms/wiecloud
 
+network:
+  hostname: wieman.cloud
+  gateway:
+    name: traefik-gateway
+    listener: websecure
+    namespace: gateway
+
+authentication:
+  basicAuth:
+    name: basic-auth
+    secret:
+      name: server-auth-secret
+  oidc:
+    provider: Keycloak
+    endpoint: https://keycloak.wieman.cloud/realms/wiecloud
+
 backups:
   - name: local
     s3:

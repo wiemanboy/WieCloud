@@ -14,7 +14,7 @@ spec:
         environment: {{ toYaml .Values.environment | nindent 10 }}
   destination:
     namespace: metallb-system
-    server: {{ .Values.infrastructure.server }}
+    server: https://kubernetes.default.svc
   project: infrastructure
   syncPolicy:
     automated:

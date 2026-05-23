@@ -11,16 +11,17 @@ spec:
     targetRevision: {{ .Values.applications.nextcloud.version }}
     helm:
       values: |
-        environment: {{ toYaml .Values.environment | nindent 10 }}
+        network: {{ toYaml .Values.network | nindent 10 }}
         backups: {{ toYaml .Values.backups | nindent 10 }}
         restores: {{ toYaml .Values.applications.nextcloud.restores | nindent 10 }}
+
         nextcloud:
           nextcloud:
             host: next.{{ .Values.environment.hostname }}
 
   destination:
     namespace: nextcloud
-    server: {{ .Values.applications.server }}
+    server: https://kubernetes.default.svc
   project: applications
   syncPolicy:
     automated:
