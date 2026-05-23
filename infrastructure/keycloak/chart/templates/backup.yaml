@@ -41,7 +41,7 @@ kind: ExternalSecret
 metadata:
   name: {{ $backup.s3.secret.name }}
 spec:
-  secretStoreRef: {{ $backup.s3.secret.storeRef | nindent 4 }}
+  secretStoreRef: {{ $backup.s3.secret.storeRef | toYaml | nindent 4 }}
   target:
     name: {{ $backup.s3.secret.name }}
   data:
@@ -60,7 +60,7 @@ kind: ExternalSecret
 metadata:
   name: {{ $backup.repo.secret.name }}
 spec:
-  secretStoreRef: {{ $backup.repo.secret.storeRef | nindent 4 }}
+  secretStoreRef: {{ $backup.repo.secret.storeRef | toYaml | nindent 4 }}
   target:
     name: {{ $backup.repo.secret.name }}
   data:
