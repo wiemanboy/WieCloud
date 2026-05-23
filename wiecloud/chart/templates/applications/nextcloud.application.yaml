@@ -9,7 +9,7 @@ spec:
   source:
     chart: nextcloud
     repoURL: {{ $.Values.applications.repository }}
-    targetRevision: {{ $.version }}
+    targetRevision: {{ .version }}
     helm:
       valuesObject:
         network: {{ toYaml $.Values.network | nindent 10 }}
