@@ -1,0 +1,15 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: curseforge-api-token
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: aws
+  target:
+    name: curseforge-api-token
+  data:
+    - secretKey: api-token
+      remoteRef:
+        key: curseforge-api-token
+        property: api-token
