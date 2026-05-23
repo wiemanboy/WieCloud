@@ -1,13 +1,3 @@
-environment:
-  hostname: example.com
-  gateway:
-    name: example-gateway
-    listener: web-example
-    namespace: example
-  oidc:
-    provider: Example
-    endpoint: https://example.com
-
 kube-prometheus-stack:
   prometheus-node-exporter:
     namespaceOverride: "node-system"

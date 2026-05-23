@@ -11,7 +11,7 @@ spec:
     repoURL: {{ $.Values.infrastructure.repository }}
     targetRevision: {{ .version }}
     helm:
-      values: |
+      valuesObject:
         network: {{ toYaml $.Values.network | nindent 10 }}
   destination:
     namespace: metallb-system

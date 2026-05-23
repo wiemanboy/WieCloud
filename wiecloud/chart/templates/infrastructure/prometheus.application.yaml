@@ -1,4 +1,5 @@
-{{- if .Values.infrastructure.prometheus.deploy -}}
+{{- with .Values.infrastructure.prometheus -}}
+{{- if .deploy -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -7,29 +8,29 @@ metadata:
 spec:
   source:
     chart: prometheus
-    repoURL: {{ .Values.infrastructure.repository }}
-    targetRevision: {{ .Values.infrastructure.prometheus.version }}
+    repoURL: {{ $.Values.infrastructure.repository }}
+    targetRevision: {{ .version }}
     helm:
-      values: |
-        environment: {{ toYaml .Values.environment | nindent 10 }}
+      valuesObject:
+        network: {{ toYaml $.Values.network | nindent 10 }}
         kube-prometheus-stack:
           grafana:
             grafana.ini:
               server:
-                root_url: https://grafana.{{ .Values.environment.hostname }}
+                root_url: https://grafana.{{ $.Values.network.hostname }}
               auth.generic_oauth:
-                name: {{ .Values.environment.oidc.provider }}
-                auth_url: {{ .Values.environment.oidc.endpoint }}/protocol/openid-connect/auth
-                token_url: {{ .Values.environment.oidc.endpoint }}/protocol/openid-connect/token
-                api_url: {{ .Values.environment.oidc.endpoint }}/protocol/openid-connect/userinfo
+                name: {{ $.Values.auth.oidc.provider }}
+                auth_url: {{ $.Values.auth.oidc.endpoint }}/protocol/openid-connect/auth
+                token_url: {{ $.Values.auth.oidc.endpoint }}/protocol/openid-connect/token
+                api_url: {{ $.Values.auth.oidc.endpoint }}/protocol/openid-connect/userinfo
             route:
               main:
                 parentRefs:
-                - name: {{ .Values.environment.gateway.name }}
-                  sectionName: {{ .Values.environment.gateway.listener }}
-                  namespace: {{ .Values.environment.gateway.namespace }}
+                - name: {{ $.Values.network.gateway.name }}
+                  sectionName: {{ $.Values.network.gateway.listener }}
+                  namespace: {{ $.Values.network.gateway.namespace }}
                 hostnames:
-                - grafana.{{ .Values.environment.hostname }}
+                - grafana.{{ $.Values.network.hostname }}
   destination:
     namespace: prometheus
     server: https://kubernetes.default.svc
@@ -41,4 +42,5 @@ spec:
     syncOptions:
     - CreateNamespace=true
     - ServerSideApply=true
-{{- end }}
+{{- end -}}
+{{- end -}}
