@@ -34,9 +34,9 @@ metadata:
   name: {{ .Values.seaweedfs.name }}
 spec:
   parentRefs:
-    - name: {{ .Values.environment.gateway.name }}
-      sectionName: {{ .Values.environment.gateway.listener }}
-      namespace: {{ .Values.environment.gateway.namespace }}
+    - name: {{ .Values.network.gateway.name }}
+      sectionName: {{ .Values.network.gateway.listener }}
+      namespace: {{ .Values.network.gateway.namespace }}
 
   hostnames:
     - {{ .Values.seaweedfs.endpoint }}

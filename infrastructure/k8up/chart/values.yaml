@@ -1,4 +1,14 @@
-environment:
+seaweedfs:
+  name: backup-s3
+  endpoint: k8up.s3.example.com
+  secret:
+    name: local-backup-s3-config
+
+k8up:
+  k8up:
+    skipWithoutAnnotation: true
+
+network:
   hostname: example.com
   gateway:
     name: example-gateway
@@ -9,18 +19,9 @@ targetRepository:
   url: https://repo.git
   branch: example
 
-tofudeployer:
-  image:
-    registry: example.com
-    repository: products/tofudeployer
-    version: 0.0.0
-
-seaweedfs:
-  name: backup-s3
-  endpoint: k8up.s3.example.com
-  secret:
-    name: local-backup-s3-config
-
-k8up:
-  k8up:
-    skipWithoutAnnotation: true
+images:
+  tofudeployer:
+    image:
+      registry: example.com
+      repository: products/tofudeployer
+      version: 0.0.0

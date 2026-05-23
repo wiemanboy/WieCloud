@@ -1,4 +1,5 @@
-{{- if .Values.infrastructure.k8up.deploy -}}
+{{- with .Values.infrastructure.k8up -}}
+{{- if .deploy -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -7,15 +8,16 @@ metadata:
 spec:
   source:
     chart: k8up
-    repoURL: {{ .Values.infrastructure.repository }}
-    targetRevision: {{ .Values.infrastructure.k8up.version }}
+    repoURL: {{ $.Values.infrastructure.repository }}
+    targetRevision: {{ .version }}
     helm:
-      values: |
-        environment: {{ toYaml .Values.environment | nindent 10 }}
-        targetRepository: {{ toYaml .Values.targetRepository | nindent 10 }}
-        tofudeployer: {{ toYaml .Values.images.tofudeployer | nindent 10 }}
+      valuesObject:
+        network: {{ toYaml $.Values.network | nindent 10 }}
+        targetRepository: {{ toYaml $.Values.targetRepository | nindent 10 }}
+        images: {{ toYaml $.Values.images | nindent 10 }}
+
         seaweedfs:
-          endpoint: k8up.s3.{{ .Values.environment.hostname }}
+          endpoint: k8up.s3.{{ $.Values.network.hostname }}
 
   destination:
     namespace: k8up
@@ -34,4 +36,5 @@ spec:
     syncOptions:
     - CreateNamespace=true
     - ServerSideApply=true
-{{- end }}
+{{- end -}}
+{{- end -}}

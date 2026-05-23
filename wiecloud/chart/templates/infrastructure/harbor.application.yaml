@@ -1,4 +1,4 @@
-{{- with .Values.infrastructure.externalsecrets -}}
+{{- with .Values.infrastructure.harbor -}}
 {{- if .deploy -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -17,7 +17,7 @@ spec:
         restores: {{ toYaml .restores | nindent 10 }}
 
         harbor:
-          externalURL: https://harbor.{{ .Values.network.hostname }}
+          externalURL: https://harbor.{{ $.Values.network.hostname }}
           core:
             extraEnvVars:
             - name: OIDC_CLIENT_SECRET
@@ -30,11 +30,11 @@ spec:
                 {
                   "auth_mode": "oidc_auth",
                   "primary_auth_mode": "true",
-                  "oidc_name": "{{ .Values.auth.oidc.provider }}",
+                  "oidc_name": "{{ $.Values.auth.oidc.provider }}",
                   "oidc_groups_claim": "groups",
                   "oidc_admin_group": "/infra/harbor/admin",
                   "oidc_client_id": "harbor",
-                  "oidc_endpoint": "{{ .Values.auth.oidc.endpoint }}",
+                  "oidc_endpoint": "{{ $.Values.auth.oidc.endpoint }}",
                   "oidc_client_secret": "$(OIDC_CLIENT_SECRET)",
                   "oidc_scope": "openid,email,profile,offline_access",
                   "oidc_verify_cert": "true",
