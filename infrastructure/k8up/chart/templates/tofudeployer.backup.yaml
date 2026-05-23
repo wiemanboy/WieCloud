@@ -12,3 +12,7 @@ spec:
   selector:
     secret:
       name: tfstate-default-state
+  data:
+      match:
+        remoteRef:
+          remoteKey: k8up-tfstate-default-state-backup
