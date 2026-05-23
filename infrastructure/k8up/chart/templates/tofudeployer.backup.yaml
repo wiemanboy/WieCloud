@@ -1,3 +1,4 @@
+{{- if eq .Values.externalsecrets.backup "Push" }}
 apiVersion: external-secrets.io/v1alpha1
 kind: PushSecret
 metadata:
@@ -16,3 +17,22 @@ spec:
     - match:
         remoteRef:
           remoteKey: k8up-tfstate-default-state-backup
+{{- end }}
+{{- if eq .Values.externalsecrets.backup "Pull" }}
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: tfstate-default-state-backup
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: aws
+  target:
+    name: tfstate-default-state
+  data:
+    - secretKey: k8up-tfstate-default-state-backup
+      remoteRef:
+        key: k8up-tfstate-default-state-backup
+        property: tfstate
+
+{{- end }}

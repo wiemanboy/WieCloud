@@ -22,6 +22,7 @@ seaweedfs:
     name: s3-config-secret
 
 externalsecrets:
+  backup: Pull
   k8sSecretStore:
     name: local-backup-s3-secret-store
 
