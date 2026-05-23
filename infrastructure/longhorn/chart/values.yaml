@@ -1,12 +1,12 @@
-environment: 
+network:
   hostname: example.com
   gateway:
     name: example-gateway
     listener: web-example
     namespace: example
-    authentication:
-      enabled: true
-      basicAuth:
-        name: example-auth
-        secret:
-          name: example-server-auth-secret
+
+auth:
+  basic:
+    name: example-auth
+    secret:
+      name: example-auth-secret

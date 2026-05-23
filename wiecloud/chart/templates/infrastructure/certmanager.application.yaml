@@ -14,6 +14,7 @@ spec:
       valuesObject:
         network: {{ toYaml $.Values.network | nindent 10 }}
         certificate: {{ toYaml .certificate | nindent 10 }}
+        
   destination:
     namespace: gateway
     server: https://kubernetes.default.svc

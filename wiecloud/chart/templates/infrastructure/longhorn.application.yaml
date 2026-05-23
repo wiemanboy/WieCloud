@@ -1,4 +1,5 @@
-{{- if .Values.infrastructure.longhorn.deploy -}}
+{{- with .Values.infrastructure.longhorn -}}
+{{- if .deploy -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -7,11 +8,13 @@ metadata:
 spec:
   source:
     chart: longhorn
-    repoURL: {{ .Values.infrastructure.repository }}
-    targetRevision: {{ .Values.infrastructure.longhorn.version }}
+    repoURL: {{ $.Values.infrastructure.repository }}
+    targetRevision: {{ .version }}
     helm:
-      values: |
-        environment: {{ toYaml .Values.environment | nindent 10 }}
+      valuesObject:
+        network: {{ toYaml $.Values.network | nindent 10 }}
+        auth: {{ toYaml $.Values.auth | nindent 10 }}
+
   destination:
     namespace: longhorn-system
     server: https://kubernetes.default.svc
@@ -22,4 +25,5 @@ spec:
       selfHeal: true
     syncOptions:
     - CreateNamespace=true
-{{- end }}
+{{- end -}}
+{{- end -}}

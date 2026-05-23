@@ -11,10 +11,11 @@ spec:
     repoURL: {{ $.Values.infrastructure.repository }}
     targetRevision: {{ .version }}
     helm:
-      values: |
+      valuesObject:
         network: {{ toYaml $.Values.network | nindent 10 }}
         backups: {{ toYaml $.Values.backups | nindent 10 }}
         restores: {{ toYaml .restores | nindent 10 }}
+
   destination:
     namespace: keycloak
     server: https://kubernetes.default.svc

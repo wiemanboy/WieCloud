@@ -31,6 +31,7 @@ spec:
                 namespace: {{ $.Values.network.gateway.namespace }}
               hostnames:
               - argo.{{ $.Values.network.hostname }}
+
   destination:
     namespace: argocd
     server: https://kubernetes.default.svc
