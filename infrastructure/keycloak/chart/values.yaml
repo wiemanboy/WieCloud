@@ -39,8 +39,8 @@ keycloak:
     vendor: postgres
     host: postgres-db
     username:
-      secret: keycloak-db-secret
+      secret: keycloak-db-credentials
       key: username
     password:
-      secret: keycloak-db-secret
+      secret: keycloak-db-credentials
       key: password
