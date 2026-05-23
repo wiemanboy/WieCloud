@@ -30,7 +30,7 @@ spec:
   target:
     name: tfstate-default-state
   data:
-    - secretKey: k8up-tfstate-default-state-backup
+    - secretKey: tfstate
       remoteRef:
         key: k8up-tfstate-default-state-backup
         property: tfstate
