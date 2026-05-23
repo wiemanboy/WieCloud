@@ -56,7 +56,7 @@ targetRepository:
 applications:
   minecraft:
     deploy: true
-    version: 1.1.0-implement-external-secrets-fa7db32
+    version: 1.1.0-implement-external-secrets-f3c2aac
     restores:
       - name: minecraft-local-restore
         enabled: false
@@ -86,7 +86,7 @@ applications:
 
   nextcloud:
     deploy: true
-    version: 0.2.0-implement-external-secrets-fa7db32
+    version: 0.2.0-implement-external-secrets-f3c2aac
     restores:
       - name: nextcloud-local-restore
         enabled: false
@@ -111,7 +111,7 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.3.1-implement-external-secrets-fa7db32
+    version: 0.3.1-implement-external-secrets-f3c2aac
 
   certmanager:
     deploy: true
@@ -133,15 +133,15 @@ infrastructure:
 
   externaldns:
     deploy: true
-    version: 0.1.0-implement-external-secrets-fa7db32
+    version: 0.1.0-implement-external-secrets-f3c2aac
 
   externalsecrets:
     deploy: true
-    version: 0.0.0-implement-external-secrets-fa7db32
+    version: 0.0.0-implement-external-secrets-f3c2aac
 
   harbor:
     deploy: true
-    version: 1.3.0-implement-external-secrets-fa7db32
+    version: 1.3.0-implement-external-secrets-f3c2aac
     restores:
       - name: harbor-registry-local-restore
         enabled: false
@@ -158,11 +158,11 @@ infrastructure:
 
   k8up:
     deploy: true
-    version: 1.0.0-implement-external-secrets-fa7db32
+    version: 1.0.0-implement-external-secrets-f3c2aac
 
   keycloak:
     deploy: true
-    version: 1.2.0-implement-external-secrets-fa7db32
+    version: 1.2.0-implement-external-secrets-f3c2aac
     restores:
       - name: postgresql-local-restore
         enabled: false
