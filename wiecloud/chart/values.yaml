@@ -220,8 +220,8 @@ images:
       repository: library/postgres
       version: 18.4
 
-  wireguard:
+  wireguardserver:
     image:
       registry: docker.io
       repository: linuxserver/wireguard
-      version: 0.0.1-improve-templating-80438ca
+      version: 1.0.20250521

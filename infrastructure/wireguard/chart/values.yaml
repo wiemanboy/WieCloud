@@ -14,7 +14,7 @@ vpn:
     - "0.0.0.1"
 
 images:
-  wireguard:
+  wireguardserver:
     image:
       registry: example.com
       repository: linuxserver/wireguard
