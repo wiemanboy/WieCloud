@@ -16,8 +16,10 @@ spec:
     spec:
       nodeName: talos-worker-0
       containers:
-      - image: linuxserver/wireguard:1.0.20250521
-        name: wireguard
+      - name: wireguard
+        {{ with .Values.images.wireguard.image -}}
+        image: {{ .registry }}/{{ .repository }}:{{ .version }}
+        {{ end -}}
         env:
         - name:  SERVERURL
           value: wireguard.{{ .Values.network.hostname }}

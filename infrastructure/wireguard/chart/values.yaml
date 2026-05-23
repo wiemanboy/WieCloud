@@ -12,3 +12,10 @@ vpn:
   dns:
     - "0.0.0.0"
     - "0.0.0.1"
+
+images:
+  wireguard:
+    image:
+      registry: example.com
+      repository: linuxserver/wireguard
+      version: 0.0.0

@@ -219,3 +219,9 @@ images:
       registry: docker.io
       repository: library/postgres
       version: 18.4
+
+  wireguard:
+    image:
+      registry: docker.io
+      repository: linuxserver/wireguard
+      version: 1.0.20250521
