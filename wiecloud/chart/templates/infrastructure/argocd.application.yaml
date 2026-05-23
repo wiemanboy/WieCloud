@@ -1,4 +1,5 @@
-{{- if .Values.infrastructure.argocd.deploy -}}
+{{- with .Values.applications.argocd -}}
+{{- if .deploy -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -10,15 +11,14 @@ spec:
     repoURL: {{ .Values.infrastructure.repository }}
     targetRevision: {{ .Values.infrastructure.argocd.version }}
     helm:
-      values: |
-        environment: {{ toYaml .Values.environment | nindent 10 }}
+      valuesObject:
         argo-cd:
           configs:
             cm:
-              url: https://argo.{{ .Values.environment.hostname }}
+              url: https://argo.{{ $.Values.network.hostname }}
               oidc.config: |
-                name: {{ .Values.environment.oidc.provider }}
-                issuer: {{ .Values.environment.oidc.endpoint }}
+                name: {{ .Values.auth.oidc.provider }}
+                issuer: {{ .Values.auth.oidc.endpoint }}
                 clientID: argocd
                 clientSecret: $oidc.keycloak.clientSecret
                 refreshTokenThreshold: 2m
@@ -26,11 +26,11 @@ spec:
           server:
             httproute:
               parentRefs:
-              - name: {{ .Values.environment.gateway.name }}
-                sectionName: {{ .Values.environment.gateway.listener }}
-                namespace: {{ .Values.environment.gateway.namespace }}
+              - name: {{ $.Values.network.gateway.name }}
+                sectionName: {{ $.Values.network.gateway.listener }}
+                namespace: {{ $.Values.network.gateway.namespace }}
               hostnames:
-              - argo.{{ .Values.environment.hostname }}
+              - argo.{{ $.Values.network.hostname }}
   destination:
     namespace: argocd
     server: https://kubernetes.default.svc
@@ -42,4 +42,5 @@ spec:
     syncOptions:
     - CreateNamespace=true
     - ServerSideApply=true
-{{- end }}
+{{- end -}}
+{{- end -}}
