@@ -1,4 +1,4 @@
-{{- with .Values.applications.argocd -}}
+{{- with .Values.infrastructure.argocd -}}
 {{- if .deploy -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -8,8 +8,8 @@ metadata:
 spec:
   source:
     chart: argocd
-    repoURL: {{ .Values.infrastructure.repository }}
-    targetRevision: {{ .Values.infrastructure.argocd.version }}
+    repoURL: {{ $.Values.infrastructure.repository }}
+    targetRevision: {{ .version }}
     helm:
       valuesObject:
         argo-cd:
@@ -17,8 +17,8 @@ spec:
             cm:
               url: https://argo.{{ $.Values.network.hostname }}
               oidc.config: |
-                name: {{ .Values.auth.oidc.provider }}
-                issuer: {{ .Values.auth.oidc.endpoint }}
+                name: {{ $.Values.auth.oidc.provider }}
+                issuer: {{ $.Values.auth.oidc.endpoint }}
                 clientID: argocd
                 clientSecret: $oidc.keycloak.clientSecret
                 refreshTokenThreshold: 2m
