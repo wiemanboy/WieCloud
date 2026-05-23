@@ -12,7 +12,6 @@ spec:
     targetRevision: {{ .version }}
     helm:
       valuesObject:
-        network: {{ toYaml $.Values.network | nindent 10 }}
         kube-prometheus-stack:
           grafana:
             grafana.ini:
