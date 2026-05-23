@@ -36,6 +36,39 @@ spec:
       keepLast: {{ $backup.default.retention.keepLast }}
       keepDaily: {{ $backup.default.retention.keepDaily }}
 ---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: {{ $backup.s3.secret.name }}
+spec:
+  secretStoreRef: {{ $backup.s3.secret.storeRef | toYaml | nindent 4 }}
+  target:
+    name: {{ $backup.s3.secret.name }}
+  data:
+  - secretKey: {{ $backup.s3.secret.accessKey }}
+    remoteRef:
+      key: {{ $backup.s3.secret.name }}
+      property: {{ $backup.s3.secret.accessKey }}
+
+  - secretKey: {{ $backup.s3.secret.secretKey }}
+    remoteRef:
+      key: {{ $backup.s3.secret.name }}
+      property: {{ $backup.s3.secret.secretKey }}
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: {{ $backup.repo.secret.name }}
+spec:
+  secretStoreRef: {{ $backup.repo.secret.storeRef | toYaml | nindent 4 }}
+  target:
+    name: {{ $backup.repo.secret.name }}
+  data:
+  - secretKey: {{ $backup.repo.secret.key }}
+    remoteRef:
+      key: {{ $backup.repo.secret.name }}
+      property: {{ $backup.repo.secret.key }}
+---
 {{- range $index, $restore := $.Values.restores }}
 {{- if and ($restore.enabled) (eq $restore.fromBackup $backup.name) }}
 apiVersion: k8up.io/v1

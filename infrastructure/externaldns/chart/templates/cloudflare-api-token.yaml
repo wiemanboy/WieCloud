@@ -1,0 +1,18 @@
+{{- $name := index .Values "external-dns" "env" 0 "valueFrom" "secretKeyRef" "name" -}}
+{{- $key := index .Values "external-dns" "env" 0 "valueFrom" "secretKeyRef" "key" -}}
+
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: {{ $name | quote }}
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: aws
+  target:
+    name: {{ $name | quote }}
+  data:
+    - secretKey: {{ $key | quote }}
+      remoteRef:
+        key: {{ $name | quote }}
+        property: {{ $key | quote }}

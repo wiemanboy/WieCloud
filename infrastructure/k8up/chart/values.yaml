@@ -19,7 +19,7 @@ seaweedfs:
   name: backup-s3
   endpoint: k8up.s3.example.com
   secret:
-    name: s3-config-secret
+    name: local-backup-s3-config
 
 k8up:
   k8up:

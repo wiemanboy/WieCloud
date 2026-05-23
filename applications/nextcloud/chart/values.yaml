@@ -32,7 +32,7 @@ nextcloud:
     host: postgresql-db-service
     existingSecret:
       enabled: true
-      secretName: nextcloud-db-secret
+      secretName: nextcloud-db-credentials
       usernameKey: username
       passwordKey: password
 
