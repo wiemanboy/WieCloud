@@ -4,9 +4,9 @@ metadata:
   name: minecraft
 spec:
   parentRefs:
-    - name: {{ .Values.environment.gateway.name }}
+    - name: {{ .Values.network.gateway.name }}
       sectionName: minecraft
-      namespace: {{ .Values.environment.gateway.namespace }}
+      namespace: {{ .Values.network.gateway.namespace }}
 
   rules:
     - backendRefs:

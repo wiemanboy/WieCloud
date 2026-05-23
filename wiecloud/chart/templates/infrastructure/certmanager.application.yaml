@@ -1,4 +1,5 @@
-{{- if .Values.infrastructure.certmanager.deploy -}}
+{{- with .Values.infrastructure.certmanager -}}
+{{- if .deploy -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -7,15 +8,16 @@ metadata:
 spec:
   source:
     chart: certmanager
-    repoURL: {{ .Values.infrastructure.repository }}
-    targetRevision: {{ .Values.infrastructure.certmanager.version }}
+    repoURL: {{ $.Values.infrastructure.repository }}
+    targetRevision: {{ .version }}
     helm:
-      values: |
-        environment: {{ toYaml .Values.environment | nindent 10 }}
-        certificate: {{ toYaml .Values.infrastructure.certmanager.certificate | nindent 10 }}
+      valuesObject:
+        network: {{ toYaml $.Values.network | nindent 10 }}
+        certificate: {{ toYaml .certificate | nindent 10 }}
+        
   destination:
     namespace: gateway
-    server: {{ .Values.infrastructure.server }}
+    server: https://kubernetes.default.svc
   project: infrastructure
   syncPolicy:
     automated:
@@ -23,4 +25,6 @@ spec:
       selfHeal: true
     syncOptions:
     - CreateNamespace=true
-{{- end }}
+    - ServerSideApply=true
+{{- end -}}
+{{- end -}}

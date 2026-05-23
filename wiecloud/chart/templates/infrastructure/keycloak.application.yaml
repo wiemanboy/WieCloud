@@ -1,4 +1,5 @@
-{{- if .Values.infrastructure.keycloak.deploy -}}
+{{- with .Values.infrastructure.keycloak -}}
+{{- if .deploy -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -7,16 +8,18 @@ metadata:
 spec:
   source:
     chart: keycloak
-    repoURL: {{ .Values.infrastructure.repository }}
-    targetRevision: {{ .Values.infrastructure.keycloak.version }}
+    repoURL: {{ $.Values.infrastructure.repository }}
+    targetRevision: {{ .version }}
     helm:
-      values: |
-        environment: {{ toYaml .Values.environment | nindent 10 }}
-        backups: {{ toYaml .Values.backups | nindent 10 }}
-        restores: {{ toYaml .Values.infrastructure.keycloak.restores | nindent 10 }}
+      valuesObject:
+        network: {{ toYaml $.Values.network | nindent 10 }}
+        images: {{ toYaml $.Values.images | nindent 10 }}
+        backups: {{ toYaml $.Values.backups | nindent 10 }}
+        restores: {{ toYaml .restores | nindent 10 }}
+
   destination:
     namespace: keycloak
-    server: {{ .Values.infrastructure.server }}
+    server: https://kubernetes.default.svc
   project: infrastructure
   syncPolicy:
     automated:
@@ -24,4 +27,6 @@ spec:
       selfHeal: true
     syncOptions:
     - CreateNamespace=true
-{{- end }}
+    - ServerSideApply=true
+{{- end -}}
+{{- end -}}

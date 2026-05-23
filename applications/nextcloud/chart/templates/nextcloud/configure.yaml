@@ -23,10 +23,10 @@ data:
     echo "Configuring OIDC provider"
     client_secret=$(cat /var/run/secrets/nextcloud-client-secret)
     php occ config:app:set --type=string --value=0 user_oidc allow_multiple_user_backends || true
-    php occ user_oidc:provider {{ .Values.environment.oidc.provider }} \
+    php occ user_oidc:provider {{ .Values.auth.oidc.provider }} \
       --clientid="nextcloud" \
       --clientsecret="${client_secret}" \
-      --discoveryuri="{{ .Values.environment.oidc.endpoint }}/.well-known/openid-configuration" \
+      --discoveryuri="{{ .Values.auth.oidc.endpoint }}/.well-known/openid-configuration" \
       --scope="openid email profile groups offline_access" \
       || true
       # --group-whitelist-regex=GROUP-WHITELIST-REGEX -> maybe in the future only allow nextcloud users

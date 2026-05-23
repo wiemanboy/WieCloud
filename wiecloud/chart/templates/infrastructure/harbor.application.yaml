@@ -1,4 +1,5 @@
-{{- if .Values.infrastructure.harbor.deploy -}}
+{{- with .Values.infrastructure.harbor -}}
+{{- if .deploy -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -7,15 +8,16 @@ metadata:
 spec:
   source:
     chart: harbor
-    repoURL: {{ .Values.infrastructure.repository }}
-    targetRevision: {{ .Values.infrastructure.harbor.version }}
+    repoURL: {{ $.Values.infrastructure.repository }}
+    targetRevision: {{ .version }}
     helm:
-      values: |
-        environment: {{ toYaml .Values.environment | nindent 10 }}
-        backups: {{ toYaml .Values.backups | nindent 10 }}
-        restores: {{ toYaml .Values.infrastructure.harbor.restores | nindent 10 }}
+      valuesObject:
+        network: {{ toYaml $.Values.network | nindent 10 }}
+        backups: {{ toYaml $.Values.backups | nindent 10 }}
+        restores: {{ toYaml .restores | nindent 10 }}
+
         harbor:
-          externalURL: https://harbor.{{ .Values.environment.hostname }}
+          externalURL: https://harbor.{{ $.Values.network.hostname }}
           core:
             extraEnvVars:
             - name: OIDC_CLIENT_SECRET
@@ -28,11 +30,11 @@ spec:
                 {
                   "auth_mode": "oidc_auth",
                   "primary_auth_mode": "true",
-                  "oidc_name": "{{ .Values.environment.oidc.provider }}",
+                  "oidc_name": "{{ $.Values.auth.oidc.provider }}",
                   "oidc_groups_claim": "groups",
                   "oidc_admin_group": "/infra/harbor/admin",
                   "oidc_client_id": "harbor",
-                  "oidc_endpoint": "{{ .Values.environment.oidc.endpoint }}",
+                  "oidc_endpoint": "{{ $.Values.auth.oidc.endpoint }}",
                   "oidc_client_secret": "$(OIDC_CLIENT_SECRET)",
                   "oidc_scope": "openid,email,profile,offline_access",
                   "oidc_verify_cert": "true",
@@ -41,7 +43,7 @@ spec:
                 }
   destination:
     namespace: harbor
-    server: {{ .Values.infrastructure.server }}
+    server: https://kubernetes.default.svc
   project: infrastructure
   syncPolicy:
     automated:
@@ -49,4 +51,7 @@ spec:
       selfHeal: true
     syncOptions:
     - CreateNamespace=true
-{{- end }}
+    - ServerSideApply=true
+{{- end -}}
+{{- end -}}
+

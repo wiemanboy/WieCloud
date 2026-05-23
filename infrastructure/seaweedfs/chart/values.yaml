@@ -1,13 +1,3 @@
-environment:
-  hostname: example.com
-  gateway:
-    name: example-gateway
-    listener: web-example
-    namespace: example
-
 seaweedfs-operator:
   webhook:
     enabled: true
-
-seaweedfs:
-  name: seaweed-s3-default

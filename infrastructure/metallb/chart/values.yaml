@@ -1,2 +1,8 @@
-environment: 
+network:
   hostname: example.com
+  ipPool:
+    - 0.0.0.0 - 0.0.0.0
+  gateway:
+    name: example-gateway
+    listener: web-example
+    namespace: example

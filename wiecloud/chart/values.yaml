@@ -1,14 +1,18 @@
-environment:
+network:
   hostname: wieman.cloud
+  externalIp: 85.148.81.86
+  ipPool:
+    - 192.168.178.201 - 192.168.178.210
   gateway:
     name: traefik-gateway
     listener: websecure
     namespace: gateway
-    authentication:
-      basicAuth:
-        name: basic-auth
-        secret:
-          name: server-auth-secret
+
+auth:
+  basic:
+    name: basic-auth
+    secret:
+      name: server-auth-secret
   oidc:
     provider: Keycloak
     endpoint: https://keycloak.wieman.cloud/realms/wiecloud
@@ -40,15 +44,6 @@ backups:
         keepLast: 5
         keepDaily: 14
 
-vpn:
-  peers:
-    - pc
-    - laptop
-    - s24ultra
-  dns:
-    - "1.1.1.1"
-    - "8.8.8.8"
-
 targetRepository:
   url: https://github.com/wiemanboy/WieCloud.git
   branch: master
@@ -56,7 +51,7 @@ targetRepository:
 applications:
   minecraft:
     deploy: true
-    version: 1.1.0
+    version: 1.1.1
     restores:
       - name: minecraft-local-restore
         enabled: false
@@ -86,7 +81,7 @@ applications:
 
   nextcloud:
     deploy: true
-    version: 0.2.0
+    version: 0.2.1
     restores:
       - name: nextcloud-local-restore
         enabled: false
@@ -111,11 +106,11 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.3.1
+    version: 0.3.2
 
   certmanager:
     deploy: true
-    version: 0.2.3
+    version: 0.2.4
     certificate:
       email: wiemanboy@gmail.com
       hostnames:
@@ -133,7 +128,7 @@ infrastructure:
 
   externaldns:
     deploy: true
-    version: 0.1.0
+    version: 0.1.1
 
   externalsecrets:
     deploy: true
@@ -141,7 +136,7 @@ infrastructure:
 
   harbor:
     deploy: true
-    version: 1.3.0
+    version: 1.3.1
     restores:
       - name: harbor-registry-local-restore
         enabled: false
@@ -158,11 +153,11 @@ infrastructure:
 
   k8up:
     deploy: true
-    version: 1.0.0
+    version: 1.0.1
 
   keycloak:
     deploy: true
-    version: 1.2.0
+    version: 1.2.1
     restores:
       - name: postgresql-local-restore
         enabled: false
@@ -173,27 +168,35 @@ infrastructure:
 
   longhorn:
     deploy: true
-    version: 0.0.7
+    version: 0.0.8
 
   metallb:
     deploy: true
-    version: 0.0.9
+    version: 0.0.10
 
   prometheus:
     deploy: true
-    version: 0.0.1
+    version: 0.0.2
 
   traefik:
     deploy: true
-    version: 0.1.6
+    version: 0.2.0
 
   seaweedfs:
     deploy: true
-    version: 0.0.1
+    version: 0.1.0
 
   wireguard:
     deploy: true
-    version: 0.0.0
+    version: 0.0.1
+    vpn:
+      peers:
+        - pc
+        - laptop
+        - s24ultra
+      dns:
+        - "1.1.1.1"
+        - "8.8.8.8"
 
   server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/infrastructure
@@ -210,3 +213,15 @@ images:
       registry: harbor.wieman.cloud
       repository: products/tofudeployer
       version: 0.0.1
+
+  postgres:
+    image:
+      registry: docker.io
+      repository: library/postgres
+      version: 18.4
+
+  wireguardserver:
+    image:
+      registry: docker.io
+      repository: linuxserver/wireguard
+      version: 1.0.20250521

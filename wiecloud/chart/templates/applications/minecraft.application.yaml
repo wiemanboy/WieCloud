@@ -1,4 +1,5 @@
-{{- if .Values.applications.minecraft.deploy -}}
+{{- with .Values.applications.minecraft -}}
+{{- if .deploy -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -7,41 +8,43 @@ metadata:
 spec:
   source:
     chart: minecraft
-    repoURL: {{ .Values.applications.repository }}
-    targetRevision: {{ .Values.applications.minecraft.version }}
+    repoURL: {{ $.Values.applications.repository }}
+    targetRevision: {{ .version }}
     helm:
-      values: |
-        environment: {{ toYaml .Values.environment | nindent 10 }}
-        backups: {{ toYaml .Values.backups | nindent 10 }}
-        restores: {{ toYaml .Values.applications.minecraft.restores | nindent 10 }}
-        rconcli: {{ toYaml .Values.images.rconcli | nindent 10 }}
+      valuesObject:
+        network: {{ toYaml $.Values.network | nindent 10 }}
+        images: {{ toYaml $.Values.images | nindent 10 }}
+        backups: {{ toYaml $.Values.backups | nindent 10 }}
+        restores: {{ toYaml .restores | nindent 10 }}
+
         minecraft:
           image:
-            tag: {{ .Values.applications.minecraft.server.version }}
+            tag: {{ .server.version }}
           minecraftServer:
-            worldSaveName: {{ .Values.applications.minecraft.world.name }}
-            version: {{ .Values.applications.minecraft.world.version }}
-            type: {{ .Values.applications.minecraft.server.launcher }}
-            vanillaTweaksShareCodes: {{ toYaml .Values.applications.minecraft.mods.vanillaTweaks | nindent 16 }}
+            worldSaveName: {{ .world.name }}
+            version: {{ .world.version }}
+            type: {{ .server.launcher }}
+            vanillaTweaksShareCodes: {{ toYaml .mods.vanillaTweaks | nindent 16 }}
             modrinth:
-              projects: {{ toYaml .Values.applications.minecraft.mods.modrinth.projects | nindent 16 }}
+              projects: {{ toYaml .mods.modrinth.projects | nindent 16 }}
             autoCurseForge:
-              pageUrl: {{ .Values.applications.minecraft.mods.curseforge.pageUrl }}
-              excludeMods: {{ toYaml .Values.applications.minecraft.mods.curseforge.excludeMods | nindent 16 }}
-              includeMods: {{ toYaml .Values.applications.minecraft.mods.curseforge.includeMods | nindent 16 }}
+              pageUrl: {{ .mods.curseforge.pageUrl }}
+              zipUrl: {{ .mods.curseforge.zip.file }}
+              excludeMods: {{ toYaml .mods.curseforge.excludeMods | nindent 16 }}
+              includeMods: {{ toYaml .mods.curseforge.includeMods | nindent 16 }}
+
           extraEnv:
-            CURSEFORGE_FILES: | {{- .Values.applications.minecraft.bluemap.file | nindent 14 }}
-            {{- if .Values.applications.minecraft.mods.curseforge.zip.deploy}}
+            CURSEFORGE_FILES: |
+              {{- .bluemap.file | nindent 14 }}
+
+            {{- if .mods.curseforge.zip.deploy}}
             CF_MODPACK_ZIP: /data/zip/server.zip
             CF_SLUG: "custom"
             {{- end}}
-        curseforge:
-          {{- if .Values.applications.minecraft.mods.curseforge.zip.deploy}}
-          zip: {{ .Values.applications.minecraft.mods.curseforge.zip.file }}
-          {{- end}}
+
   destination:
     namespace: minecraft
-    server: {{ .Values.applications.server }}
+    server: https://kubernetes.default.svc
   project: minecraft
   syncPolicy:
     automated:
@@ -49,4 +52,6 @@ spec:
       selfHeal: true
     syncOptions:
     - CreateNamespace=true
-{{- end }}
+    - ServerSideApply=true
+{{- end -}}
+{{- end -}}

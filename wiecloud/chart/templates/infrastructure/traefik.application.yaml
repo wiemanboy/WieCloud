@@ -1,4 +1,5 @@
-{{- if .Values.infrastructure.traefik.deploy -}}
+{{- with .Values.infrastructure.traefik -}}
+{{- if .deploy -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -7,14 +8,26 @@ metadata:
 spec:
   source:
     chart: traefik
-    repoURL: {{ .Values.infrastructure.repository }}
-    targetRevision: {{ .Values.infrastructure.traefik.version }}
+    repoURL: {{ $.Values.infrastructure.repository }}
+    targetRevision: {{ .version }}
     helm:
-      values: |
-        environment: {{ toYaml .Values.environment | nindent 10 }}
+      valuesObject:
+        traefik:
+          service:
+            externalIps:
+              - {{ $.Values.network.externalIp }}
+            loadbalancerIp: 192.168.178.201
+            annotations:
+              external-dns.alpha.kubernetes.io/hostname: {{ $.Values.network.hostname }}
+              external-dns.alpha.kubernetes.io/target: {{ $.Values.network.externalIp }}
+
+          gateway:
+            annotations:
+              external-dns.alpha.kubernetes.io/target: {{ $.Values.network.hostname }}
+
   destination:
     namespace: gateway
-    server: {{ .Values.infrastructure.server }}
+    server: https://kubernetes.default.svc
   project: infrastructure
   syncPolicy:
     automated:
@@ -22,4 +35,6 @@ spec:
       selfHeal: true
     syncOptions:
     - CreateNamespace=true
-{{- end }}
+    - ServerSideApply=true
+{{- end -}}
+{{- end -}}

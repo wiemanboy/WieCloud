@@ -27,7 +27,9 @@ spec:
     spec:
       containers:
         - name: postgresql-db
-          image: postgres:18.1
+          {{ with .Values.images.postgres.image -}}
+          image: {{ .registry }}/{{ .repository }}:{{ .version }}
+          {{ end -}}
           volumeMounts:
             - name: data
               mountPath: /data

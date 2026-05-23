@@ -1,8 +1,8 @@
 apiVersion: v2
 name: k8up
 type: application
-version: 1.0.0
+version: 1.0.1
 dependencies:
   - name: k8up
-    version: 4.8.6
+    version: 4.9.0
     repository: https://k8up-io.github.io/k8up
