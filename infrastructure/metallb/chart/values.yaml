@@ -6,9 +6,3 @@ network:
     name: example-gateway
     listener: web-example
     namespace: example
-
-metallb:
-
-prometheus:
-  serviceMonitor:
-    enabled: false
