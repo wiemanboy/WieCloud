@@ -29,7 +29,7 @@ spec:
               projects: {{ toYaml .mods.modrinth.projects | nindent 16 }}
             autoCurseForge:
               pageUrl: {{ .mods.curseforge.pageUrl }}
-              zip: {{ .mods.curseforge.zip.file }}
+              zipUrl: {{ .mods.curseforge.zip.file }}
               excludeMods: {{ toYaml .mods.curseforge.excludeMods | nindent 16 }}
               includeMods: {{ toYaml .mods.curseforge.includeMods | nindent 16 }}
 
