@@ -15,3 +15,4 @@ spec:
     - secretKey: {{ $key | quote }}
       remoteRef:
         key: {{ $name | quote }}
+        property: {{ $key | quote }}
