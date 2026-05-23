@@ -1,18 +1,3 @@
-environment:
-  hostname: wieman.cloud
-  gateway:
-    name: traefik-gateway
-    listener: websecure
-    namespace: gateway
-    authentication:
-      basicAuth:
-        name: basic-auth
-        secret:
-          name: server-auth-secret
-  oidc:
-    provider: Keycloak
-    endpoint: https://keycloak.wieman.cloud/realms/wiecloud
-
 network:
   hostname: wieman.cloud
   externalIp: 85.148.81.86
