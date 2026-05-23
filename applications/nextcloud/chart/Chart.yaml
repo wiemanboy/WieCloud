@@ -4,5 +4,5 @@ type: application
 version: 0.2.1
 dependencies:
   - name: nextcloud
-    version: 9.9.0
+    version: 9.1.0
     repository: https://nextcloud.github.io/helm/
