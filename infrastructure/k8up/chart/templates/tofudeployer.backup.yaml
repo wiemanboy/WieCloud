@@ -1,0 +1,14 @@
+apiVersion: external-secrets.io/v1alpha1
+kind: PushSecret
+metadata:
+  name: tfstate-default-state-backup
+spec:
+  updatePolicy: Replace
+  deletionPolicy: None
+  refreshInterval: 2m
+  secretStoreRefs:
+    - name: aws
+      kind: ClusterSecretStore
+  selector:
+    secret:
+      name: tfstate-default-state
