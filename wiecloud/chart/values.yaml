@@ -18,13 +18,19 @@ backups:
     s3:
       endpoint: https://k8up.s3.wieman.cloud
       secret:
-        name: backup-s3-secret
+        name: local-backup-s3-credentials
         accessKey: accessKey
         secretKey: secretKey
+        storeRef:
+          kind: ClusterSecretStore
+          name: local-backup-s3-credentials-store
     repo:
       secret:
-        name: repo-password-secret
+        name: local-backup-repo-password
         key: password
+        storeRef:
+          kind: ClusterSecretStore
+          name: local-backup-repo-password-store
     default:
       schedule:
         backup: "0 12 * * *"
