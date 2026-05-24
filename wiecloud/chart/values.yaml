@@ -151,6 +151,10 @@ infrastructure:
         - "carnaval.lol"
         - "*.carnaval.lol"
 
+  envoygateway:
+    deploy: true
+    version: 0.0.0
+
   externaldns:
     deploy: true
     version: 0.1.1
