@@ -6,7 +6,7 @@ spec:
   gatewayClassName: default-envoy-gateway
   listeners:
     - name: {{ .Values.network.gateway.listener }}
-      protocol: HTTP
+      protocol: HTTPS
       port: 8443
       tls:
         mode: Terminate
