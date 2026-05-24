@@ -12,7 +12,7 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: letsencrypt-certificate
-            kind: Certificate
+            kind: Secret
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
