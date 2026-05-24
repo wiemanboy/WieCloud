@@ -62,9 +62,9 @@ backups:
           name: aws
     default:
       schedule:
-        backup: "*/3 * * * *"
-        check: "30 12 * * *"
-        prune: "0 13 * * *"
+        backup: "0 0 * * *"
+        check: "30 0 * * *"
+        prune: "0 1 * * *"
       retention:
         keepLast: 5
         keepDaily: 14
@@ -186,8 +186,8 @@ infrastructure:
     restores:
       - name: postgresql-restore
         enabled: true
-        fromBackup: aws
-        snapshot: "d236fc6d"
+        fromBackup: local
+        snapshot: ""
         claim:
           name: data-postgresql-db-0
 
