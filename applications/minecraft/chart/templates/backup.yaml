@@ -10,7 +10,7 @@ spec:
       key: {{ $backup.repo.secret.key }}
     s3:
       endpoint: {{ $backup.s3.endpoint }}
-      bucket: minecraft-backups
+      bucket: wiecloud-minecraft-backups
       accessKeyIDSecretRef:
         name: {{ $backup.s3.secret.name }}
         key: {{ $backup.s3.secret.accessKey }}
@@ -91,7 +91,7 @@ spec:
       key: {{ $backup.repo.secret.key }}
     s3:
       endpoint: {{ $backup.s3.endpoint }}
-      bucket: minecraft-backups
+      bucket: wiecloud-minecraft-backups
       accessKeyIDSecretRef:
         name: {{ $backup.s3.secret.name }}
         key: {{ $backup.s3.secret.accessKey }}
