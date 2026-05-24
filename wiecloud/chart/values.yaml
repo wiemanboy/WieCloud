@@ -184,10 +184,10 @@ infrastructure:
     deploy: true
     version: 1.2.2-implement-aws-remote-backups-45aaa80
     restores:
-      - name: postgresql-local-restore
-        enabled: false
-        fromBackup: local
-        snapshot: ""
+      - name: postgresql-restore
+        enabled: true
+        fromBackup: aws
+        snapshot: "d236fc6d"
         claim:
           name: data-postgresql-db-0
 
