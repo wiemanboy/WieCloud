@@ -76,7 +76,7 @@ targetRepository:
 applications:
   minecraft:
     deploy: true
-    version: 1.1.2-implement-aws-remote-backups-093f9df
+    version: 1.1.2-implement-aws-remote-backups-89af4f1
     restores:
       - name: minecraft-restore
         enabled: false
@@ -106,7 +106,7 @@ applications:
 
   nextcloud:
     deploy: true
-    version: 0.2.2-implement-aws-remote-backups-093f9df
+    version: 0.2.2-implement-aws-remote-backups-89af4f1
     restores:
       - name: nextcloud-restore
         enabled: false
@@ -157,11 +157,11 @@ infrastructure:
 
   externalsecrets:
     deploy: true
-    version: 0.0.0
+    version: 0.0.0-implement-aws-remote-backups-89af4f1
 
   harbor:
     deploy: true
-    version: 1.3.2-implement-aws-remote-backups-093f9df
+    version: 1.3.2-implement-aws-remote-backups-89af4f1
     restores:
       - name: harbor-registry-restore
         enabled: false
@@ -182,7 +182,7 @@ infrastructure:
 
   keycloak:
     deploy: true
-    version: 1.2.2-implement-aws-remote-backups-093f9df
+    version: 1.2.2-implement-aws-remote-backups-89af4f1
     restores:
       - name: postgresql-restore
         enabled: true
