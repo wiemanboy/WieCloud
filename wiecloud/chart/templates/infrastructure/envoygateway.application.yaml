@@ -10,9 +10,9 @@ spec:
     chart: envoygateway
     repoURL: {{ $.Values.infrastructure.repository }}
     targetRevision: {{ .version }}
-#    helm:
-#      valuesObject:
-#        network: {{ toYaml $.Values.network | nindent 10 }}
+    helm:
+      valuesObject:
+        test: test
 
   destination:
     namespace: envoy-gateway
