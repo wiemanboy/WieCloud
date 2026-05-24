@@ -1,0 +1,7 @@
+  # service:
+  #   externalIps:
+  #     - 0.0.0.0
+  #   loadbalancerIp: 0.0.0.0
+  #   annotations:
+  #     external-dns.alpha.kubernetes.io/hostname: example.com
+  #     external-dns.alpha.kubernetes.io/target: 0.0.0.0
