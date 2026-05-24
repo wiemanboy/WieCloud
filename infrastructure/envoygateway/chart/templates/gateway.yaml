@@ -19,6 +19,6 @@ kind: Certificate
 metadata:
   name: letsencrypt-certificate
 spec:
-  secretName: letsencrypt-secret
+  secretName: letsencrypt-certificate
   dnsNames: {{ toYaml .Values.network.gateway.certificate.hostnames | nindent 4 }}
   issuerRef: {{ toYaml .Values.network.gateway.certificate.issuerRef | nindent 4 }}
