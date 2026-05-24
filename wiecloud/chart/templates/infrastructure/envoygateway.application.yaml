@@ -1,0 +1,29 @@
+{{- with .Values.infrastructure.envoygateway -}}
+{{- if .deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: envoygateway
+  namespace: argocd
+spec:
+  source:
+    chart: envoygateway
+    repoURL: {{ $.Values.infrastructure.repository }}
+    targetRevision: {{ .version }}
+    helm:
+      valuesObject:
+        network: {{ toYaml $.Values.network | nindent 10 }}
+
+  destination:
+    namespace: envoy-gateway
+    server: https://kubernetes.default.svc
+  project: infrastructure
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
+{{- end -}}
+{{- end -}}
