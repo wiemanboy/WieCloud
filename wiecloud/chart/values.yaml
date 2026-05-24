@@ -153,7 +153,7 @@ infrastructure:
 
   envoygateway:
     deploy: true
-    version: 0.0.0-implement-envoygateway-64de89e
+    version: 0.0.0-implement-envoygateway-113cd63
 
   externaldns:
     deploy: true
