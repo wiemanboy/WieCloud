@@ -5,3 +5,23 @@
   #   annotations:
   #     external-dns.alpha.kubernetes.io/hostname: example.com
   #     external-dns.alpha.kubernetes.io/target: 0.0.0.0
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: envoy-gateway-service
+  name: envoy-gateway-service
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: example.com
+    external-dns.alpha.kubernetes.io/target: 0.0.0.0
+spec:
+  type: LoadBalancer
+  selector:
+    app: envoy-gateway-service
+  externalIPs:
+    - 0.0.0.0
+  ports:
+  - name: https
+    port: 8443
+    protocol: TCP
+    targetPort: 8443

@@ -2,13 +2,6 @@ cert-manager:
   crds:
     enabled: true
 
-network:
-  hostname: example.com
-  gateway:
-    name: example-gateway
-    listener: web-example
-    namespace: example
-
 certificate:
   issuer: letsencrypt
   secret: letsencrypt-secret
@@ -20,3 +13,10 @@ certificate:
       secret:
         name: cloudflare-api-token
         key: api-token
+
+network:
+  hostname: example.com
+  gateway:
+    name: example-gateway
+    listener: web-example
+    namespace: example
