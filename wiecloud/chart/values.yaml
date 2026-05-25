@@ -6,7 +6,7 @@ network:
   gateway:
     name: default-envoy-gateway
     listener: https
-    namespace: envoygateway
+    namespace: envoy-gateway
     certificate:
       email: wiemanboy@gmail.com
       issuerRef:
