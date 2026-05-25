@@ -1,8 +1,3 @@
-variable "namespace" {
-  description = "Namespace of the kubernetes backend"
-  type        = string
-}
-
 variable "aws_access_key" {
   description = "AWS Access Key"
   type        = string

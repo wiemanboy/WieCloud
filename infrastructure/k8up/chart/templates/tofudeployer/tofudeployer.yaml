@@ -27,8 +27,6 @@ spec:
               value: {{ .Values.targetRepository.branch }}
             - name: TOFU_PATH
               value: infrastructure/k8up/tofu
-            - name: TF_VAR_namespace
-              value: {{ .Release.Namespace }}
             - name: TF_VAR_aws_access_key
               valueFrom:
                 secretKeyRef:
