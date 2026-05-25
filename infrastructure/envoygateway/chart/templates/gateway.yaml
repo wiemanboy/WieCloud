@@ -13,9 +13,15 @@ spec:
         certificateRefs:
           - name: letsencrypt-certificate
             kind: Secret
+      allowedRoutes:
+        namespaces:
+          from: All
     - name:  minecraft
       protocol: TCP
       port: 25565
+      allowedRoutes:
+        namespaces:
+          from: minecraft
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
