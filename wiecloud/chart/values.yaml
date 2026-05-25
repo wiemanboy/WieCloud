@@ -4,11 +4,14 @@ network:
   ipPool:
     - 192.168.178.201 - 192.168.178.210
   gateway:
-    name: traefik-gateway
-    listener: websecure
-    namespace: gateway
+    name: default-envoy-gateway
+    listener: https
+    namespace: envoygateway
     certificate:
       email: wiemanboy@gmail.com
+      issuerRef:
+        name: letsencrypt
+        kind: ClusterIssuer
       hostnames:
         - "wieman.cloud"
         - "*.wieman.cloud"
@@ -222,7 +225,7 @@ infrastructure:
     version: 0.0.2
 
   traefik:
-    deploy: true
+    deploy: false
     version: 0.2.0
 
   seaweedfs:

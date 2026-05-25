@@ -12,7 +12,7 @@ spec:
     targetRevision: {{ .version }}
     helm:
       valuesObject:
-        test: test
+        network: {{ toYaml $.Values.network | nindent 10 }}
 
   destination:
     namespace: envoy-gateway
