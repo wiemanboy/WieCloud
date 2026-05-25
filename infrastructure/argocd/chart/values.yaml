@@ -4,7 +4,7 @@ argo-cd:
       server.insecure: true
       controller.diff.server.side: true
     cm:
-      admin.enabled: "true"
+      admin.enabled: "false"
       url: https://argo.example.com
       exec.enabled: true
       oidc.config: "overwritten"
