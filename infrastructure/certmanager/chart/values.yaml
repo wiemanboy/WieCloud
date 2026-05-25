@@ -1,22 +1,26 @@
-cert-manager:
-  crds:
-    enabled: true
-
-certificate:
-  issuer: letsencrypt
-  secret: letsencrypt-secret
-  hostnames:
-    - "example.com"
-  email: email@example.com
-  cloudflare:
-    token:
-      secret:
-        name: cloudflare-api-token
-        key: api-token
-
 network:
-  hostname: example.com
+  hostname: wieman.cloud
+  externalIp: 85.148.81.86
+  ipPool:
+    - 192.168.178.201 - 192.168.178.210
   gateway:
-    name: example-gateway
-    listener: web-example
-    namespace: example
+    name: default-envoy-gateway
+    listener: https
+    namespace: envoy-gateway
+    certificate:
+      email: wiemanboy@gmail.com
+      issuerRef:
+        name: letsencrypt
+        kind: ClusterIssuer
+      hostnames:
+        - "wieman.cloud"
+        - "*.wieman.cloud"
+        - "*.s3.wieman.cloud"
+        - "wiemanboy.com"
+        - "*.wiemanboy.com"
+        - "jarnowieman.com"
+        - "*.jarnowieman.com"
+        - "jarnowieman.nl"
+        - "*.jarnowieman.nl"
+        - "carnaval.lol"
+        - "*.carnaval.lol"

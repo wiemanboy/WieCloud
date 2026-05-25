@@ -13,10 +13,9 @@ spec:
     helm:
       valuesObject:
         network: {{ toYaml $.Values.network | nindent 10 }}
-        certificate: {{ toYaml .certificate | nindent 10 }}
-        
+
   destination:
-    namespace: gateway
+    namespace: cert-manager
     server: https://kubernetes.default.svc
   project: infrastructure
   syncPolicy:

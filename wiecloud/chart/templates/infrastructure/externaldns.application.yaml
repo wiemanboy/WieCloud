@@ -11,7 +11,7 @@ spec:
     repoURL: {{ $.Values.infrastructure.repository }}
     targetRevision: {{ .version }}
   destination:
-    namespace: gateway
+    namespace: external-dns
     server: https://kubernetes.default.svc
   project: infrastructure
   syncPolicy:

@@ -152,21 +152,7 @@ infrastructure:
 
   certmanager:
     deploy: true
-    version: 0.2.4-implement-envoygateway-6dfbbf3
-    certificate:
-      email: wiemanboy@gmail.com
-      hostnames:
-        - "wieman.cloud"
-        - "*.wieman.cloud"
-        - "*.s3.wieman.cloud"
-        - "wiemanboy.com"
-        - "*.wiemanboy.com"
-        - "jarnowieman.com"
-        - "*.jarnowieman.com"
-        - "jarnowieman.nl"
-        - "*.jarnowieman.nl"
-        - "carnaval.lol"
-        - "*.carnaval.lol"
+    version: 0.2.4-implement-envoygateway-9fce835
 
   envoygateway:
     deploy: true
