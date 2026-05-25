@@ -149,7 +149,7 @@ infrastructure:
 
   certmanager:
     deploy: true
-    version: 0.2.4-implement-envoygateway-e5f986e
+    version: 0.2.4-implement-envoygateway-ffb54bc
     certificate:
       email: wiemanboy@gmail.com
       hostnames:
@@ -167,11 +167,11 @@ infrastructure:
 
   envoygateway:
     deploy: true
-    version: 0.0.0-implement-envoygateway-e5f986e
+    version: 0.0.0-implement-envoygateway-ffb54bc
 
   externaldns:
     deploy: true
-    version: 0.1.2-implement-envoygateway-e5f986e
+    version: 0.1.2-implement-envoygateway-ffb54bc
 
   externalsecrets:
     deploy: true
