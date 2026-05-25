@@ -1,17 +1,21 @@
-{{- with .Values.infrastructure.externaldns -}}
+{{- with .Values.infrastructure.envoygateway -}}
 {{- if .deploy -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: externaldns
+  name: envoygateway
   namespace: argocd
 spec:
   source:
-    chart: externaldns
+    chart: envoygateway
     repoURL: {{ $.Values.infrastructure.repository }}
     targetRevision: {{ .version }}
+    helm:
+      valuesObject:
+        network: {{ toYaml $.Values.network | nindent 10 }}
+
   destination:
-    namespace: external-dns
+    namespace: envoy-gateway
     server: https://kubernetes.default.svc
   project: infrastructure
   syncPolicy:

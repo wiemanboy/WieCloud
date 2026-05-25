@@ -1,0 +1,14 @@
+network:
+  hostname: test.wieman.cloud
+  externalIp: 0.0.0.0
+  gateway:
+    name: example
+    listener: example
+    namespace: example
+    certificate:
+      email: email@example.com
+      issuerRef:
+        name: example
+        kind: ClusterIssuer
+      hostnames:
+        - "example.com"

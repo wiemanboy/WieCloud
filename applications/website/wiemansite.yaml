@@ -45,9 +45,9 @@ metadata:
   name: wiemansite
 spec:
   parentRefs:
-    - name: traefik-gateway
-      sectionName: websecure
-      namespace: gateway
+    - name: default-envoy-gateway
+      sectionName: https
+      namespace: envoy-gateway
 
   hostnames:
     - site.wieman.cloud

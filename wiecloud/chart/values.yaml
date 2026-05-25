@@ -4,9 +4,26 @@ network:
   ipPool:
     - 192.168.178.201 - 192.168.178.210
   gateway:
-    name: traefik-gateway
-    listener: websecure
-    namespace: gateway
+    name: default-envoy-gateway
+    listener: https
+    namespace: envoy-gateway
+    certificate:
+      email: wiemanboy@gmail.com
+      issuerRef:
+        name: letsencrypt
+        kind: ClusterIssuer
+      hostnames:
+        - "wieman.cloud"
+        - "*.wieman.cloud"
+        - "*.s3.wieman.cloud"
+        - "wiemanboy.com"
+        - "*.wiemanboy.com"
+        - "jarnowieman.com"
+        - "*.jarnowieman.com"
+        - "jarnowieman.nl"
+        - "*.jarnowieman.nl"
+        - "carnaval.lol"
+        - "*.carnaval.lol"
 
 auth:
   basic:
@@ -135,25 +152,15 @@ infrastructure:
 
   certmanager:
     deploy: true
-    version: 0.2.4
-    certificate:
-      email: wiemanboy@gmail.com
-      hostnames:
-        - "wieman.cloud"
-        - "*.wieman.cloud"
-        - "*.s3.wieman.cloud"
-        - "wiemanboy.com"
-        - "*.wiemanboy.com"
-        - "jarnowieman.com"
-        - "*.jarnowieman.com"
-        - "jarnowieman.nl"
-        - "*.jarnowieman.nl"
-        - "carnaval.lol"
-        - "*.carnaval.lol"
+    version: 0.2.5
+
+  envoygateway:
+    deploy: true
+    version: 0.0.0
 
   externaldns:
     deploy: true
-    version: 0.1.1
+    version: 0.1.2
 
   externalsecrets:
     deploy: true
@@ -193,7 +200,7 @@ infrastructure:
 
   longhorn:
     deploy: true
-    version: 0.0.8
+    version: 0.0.9
 
   metallb:
     deploy: true
@@ -202,10 +209,6 @@ infrastructure:
   prometheus:
     deploy: true
     version: 0.0.2
-
-  traefik:
-    deploy: true
-    version: 0.2.0
 
   seaweedfs:
     deploy: true

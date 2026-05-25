@@ -1,0 +1,22 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyProxy
+metadata:
+  name: envoy-proxy
+spec:
+  provider:
+    type: Kubernetes
+    kubernetes:
+      envoyService:
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: {{ .Values.network.hostname }}
+          external-dns.alpha.kubernetes.io/target: {{ .Values.network.externalIp }}
+        patch:
+          type: StrategicMerge
+          value:
+            spec:
+              externalIPs:
+                - 192.168.178.201
+      envoyDeployment:
+        pod:
+          nodeSelector:
+            kubernetes.io/hostname: talos-worker-0

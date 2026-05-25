@@ -1,12 +1,12 @@
-name: Build traefik
+name: Build envoygateway
 
 on:
   pull_request:
     branches:
     - master
     paths:
-    - infrastructure/traefik/chart**
-    - .github/workflows/helm_build_traefik.yaml
+    - infrastructure/envoygateway/chart**
+    - .github/workflows/helm_build_envoygateway.yaml
     - .github/workflows/helm_build.yaml
     - pipeline/build/scripts/helm/**
 
@@ -15,8 +15,8 @@ jobs:
     name: Build
     uses: ./.github/workflows/helm_build.yaml
     with:
-      chart_name: traefik
-      chart_path: infrastructure/traefik/chart
+      chart_name: envoygateway
+      chart_path: infrastructure/envoygateway/chart
       registry: oci://harbor.wieman.cloud
       repository: infrastructure
     secrets:
