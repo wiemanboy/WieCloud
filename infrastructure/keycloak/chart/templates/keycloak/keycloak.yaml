@@ -44,12 +44,12 @@ spec:
             valueFrom:
               secretKeyRef:
                 key: username
-                name: keycloak-initial-admin
+                name: keycloak-admin-credentials
           - name: KC_BOOTSTRAP_ADMIN_PASSWORD
             valueFrom:
               secretKeyRef:
                 key: password
-                name: keycloak-initial-admin
+                name: keycloak-admin-credentials
           - name: KC_HEALTH_ENABLED
             value: 'true'
           - name: KC_CACHE

@@ -1,0 +1,29 @@
+apiVersion: generators.external-secrets.io/v1alpha1
+kind: Password
+metadata:
+  name: keycloak-admin-credentials
+spec:
+  length: 42
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: keycloak-admin-credentials
+spec:
+  refreshInterval: 0s
+  target:
+    name: keycloak-admin-credentials
+    template:
+      data:
+        username: temp-admin
+
+  dataFrom:
+  - sourceRef:
+       generatorRef:
+         apiVersion: generators.external-secrets.io/v1alpha1
+         kind: Password
+         name: keycloak-admin-credentials
+    rewrite:
+    - regexp:
+        source: "(.*)"
+        target: "password"
