@@ -8,7 +8,7 @@ spec:
     email: {{ .email }}
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
-      name: cloudflare-api-token
+      name: letsencrypt-private-key
     solvers:
     - dns01:
         cloudflare:
