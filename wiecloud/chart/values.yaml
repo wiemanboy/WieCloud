@@ -152,15 +152,15 @@ infrastructure:
 
   certmanager:
     deploy: true
-    version: 0.2.5-implement-envoygateway-1406ec3
+    version: 0.2.6-implement-envoygateway-812ac2f
 
   envoygateway:
     deploy: true
-    version: 0.0.0-implement-envoygateway-1406ec3
+    version: 0.0.0-implement-envoygateway-812ac2f
 
   externaldns:
     deploy: true
-    version: 0.1.2-implement-envoygateway-1406ec3
+    version: 0.1.2-implement-envoygateway-812ac2f
 
   externalsecrets:
     deploy: true
@@ -200,7 +200,7 @@ infrastructure:
 
   longhorn:
     deploy: true
-    version: 0.0.8
+    version: 0.0.8-implement-envoygateway-812ac2f
 
   metallb:
     deploy: true
@@ -212,7 +212,7 @@ infrastructure:
 
   traefik:
     deploy: false
-    version: 0.0.0-implement-envoygateway-1406ec3
+    version: 0.0.0-implement-envoygateway-812ac2f
 
   seaweedfs:
     deploy: true
