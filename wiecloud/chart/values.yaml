@@ -148,7 +148,7 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.3.3-implement-envoygateway-6dfbbf3
+    version: 0.3.2
 
   certmanager:
     deploy: true
