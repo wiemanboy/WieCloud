@@ -4,6 +4,7 @@ metadata:
   name: envoy-proxy
 spec:
   provider:
+    type: kubernetes
     kubernetes:
       envoyService:
         annotations:
