@@ -145,11 +145,11 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.3.2
+    version: 0.3.3-implement-envoygateway-d4733b2
 
   certmanager:
     deploy: true
-    version: 0.2.4-implement-envoygateway-1823e04
+    version: 0.2.4-implement-envoygateway-d4733b2
     certificate:
       email: wiemanboy@gmail.com
       hostnames:
@@ -167,11 +167,11 @@ infrastructure:
 
   envoygateway:
     deploy: true
-    version: 0.0.0-implement-envoygateway-1823e04
+    version: 0.0.0-implement-envoygateway-d4733b2
 
   externaldns:
     deploy: true
-    version: 0.1.2-implement-envoygateway-1823e04
+    version: 0.1.2-implement-envoygateway-d4733b2
 
   externalsecrets:
     deploy: true
