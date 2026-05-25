@@ -9,5 +9,9 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: {{ .Values.network.hostname }}
           external-dns.alpha.kubernetes.io/target: {{ .Values.network.externalIp }}
-        externalIPs:
-          - 192.168.178.210
+        patch:
+          type: StrategicMerge
+          value:
+            spec:
+              externalIPs:
+                - 192.168.178.210
