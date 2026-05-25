@@ -210,6 +210,10 @@ infrastructure:
     deploy: true
     version: 0.0.2
 
+  traefik:
+    deploy: false
+    version: 0.2.0
+
   seaweedfs:
     deploy: true
     version: 0.1.0
