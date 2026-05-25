@@ -16,3 +16,7 @@ spec:
             spec:
               externalIPs:
                 - 192.168.178.201
+      envoyDeployment:
+        pod:
+          nodeSelector:
+            kubernetes.io/hostname: talos-worker-0
