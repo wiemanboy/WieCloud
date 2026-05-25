@@ -21,7 +21,10 @@ spec:
       port: 25565
       allowedRoutes:
         namespaces:
-          from: minecraft
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: minecraft
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate

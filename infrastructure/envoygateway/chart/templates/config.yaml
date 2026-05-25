@@ -1,0 +1,13 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyProxy
+metadata:
+  name: envoy-proxy
+spec:
+  provider:
+    kubernetes:
+      envoyService:
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: {{ .Values.network.hostname }}
+          external-dns.alpha.kubernetes.io/target: {{ .Values.network.externalIp }}
+        externalIPs:
+          - 192.168.178.210
