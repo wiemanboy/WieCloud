@@ -2,13 +2,13 @@ network:
   hostname: test.wieman.cloud
   externalIp: 0.0.0.0
   gateway:
-    name: default-envoy-gateway
-    listener: https
-    namespace: envoygateway
+    name: example
+    listener: example
+    namespace: example
     certificate:
-      email: wiemanboy@gmail.com
+      email: email@example.com
       issuerRef:
-        name: letsencrypt
+        name: example
         kind: ClusterIssuer
       hostnames:
-        - "test.wieman.cloud"
+        - "example.com"
