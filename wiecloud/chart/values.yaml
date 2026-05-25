@@ -185,7 +185,7 @@ infrastructure:
 
   k8up:
     deploy: true
-    version: 1.0.1-tofudeployer-state-backup-d3d39a3
+    version: 1.0.2-tofudeployer-state-backup-3f3dbb5
 
   keycloak:
     deploy: true
