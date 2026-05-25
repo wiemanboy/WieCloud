@@ -4,6 +4,7 @@ metadata:
   name: tofudeployer
 spec:
   successfulJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
   schedule: "0/3 * * * *"
   jobTemplate:
     metadata:
