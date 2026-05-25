@@ -88,7 +88,7 @@ backups:
 
 targetRepository:
   url: https://github.com/wiemanboy/WieCloud.git
-  branch: master
+  branch: tofudeployer-state-backup
 
 applications:
   minecraft:
