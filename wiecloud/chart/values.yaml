@@ -189,7 +189,7 @@ infrastructure:
 
   keycloak:
     deploy: true
-    version: 2.1.0-deploy-keycloak-realm-via-tofudeployer-7d31a36
+    version: 2.1.0-deploy-keycloak-realm-via-tofudeployer-9d10727
     restores:
       - name: postgresql-restore
         enabled: false
