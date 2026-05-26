@@ -16,6 +16,10 @@ network:
     listener: web-example
     namespace: example
 
+targetRepository:
+  url: https://repo.git
+  branch: example
+
 images:
   keycloakserver:
     image:
@@ -34,4 +38,3 @@ images:
       registry: example.com
       repository: products/tofudeployer
       version: 0.0.0
-  
