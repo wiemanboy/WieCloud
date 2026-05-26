@@ -18,9 +18,10 @@ network:
 
 images:
   keycloakserver:
-    registry: example.com
-    repository: keycloak/keycloak
-    version: 26.6.2
+    image:
+      registry: example.com
+      repository: keycloak/keycloak
+      version: 26.6.2
 
   postgres:
     image:

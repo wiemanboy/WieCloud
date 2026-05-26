@@ -231,9 +231,10 @@ infrastructure:
 
 images:
   keycloakserver:
-    registry: docker.io
-    repository: keycloak/keycloak
-    version: 26.6.2
+    image:
+      registry: docker.io
+      repository: keycloak/keycloak
+      version: 26.6.2
 
   postgres:
     image:
