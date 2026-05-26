@@ -189,7 +189,7 @@ infrastructure:
 
   keycloak:
     deploy: true
-    version: 2.0.0-simplify-keycloak-deployment-ee91d76
+    version: 2.0.0-simplify-keycloak-deployment-a847445
     restores:
       - name: postgresql-restore
         enabled: false
