@@ -25,7 +25,7 @@ spec:
         env:
           - name: KC_DB
             value: {{ .Values.keycloak.db.vendor }}
-          - name: KC_DB_URL
+          - name: KC_DB_URL_HOST
             value: {{ .Values.keycloak.db.host }}
           - name: KC_DB_USERNAME
             valueFrom:
