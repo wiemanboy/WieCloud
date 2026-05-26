@@ -28,3 +28,10 @@ images:
       registry: example.com
       repository: library/postgres
       version: 18.4
+
+  tofudeployer:
+    image:
+      registry: example.com
+      repository: products/tofudeployer
+      version: 0.0.0
+  
