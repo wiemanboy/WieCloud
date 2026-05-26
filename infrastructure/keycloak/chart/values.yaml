@@ -17,7 +17,7 @@ network:
     namespace: example
 
 images:
-  keycloak:
+  keycloakserver:
     registry: example.com
     repository: keycloak/keycloak
     version: 26.6.2

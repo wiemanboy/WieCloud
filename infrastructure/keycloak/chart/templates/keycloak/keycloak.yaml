@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: keycloak
-        {{ with .Values.images.keycloak.image -}}
+        {{ with .Values.images.keycloakserver.image -}}
         image: {{ .registry }}/{{ .repository }}:{{ .version }}
         {{ end -}}
         args:
