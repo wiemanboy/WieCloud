@@ -16,7 +16,7 @@ spec:
     template:
       data:
         username: temp-admin
-        password: {{ `{{ .password }}` }}
+        password: "{{ `{{ .password }}` }}"
 
   dataFrom:
   - sourceRef:
