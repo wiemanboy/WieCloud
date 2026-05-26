@@ -1,26 +1,114 @@
-apiVersion: k8s.keycloak.org/v2alpha1
-kind: Keycloak
+apiVersion: apps/v1
+kind: Deployment
 metadata:
+  labels:
+    app: keycloak
   name: keycloak
 spec:
-  instances: 1
-  db:
-    vendor: {{ .Values.keycloak.db.vendor }}
-    host: {{ .Values.keycloak.db.host }}
-    usernameSecret:
-      name: {{ .Values.keycloak.db.username.secret }}
-      key: {{ .Values.keycloak.db.username.key }}
-    passwordSecret:
-      name: {{ .Values.keycloak.db.password.secret }}
-      key: {{ .Values.keycloak.db.password.key }}
-  ingress:
-    enabled: false
-  http:
-    httpEnabled: true
-  hostname:
-    hostname: keycloak.{{ .Values.network.hostname }}
-  proxy:
-    headers: xforwarded
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      containers:
+      - name: keycloak
+        {{ with .Values.images.keycloakserver.image -}}
+        image: {{ .registry }}/{{ .repository }}:{{ .version }}
+        {{ end -}}
+        args:
+          - '--verbose'
+          - start
+        env:
+          - name: KC_DB
+            value: {{ .Values.keycloak.db.vendor }}
+          - name: KC_DB_URL_HOST
+            value: {{ .Values.keycloak.db.host }}
+          - name: KC_DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.keycloak.db.username.secret }}
+                key: {{ .Values.keycloak.db.username.key }}
+          - name: KC_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.keycloak.db.password.secret }}
+                key: {{ .Values.keycloak.db.password.key }}
+          - name: KC_HOSTNAME
+            value: keycloak.{{ .Values.network.hostname }}
+          - name: KC_PROXY_HEADERS
+            value: xforwarded
+          - name: KC_HTTP_ENABLED
+            value: "true"
+          - name: KC_HTTP_PORT
+            value: "8080"
+          - name: KC_BOOTSTRAP_ADMIN_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: keycloak-admin-credentials
+          - name: KC_BOOTSTRAP_ADMIN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: keycloak-admin-credentials
+          - name: KC_HEALTH_ENABLED
+            value: 'true'
+          - name: KC_CACHE
+            value: ispn
+        ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          - containerPort: 9000
+            name: management
+            protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health/ready
+            port: 9000
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            memory: 2Gi
+          requests:
+            memory: 1700Mi
+        startupProbe:
+          failureThreshold: 600
+          httpGet:
+            path: /health/started
+            port: 9000
+            scheme: HTTP
+          periodSeconds: 1
+          successThreshold: 1
+          timeoutSeconds: 1
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: keycloak-service
+spec:
+  selector:
+    app: keycloak
+  ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: management
+      port: 9000
+      protocol: TCP
+      targetPort: 9000
+  type: ClusterIP
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute

@@ -189,10 +189,10 @@ infrastructure:
 
   keycloak:
     deploy: true
-    version: 1.2.2
+    version: 2.0.0
     restores:
       - name: postgresql-restore
-        enabled: true
+        enabled: false
         fromBackup: local
         snapshot: ""
         claim:
@@ -230,6 +230,18 @@ infrastructure:
   repository: harbor.wieman.cloud/infrastructure
 
 images:
+  keycloakserver:
+    image:
+      registry: docker.io
+      repository: keycloak/keycloak
+      version: 26.6.2
+
+  postgres:
+    image:
+      registry: docker.io
+      repository: library/postgres
+      version: 18.4
+
   rconcli:
     image:
       registry: harbor.wieman.cloud
@@ -241,12 +253,6 @@ images:
       registry: harbor.wieman.cloud
       repository: products/tofudeployer
       version: 0.0.1
-
-  postgres:
-    image:
-      registry: docker.io
-      repository: library/postgres
-      version: 18.4
 
   wireguardserver:
     image:
