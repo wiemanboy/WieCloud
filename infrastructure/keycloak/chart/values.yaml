@@ -17,6 +17,11 @@ network:
     namespace: example
 
 images:
+  keycloak:
+    registry: example.com
+    repository: keycloak/keycloak
+    version: 26.6.2
+
   postgres:
     image:
       registry: example.com

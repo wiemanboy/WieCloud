@@ -15,8 +15,13 @@ spec:
         app: keycloak
     spec:
       containers:
-      - image: keycloak/keycloak:26.6.2
-        name: keycloak
+      - name: keycloak
+        {{ with .Values.images.keycloak.image -}}
+        image: {{ .registry }}/{{ .repository }}:{{ .version }}
+        {{ end -}}
+        args:
+          - '--verbose'
+          - start
         env:
           - name: KC_DB
             value: {{ .Values.keycloak.db.vendor }}
