@@ -1,29 +1,16 @@
-variable "env_file" {
-  description = "Path to YAML configuration file"
-  type        = string
-  default     = "../../../env.yaml"
-}
+# terraform {
+#   backend "local" {
+#     path = "/data/state/terraform.tfstate"
+#   }
+# }
 
-variable "values_file" {
-  description = "Path to values.yaml"
-  type        = string
-  default     = "../../../wiecloud/chart/values.yaml"
-}
-
-locals {
-  env    = yamldecode(file(var.env_file))
-  values = yamldecode(file(var.values_file))
-}
-
-provider "kubernetes" {
-  config_path = "../../../foundation/config/kubeconfig"
-}
+provider "kubernetes" {}
 
 provider "keycloak" {
   client_id = "admin-cli"
-  username  = local.env.keycloak.admin.username
-  password  = local.env.keycloak.admin.password
-  url       = "https://keycloak.${local.values.environment.hostname}"
+  username  = var.keycloak_admin_username
+  password  = var.keycloak_admin_password
+  url       = "https://keycloak.${var.hostname}"
 }
 
 provider "random" {}
