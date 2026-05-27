@@ -29,16 +29,11 @@ spec:
               value: infrastructure/keycloak/tofu
             - name: TF_VAR_hostname
               value: {{ .Values.network.hostname }}
-            - name: TF_VAR_keycloak_admin_username
+            - name: TF_VAR_client_secret
               valueFrom:
                 secretKeyRef:
-                  name: keycloak-admin-credentials
-                  key: username
-            - name: TF_VAR_keycloak_admin_password
-              valueFrom:
-                secretKeyRef:
-                  name: keycloak-admin-credentials
-                  key: password
+                  name: tofudeployer-client-secret
+                  key: secret
 
             volumeMounts:
             - name: data

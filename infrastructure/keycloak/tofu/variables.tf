@@ -3,12 +3,7 @@ variable "hostname" {
   type        = string
 }
 
-variable "keycloak_admin_username" {
-  description = "Keycloak Admin Username"
-  type        = string
-}
-
-variable "keycloak_admin_password" {
-  description = "Keycloak Admin Password"
+variable "client_secret" {
+  description = "Deployer client secret"
   type        = string
 }
