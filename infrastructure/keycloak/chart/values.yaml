@@ -8,6 +8,9 @@ keycloak:
     password:
       secret: keycloak-db-credentials
       key: password
+  clientCreationPermissions:
+    - name: keycloak
+      namespace: keycloak
 
 network:
   hostname: example.com

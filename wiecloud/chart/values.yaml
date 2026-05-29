@@ -190,6 +190,15 @@ infrastructure:
   keycloak:
     deploy: true
     version: 2.1.0-deploy-keycloak-realm-via-tofudeployer-14bdc59
+    clientCreationPermissions:
+      - name: argocd
+        namespace: argocd
+      - name: harbor
+        namespace: harbor
+      - name: nextcloud
+        namespace: nextcloud
+      - name: grafana
+        namespace: prometheus
     restores:
       - name: postgresql-restore
         enabled: false
