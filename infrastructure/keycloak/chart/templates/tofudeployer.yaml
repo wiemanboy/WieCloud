@@ -21,7 +21,7 @@ spec:
             {{- end }}
             env:
             - name: DRY_RUN
-              value: "true"
+              value: "false"
             - name: REPOSITORY_URL
               value: {{ .Values.targetRepository.url }}
             - name: REPOSITORY_BRANCH
