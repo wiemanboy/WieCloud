@@ -11,6 +11,7 @@ spec:
       name: tofudeployer
     spec:
       backoffLimit: 1
+      serviceAccountName: client-secret-manager
       template:
         spec:
           containers:
