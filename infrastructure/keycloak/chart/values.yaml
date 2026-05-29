@@ -9,8 +9,14 @@ keycloak:
       secret: keycloak-db-credentials
       key: password
   clientCreationPermissions:
-    - name: keycloak
-      namespace: keycloak
+    - name: argocd
+      namespace: argocd
+    - name: harbor
+      namespace: harbor
+    - name: nextcloud
+      namespace: nextcloud
+    - name: grafana
+      namespace: prometheus
 
 network:
   hostname: example.com
