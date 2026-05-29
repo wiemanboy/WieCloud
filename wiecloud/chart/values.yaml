@@ -189,7 +189,7 @@ infrastructure:
 
   keycloak:
     deploy: true
-    version: 2.1.0-deploy-keycloak-realm-via-tofudeployer-14bdc59
+    version: 2.1.0-deploy-keycloak-realm-via-tofudeployer-28030e5
     clientCreationPermissions:
       - name: argocd
         namespace: argocd
