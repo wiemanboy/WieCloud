@@ -1,20 +1,30 @@
-{{- include "shared.backups.tpl" (dict
+{{ include "shared.backups.tpl" (dict
     "backups" .Values.backups
     "restores" .Values.restores
     "bucket" (dict "name" "bucket-name")
-    
+    "disable" (dict "schedule" true)
 ) }}
 
-{{- define "wireguard.extraSchedule" -}}
-apiVersion: k8up.io/v1
-kind: Schedule
-metadata:
-  name: {{ .backup.name }}-extra
-spec:
-  backend:
-    s3:
-      endpoint: {{ .backup.s3.endpoint }}
-      bucket: {{ .root.bucket.name }}
-  backup:
-    schedule: "0 3 * * *"
-{{- end -}}
+{{ range $index, $backup := .Values.backups }}
+{{- include "shared.schedule.tpl" (dict
+    "backup" $backup
+    "bucket" (dict "name" "bucket-name")
+    "namePostfix" "test"
+    "override" (dict "backup" "wireguard.schedule.backup.override")
+) }}
+---
+{{ end }}
+
+{{ define "wireguard.schedule.backup.override" }}
+podSecurityContext:
+  runAsUser: 0
+  fsGroup: 999
+  fsGroupChangePolicy: OnRootMismatch
+
+labelSelectors:
+  - matchExpressions:
+    - key: next.wieman.cloud/workload
+      operator: NotIn
+      values:
+        - nextcloud
+{{ end }}
