@@ -88,7 +88,7 @@ backups:
 
 targetRepository:
   url: https://github.com/wiemanboy/WieCloud.git
-  branch: tofudeployer-state-backup
+  branch: master
 
 applications:
   minecraft:
@@ -189,7 +189,16 @@ infrastructure:
 
   keycloak:
     deploy: true
-    version: 2.0.0
+    version: 2.1.0
+    clientCreationPermissions:
+      - name: argocd
+        namespace: argocd
+      - name: harbor
+        namespace: harbor
+      - name: nextcloud
+        namespace: nextcloud
+      - name: grafana
+        namespace: prometheus
     restores:
       - name: postgresql-restore
         enabled: false

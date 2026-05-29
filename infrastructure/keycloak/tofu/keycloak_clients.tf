@@ -19,9 +19,9 @@ module "argocd_client" {
   namespace = "argocd"
 
   urls = {
-    root     = "https://argo.${local.values.environment.hostname}"
-    base     = "https://argo.${local.values.environment.hostname}/applications"
-    redirect = ["https://argo.${local.values.environment.hostname}/auth/callback"]
+    root     = "https://argo.${var.hostname}"
+    base     = "https://argo.${var.hostname}/applications"
+    redirect = ["https://argo.${var.hostname}/auth/callback"]
   }
 }
 
@@ -33,8 +33,8 @@ module "harbor_client" {
   namespace = "harbor"
 
   urls = {
-    root     = "https://harbor.${local.values.environment.hostname}"
-    redirect = ["https://harbor.${local.values.environment.hostname}/c/oidc/callback"]
+    root     = "https://harbor.${var.hostname}"
+    redirect = ["https://harbor.${var.hostname}/c/oidc/callback"]
   }
 }
 
@@ -46,9 +46,9 @@ module "nextcloud_client" {
   namespace = "nextcloud"
 
   urls = {
-    root                 = "https://next.${local.values.environment.hostname}"
-    redirect             = ["https://next.${local.values.environment.hostname}/apps/user_oidc/code"]
-    post_logout_redirect = ["https://next.${local.values.environment.hostname}/"]
+    root                 = "https://next.${var.hostname}"
+    redirect             = ["https://next.${var.hostname}/apps/user_oidc/code"]
+    post_logout_redirect = ["https://next.${var.hostname}/"]
   }
 }
 
@@ -60,7 +60,7 @@ module "grafana_client" {
   namespace = "prometheus"
 
   urls = {
-    root     = "https://grafana.${local.values.environment.hostname}"
-    redirect = ["https://grafana.${local.values.environment.hostname}/login/generic_oauth"]
+    root     = "https://grafana.${var.hostname}"
+    redirect = ["https://grafana.${var.hostname}/login/generic_oauth"]
   }
 }

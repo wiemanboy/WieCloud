@@ -8,6 +8,15 @@ keycloak:
     password:
       secret: keycloak-db-credentials
       key: password
+  clientCreationPermissions:
+    - name: argocd
+      namespace: argocd
+    - name: harbor
+      namespace: harbor
+    - name: nextcloud
+      namespace: nextcloud
+    - name: grafana
+      namespace: prometheus
 
 network:
   hostname: example.com
@@ -15,6 +24,10 @@ network:
     name: example-gateway
     listener: web-example
     namespace: example
+
+targetRepository:
+  url: https://repo.git
+  branch: example
 
 images:
   keycloakserver:
@@ -28,3 +41,9 @@ images:
       registry: example.com
       repository: library/postgres
       version: 18.4
+
+  tofudeployer:
+    image:
+      registry: example.com
+      repository: products/tofudeployer
+      version: 0.0.0
