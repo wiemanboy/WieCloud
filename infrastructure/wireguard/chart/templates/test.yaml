@@ -1,0 +1,20 @@
+{{- include "shared.backups.tpl" (dict
+    "backups" .Values.backups
+    "restores" .Values.restores
+    "bucket" (dict "name" "bucket-name")
+    
+) }}
+
+{{- define "wireguard.extraSchedule" -}}
+apiVersion: k8up.io/v1
+kind: Schedule
+metadata:
+  name: {{ .backup.name }}-extra
+spec:
+  backend:
+    s3:
+      endpoint: {{ .backup.s3.endpoint }}
+      bucket: {{ .root.bucket.name }}
+  backup:
+    schedule: "0 3 * * *"
+{{- end -}}
