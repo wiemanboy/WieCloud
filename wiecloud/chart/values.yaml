@@ -111,7 +111,7 @@ applications:
       file: https://www.curseforge.com/minecraft/mc-mods/bluemap/files/7057487
     mods:
       voicechat:
-        enabled: true
+        enabled: false
       vanillaTweaks: []
       modrinth:
         projects: []
