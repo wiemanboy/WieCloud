@@ -22,13 +22,13 @@ spec:
     schedule: {{ .backup.default.schedule.backup | quote }}
     failedJobsHistoryLimit: 2
     successfulJobsHistoryLimit: 1
-    {{- if .override.backup }}
+    {{- if and .override .override.backup }}
     {{ include .override.backup . | nindent 4 }}
     {{- else }}
-        podSecurityContext:
-          runAsUser: 0
-          fsGroup: 999
-          fsGroupChangePolicy: OnRootMismatch
+    podSecurityContext:
+      runAsUser: 0
+      fsGroup: 999
+      fsGroupChangePolicy: OnRootMismatch
     {{- end }}
 
   check:
