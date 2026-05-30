@@ -225,7 +225,7 @@ infrastructure:
 
   wireguard:
     deploy: true
-    version: 0.0.1-create-shared-chart-ce53668
+    version: 0.0.1
     vpn:
       peers:
         - pc
