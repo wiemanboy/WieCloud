@@ -1,8 +1,11 @@
 apiVersion: v2
 name: nextcloud
 type: application
-version: 0.2.2
+version: 0.2.3
 dependencies:
+  - name: shared
+    version: 0.0.0-create-shared-chart-e4f9905
+    repository: oci://harbor.wieman.cloud/products
   - name: nextcloud
     version: 9.1.0
     repository: https://nextcloud.github.io/helm/
