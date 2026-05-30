@@ -239,7 +239,7 @@ infrastructure:
 # Placeholders so the pipelines will run
 products:
   shared:
-    version: 0.0.0
+    version: 0.0.0-create-shared-chart-6c8804b
 
 images:
   keycloakserver:
