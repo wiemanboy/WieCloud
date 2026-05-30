@@ -188,7 +188,7 @@ infrastructure:
 
   keycloak:
     deploy: true
-    version: 2.1.1-create-shared-chart-480accd
+    version: 2.1.1-create-shared-chart-e4f9905
     clientCreationPermissions:
       - name: argocd
         namespace: argocd
@@ -239,7 +239,7 @@ infrastructure:
 # Placeholders so the pipelines will run
 products:
   shared:
-    version: 0.0.0-create-shared-chart-480accd
+    version: 0.0.0-create-shared-chart-e4f9905
 
 images:
   keycloakserver:
