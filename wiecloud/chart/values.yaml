@@ -142,7 +142,6 @@ applications:
     deploy: true
     namespace: website
 
-  server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/applications
 
 infrastructure:
@@ -235,8 +234,12 @@ infrastructure:
         - "1.1.1.1"
         - "8.8.8.8"
 
-  server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/infrastructure
+
+# Placeholders so the pipelines will run
+products:
+  shared:
+    version: 0.0.0
 
 images:
   keycloakserver:
