@@ -39,6 +39,9 @@ minecraft:
     rcon:
       enabled: true
 
+    voicechat:
+      enabled: false
+
   extraEnv:
     ENABLE_WHITELIST: true
     CURSEFORGE_FILES: ""

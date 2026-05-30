@@ -32,6 +32,8 @@ spec:
               zipUrl: {{ .mods.curseforge.zip.file }}
               excludeMods: {{ toYaml .mods.curseforge.excludeMods | nindent 16 }}
               includeMods: {{ toYaml .mods.curseforge.includeMods | nindent 16 }}
+            voicechat:
+              enabled: {{ .mods.voicechat.enabled }}
 
           extraEnv:
             CURSEFORGE_FILES: |
