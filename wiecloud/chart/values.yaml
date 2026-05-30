@@ -93,7 +93,7 @@ targetRepository:
 applications:
   minecraft:
     deploy: true
-    version: 1.2.0-enable-minecraft-voicechat-51aa213
+    version: 1.2.0-enable-minecraft-voicechat-2277e18
     restores:
       - name: minecraft-restore
         enabled: false
@@ -155,7 +155,7 @@ infrastructure:
 
   envoygateway:
     deploy: true
-    version: 0.1.0-enable-minecraft-voicechat-51aa213
+    version: 0.1.0-enable-minecraft-voicechat-2277e18
 
   externaldns:
     deploy: true
