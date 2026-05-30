@@ -1,0 +1,46 @@
+{{- define "shared.schedule.tpl" -}}
+apiVersion: k8up.io/v1
+kind: Schedule
+metadata:
+  name: {{ .backup.name }}{{ if .namePostfix }}-{{ .namePostfix }}{{ end }}
+spec:
+  backend:
+    repoPasswordSecretRef:
+      name: {{ .backup.repo.secret.name }}
+      key: {{ .backup.repo.secret.key }}
+    s3:
+      endpoint: {{ .backup.s3.endpoint }}
+      bucket: {{ .bucket.name}}
+      accessKeyIDSecretRef:
+        name: {{ .backup.s3.secret.name }}
+        key: {{ .backup.s3.secret.accessKey }}
+      secretAccessKeySecretRef:
+        name: {{ .backup.s3.secret.name }}
+        key: {{ .backup.s3.secret.secretKey }}
+
+  backup:
+    schedule: {{ .backup.default.schedule.backup | quote }}
+    failedJobsHistoryLimit: 2
+    successfulJobsHistoryLimit: 1
+    {{- if and .override .override.backup }}
+    {{ include .override.backup . | nindent 4 }}
+    {{- else }}
+    podSecurityContext:
+      runAsUser: 0
+      fsGroup: 999
+      fsGroupChangePolicy: OnRootMismatch
+    {{- end }}
+
+  check:
+    schedule: {{ .backup.default.schedule.check | quote }}
+    failedJobsHistoryLimit: 2
+    successfulJobsHistoryLimit: 0
+
+  prune:
+    schedule: {{ .backup.default.schedule.prune | quote }}
+    retention:
+      keepLast: {{ .backup.default.retention.keepLast }}
+      keepDaily: {{ .backup.default.retention.keepDaily }}
+    failedJobsHistoryLimit: 2
+    successfulJobsHistoryLimit: 0
+{{- end -}}
