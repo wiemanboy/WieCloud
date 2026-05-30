@@ -29,6 +29,7 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
+
     - name:  minecraft
       protocol: TCP
       port: 25565
@@ -38,6 +39,16 @@ spec:
           selector:
             matchLabels:
               kubernetes.io/metadata.name: minecraft
+    - name:  minecraft-voicechat
+      protocol: UDP
+      port: 24454
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: minecraft
+
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate

@@ -1,0 +1,15 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: UDPRoute
+metadata:
+  name: voicechat
+spec:
+  parentRefs:
+    - name: {{ .Values.network.gateway.name }}
+      sectionName: minecraft-voicechat
+      namespace: {{ .Values.network.gateway.namespace }}
+
+  rules:
+    - backendRefs:
+        - name: voicechat
+          namespace: {{ .Release.Namespace }}
+          port: 24454
