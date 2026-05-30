@@ -9,3 +9,4 @@ spec:
   ports:
     - port: 24454
       targetPort: 24454
+      protocol: UDP
