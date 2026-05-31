@@ -19,9 +19,12 @@ module "argocd_client" {
   namespace = "argocd"
 
   urls = {
-    root     = "https://argo.${var.hostname}"
-    base     = "https://argo.${var.hostname}/applications"
-    redirect = ["https://argo.${var.hostname}/auth/callback"]
+    root = "https://argo.${var.hostname}"
+    base = "https://argo.${var.hostname}/applications"
+    redirect = [
+      "https://argo.${var.hostname}/auth/callback",
+      "argocd://auth/callback"
+    ]
   }
 }
 
