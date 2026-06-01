@@ -3,11 +3,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: k8up
+  name: nodes
   namespace: argocd
 spec:
   source:
-    chart: k8up
+    chart: nodes
     repoURL: {{ $.Values.infrastructure.repository }}
     targetRevision: {{ .version }}
     helm:
