@@ -28,8 +28,6 @@ spec:
               value: {{ .Values.targetRepository.branch }}
             - name: TOFU_PATH
               value: infrastructure/nodes/tofu
-            - name: TF_VAR_hostname
-              value: {{ .Values.network.hostname }}
             - name: TF_VAR_proxmox_api_url
               value: {{ .Values.proxmox.api.url }}
             - name: TF_VAR_proxmox_user_id
