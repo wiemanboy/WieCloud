@@ -1,4 +1,4 @@
-name: Build null
+name: Build nodes
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
     - master
     paths:
     - infrastructure/nodes/chart**
-    - .github/workflows/helm_build_null.yaml
+    - .github/workflows/helm_build_nodes.yaml
     - .github/workflows/helm_build.yaml
     - pipeline/build/scripts/helm/**
 
@@ -15,7 +15,7 @@ jobs:
     name: Build
     uses: ./.github/workflows/helm_build.yaml
     with:
-      chart_name: null
+      chart_name: nodes
       chart_path: infrastructure/nodes/chart
       registry: oci://harbor.wieman.cloud
       repository: infrastructure
