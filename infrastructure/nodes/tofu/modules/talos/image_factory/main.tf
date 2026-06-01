@@ -1,5 +1,5 @@
 data "talos_image_factory_extensions_versions" "talos_extensions" {
-  talos_version = "v1.11.5"
+  talos_version = var.talos_version
   filters = {
     names = [
       "siderolabs/iscsi-tools",

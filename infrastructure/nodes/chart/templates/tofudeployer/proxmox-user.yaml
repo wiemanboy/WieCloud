@@ -1,0 +1,19 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: proxmox-user
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: aws
+  target:
+    name: proxmox-user
+  data:
+    - secretKey: id
+      remoteRef:
+        key: proxmox-user
+        property: id
+    - secretKey: secret
+      remoteRef:
+        key: proxmox-user
+        property: secret

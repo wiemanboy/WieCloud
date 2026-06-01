@@ -1,0 +1,14 @@
+proxmox:
+  api:
+    url: https://example:8006/api2/json
+
+targetRepository:
+  url: https://repo.git
+  branch: example
+
+images:
+  tofudeployer:
+    image:
+      registry: example.com
+      repository: products/tofudeployer
+      version: 0.0.0

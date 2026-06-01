@@ -1,11 +1,5 @@
 # Provisioning
 
-## Aquire ip
-
-1. Manually create VM in Proxmox
-2. Wait for a mac address and ip to be assigned
-3. Shut down and delete the VM
-
 ## Tofu
 
 Add a node:

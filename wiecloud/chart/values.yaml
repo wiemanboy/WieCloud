@@ -88,7 +88,7 @@ backups:
 
 targetRepository:
   url: https://github.com/wiemanboy/WieCloud.git
-  branch: master
+  branch: manage-nodes-in-cluster
 
 applications:
   minecraft:
@@ -215,6 +215,13 @@ infrastructure:
   metallb:
     deploy: true
     version: 0.0.10
+
+  nodes:
+    deploy: true
+    version: 0.0.0-manage-nodes-in-cluster-41ea1c0
+    proxmox:
+      api:
+        url: https://192.168.178.166:8006/api2/json
 
   prometheus:
     deploy: true
