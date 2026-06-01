@@ -7,7 +7,7 @@ locals {
 }
 
 module "talos_image" {
-  source        = "./modules/talos/image"
+  source        = "./modules/talos/factory_image"
   talos_version = local.talos_version
 }
 
