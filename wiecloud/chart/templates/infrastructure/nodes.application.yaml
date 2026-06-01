@@ -1,0 +1,37 @@
+{{- with .Values.infrastructure.nodes -}}
+{{- if .deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: k8up
+  namespace: argocd
+spec:
+  source:
+    chart: k8up
+    repoURL: {{ $.Values.infrastructure.repository }}
+    targetRevision: {{ .version }}
+    helm:
+      valuesObject:
+        proxmox:
+          api:
+            url: {{ .proxmox.api.url }}
+
+  destination:
+    namespace: nodes
+    server: https://kubernetes.default.svc
+  project: infrastructure
+  ignoreDifferences:
+    - group: ""
+      kind: PersistentVolumeClaim
+      jsonPointers:
+        - /spec
+        - /metadata/annotations
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
+{{- end -}}
+{{- end -}}
