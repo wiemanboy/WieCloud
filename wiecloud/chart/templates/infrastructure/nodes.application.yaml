@@ -12,6 +12,11 @@ spec:
     targetRevision: {{ .version }}
     helm:
       valuesObject:
+        auth: {{ toYaml $.Values.auth | nindent 10 }}
+        targetRepository: {{ toYaml $.Values.targetRepository | nindent 10 }}
+        images: {{ toYaml $.Values.images | nindent 10 }}
+        backups: {{ toYaml $.Values.backups | nindent 10 }}
+        restores: {{ toYaml .restores | nindent 10 }}
         proxmox:
           api:
             url: {{ .proxmox.api.url }}
