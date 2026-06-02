@@ -34,7 +34,6 @@ module "grafana_client" {
   namespace   = "prometheus"
   access_type = "CONFIDENTIAL"
 
-
   urls = {
     root     = "https://grafana.${var.hostname}"
     redirect = ["https://grafana.${var.hostname}/login/generic_oauth"]
@@ -49,7 +48,6 @@ module "harbor_client" {
   namespace   = "harbor"
   access_type = "CONFIDENTIAL"
 
-
   urls = {
     root     = "https://harbor.${var.hostname}"
     redirect = ["https://harbor.${var.hostname}/c/oidc/callback"]
@@ -61,9 +59,7 @@ module "kubeapi_client" {
   realm_id = keycloak_realm.wiecloud.id
 
   name        = "kubeapi"
-  namespace   = "nodes"
   access_type = "PUBLIC"
-
 
   urls = {
     root     = "https://kubernetes/api"
