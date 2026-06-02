@@ -2,3 +2,7 @@ apiVersion: v2
 name: nodes
 type: application
 version: 0.1.0
+dependencies:
+  - name: shared
+    version: 0.0.0
+    repository: oci://harbor.wieman.cloud/products
