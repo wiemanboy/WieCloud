@@ -4,7 +4,7 @@ metadata:
   name: kubernetes-admin-binding
 subjects:
 - kind: Group
-  name: /kubernetes/admin
+  name: /infra/kubernetes/admin
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: ClusterRole
