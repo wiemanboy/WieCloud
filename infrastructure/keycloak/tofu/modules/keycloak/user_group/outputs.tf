@@ -10,5 +10,8 @@ output "child_groups" {
     user = {
       id = keycloak_group.user_group.id
     }
+    reader = {
+      id = keycloak_group.reader_group.id
+    }
   }
 }
