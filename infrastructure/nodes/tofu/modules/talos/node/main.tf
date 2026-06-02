@@ -40,7 +40,7 @@ resource "talos_machine_configuration_apply" "config_apply" {
           extraArgs = {
             "oidc-issuer-url"     = var.oidc.issuer_url
             "oidc-client-id"      = "kubeapi"
-            "oidc-username-claim" = "username"
+            "oidc-username-claim" = "preferred_username"
             "oidc-groups-claim"   = "groups"
           }
         }
