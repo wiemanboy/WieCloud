@@ -218,7 +218,7 @@ infrastructure:
 
   nodes:
     deploy: true
-    version: 0.0.0-manage-nodes-in-cluster-b193c5a
+    version: 0.0.0-manage-nodes-in-cluster-b44855b
     proxmox:
       api:
         url: https://192.168.178.166:8006/api2/json
