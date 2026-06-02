@@ -12,11 +12,16 @@ variable "namespace" {
   description = "Namespace of where the application is deployed"
   type        = string
   nullable    = true
+  default     = null
 }
 
 variable "access_type" {
   description = "Access type of the client, can be either 'PUBLIC' or 'CONFIDENTIAL'"
   type        = string
+  validation {
+    condition     = contains(["PUBLIC", "CONFIDENTIAL"], var.access_type)
+    error_message = "Access type must be either 'PUBLIC' or 'CONFIDENTIAL'."
+  }
 }
 
 variable "urls" {
