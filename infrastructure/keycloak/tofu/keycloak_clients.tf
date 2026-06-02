@@ -15,8 +15,9 @@ module "argocd_client" {
   source   = "./modules/keycloak/client"
   realm_id = keycloak_realm.wiecloud.id
 
-  name      = "argocd"
-  namespace = "argocd"
+  name        = "argocd"
+  namespace   = "argocd"
+  access_type = "CONFIDENTIAL"
 
   urls = {
     root     = "https://argo.${var.hostname}"
@@ -29,8 +30,10 @@ module "grafana_client" {
   source   = "./modules/keycloak/client"
   realm_id = keycloak_realm.wiecloud.id
 
-  name      = "grafana"
-  namespace = "prometheus"
+  name        = "grafana"
+  namespace   = "prometheus"
+  access_type = "CONFIDENTIAL"
+
 
   urls = {
     root     = "https://grafana.${var.hostname}"
@@ -42,8 +45,10 @@ module "harbor_client" {
   source   = "./modules/keycloak/client"
   realm_id = keycloak_realm.wiecloud.id
 
-  name      = "harbor"
-  namespace = "harbor"
+  name        = "harbor"
+  namespace   = "harbor"
+  access_type = "CONFIDENTIAL"
+
 
   urls = {
     root     = "https://harbor.${var.hostname}"
@@ -51,25 +56,28 @@ module "harbor_client" {
   }
 }
 
-# module "kubeapi_client" {
-#   source   = "./modules/keycloak/client"
-#   realm_id = keycloak_realm.wiecloud.id
+module "kubeapi_client" {
+  source   = "./modules/keycloak/client"
+  realm_id = keycloak_realm.wiecloud.id
 
-#   name      = "kubeapi"
-#   namespace = "nodes"
+  name        = "kubeapi"
+  namespace   = "nodes"
+  access_type = "PUBLIC"
 
-#   urls = {
-#     root     = "https://kubernetes/api"
-#     redirect = ["https://kubernetes/api/v1/auth/callback"]
-#   }
-# }
+
+  urls = {
+    root     = "https://kubernetes/api"
+    redirect = ["https://kubernetes/api/v1/auth/callback"]
+  }
+}
 
 module "nextcloud_client" {
   source   = "./modules/keycloak/client"
   realm_id = keycloak_realm.wiecloud.id
 
-  name      = "nextcloud"
-  namespace = "nextcloud"
+  name        = "nextcloud"
+  namespace   = "nextcloud"
+  access_type = "CONFIDENTIAL"
 
   urls = {
     root                 = "https://next.${var.hostname}"

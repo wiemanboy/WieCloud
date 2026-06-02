@@ -1,3 +1,8 @@
+variable "realm_id" {
+  description = "ID of the realm to create the client in"
+  type        = string
+}
+
 variable "name" {
   description = "Name of the client to create in keycloak"
   type        = string
@@ -6,10 +11,11 @@ variable "name" {
 variable "namespace" {
   description = "Namespace of where the application is deployed"
   type        = string
+  nullable    = true
 }
 
-variable "realm_id" {
-  description = "ID of the realm to create the client in"
+variable "access_type" {
+  description = "Access type of the client, can be either 'PUBLIC' or 'CONFIDENTIAL'"
   type        = string
 }
 
