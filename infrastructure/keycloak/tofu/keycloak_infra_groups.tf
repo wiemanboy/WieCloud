@@ -4,11 +4,11 @@ module "infra_group" {
   name     = "infra"
 }
 
-module "infra_argo_group" {
+module "infra_argocd_group" {
   source    = "./modules/keycloak/user_group"
   realm_id  = keycloak_realm.wiecloud.id
   parent_id = module.infra_group.id
-  name      = "argo"
+  name      = "argocd"
 }
 
 module "infra_grafana_group" {

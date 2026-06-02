@@ -11,7 +11,7 @@ argo-cd:
     rbac:
       policy.default: role:readonly
       policy.csv: |
-        g, /infra/admin, role:admin
+        g, /infra/argocd/admin, role:admin
   server:
     httproute:
       enabled: true
