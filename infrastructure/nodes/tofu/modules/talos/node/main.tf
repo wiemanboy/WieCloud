@@ -32,7 +32,20 @@ resource "talos_machine_configuration_apply" "config_apply" {
           "topology.kubernetes.io/zone"   = var.zone
         }
       }
-    })
+    }),
+
+    var.role == "controlplane" ? yamlencode({
+      cluster = {
+        apiServer = {
+          extraArgs = {
+            "oidc-issuer-url"     = var.oidc.issuer_url
+            "oidc-client-id"      = "kubeapi"
+            "oidc-username-claim" = "preferred_username"
+            "oidc-groups-claim"   = "groups"
+          }
+        }
+      }
+    }) : null
   ]
 }
 

@@ -15,8 +15,9 @@ module "argocd_client" {
   source   = "./modules/keycloak/client"
   realm_id = keycloak_realm.wiecloud.id
 
-  name      = "argocd"
-  namespace = "argocd"
+  name        = "argocd"
+  namespace   = "argocd"
+  access_type = "CONFIDENTIAL"
 
   urls = {
     root     = "https://argo.${var.hostname}"
@@ -25,12 +26,27 @@ module "argocd_client" {
   }
 }
 
+module "grafana_client" {
+  source   = "./modules/keycloak/client"
+  realm_id = keycloak_realm.wiecloud.id
+
+  name        = "grafana"
+  namespace   = "prometheus"
+  access_type = "CONFIDENTIAL"
+
+  urls = {
+    root     = "https://grafana.${var.hostname}"
+    redirect = ["https://grafana.${var.hostname}/login/generic_oauth"]
+  }
+}
+
 module "harbor_client" {
   source   = "./modules/keycloak/client"
   realm_id = keycloak_realm.wiecloud.id
 
-  name      = "harbor"
-  namespace = "harbor"
+  name        = "harbor"
+  namespace   = "harbor"
+  access_type = "CONFIDENTIAL"
 
   urls = {
     root     = "https://harbor.${var.hostname}"
@@ -38,12 +54,29 @@ module "harbor_client" {
   }
 }
 
+module "kubeapi_client" {
+  source   = "./modules/keycloak/client"
+  realm_id = keycloak_realm.wiecloud.id
+
+  name        = "kubeapi"
+  access_type = "PUBLIC"
+
+  urls = {
+    root = "http://localhost:8000"
+    redirect = [
+      "http://localhost:8000",
+      "http://127.0.0.1:8000"
+    ]
+  }
+}
+
 module "nextcloud_client" {
   source   = "./modules/keycloak/client"
   realm_id = keycloak_realm.wiecloud.id
 
-  name      = "nextcloud"
-  namespace = "nextcloud"
+  name        = "nextcloud"
+  namespace   = "nextcloud"
+  access_type = "CONFIDENTIAL"
 
   urls = {
     root                 = "https://next.${var.hostname}"
@@ -52,15 +85,3 @@ module "nextcloud_client" {
   }
 }
 
-module "grafana_client" {
-  source   = "./modules/keycloak/client"
-  realm_id = keycloak_realm.wiecloud.id
-
-  name      = "grafana"
-  namespace = "prometheus"
-
-  urls = {
-    root     = "https://grafana.${var.hostname}"
-    redirect = ["https://grafana.${var.hostname}/login/generic_oauth"]
-  }
-}

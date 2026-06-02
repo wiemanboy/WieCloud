@@ -9,9 +9,9 @@ argo-cd:
       exec.enabled: true
       oidc.config: "overwritten"
     rbac:
-      policy.default: role:readonly
       policy.csv: |
-        g, /infra/admin, role:admin
+        g, /infra/argocd/admin, role:admin
+        g, /infra/argocd/reader, role:readonly
   server:
     httproute:
       enabled: true

@@ -1,0 +1,67 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: tofudeployer
+spec:
+  successfulJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  schedule: "0/3 * * * *"
+  jobTemplate:
+    metadata:
+      name: tofudeployer
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          containers:
+          - name: tofudeployer
+            {{- with .Values.images.tofudeployer.image }}
+            image: {{ .registry }}/{{ .repository }}:{{ .version }}
+            {{- end }}
+            env:
+            - name: DRY_RUN
+              value: "false"
+            - name: REPOSITORY_URL
+              value: {{ .Values.targetRepository.url }}
+            - name: REPOSITORY_BRANCH
+              value: {{ .Values.targetRepository.branch }}
+            - name: TOFU_PATH
+              value: infrastructure/nodes/tofu
+            - name: TF_VAR_proxmox_api_url
+              value: {{ .Values.proxmox.api.url }}
+            - name: TF_VAR_proxmox_user_id
+              valueFrom:
+                secretKeyRef:
+                  name: proxmox-user
+                  key: id
+            - name: TF_VAR_proxmox_user_secret
+              valueFrom:
+                secretKeyRef:
+                  name: proxmox-user
+                  key: secret
+            - name: TF_VAR_oidc_issuer_url
+              value: {{ .Values.auth.oidc.endpoint }}
+
+            volumeMounts:
+            - name: data
+              mountPath: /data
+
+          volumes:
+          - name: data
+            persistentVolumeClaim:
+              claimName: tofudeployer-state
+
+          restartPolicy: Never
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tofudeployer-state
+  annotations:
+    k8up.io/backup: "true"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Mi

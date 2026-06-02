@@ -1,0 +1,42 @@
+{{- with .Values.infrastructure.nodes -}}
+{{- if .deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nodes
+  namespace: argocd
+spec:
+  source:
+    chart: nodes
+    repoURL: {{ $.Values.infrastructure.repository }}
+    targetRevision: {{ .version }}
+    helm:
+      valuesObject:
+        auth: {{ toYaml $.Values.auth | nindent 10 }}
+        targetRepository: {{ toYaml $.Values.targetRepository | nindent 10 }}
+        images: {{ toYaml $.Values.images | nindent 10 }}
+        backups: {{ toYaml $.Values.backups | nindent 10 }}
+        restores: {{ toYaml .restores | nindent 10 }}
+        proxmox:
+          api:
+            url: {{ .proxmox.api.url }}
+
+  destination:
+    namespace: nodes
+    server: https://kubernetes.default.svc
+  project: infrastructure
+  ignoreDifferences:
+    - group: ""
+      kind: PersistentVolumeClaim
+      jsonPointers:
+        - /spec
+        - /metadata/annotations
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
+{{- end -}}
+{{- end -}}

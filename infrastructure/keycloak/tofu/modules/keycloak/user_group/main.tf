@@ -15,3 +15,9 @@ resource "keycloak_group" "user_group" {
   parent_id = keycloak_group.parent_group.id
   name      = "user"
 }
+
+resource "keycloak_group" "reader_group" {
+  realm_id  = var.realm_id
+  parent_id = keycloak_group.parent_group.id
+  name      = "reader"
+}

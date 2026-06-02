@@ -1,13 +1,13 @@
 locals {
-  node_module_source = "./modules/node"
-  cluster            = "homelab"
-  talos_version      = "v1.11.5"
-  iso                = "${proxmox_storage_iso.omen-pve-0-metal-amd64-iso.storage}:iso/${proxmox_storage_iso.omen-pve-0-metal-amd64-iso.filename}"
-  image              = "factory.talos.dev/installer/${module.talos_image.id}:${module.talos_image.talos_version}"
+  cluster                        = "homelab"
+  talos_version                  = "v1.11.5"
+  image                          = "factory.talos.dev/installer/${module.talos_image.id}:${module.talos_image.talos_version}"
+  gigabyte-pve-0-metal-amd64-iso = "${proxmox_storage_iso.gigabyte-pve-0-metal-amd64-iso.storage}:iso/${proxmox_storage_iso.gigabyte-pve-0-metal-amd64-iso.filename}"
+  omen-pve-0-metal-amd64-iso     = "${proxmox_storage_iso.omen-pve-0-metal-amd64-iso.storage}:iso/${proxmox_storage_iso.omen-pve-0-metal-amd64-iso.filename}"
 }
 
 module "talos_image" {
-  source        = "./modules/talos/image"
+  source        = "./modules/talos/image_factory"
   talos_version = local.talos_version
 }
 
@@ -33,7 +33,7 @@ resource "talos_machine_secrets" "machine_secret" {
 }
 
 module "talos-controlplane-0" {
-  source   = local.node_module_source
+  source   = "./modules/node"
   name     = "talos-controlplane-0"
   node     = "gigabyte-pve-0"
   region   = "home"
@@ -46,7 +46,7 @@ module "talos-controlplane-0" {
 
   machine_secret = talos_machine_secrets.machine_secret
   talos_version  = local.talos_version
-  iso            = local.iso
+  iso            = local.gigabyte-pve-0-metal-amd64-iso
   image          = local.image
   bootstrap      = true
 
@@ -55,11 +55,15 @@ module "talos-controlplane-0" {
     disk_size = 100
     memory    = 6144
   }
+
+  oidc = {
+    issuer_url = var.oidc_issuer_url
+  }
 }
 
 module "talos-worker-0" {
   depends_on = [module.talos-controlplane-0]
-  source     = local.node_module_source
+  source     = "./modules/node"
 
   name     = "talos-worker-0"
   node     = "gigabyte-pve-0"
@@ -73,7 +77,7 @@ module "talos-worker-0" {
 
   machine_secret = talos_machine_secrets.machine_secret
   talos_version  = local.talos_version
-  iso            = local.iso
+  iso            = local.gigabyte-pve-0-metal-amd64-iso
   image          = local.image
 
   spec = {
@@ -85,7 +89,7 @@ module "talos-worker-0" {
 
 module "talos-worker-1" {
   depends_on = [module.talos-controlplane-0]
-  source     = local.node_module_source
+  source     = "./modules/node"
 
   name     = "talos-worker-1"
   node     = "omen-pve-0"
@@ -100,7 +104,7 @@ module "talos-worker-1" {
 
   machine_secret = talos_machine_secrets.machine_secret
   talos_version  = local.talos_version
-  iso            = local.iso
+  iso            = local.omen-pve-0-metal-amd64-iso
   image          = local.image
 
   spec = {
@@ -112,7 +116,7 @@ module "talos-worker-1" {
 
 module "talos-worker-2" {
   depends_on = [module.talos-controlplane-0]
-  source     = local.node_module_source
+  source     = "./modules/node"
 
   name     = "talos-worker-2"
   node     = "omen-pve-0"
@@ -127,7 +131,7 @@ module "talos-worker-2" {
 
   machine_secret = talos_machine_secrets.machine_secret
   talos_version  = local.talos_version
-  iso            = local.iso
+  iso            = local.omen-pve-0-metal-amd64-iso
   image          = local.image
 
   spec = {

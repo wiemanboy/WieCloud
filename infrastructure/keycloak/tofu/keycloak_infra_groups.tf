@@ -4,6 +4,20 @@ module "infra_group" {
   name     = "infra"
 }
 
+module "infra_argocd_group" {
+  source    = "./modules/keycloak/user_group"
+  realm_id  = keycloak_realm.wiecloud.id
+  parent_id = module.infra_group.id
+  name      = "argocd"
+}
+
+module "infra_grafana_group" {
+  source    = "./modules/keycloak/user_group"
+  realm_id  = keycloak_realm.wiecloud.id
+  parent_id = module.infra_group.id
+  name      = "grafana"
+}
+
 module "infra_harbor_group" {
   source    = "./modules/keycloak/user_group"
   realm_id  = keycloak_realm.wiecloud.id
@@ -16,13 +30,6 @@ module "infra_keycloak_group" {
   realm_id  = keycloak_realm.wiecloud.id
   parent_id = module.infra_group.id
   name      = "keycloak"
-}
-
-module "infra_grafana_group" {
-  source    = "./modules/keycloak/user_group"
-  realm_id  = keycloak_realm.wiecloud.id
-  parent_id = module.infra_group.id
-  name      = "grafana"
 }
 
 module "realm_admin_role" {
@@ -52,6 +59,13 @@ module "realm_admin_role" {
     "manage-authorization",
     "query-groups",
   ]
+}
+
+module "infra_kubernetes_group" {
+  source    = "./modules/keycloak/user_group"
+  realm_id  = keycloak_realm.wiecloud.id
+  parent_id = module.infra_group.id
+  name      = "kubernetes"
 }
 
 resource "keycloak_group_roles" "infra_keycloak_admin_roles" {

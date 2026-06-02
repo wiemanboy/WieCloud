@@ -149,7 +149,7 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.3.2
+    version: 0.3.3
 
   certmanager:
     deploy: true
@@ -215,6 +215,13 @@ infrastructure:
   metallb:
     deploy: true
     version: 0.0.10
+
+  nodes:
+    deploy: true
+    version: 0.0.0
+    proxmox:
+      api:
+        url: https://192.168.178.166:8006/api2/json
 
   prometheus:
     deploy: true

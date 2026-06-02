@@ -82,6 +82,15 @@ variable "spec" {
 
 variable "bootstrap" {
   description = "If the machine should be bootstrapped, only needed on one controlplane"
-  type = bool
-  default = false
+  type        = bool
+  default     = false
+}
+
+variable "oidc" {
+  description = "OIDC configuration"
+  type = object({
+    issuer_url = string
+  })
+  nullable = true
+  default  = null
 }
