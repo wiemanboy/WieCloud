@@ -207,6 +207,12 @@ infrastructure:
         snapshot: ""
         claim:
           name: data-postgresql-db-0
+      - name: tfstate-restore
+        enabled: false
+        fromBackup: local
+        snapshot: ""
+        claim:
+          name: tofudeployer-state
 
   longhorn:
     deploy: true
@@ -222,6 +228,13 @@ infrastructure:
     proxmox:
       api:
         url: https://192.168.178.166:8006/api2/json
+    restores:
+      - name: tfstate-restore
+        enabled: false
+        fromBackup: local
+        snapshot: ""
+        claim:
+          name: tofudeployer-state
 
   prometheus:
     deploy: true
