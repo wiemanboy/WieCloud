@@ -25,6 +25,19 @@ module "argocd_client" {
   }
 }
 
+module "grafana_client" {
+  source   = "./modules/keycloak/client"
+  realm_id = keycloak_realm.wiecloud.id
+
+  name      = "grafana"
+  namespace = "prometheus"
+
+  urls = {
+    root     = "https://grafana.${var.hostname}"
+    redirect = ["https://grafana.${var.hostname}/login/generic_oauth"]
+  }
+}
+
 module "harbor_client" {
   source   = "./modules/keycloak/client"
   realm_id = keycloak_realm.wiecloud.id
@@ -37,6 +50,19 @@ module "harbor_client" {
     redirect = ["https://harbor.${var.hostname}/c/oidc/callback"]
   }
 }
+
+# module "kubeapi_client" {
+#   source   = "./modules/keycloak/client"
+#   realm_id = keycloak_realm.wiecloud.id
+
+#   name      = "kubeapi"
+#   namespace = "nodes"
+
+#   urls = {
+#     root     = "https://kubernetes/api"
+#     redirect = ["https://kubernetes/api/v1/auth/callback"]
+#   }
+# }
 
 module "nextcloud_client" {
   source   = "./modules/keycloak/client"
@@ -52,15 +78,3 @@ module "nextcloud_client" {
   }
 }
 
-module "grafana_client" {
-  source   = "./modules/keycloak/client"
-  realm_id = keycloak_realm.wiecloud.id
-
-  name      = "grafana"
-  namespace = "prometheus"
-
-  urls = {
-    root     = "https://grafana.${var.hostname}"
-    redirect = ["https://grafana.${var.hostname}/login/generic_oauth"]
-  }
-}
