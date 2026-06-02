@@ -88,7 +88,7 @@ backups:
 
 targetRepository:
   url: https://github.com/wiemanboy/WieCloud.git
-  branch: manage-nodes-in-cluster
+  branch: master
 
 applications:
   minecraft:
