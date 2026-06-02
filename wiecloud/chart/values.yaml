@@ -149,7 +149,7 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.3.2
+    version: 0.3.3-manage-nodes-in-cluster-2910200
 
   certmanager:
     deploy: true
@@ -218,7 +218,7 @@ infrastructure:
 
   nodes:
     deploy: true
-    version: 0.0.0-manage-nodes-in-cluster-85f60ff
+    version: 0.0.0-manage-nodes-in-cluster-2910200
     proxmox:
       api:
         url: https://192.168.178.166:8006/api2/json
