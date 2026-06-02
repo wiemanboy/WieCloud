@@ -21,4 +21,5 @@ module "talos_node" {
   machine_secret = var.machine_secret
   bootstrap      = var.bootstrap
   talos_version  = var.talos_version
+  oidc           = var.oidc
 }

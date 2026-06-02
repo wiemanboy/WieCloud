@@ -53,3 +53,12 @@ variable "bootstrap" {
   type        = bool
   default     = false
 }
+
+variable "oidc" {
+  description = "OIDC configuration"
+  type = object({
+    issuer_url = string
+  })
+  nullable = true
+  default  = null
+}

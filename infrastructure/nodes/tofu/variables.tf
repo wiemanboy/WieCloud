@@ -12,3 +12,9 @@ variable "proxmox_user_secret" {
   description = "User token secret for the Proxmox Api"
   type        = string
 }
+
+variable "oidc_issuer_url" {
+  description = "Issuer URL for OIDC configuration of the nodes"
+  type        = string
+}
+

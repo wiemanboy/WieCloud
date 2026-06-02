@@ -38,7 +38,7 @@ resource "talos_machine_configuration_apply" "config_apply" {
       cluster = {
         apiServer = {
           extraArgs = {
-            "oidc-issuer-url"     = var.oidc.isssuer_url
+            "oidc-issuer-url"     = var.oidc.issuer_url
             "oidc-client-id"      = "kubeapi"
             "oidc-username-claim" = "username"
             "oidc-groups-claim"   = "groups"

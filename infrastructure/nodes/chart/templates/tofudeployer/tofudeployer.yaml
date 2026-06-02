@@ -39,6 +39,8 @@ spec:
                 secretKeyRef:
                   name: proxmox-user
                   key: secret
+            - name: TF_VAR_oidc_issuer_url
+              value: {{ .Values.auth.oidc.endpoint }}
 
             volumeMounts:
             - name: data

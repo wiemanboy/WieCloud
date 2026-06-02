@@ -55,6 +55,10 @@ module "talos-controlplane-0" {
     disk_size = 100
     memory    = 6144
   }
+
+  oidc = {
+    issuer_url = var.oidc_issuer_url
+  }
 }
 
 module "talos-worker-0" {
