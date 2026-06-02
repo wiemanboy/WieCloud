@@ -62,8 +62,11 @@ module "kubeapi_client" {
   access_type = "PUBLIC"
 
   urls = {
-    root     = "https://kubernetes/api"
-    redirect = ["https://kubernetes/api/v1/auth/callback"]
+    root = "http://localhost:8000"
+    redirect = [
+      "http://localhost:8000",
+      "http://127.0.0.1:8000"
+    ]
   }
 }
 
