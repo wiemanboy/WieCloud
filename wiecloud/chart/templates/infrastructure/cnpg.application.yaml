@@ -1,0 +1,25 @@
+{{- with .Values.infrastructure.cnpg -}}
+{{- if .deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cnpg
+  namespace: argocd
+spec:
+  source:
+    chart: cnpg
+    repoURL: {{ $.Values.infrastructure.repository }}
+    targetRevision: {{ .version }}
+  destination:
+    namespace: cnpg
+    server: https://kubernetes.default.svc
+  project: infrastructure
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
+{{- end -}}
+{{- end -}}
