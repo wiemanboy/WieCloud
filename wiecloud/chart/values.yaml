@@ -157,7 +157,7 @@ infrastructure:
 
   cnpg:
     deploy: true
-    version: 0.0.0-implement-cnpg-fae1a54
+    version: 0.0.0-implement-cnpg-3c2efb6
 
   envoygateway:
     deploy: true
