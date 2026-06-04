@@ -8,6 +8,16 @@ spec:
   bootstrap:
     initdb:
       database: nextcloud
+    # recovery:
+    #   source: source
 
   storage:
     size: 1Gi
+
+  # externalClusters:
+  # - name: source
+  #   plugin:
+  #     name: barman-cloud.cloudnative-pg.io
+  #     parameters:
+  #       barmanObjectName: local-backup-s3
+  #       serverName: cluster-example
