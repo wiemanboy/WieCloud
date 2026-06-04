@@ -125,7 +125,7 @@ applications:
 
   nextcloud:
     deploy: true
-    version: 1.0.0-implement-cnpg-6996bcb
+    version: 1.0.0-implement-cnpg-1160a2e
     restores:
       - name: nextcloud-restore
         enabled: false
@@ -157,7 +157,7 @@ infrastructure:
 
   cnpg:
     deploy: true
-    version: 0.0.0-implement-cnpg-6996bcb
+    version: 0.0.0-implement-cnpg-1160a2e
 
   envoygateway:
     deploy: true
@@ -190,7 +190,7 @@ infrastructure:
 
   k8up:
     deploy: true
-    version: 1.0.4-implement-cnpg-6996bcb
+    version: 1.0.4-implement-cnpg-1160a2e
 
   keycloak:
     deploy: true
