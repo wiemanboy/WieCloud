@@ -8,12 +8,6 @@ spec:
   bootstrap:
     initdb:
       database: nextcloud
-      import:
-        type: microservice
-        databases:
-          - nextcloud
-        source:
-          externalCluster: postgres-sts
 
     # recovery:
     #   source: source
@@ -21,15 +15,7 @@ spec:
   storage:
     size: 2Gi
 
-  externalClusters:
-    - name:  postgres-sts
-      connectionParameters:
-        host: postgresql-db-service
-        user: admin
-        dbname: nextcloud
-      password:
-        name: nextcloud-db-credentials
-        key: password
+  # externalClusters:
   # - name: source
   #   plugin:
   #     name: barman-cloud.cloudnative-pg.io
