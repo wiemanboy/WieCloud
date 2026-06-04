@@ -24,7 +24,7 @@ spec:
   externalClusters:
     - name:  postgres-sts
       connectionParameters:
-        host: postgres-db-service
+        host: postgresql-db-service
         user: admin
         dbname: nextcloud
       password:
