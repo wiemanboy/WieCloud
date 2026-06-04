@@ -15,8 +15,10 @@ spec:
   storage:
     size: 2Gi
 
-  plugins:
-    - name: barman-cloud.cloudnative-pg.io
+  backup:
+    barmanObjectStore:
+      objectStore:
+        name: local-backup-s3
 
   # externalClusters:
   # - name: source
