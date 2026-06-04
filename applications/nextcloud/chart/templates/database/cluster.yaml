@@ -15,10 +15,11 @@ spec:
   storage:
     size: 2Gi
 
-  backup:
-    barmanObjectStore:
-      objectStore:
-        name: local-backup-s3
+  plugins:
+  - name: barman-cloud.cloudnative-pg.io
+    isWALArchiver: true
+    parameters:
+      barmanObjectName: local-backup-s3
 
   # externalClusters:
   # - name: source
