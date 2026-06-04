@@ -1,10 +1,8 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: cluster-example
+  name: example-postgres-cluster
 spec:
-  name: example
   instances: 3
   storage:
     size: 1Gi
- 
