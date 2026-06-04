@@ -19,12 +19,12 @@ spec:
   - name: barman-cloud.cloudnative-pg.io
     isWALArchiver: true
     parameters:
-      barmanObjectName: local-backup-s3
+      barmanObjectName: aws-backup-s3
 
   # externalClusters:
   # - name: source
   #   plugin:
   #     name: barman-cloud.cloudnative-pg.io
   #     parameters:
-  #       barmanObjectName: local-backup-s3
-  #       serverName: cluster-example
+  #       barmanObjectName: aws-backup-s3
+  #       serverName: nextcloud-postgres-cluster
