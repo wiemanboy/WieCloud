@@ -3,7 +3,8 @@ kind: Cluster
 metadata:
   name: cluster-example
 spec:
+  name: example
   instances: 3
-
   storage:
     size: 1Gi
+ 
