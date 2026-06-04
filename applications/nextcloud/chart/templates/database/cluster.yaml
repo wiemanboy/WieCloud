@@ -7,7 +7,7 @@ spec:
 
   bootstrap:
     initdb:
-      # database: nextcloud
+      database: nextcloud
       import:
         type: microservice
         databases:
