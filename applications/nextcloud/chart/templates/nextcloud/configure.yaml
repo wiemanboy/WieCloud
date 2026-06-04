@@ -6,7 +6,7 @@ data:
   configure.sh: |
     # Configuration:
     echo "Configuring database credentials"
-    sed -i "s/'dbhost' => '.*'/'dbuser' => '$POSTGRES_HOST'/" config/config.php
+    sed -i "s/'dbhost' => '.*'/'dbhost' => '$POSTGRES_HOST'/" config/config.php
     sed -i "s/'dbuser' => '.*'/'dbuser' => '$POSTGRES_USER'/" config/config.php
     sed -i "s/'dbpassword' => '.*'/'dbpassword' => '$POSTGRES_PASSWORD'/" config/config.php
 
