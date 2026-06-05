@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: seaweed-backup
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: seaweed-backup-config
+data:
+  replication.toml: |
+    [sink.local]
+    enabled = true
+    directory = "/backup"
+    is_incremental = true
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: seaweed-backup
+  name: seaweed-backup
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: seaweed-backup
+  template:
+    metadata:
+      labels:
+        app: seaweed-backup
+    spec:
+      containers:
+        - image: chrislusf/seaweedfs:latest
+          name: seaweedfs
+          command:
+            - weed
+            - filer.backup
+            - -filer={{ .Values.seaweedfs.name }}-filer:8888
+            - -config=/config/replication.toml
+          volumeMounts:
+            - name: backup
+              mountPath: /backup
+            - name: config
+              mountPath: /config
+          resources: {}
+      volumes:
+        - name: backup
+          persistentVolumeClaim:
+            claimName: seaweed-backup
+        - name: config
+          configMap:
+            name: seaweed-backup-config
