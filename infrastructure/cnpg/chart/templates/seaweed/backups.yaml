@@ -18,7 +18,7 @@ data:
     [sink.local]
     enabled = true
     directory = "/backup"
-    is_incremental = true
+    is_incremental = false
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -43,12 +43,12 @@ spec:
             - weed
             - filer.backup
             - -filer={{ .Values.seaweedfs.name }}-filer:8888
-            - -config=/config/replication.toml
+            - -initialSnapshot
           volumeMounts:
             - name: backup
               mountPath: /backup
             - name: config
-              mountPath: /config
+              mountPath: /etc/seaweedfs
           resources: {}
       volumes:
         - name: backup
