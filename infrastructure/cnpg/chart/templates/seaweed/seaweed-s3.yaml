@@ -1,0 +1,53 @@
+apiVersion: seaweed.seaweedfs.com/v1
+kind: Seaweed
+metadata:
+  name: {{ .Values.seaweedfs.name }}
+spec:
+  image: chrislusf/seaweedfs:latest
+  master:
+    replicas: 1
+    volumeSizeLimitMB: 1024
+  volume:
+    replicas: 1
+    requests:
+      storage: 100Gi
+  filer:
+    replicas: 1
+    persistence:
+      enabled: true
+      resources:
+        requests:
+          storage: 5Gi
+    s3:
+      enabled: true
+      configSecret:
+        name: {{ .Values.seaweedfs.secret.name }}
+        key: seaweedfs_s3_config.json
+    config: |
+      [leveldb2]
+      enabled = true
+      dir = "/data/filerldb2"
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ .Values.seaweedfs.name }}
+spec:
+  parentRefs:
+    - name: {{ .Values.network.gateway.name }}
+      sectionName: {{ .Values.network.gateway.listener }}
+      namespace: {{ .Values.network.gateway.namespace }}
+
+  hostnames:
+    - {{ .Values.seaweedfs.endpoint }}
+
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+
+      backendRefs:
+        - name: "{{ .Values.seaweedfs.name }}-filer"
+          namespace: {{ .Release.Namespace }}
+          port: 8333

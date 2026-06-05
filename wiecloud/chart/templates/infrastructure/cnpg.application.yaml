@@ -10,6 +10,12 @@ spec:
     chart: cnpg
     repoURL: {{ $.Values.infrastructure.repository }}
     targetRevision: {{ .version }}
+    helm:
+      valuesObject:
+        network: {{ toYaml $.Values.network | nindent 10 }}
+        seaweedfs:
+          endpoint: cnpg.s3.{{ $.Values.network.hostname }}
+
   destination:
     namespace: cnpg
     server: https://kubernetes.default.svc

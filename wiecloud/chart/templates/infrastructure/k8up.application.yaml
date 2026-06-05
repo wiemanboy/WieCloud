@@ -13,9 +13,6 @@ spec:
     helm:
       valuesObject:
         network: {{ toYaml $.Values.network | nindent 10 }}
-        targetRepository: {{ toYaml $.Values.targetRepository | nindent 10 }}
-        images: {{ toYaml $.Values.images | nindent 10 }}
-
         seaweedfs:
           endpoint: k8up.s3.{{ $.Values.network.hostname }}
 
