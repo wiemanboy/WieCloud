@@ -1,4 +1,6 @@
 seaweedfs:
+  backup:
+    enabled: true
   name: backup-s3
   endpoint: k8up.s3.example.com
   secret:

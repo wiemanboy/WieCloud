@@ -13,8 +13,11 @@ spec:
     helm:
       valuesObject:
         network: {{ toYaml $.Values.network | nindent 10 }}
+        backups: {{ toYaml $.Values.backups | nindent 10 }}
         seaweedfs:
           endpoint: cnpg.s3.{{ $.Values.network.hostname }}
+          backup:
+            enabled: {{ .backups.enabled }}
 
   destination:
     namespace: cnpg

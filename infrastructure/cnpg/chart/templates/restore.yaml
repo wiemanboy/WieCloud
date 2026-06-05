@@ -1,0 +1,29 @@
+apiVersion: k8up.io/v1
+kind: Restore
+metadata:
+  name: restore-test
+spec:
+  restoreMethod:
+    s3:
+      endpoint: cnpg.s3.wieman.cloud
+      bucket: restored-bucket
+      accessKeyIDSecretRef:
+        name: cnpg-backup-s3-credentials
+        key: accessKey
+      secretAccessKeySecretRef:
+        name: cnpg-backup-s3-credentials
+        key: secretKey
+  snapshot: ""
+  backend:
+    repoPasswordSecretRef:
+      name: local-backup-repo-password
+      key: password
+    s3:
+      endpoint: https://k8up.s3.wieman.cloud
+      bucket: wiecloud-cnpg-backups
+      accessKeyIDSecretRef:
+        name: local-backup-s3-credentials
+        key: accessKey
+      secretAccessKeySecretRef:
+        name: local-backup-s3-credentials
+        key: secretKey

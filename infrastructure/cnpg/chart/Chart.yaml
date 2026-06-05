@@ -3,6 +3,9 @@ name: cnpg
 type: application
 version: 0.0.0
 dependencies:
+  - name: shared
+    version: 0.0.0
+    repository: oci://harbor.wieman.cloud/products
   - name: cloudnative-pg
     version: 0.28.2
     repository: https://cloudnative-pg.github.io/charts
