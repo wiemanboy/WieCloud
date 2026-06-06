@@ -43,10 +43,16 @@ spec:
         - image: chrislusf/seaweedfs:latest
           name: seaweedfs
           command:
+            {{ if not .Values.seaweedfs.backup.restore.enabled }}
             - weed
             - filer.backup
             - -filer={{ .Values.seaweedfs.name }}-filer:8888
             - -initialSnapshot
+            {{ end }}
+            {{ if .Values.seaweedfs.backup.restore.enabled }}
+            - weed
+            - filer.copy /backup/buckets http://backup-s3-filer:8888/
+            {{ end }}
           volumeMounts:
             - name: backup
               mountPath: /backup

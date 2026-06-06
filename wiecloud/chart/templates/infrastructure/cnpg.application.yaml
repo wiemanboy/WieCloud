@@ -17,8 +17,9 @@ spec:
         seaweedfs:
           endpoint: cnpg.s3.{{ $.Values.network.hostname }}
           backup:
-            enabled: {{ .backups.enabled }}
-
+            enabled: {{ .backup.enabled }}
+            restore:
+              enabled: {{ .backups.restore.enabled }}
   destination:
     namespace: cnpg
     server: https://kubernetes.default.svc

@@ -157,9 +157,11 @@ infrastructure:
 
   cnpg:
     deploy: true
-    version: 0.0.0-implement-cnpg-70a12b6
-    backups:
+    version: 0.0.0-implement-cnpg-a7cfec0
+    backup:
       enabled: true
+      restore:
+        enabled: true
 
   envoygateway:
     deploy: true
