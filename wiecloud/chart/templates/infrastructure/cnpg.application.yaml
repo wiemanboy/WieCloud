@@ -14,12 +14,15 @@ spec:
       valuesObject:
         network: {{ toYaml $.Values.network | nindent 10 }}
         backups: {{ toYaml $.Values.backups | nindent 10 }}
+        restores: {{ toYaml .restores | nindent 10 }}
+
         seaweedfs:
           endpoint: cnpg.s3.{{ $.Values.network.hostname }}
           backup:
-            enabled: {{ .backup.enabled }}
+            enabled: {{ .seaweedfs.backup.enabled }}
             restore:
-              enabled: {{ .backups.restore.enabled }}
+              enabled: {{ .seaweedfs.backup.restore.enabled }}
+
   destination:
     namespace: cnpg
     server: https://kubernetes.default.svc

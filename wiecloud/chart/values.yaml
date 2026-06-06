@@ -157,11 +157,19 @@ infrastructure:
 
   cnpg:
     deploy: true
-    version: 0.0.0-implement-cnpg-1ed79ee
-    backup:
-      enabled: true
-      restore:
+    version: 0.0.0-implement-cnpg-a7cfec0
+    seaweedfs:
+      backup:
         enabled: true
+        restore:
+          enabled: true
+    restores:
+      - name: seaweed-restore
+        enabled: false
+        fromBackup: local
+        snapshot: ""
+        claim:
+          name: seaweed-backup
 
   envoygateway:
     deploy: true
