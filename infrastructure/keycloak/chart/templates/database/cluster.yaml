@@ -15,10 +15,10 @@ spec:
     size: 2Gi
 
   plugins:
-  - name: barman-cloud.cloudnative-pg.io
-    isWALArchiver: true
-    parameters:
-      barmanObjectName: cnpg-backup-s3
+  # - name: barman-cloud.cloudnative-pg.io
+  #   isWALArchiver: true
+  #   parameters:
+  #     barmanObjectName: cnpg-backup-s3
 
   externalClusters:
   - name: source
