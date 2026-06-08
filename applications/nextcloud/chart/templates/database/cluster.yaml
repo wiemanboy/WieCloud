@@ -16,7 +16,7 @@ spec:
     {{ end }}
 
   storage:
-    size: 2Gi
+    size: 5Gi
 
   {{ if not .Values.cnpg.restore }}
   plugins:
