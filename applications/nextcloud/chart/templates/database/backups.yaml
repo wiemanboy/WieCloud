@@ -1,18 +1,18 @@
 apiVersion: barmancloud.cnpg.io/v1
 kind: ObjectStore
 metadata:
-  name: aws-backup-s3
+  name: cnpg-backup-s3
 spec:
   configuration:
     destinationPath: s3://wiecloud-nextcloud-postgres-backups/
-    endpointURL: https://s3.eu-central-1.amazonaws.com
+    endpointURL: https://cnpg.s3.wieman.cloud
 
     s3Credentials:
       accessKeyId:
-        name: aws-backup-s3-credentials
+        name: cnpg-backup-s3-credentials
         key: accessKey
       secretAccessKey:
-        name: aws-backup-s3-credentials
+        name: cnpg-backup-s3-credentials
         key: secretKey
 
     wal:
@@ -20,10 +20,11 @@ spec:
 
   retentionPolicy: "14d"
 ---
+{{ if not .Values.cnpg.restore }}
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: aws
+  name: cnpg
 spec:
   immediate: true
   schedule: "0 0 0 * * *"
@@ -35,4 +36,5 @@ spec:
   pluginConfiguration:
     name: barman-cloud.cloudnative-pg.io
     parameters:
-      barmanObjectName: aws-backup-s3
+      barmanObjectName: cnpg-backup-s3
+{{ end }}

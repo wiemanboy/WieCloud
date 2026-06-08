@@ -6,20 +6,26 @@ spec:
   instances: 1
 
   bootstrap:
-    # initdb:
-    #   database: keycloak
+    {{ if not .Values.cnpg.restore }}
+    initdb:
+      database: keycloak
+    {{ end }}
+    {{ if .Values.cnpg.restore }}
     recovery:
       source: source
+    {{ end }}
 
   storage:
     size: 2Gi
 
-  # plugins:
-  # - name: barman-cloud.cloudnative-pg.io
-  #   isWALArchiver: true
-  #   parameters:
-  #     barmanObjectName: cnpg-backup-s3
-
+  {{ if not .Values.cnpg.restore }}
+  plugins:
+  - name: barman-cloud.cloudnative-pg.io
+    isWALArchiver: true
+    parameters:
+      barmanObjectName: cnpg-backup-s3
+  {{ end }}
+  {{ if .Values.cnpg.restore }}
   externalClusters:
   - name: source
     plugin:
@@ -27,3 +33,4 @@ spec:
       parameters:
         barmanObjectName: cnpg-backup-s3
         serverName: keycloak-postgres-cluster
+  {{ end }}

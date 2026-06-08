@@ -6,25 +6,31 @@ spec:
   instances: 1
 
   bootstrap:
+    {{ if not .Values.cnpg.restore }}
     initdb:
       database: nextcloud
-
-    # recovery:
-    #   source: source
+    {{ end }}
+    {{ if .Values.cnpg.restore }}
+    recovery:
+      source: source
+    {{ end }}
 
   storage:
     size: 2Gi
 
+  {{ if not .Values.cnpg.restore }}
   plugins:
   - name: barman-cloud.cloudnative-pg.io
     isWALArchiver: true
     parameters:
-      barmanObjectName: aws-backup-s3
-
-  # externalClusters:
-  # - name: source
-  #   plugin:
-  #     name: barman-cloud.cloudnative-pg.io
-  #     parameters:
-  #       barmanObjectName: aws-backup-s3
-  #       serverName: nextcloud-postgres-cluster
+      barmanObjectName: cnpg-backup-s3
+  {{ end }}
+  {{ if .Values.cnpg.restore }}
+  externalClusters:
+  - name: source
+    plugin:
+      name: barman-cloud.cloudnative-pg.io
+      parameters:
+        barmanObjectName: cnpg-backup-s3
+        serverName: nextcloud-postgres-cluster
+  {{ end }}

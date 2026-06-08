@@ -20,6 +20,7 @@ spec:
 
   retentionPolicy: "14d"
 ---
+{{ if not .Values.cnpg.restore }}
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
@@ -36,3 +37,4 @@ spec:
     name: barman-cloud.cloudnative-pg.io
     parameters:
       barmanObjectName: cnpg-backup-s3
+{{ end }}

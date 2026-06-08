@@ -124,3 +124,6 @@ images:
       registry: example.com
       repository: library/postgres
       version: 18.4
+
+cnpg:
+  restore: false

@@ -20,6 +20,9 @@ spec:
         keycloak:
           clientCreationPermissions: {{ toYaml .clientCreationPermissions | nindent 12 }}
 
+        cnpg:
+          restore: {{ .cnpg.restore }}
+
   destination:
     namespace: keycloak
     server: https://kubernetes.default.svc

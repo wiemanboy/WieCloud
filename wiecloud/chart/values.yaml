@@ -125,7 +125,9 @@ applications:
 
   nextcloud:
     deploy: true
-    version: 1.0.0-implement-cnpg-d387ffc
+    version: 1.0.0-implement-cnpg-d467488
+    cnpg:
+      restore: false
     restores:
       - name: nextcloud-restore
         enabled: false
@@ -133,12 +135,6 @@ applications:
         snapshot: ""
         claim:
           name: nextcloud-nextcloud
-      - name: postgresql-restore
-        enabled: false
-        fromBackup: local
-        snapshot: ""
-        claim:
-          name: data-postgresql-db-0
 
   website:
     deploy: true
@@ -214,13 +210,9 @@ infrastructure:
         namespace: nextcloud
       - name: grafana
         namespace: prometheus
+    cnpg:
+      restore: false
     restores:
-      - name: postgresql-restore
-        enabled: false
-        fromBackup: local
-        snapshot: ""
-        claim:
-          name: data-postgresql-db-0
       - name: tfstate-restore
         enabled: false
         fromBackup: local

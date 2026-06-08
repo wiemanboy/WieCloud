@@ -47,3 +47,6 @@ images:
       registry: example.com
       repository: products/tofudeployer
       version: 0.0.0
+
+cnpg:
+  restore: false

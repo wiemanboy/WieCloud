@@ -22,6 +22,9 @@ spec:
           nextcloud:
             host: next.{{ $.Values.network.hostname }}
 
+        cnpg:
+          restore: {{ .cnpg.restore }}
+
   destination:
     namespace: nextcloud
     server: https://kubernetes.default.svc
