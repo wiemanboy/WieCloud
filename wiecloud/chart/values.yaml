@@ -125,7 +125,7 @@ applications:
 
   nextcloud:
     deploy: true
-    version: 1.0.0-implement-cnpg-d467488
+    version: 1.0.0-implement-cnpg-37cee6b
     cnpg:
       restore: false
     restores:
@@ -145,7 +145,7 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.3.3
+    version: 0.0.0-implement-cnpg-37cee6b
 
   certmanager:
     deploy: true
@@ -153,7 +153,7 @@ infrastructure:
 
   cnpg:
     deploy: true
-    version: 0.0.0-implement-cnpg-d387ffc
+    version: 0.0.0-implement-cnpg-37cee6b
     seaweedfs:
       backup:
         enabled: true
@@ -196,11 +196,11 @@ infrastructure:
 
   k8up:
     deploy: true
-    version: 1.0.4-implement-cnpg-d387ffc
+    version: 1.0.4-implement-cnpg-37cee6b
 
   keycloak:
     deploy: true
-    version: 3.0.0-implement-cnpg-d387ffc
+    version: 3.0.0-implement-cnpg-37cee6b
     clientCreationPermissions:
       - name: argocd
         namespace: argocd
@@ -222,7 +222,7 @@ infrastructure:
 
   longhorn:
     deploy: true
-    version: 0.0.9
+    version: 0.0.0-implement-cnpg-37cee6b
 
   metallb:
     deploy: true
