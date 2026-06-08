@@ -8,9 +8,8 @@ spec:
   bootstrap:
     initdb:
       database: keycloak
-
-    # recovery:
-    #   source: source
+    recovery:
+      source: source
 
   storage:
     size: 2Gi
@@ -21,10 +20,10 @@ spec:
     parameters:
       barmanObjectName: cnpg-backup-s3
 
-  # externalClusters:
-  # - name: source
-  #   plugin:
-  #     name: barman-cloud.cloudnative-pg.io
-  #     parameters:
-  #       barmanObjectName: cnpg-backup-s3
-  #       serverName: keycloak-postgres-cluster
+  externalClusters:
+  - name: source
+    plugin:
+      name: barman-cloud.cloudnative-pg.io
+      parameters:
+        barmanObjectName: cnpg-backup-s3
+        serverName: keycloak-postgres-cluster
