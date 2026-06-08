@@ -1,0 +1,38 @@
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: cnpg-backup-s3
+spec:
+  configuration:
+    destinationPath: s3://wiecloud-keycloak-postgres-backups/
+    endpointURL: https://cnpg.s3.wieman.cloud
+
+    s3Credentials:
+      accessKeyId:
+        name: cnpg-backup-s3-credentials
+        key: accessKey
+      secretAccessKey:
+        name: cnpg-backup-s3-credentials
+        key: secretKey
+
+    wal:
+      compression: gzip
+
+  retentionPolicy: "14d"
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: cnpg
+spec:
+  immediate: true
+  schedule: "0 0 0 * * *"
+  backupOwnerReference: self
+  cluster:
+    name: keycloak-postgres-cluster
+
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io
+    parameters:
+      barmanObjectName: cnpg-backup-s3
