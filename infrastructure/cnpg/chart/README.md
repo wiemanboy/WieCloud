@@ -1,6 +1,8 @@
-# SeaweedFS
+# CNPG
 
-## Backups
+## SeaweedFS
+
+### Backups
 
 A restore can be done by running the following command on the backup pod:
 
