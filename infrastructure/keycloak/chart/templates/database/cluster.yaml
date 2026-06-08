@@ -21,7 +21,7 @@ spec:
   externalClusters:
     - name:  postgres-sts
       connectionParameters:
-        host: postgresql-db-service
+        host: postgres-db
         user: admin
         dbname: keycloak
       password:
