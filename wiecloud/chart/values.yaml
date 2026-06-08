@@ -125,7 +125,7 @@ applications:
 
   nextcloud:
     deploy: true
-    version: 1.0.0-implement-cnpg-7997102
+    version: 1.0.0-implement-cnpg-39f5e73
     restores:
       - name: nextcloud-restore
         enabled: false
@@ -157,7 +157,7 @@ infrastructure:
 
   cnpg:
     deploy: true
-    version: 0.0.0-implement-cnpg-7997102
+    version: 0.0.0-implement-cnpg-39f5e73
     seaweedfs:
       backup:
         enabled: true
@@ -200,7 +200,7 @@ infrastructure:
 
   k8up:
     deploy: true
-    version: 1.0.4-implement-cnpg-7997102
+    version: 1.0.4-implement-cnpg-39f5e73
 
   keycloak:
     deploy: true
