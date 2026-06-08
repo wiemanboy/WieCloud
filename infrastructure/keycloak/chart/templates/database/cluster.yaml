@@ -6,54 +6,31 @@ spec:
   instances: 1
 
   bootstrap:
+    {{ if not .Values.cnpg.restore }}
     initdb:
       database: keycloak
-      import:
-        type: microservice
-        databases:
-          - keycloak
-        source:
-          externalCluster: postgres-sts
+    {{ end }}
+    {{ if .Values.cnpg.restore }}
+    recovery:
+      source: source
+    {{ end }}
 
   storage:
     size: 2Gi
 
+  {{ if not .Values.cnpg.restore }}
+  plugins:
+  - name: barman-cloud.cloudnative-pg.io
+    isWALArchiver: true
+    parameters:
+      barmanObjectName: cnpg-backup-s3
+  {{ end }}
+  {{ if .Values.cnpg.restore }}
   externalClusters:
-    - name:  postgres-sts
-      connectionParameters:
-        host: postgres-db
-        user: admin
-        dbname: keycloak
-      password:
-        name: keycloak-db-credentials
-        key: password
-
-  # bootstrap:
-  #   {{ if not .Values.cnpg.restore }}
-  #   initdb:
-  #     database: keycloak
-  #   {{ end }}
-  #   {{ if .Values.cnpg.restore }}
-  #   recovery:
-  #     source: source
-  #   {{ end }}
-
-  # storage:
-  #   size: 2Gi
-
-  # {{ if not .Values.cnpg.restore }}
-  # plugins:
-  # - name: barman-cloud.cloudnative-pg.io
-  #   isWALArchiver: true
-  #   parameters:
-  #     barmanObjectName: cnpg-backup-s3
-  # {{ end }}
-  # {{ if .Values.cnpg.restore }}
-  # externalClusters:
-  # - name: source
-  #   plugin:
-  #     name: barman-cloud.cloudnative-pg.io
-  #     parameters:
-  #       barmanObjectName: cnpg-backup-s3
-  #       serverName: keycloak-postgres-cluster
-  # {{ end }}
+  - name: source
+    plugin:
+      name: barman-cloud.cloudnative-pg.io
+      parameters:
+        barmanObjectName: cnpg-backup-s3
+        serverName: keycloak-postgres-cluster
+  {{ end }}
