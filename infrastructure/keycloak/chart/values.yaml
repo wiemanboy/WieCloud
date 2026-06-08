@@ -1,12 +1,12 @@
 keycloak:
   db:
     vendor: postgres
-    host: postgres-db
+    host: keycloak-postgres-cluster-rw
     username:
-      secret: keycloak-db-credentials
+      secret: keycloak-postgres-cluster-app
       key: username
     password:
-      secret: keycloak-db-credentials
+      secret: keycloak-postgres-cluster-app
       key: password
   clientCreationPermissions:
     - name: argocd

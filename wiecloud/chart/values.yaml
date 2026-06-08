@@ -211,7 +211,7 @@ infrastructure:
       - name: grafana
         namespace: prometheus
     cnpg:
-      restore: true
+      restore: false
     restores:
       - name: tfstate-restore
         enabled: false
