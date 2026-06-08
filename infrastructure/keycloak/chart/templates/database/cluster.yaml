@@ -6,8 +6,8 @@ spec:
   instances: 1
 
   bootstrap:
-    initdb:
-      database: keycloak
+    # initdb:
+    #   database: keycloak
     recovery:
       source: source
 
