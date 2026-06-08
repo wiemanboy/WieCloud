@@ -1,0 +1,36 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: nextcloud-postgres-cluster
+spec:
+  instances: 1
+
+  bootstrap:
+    {{ if not .Values.cnpg.restore }}
+    initdb:
+      database: nextcloud
+    {{ end }}
+    {{ if .Values.cnpg.restore }}
+    recovery:
+      source: source
+    {{ end }}
+
+  storage:
+    size: 5Gi
+
+  {{ if not .Values.cnpg.restore }}
+  plugins:
+  - name: barman-cloud.cloudnative-pg.io
+    isWALArchiver: true
+    parameters:
+      barmanObjectName: cnpg-backup-s3
+  {{ end }}
+  {{ if .Values.cnpg.restore }}
+  externalClusters:
+  - name: source
+    plugin:
+      name: barman-cloud.cloudnative-pg.io
+      parameters:
+        barmanObjectName: cnpg-backup-s3
+        serverName: nextcloud-postgres-cluster
+  {{ end }}

@@ -1,12 +1,12 @@
 seaweedfs:
+  backup:
+    enabled: true
+    restore:
+      enabled: false
   name: backup-s3
   endpoint: k8up.s3.example.com
   secret:
-    name: local-backup-s3-config
-
-k8up:
-  k8up:
-    skipWithoutAnnotation: true
+    name: cnpg-backup-s3-config
 
 network:
   hostname: example.com

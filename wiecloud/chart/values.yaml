@@ -125,7 +125,9 @@ applications:
 
   nextcloud:
     deploy: true
-    version: 0.2.3
+    version: 1.0.0
+    cnpg:
+      restore: false
     restores:
       - name: nextcloud-restore
         enabled: false
@@ -133,12 +135,6 @@ applications:
         snapshot: ""
         claim:
           name: nextcloud-nextcloud
-      - name: postgresql-restore
-        enabled: false
-        fromBackup: local
-        snapshot: ""
-        claim:
-          name: data-postgresql-db-0
 
   website:
     deploy: true
@@ -149,11 +145,25 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.3.3
+    version: 0.0.0
 
   certmanager:
     deploy: true
     version: 0.2.5
+
+  cnpg:
+    deploy: true
+    version: 0.0.0
+    seaweedfs:
+      backup:
+        enabled: true
+    restores:
+      - name: seaweed-restore
+        enabled: false
+        fromBackup: local
+        snapshot: ""
+        claim:
+          name: seaweed-backup
 
   envoygateway:
     deploy: true
@@ -186,11 +196,11 @@ infrastructure:
 
   k8up:
     deploy: true
-    version: 1.0.3
+    version: 1.0.4
 
   keycloak:
     deploy: true
-    version: 2.1.1
+    version: 3.0.0
     clientCreationPermissions:
       - name: argocd
         namespace: argocd
@@ -200,13 +210,9 @@ infrastructure:
         namespace: nextcloud
       - name: grafana
         namespace: prometheus
+    cnpg:
+      restore: false
     restores:
-      - name: postgresql-restore
-        enabled: false
-        fromBackup: local
-        snapshot: ""
-        claim:
-          name: data-postgresql-db-0
       - name: tfstate-restore
         enabled: false
         fromBackup: local
@@ -216,7 +222,7 @@ infrastructure:
 
   longhorn:
     deploy: true
-    version: 0.0.9
+    version: 0.0.0
 
   metallb:
     deploy: true
@@ -269,12 +275,6 @@ images:
       registry: docker.io
       repository: keycloak/keycloak
       version: 26.6.2
-
-  postgres:
-    image:
-      registry: docker.io
-      repository: library/postgres
-      version: 18.4
 
   rconcli:
     image:

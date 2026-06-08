@@ -1,12 +1,12 @@
 keycloak:
   db:
     vendor: postgres
-    host: postgres-db
+    host: keycloak-postgres-cluster-rw
     username:
-      secret: keycloak-db-credentials
+      secret: keycloak-postgres-cluster-app
       key: username
     password:
-      secret: keycloak-db-credentials
+      secret: keycloak-postgres-cluster-app
       key: password
   clientCreationPermissions:
     - name: argocd
@@ -36,14 +36,11 @@ images:
       repository: keycloak/keycloak
       version: 26.6.2
 
-  postgres:
-    image:
-      registry: example.com
-      repository: library/postgres
-      version: 18.4
-
   tofudeployer:
     image:
       registry: example.com
       repository: products/tofudeployer
       version: 0.0.0
+
+cnpg:
+  restore: false

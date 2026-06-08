@@ -1,33 +1,29 @@
-{{- with .Values.applications.nextcloud -}}
+{{- with .Values.infrastructure.cnpg -}}
 {{- if .deploy -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nextcloud
+  name: cnpg
   namespace: argocd
 spec:
   source:
-    chart: nextcloud
-    repoURL: {{ $.Values.applications.repository }}
+    chart: cnpg
+    repoURL: {{ $.Values.infrastructure.repository }}
     targetRevision: {{ .version }}
     helm:
       valuesObject:
         network: {{ toYaml $.Values.network | nindent 10 }}
-        auth: {{ toYaml $.Values.auth | nindent 10 }}
         backups: {{ toYaml $.Values.backups | nindent 10 }}
         restores: {{ toYaml .restores | nindent 10 }}
 
-        nextcloud:
-          nextcloud:
-            host: next.{{ $.Values.network.hostname }}
-
-        cnpg:
-          restore: {{ .cnpg.restore }}
-
+        seaweedfs:
+          endpoint: cnpg.s3.{{ $.Values.network.hostname }}
+          backup:
+            enabled: {{ .seaweedfs.backup.enabled }}
   destination:
-    namespace: nextcloud
+    namespace: cnpg
     server: https://kubernetes.default.svc
-  project: applications
+  project: infrastructure
   syncPolicy:
     automated:
       prune: true

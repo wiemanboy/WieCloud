@@ -19,10 +19,10 @@ nextcloud:
   externalDatabase:
     enabled: true
     type: postgresql
-    host: postgresql-db-service
+    host: nextcloud-postgres-cluster-rw
     existingSecret:
       enabled: true
-      secretName: nextcloud-db-credentials
+      secretName: nextcloud-postgres-cluster-app
       usernameKey: username
       passwordKey: password
 
@@ -118,9 +118,5 @@ auth:
     provider: Example
     endpoint: https://example.com
 
-images:
-  postgres:
-    image:
-      registry: example.com
-      repository: library/postgres
-      version: 18.4
+cnpg:
+  restore: false
