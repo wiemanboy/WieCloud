@@ -36,12 +36,6 @@ images:
       repository: keycloak/keycloak
       version: 26.6.2
 
-  postgres:
-    image:
-      registry: example.com
-      repository: library/postgres
-      version: 18.4
-
   tofudeployer:
     image:
       registry: example.com

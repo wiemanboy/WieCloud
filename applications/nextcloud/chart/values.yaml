@@ -118,12 +118,5 @@ auth:
     provider: Example
     endpoint: https://example.com
 
-images:
-  postgres:
-    image:
-      registry: example.com
-      repository: library/postgres
-      version: 18.4
-
 cnpg:
   restore: false
