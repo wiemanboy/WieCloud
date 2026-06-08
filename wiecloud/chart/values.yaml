@@ -161,8 +161,6 @@ infrastructure:
     seaweedfs:
       backup:
         enabled: true
-        restore:
-          enabled: true
     restores:
       - name: seaweed-restore
         enabled: false
