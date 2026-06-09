@@ -19,13 +19,16 @@ spec:
       resources: ["pods"]
 
   mutations:
-    - patchType: ApplyConfiguration
-      applyConfiguration:
-        expression: >
-          Object{
-            metadata: Object.metadata{
-              labels: Object.metadata.labels{
-                foo: "bar"
+  - patchType: ApplyConfiguration
+    applyConfiguration:
+      expression: |
+        Object{
+          spec: Object.spec{
+            securityContext: Object.spec.securityContext{
+              runAsNonRoot: true,
+              seccompProfile: Object.spec.securityContext.seccompProfile{
+                type: "RuntimeDefault"
               }
-            }
+            },
           }
+        }
