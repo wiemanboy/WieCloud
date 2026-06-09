@@ -1,0 +1,27 @@
+apiVersion: policies.kyverno.io/v1
+kind: ValidatingPolicy
+metadata:
+  name: has-requests
+spec:
+  validationActions:
+    - Warn
+    - Audit
+  matchConstraints:
+    resourceRules:
+      - apiGroups: ['']
+        apiVersions: [v1]
+        operations: [CREATE, UPDATE]
+        resources: [pods]
+  validations:
+    - message: "All containers must define CPU requests and memory requests/limits"
+      expression: >
+        object.spec.containers.all(containers,
+          has(containers.resources) &&
+
+          has(containers.resources.requests) &&
+          has(containers.resources.requests.cpu) &&
+          has(containers.resources.requests.memory)
+
+          has(containers.resources.limits) &&
+          has(containers.resources.limits.memory)
+        )
