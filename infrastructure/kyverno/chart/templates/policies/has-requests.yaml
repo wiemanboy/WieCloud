@@ -20,7 +20,7 @@ spec:
 
           has(containers.resources.requests) &&
           has(containers.resources.requests.cpu) &&
-          has(containers.resources.requests.memory)
+          has(containers.resources.requests.memory) &&
 
           has(containers.resources.limits) &&
           has(containers.resources.limits.memory)
