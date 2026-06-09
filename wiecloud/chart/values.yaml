@@ -222,7 +222,7 @@ infrastructure:
 
   kyverno:
     deploy: true
-    version: 0.0.0
+    version: 0.0.0-implement-kyverno-6964a82
 
   longhorn:
     deploy: true
