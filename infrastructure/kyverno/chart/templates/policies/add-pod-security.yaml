@@ -19,30 +19,13 @@ spec:
       resources: ["pods"]
 
   mutations:
-  - patchType: ApplyConfiguration
-    applyConfiguration:
-      expression: |
-        Object{
-          spec: Object.spec{
-            securityContext: Object.spec.securityContext{
-              runAsNonRoot: true,
-              seccompProfile: Object.spec.securityContext.seccompProfile{
-                type: "RuntimeDefault"
+    - patchType: ApplyConfiguration
+      applyConfiguration:
+        expression: >
+          Object{
+            metadata: Object.metadata{
+              labels: Object.metadata.labels{
+                foo: "bar"
               }
-            },
-            containers: request.object.spec.containers.map(c,
-              Object{
-                securityContext: Object{
-                  allowPrivilegeEscalation: false,
-                  runAsNonRoot: true,
-                  capabilities: Object{
-                    drop: ["ALL"]
-                  },
-                  seccompProfile: Object{
-                    type: "RuntimeDefault"
-                  }
-                }
-              }
-            )
+            }
           }
-        }
