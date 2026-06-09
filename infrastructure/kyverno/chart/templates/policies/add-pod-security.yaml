@@ -13,37 +13,36 @@ spec:
         values:
         - "*-system"
     resourceRules:
-      - apiGroups: [""]
-        apiVersions: ["v1"]
-        operations: ["CREATE"]
-        resources: ["pods"]
+    - apiGroups: [""]
+      apiVersions: ["v1"]
+      operations: ["CREATE"]
+      resources: ["pods"]
 
   mutations:
-    - patchType: ApplyConfiguration
-      applyConfiguration:
-        expression: >
-          Object{
-            spec: Object.spec{
-              securityContext: Object.spec.securityContext{
-                runAsNonRoot: true,
-                seccompProfile: Object.spec.securityContext.seccompProfile{
-                  type: "RuntimeDefault"
-                }
-              },
-              containers: Object.spec.containers.map(c,
-                Object{
-                  name: c.name,
-                  securityContext: Object.spec.containers[c.name].securityContext{
-                    allowPrivilegeEscalation: false,
-                    runAsNonRoot: true,
-                    capabilities: Object.spec.containers[c.name].securityContext.capabilities{
-                      drop: ["ALL"]
-                    },
-                    seccompProfile: Object.spec.containers[c.name].securityContext.seccompProfile{
-                      type: "RuntimeDefault"
-                    }
+  - patchType: ApplyConfiguration
+    applyConfiguration:
+      expression: |
+        Object{
+          spec: Object.spec{
+            securityContext: Object.spec.securityContext{
+              runAsNonRoot: true,
+              seccompProfile: Object.spec.securityContext.seccompProfile{
+                type: "RuntimeDefault"
+              }
+            },
+            containers: request.object.spec.containers.map(c,
+              Object{
+                securityContext: Object{
+                  allowPrivilegeEscalation: false,
+                  runAsNonRoot: true,
+                  capabilities: Object{
+                    drop: ["ALL"]
+                  },
+                  seccompProfile: Object{
+                    type: "RuntimeDefault"
                   }
                 }
-              )
-            }
+              }
+            )
           }
+        }
