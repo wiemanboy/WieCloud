@@ -1,0 +1,49 @@
+apiVersion: policies.kyverno.io/v1
+kind: NamespacedMutatingPolicy
+metadata:
+  name: add-pod-security
+  namespace: default
+
+spec:
+  matchConstraints:
+    namespaceSelector:
+      matchExpressions:
+      - key: kubernetes.io/metadata.name
+        operator: DoesNotMatch
+        values:
+        - "*-system"
+    resourceRules:
+      - apiGroups: [""]
+        apiVersions: ["v1"]
+        operations: ["CREATE"]
+        resources: ["pods"]
+
+  mutations:
+    - patchType: ApplyConfiguration
+      applyConfiguration:
+        expression: >
+          Object{
+            spec: Object.spec{
+              securityContext: Object.spec.securityContext{
+                runAsNonRoot: true,
+                seccompProfile: Object.spec.securityContext.seccompProfile{
+                  type: "RuntimeDefault"
+                }
+              },
+              containers: Object.spec.containers.map(c,
+                Object{
+                  name: c.name,
+                  securityContext: Object.spec.containers[c.name].securityContext{
+                    allowPrivilegeEscalation: false,
+                    runAsNonRoot: true,
+                    capabilities: Object.spec.containers[c.name].securityContext.capabilities{
+                      drop: ["ALL"]
+                    },
+                    seccompProfile: Object.spec.containers[c.name].securityContext.seccompProfile{
+                      type: "RuntimeDefault"
+                    }
+                  }
+                }
+              )
+            }
+          }

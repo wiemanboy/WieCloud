@@ -1,7 +1,7 @@
 apiVersion: policies.kyverno.io/v1
 kind: ValidatingPolicy
 metadata:
-  name: has-requests
+  name: container-has-requests
 spec:
   validationActions:
     - Warn
