@@ -103,12 +103,12 @@ applications:
           name: minecraft-datadir
     world:
       name: minecraft-for-the-gurls
-      version: 1.20.1
+      version: 1.21.1
     server:
       launcher: AUTO_CURSEFORGE
-      version: java21
+      version: java25
     bluemap:
-      file: https://www.curseforge.com/minecraft/mc-mods/bluemap/files/7057487
+      file: https://www.curseforge.com/minecraft/mc-mods/bluemap/files/6239407
     mods:
       voicechat:
         enabled: true
@@ -118,7 +118,7 @@ applications:
       curseforge:
         zip:
           deploy: true
-          file: https://next.wieman.cloud/public.php/dav/files/HxMebrnGZSXoSQF/Jarno%20server-1.2.0.zip
+          file: https://next.wieman.cloud/public.php/dav/files/kqoS4LkXPAydQBf
         pageUrl: ""
         excludeMods: []
         includeMods: []
