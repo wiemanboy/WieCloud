@@ -102,7 +102,7 @@ applications:
         claim:
           name: minecraft-datadir
     world:
-      name: cobble_create
+      name: cobble-create
       version: 1.21.1
     server:
       launcher: AUTO_CURSEFORGE
