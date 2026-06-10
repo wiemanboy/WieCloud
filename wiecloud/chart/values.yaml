@@ -145,7 +145,7 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.0.0
+    version: 0.3.3
 
   certmanager:
     deploy: true
@@ -222,7 +222,7 @@ infrastructure:
 
   longhorn:
     deploy: true
-    version: 0.0.0
+    version: 0.0.9
 
   metallb:
     deploy: true
