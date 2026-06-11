@@ -30,5 +30,11 @@ spec:
                 type: "RuntimeDefault"
               }
             },
+            containers: object.spec.containers.map(container, Object.spec.containers{
+              name: container.name,
+              securityContext: Object.spec.containers.securityContext{
+                allowPrivilegeEscalation: false
+              }
+            })
           }
         }

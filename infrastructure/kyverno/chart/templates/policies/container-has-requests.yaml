@@ -15,13 +15,13 @@ spec:
   validations:
     - message: "All containers must define CPU requests and memory requests/limits"
       expression: >
-        object.spec.containers.all(containers,
+        object.spec.containers.all(container,
           has(containers.resources) &&
 
-          has(containers.resources.requests) &&
-          has(containers.resources.requests.cpu) &&
-          has(containers.resources.requests.memory) &&
+          has(container.resources.requests) &&
+          has(container.resources.requests.cpu) &&
+          has(container.resources.requests.memory) &&
 
-          has(containers.resources.limits) &&
-          has(containers.resources.limits.memory)
+          has(container.resources.limits) &&
+          has(container.resources.limits.memory)
         )
