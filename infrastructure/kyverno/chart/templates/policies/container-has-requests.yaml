@@ -16,7 +16,7 @@ spec:
     - message: "All containers must define CPU requests and memory requests/limits"
       expression: >
         object.spec.containers.all(container,
-          has(containers.resources) &&
+          has(container.resources) &&
 
           has(container.resources.requests) &&
           has(container.resources.requests.cpu) &&
