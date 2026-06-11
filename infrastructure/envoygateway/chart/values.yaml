@@ -12,3 +12,12 @@ network:
         kind: ClusterIssuer
       hostnames:
         - "example.com"
+
+gateway-helm:
+  deployment:
+    resources:
+      limits:
+        memory: 256Mi
+      requests:
+        cpu: 50m
+        memory: 128Mi
