@@ -54,10 +54,10 @@ spec:
               mountPath: /etc/seaweedfs
           resources:
             limits:
-              memory: 64Mi
+              memory: 128Mi
             requests:
               cpu: 1m
-              memory: 32Mi
+              memory: 64Mi
 
       volumes:
         - name: backup
