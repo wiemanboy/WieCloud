@@ -1,0 +1,29 @@
+{{- with .Values.infrastructure.kyverno -}}
+{{- if .deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kyverno
+  namespace: argocd
+spec:
+  source:
+    chart: kyverno
+    repoURL: {{ $.Values.infrastructure.repository }}
+    targetRevision: {{ .version }}
+    helm:
+      valuesObject:
+        network: {{ toYaml $.Values.network | nindent 10 }}
+
+  destination:
+    namespace: kyverno
+    server: https://kubernetes.default.svc
+  project: infrastructure
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
+{{- end -}}
+{{- end -}}

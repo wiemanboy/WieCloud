@@ -220,6 +220,10 @@ infrastructure:
         claim:
           name: tofudeployer-state
 
+  kyverno:
+    deploy: true
+    version: 0.0.0
+
   longhorn:
     deploy: true
     version: 0.0.9
