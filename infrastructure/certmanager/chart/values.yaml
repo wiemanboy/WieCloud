@@ -1,3 +1,27 @@
+cert-manager:
+  resources:
+    limits:
+      memory: 76Mi
+    requests:
+      cpu: 1m
+      memory: 64Mi
+
+  chaininjector:
+    resources:
+      limits:
+        memory: 128Mi
+      requests:
+        cpu: 1m
+        memory: 76Mi
+
+  webhook:
+    resources:
+      limits:
+        memory: 64Mi
+      requests:
+        cpu: 1m
+        memory: 32Mi
+
 network:
   hostname: wieman.cloud
   externalIp: 85.148.81.86
