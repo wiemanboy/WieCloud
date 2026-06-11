@@ -145,7 +145,7 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.3.1-update-resource-requests-75619f7
+    version: 0.3.1-update-resource-requests-0f51c3c
 
   certmanager:
     deploy: true
