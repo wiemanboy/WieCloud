@@ -52,7 +52,13 @@ spec:
               mountPath: /backup
             - name: config
               mountPath: /etc/seaweedfs
-          resources: {}
+          resources:
+            limits:
+              memory: 64Mi
+            requests:
+              cpu: 1m
+              memory: 32Mi
+
       volumes:
         - name: backup
           persistentVolumeClaim:
