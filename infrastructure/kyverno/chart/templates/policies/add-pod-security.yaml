@@ -6,12 +6,6 @@ metadata:
 
 spec:
   matchConstraints:
-    namespaceSelector:
-      matchExpressions:
-      - key: kubernetes.io/metadata.name
-        operator: DoesNotMatch
-        values:
-        - "*-system"
     resourceRules:
     - apiGroups: [""]
       apiVersions: ["v1"]
