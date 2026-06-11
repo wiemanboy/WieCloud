@@ -145,11 +145,11 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.3.1-update-resource-requests-d9e32ba
+    version: 0.3.1-update-resource-requests-b292046
 
   certmanager:
     deploy: true
-    version: 0.2.6-update-resource-requests-d9e32ba
+    version: 0.2.6-update-resource-requests-b292046
 
   cnpg:
     deploy: true
