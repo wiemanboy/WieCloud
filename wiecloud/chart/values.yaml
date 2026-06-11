@@ -145,15 +145,15 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.3.1-update-resource-requests-b292046
+    version: 0.0.1-update-resource-requests-e97bad9
 
   certmanager:
     deploy: true
-    version: 0.2.6-update-resource-requests-b292046
+    version: 0.2.6-update-resource-requests-e97bad9
 
   cnpg:
     deploy: true
-    version: 0.0.0
+    version: 0.0.1-update-resource-requests-e97bad9
     seaweedfs:
       backup:
         enabled: true
@@ -222,7 +222,7 @@ infrastructure:
 
   kyverno:
     deploy: true
-    version: 0.0.0
+    version: 0.0.1-update-resource-requests-e97bad9
 
   longhorn:
     deploy: true
