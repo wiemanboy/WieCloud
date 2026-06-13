@@ -15,3 +15,10 @@ external-dns:
     - gateway-tcproute
     - gateway-tlsroute
     - gateway-udproute
+
+  resources:
+    limits:
+      memory: 72Mi
+    requests:
+      cpu: 1m
+      memory: 56Mi
