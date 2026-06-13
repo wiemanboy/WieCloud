@@ -8,7 +8,7 @@ spec:
     replicas: 1
     volumeSizeLimitMB: 1024
     limits:
-      memory: 56Mi
+      memory: 64Mi
     requests:
       cpu: 1m
       memory: 32Mi
@@ -19,7 +19,7 @@ spec:
       memory: 128Mi
     requests:
       cpu: 5m
-      memory: 56Mi
+      memory: 64Mi
       storage: 100Gi
 
   filer:

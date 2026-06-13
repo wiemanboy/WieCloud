@@ -1,7 +1,7 @@
 cert-manager:
   resources:
     limits:
-      memory: 76Mi
+      memory: 128Mi
     requests:
       cpu: 1m
       memory: 64Mi
@@ -9,10 +9,10 @@ cert-manager:
   cainjector:
     resources:
       limits:
-        memory: 128Mi
+        memory: 144Mi
       requests:
         cpu: 1m
-        memory: 76Mi
+        memory: 72Mi
 
   webhook:
     resources:

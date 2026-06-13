@@ -4,7 +4,7 @@ cloudnative-pg:
       memory: 128Mi
     requests:
       cpu: 5m
-      memory: 56Mi
+      memory: 64Mi
 
 plugin-barman-cloud:
   resources:
@@ -12,7 +12,7 @@ plugin-barman-cloud:
       memory: 128Mi
     requests:
       cpu: 1m
-      memory: 56Mi
+      memory: 64Mi
 
 seaweedfs:
   backup:
