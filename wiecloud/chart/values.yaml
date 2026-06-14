@@ -96,11 +96,11 @@ applications:
     version: 1.2.0
     restores:
       - name: minecraft-restore
-        enabled: false
+        enabled: true
         fromBackup: local
-        snapshot: ""
+        snapshot: "b21ede93"
         claim:
-          name: minecraft-datadir
+          name: restore-pvc
     world:
       name: cobble-create
       version: 1.21.1
