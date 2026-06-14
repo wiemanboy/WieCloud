@@ -145,15 +145,15 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.0.1-update-resource-requests-ce080fa
+    version: 0.0.1-update-resource-requests-e4cfbb1
 
   certmanager:
     deploy: true
-    version: 0.2.6-update-resource-requests-ce080fa
+    version: 0.2.6-update-resource-requests-e4cfbb1
 
   cnpg:
     deploy: true
-    version: 0.0.1-update-resource-requests-ce080fa
+    version: 0.0.1-update-resource-requests-e4cfbb1
     seaweedfs:
       backup:
         enabled: true
@@ -167,15 +167,15 @@ infrastructure:
 
   envoygateway:
     deploy: true
-    version: 0.1.1-update-resource-requests-ce080fa
+    version: 0.1.1-update-resource-requests-e4cfbb1
 
   externaldns:
     deploy: true
-    version: 0.1.2-update-resource-requests-ce080fa
+    version: 0.1.2-update-resource-requests-e4cfbb1
 
   externalsecrets:
     deploy: true
-    version: 0.0.1-update-resource-requests-ce080fa
+    version: 0.0.1-update-resource-requests-e4cfbb1
 
   harbor:
     deploy: true
@@ -222,7 +222,7 @@ infrastructure:
 
   kyverno:
     deploy: true
-    version: 0.0.1-update-resource-requests-ce080fa
+    version: 0.0.1-update-resource-requests-e4cfbb1
 
   longhorn:
     deploy: true
