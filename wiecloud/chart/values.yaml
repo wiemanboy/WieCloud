@@ -118,7 +118,7 @@ applications:
       curseforge:
         zip:
           deploy: true
-          file: https://next.wieman.cloud/remote.php/dav/files/3ad95853d48cc9b2d53706d983426a075f55cd710021b05615873ef36eb74fb1/Minecraft/Mods/cobble_create_1.0.0.zip
+          file: https://next.wieman.cloud/public.php/dav/files/9cNAog5wjTWzPKb
         pageUrl: ""
         excludeMods: []
         includeMods: []
@@ -145,15 +145,15 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.0.1-update-resource-requests-e4cfbb1
+    version: 0.0.1-update-resource-requests-9f87fd4
 
   certmanager:
     deploy: true
-    version: 0.2.6-update-resource-requests-e4cfbb1
+    version: 0.2.6-update-resource-requests-9f87fd4
 
   cnpg:
     deploy: true
-    version: 0.0.1-update-resource-requests-e4cfbb1
+    version: 0.0.1-update-resource-requests-9f87fd4
     seaweedfs:
       backup:
         enabled: true
@@ -167,15 +167,15 @@ infrastructure:
 
   envoygateway:
     deploy: true
-    version: 0.1.1-update-resource-requests-e4cfbb1
+    version: 0.1.1-update-resource-requests-9f87fd4
 
   externaldns:
     deploy: true
-    version: 0.1.2-update-resource-requests-e4cfbb1
+    version: 0.1.2
 
   externalsecrets:
     deploy: true
-    version: 0.0.1-update-resource-requests-e4cfbb1
+    version: 0.0.1
 
   harbor:
     deploy: true
@@ -222,7 +222,7 @@ infrastructure:
 
   kyverno:
     deploy: true
-    version: 0.0.1-update-resource-requests-e4cfbb1
+    version: 0.0.1-update-resource-requests-9f87fd4
 
   longhorn:
     deploy: true
