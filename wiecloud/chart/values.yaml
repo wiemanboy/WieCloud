@@ -118,7 +118,7 @@ applications:
       curseforge:
         zip:
           deploy: true
-          file: https://next.wieman.cloud/public.php/dav/files/kqoS4LkXPAydQBf
+          file: https://next.wieman.cloud/remote.php/dav/files/3ad95853d48cc9b2d53706d983426a075f55cd710021b05615873ef36eb74fb1/Minecraft/Mods/cobble_create_1.0.0.zip
         pageUrl: ""
         excludeMods: []
         includeMods: []
