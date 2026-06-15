@@ -19,9 +19,9 @@ spec:
           expose:
             route:
               parentRefs:
-                - name: {{ .Values.network.gateway.name }}
-                  sectionName: {{ .Values.network.gateway.listener }}
-                  namespace: {{ .Values.network.gateway.namespace }}
+                - name: {{ $.Values.network.gateway.name }}
+                  sectionName: {{ $.Values.network.gateway.listener }}
+                  namespace: {{ $.Values.network.gateway.namespace }}
               hosts: [https://harbor.{{ $.Values.network.hostname }}]
           externalURL: https://harbor.{{ $.Values.network.hostname }}
           core:
