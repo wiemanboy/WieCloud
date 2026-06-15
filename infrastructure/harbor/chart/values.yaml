@@ -9,14 +9,7 @@ harbor:
         annotations:
           k8up.io/backup: "true"
   expose:
-    type: NodePort
-    tls:
-      enabled: false
+    route:
+      parentRefs: []
+      hosts: []
   externalURL: https://harbor.example.com
-
-network:
-  hostname: example.com
-  gateway:
-    name: traefik-gateway
-    listener: websecure
-    namespace: gateway
