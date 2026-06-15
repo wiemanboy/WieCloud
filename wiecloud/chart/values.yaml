@@ -145,15 +145,15 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.0.1-update-resource-requests-7730a5c
+    version: 0.3.1
 
   certmanager:
     deploy: true
-    version: 0.2.6-update-resource-requests-7730a5c
+    version: 0.2.6
 
   cnpg:
     deploy: true
-    version: 0.0.1-update-resource-requests-7730a5c
+    version: 0.0.1
     seaweedfs:
       backup:
         enabled: true
@@ -167,15 +167,15 @@ infrastructure:
 
   envoygateway:
     deploy: true
-    version: 0.1.1-update-resource-requests-7730a5c
+    version: 0.1.1
 
   externaldns:
     deploy: true
-    version: 0.1.2-update-resource-requests-7730a5c
+    version: 0.1.2
 
   externalsecrets:
     deploy: true
-    version: 0.0.1-update-resource-requests-7730a5c
+    version: 0.0.1
 
   harbor:
     deploy: true
