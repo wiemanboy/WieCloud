@@ -19,8 +19,8 @@ harbor:
 
   portal:
     resources:
+      limits:
+        memory: 32Mi
       requests:
         cpu: 1m
-        memory: 32Mi
-      limits:
         memory: 16Mi
