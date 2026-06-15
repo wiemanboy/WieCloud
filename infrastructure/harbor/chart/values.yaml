@@ -10,7 +10,17 @@ harbor:
           k8up.io/backup: "true"
   expose:
     type: route
+    tls:
+      enabled: false
     route:
       parentRefs: []
       hosts: []
   externalURL: https://harbor.example.com
+
+  portal:
+    resources:
+      requests:
+        cpu: 1m
+        memory: 32Mi
+      limits:
+        memory: 16Mi
