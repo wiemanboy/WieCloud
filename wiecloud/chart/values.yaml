@@ -145,15 +145,15 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.3.1-update-resource-requests-ea1f16b
+    version: 0.3.1-update-resource-requests-cec1390
 
   certmanager:
     deploy: true
-    version: 0.2.6-update-resource-requests-ea1f16b
+    version: 0.2.6-update-resource-requests-cec1390
 
   cnpg:
     deploy: true
-    version: 0.0.1-update-resource-requests-ea1f16b
+    version: 0.0.1-update-resource-requests-cec1390
     seaweedfs:
       backup:
         enabled: true
@@ -167,19 +167,19 @@ infrastructure:
 
   envoygateway:
     deploy: true
-    version: 0.1.1-update-resource-requests-ea1f16b
+    version: 0.1.1-update-resource-requests-cec1390
 
   externaldns:
     deploy: true
-    version: 0.1.3-update-resource-requests-ea1f16b
+    version: 0.1.3-update-resource-requests-cec1390
 
   externalsecrets:
     deploy: true
-    version: 0.0.2-update-resource-requests-ea1f16b
+    version: 0.0.2-update-resource-requests-cec1390
 
   harbor:
     deploy: true
-    version: 1.3.4-update-resource-requests-ea1f16b
+    version: 1.3.4-update-resource-requests-cec1390
     restores:
       - name: harbor-registry-restore
         enabled: false
