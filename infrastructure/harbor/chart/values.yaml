@@ -28,10 +28,10 @@ harbor:
   core:
     resources:
       limits:
-        memory: 32Mi
+        memory: 256Mi
       requests:
         cpu: 30m
-        memory: 16Mi
+        memory: 128Mi
 
   jobservice:
     resources:
@@ -66,17 +66,19 @@ harbor:
         memory: 128Mi
 
   database:
-    resources:
-      limits:
-        memory: 256Mi
-      requests:
-        cpu: 20m
-        memory: 128Mi
+    internal:
+      resources:
+        limits:
+          memory: 256Mi
+        requests:
+          cpu: 20m
+          memory: 128Mi
 
   redis:
-    resources:
-      limits:
-        memory: 32Mi
-      requests:
-        cpu: 5m
-        memory: 16Mi
+    internal:
+      resources:
+        limits:
+          memory: 32Mi
+        requests:
+          cpu: 5m
+          memory: 16Mi
