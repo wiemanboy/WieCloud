@@ -58,6 +58,12 @@ spec:
     syncOptions:
     - CreateNamespace=true
     - ServerSideApply=true
+  ignoreDifferences:
+    - group: ""
+      kind: Secret
+      namespace: harbor
+      jsonPointers:
+        - /data
 {{- end -}}
 {{- end -}}
 
