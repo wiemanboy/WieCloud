@@ -9,6 +9,7 @@ harbor:
         annotations:
           k8up.io/backup: "true"
   expose:
+    type: route
     route:
       parentRefs: []
       hosts: []
