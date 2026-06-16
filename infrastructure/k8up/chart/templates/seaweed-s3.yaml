@@ -7,10 +7,21 @@ spec:
   master:
     replicas: 1
     volumeSizeLimitMB: 1024
+    limits:
+      memory: 64Mi
+    requests:
+      cpu: 1m
+      memory: 32Mi
+
   volume:
     replicas: 1
+    limits:
+      memory: 128Mi
     requests:
+      cpu: 25m
+      memory: 64Mi
       storage: 100Gi
+
   filer:
     replicas: 1
     persistence:
@@ -27,6 +38,12 @@ spec:
       [leveldb2]
       enabled = true
       dir = "/data/filerldb2"
+    limits:
+      memory: 1024Mi
+    requests:
+      cpu: 100m
+      memory: 512Mi
+
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute

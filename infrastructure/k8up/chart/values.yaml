@@ -8,6 +8,14 @@ k8up:
   k8up:
     skipWithoutAnnotation: true
 
+  resources:
+    limits:
+      memory: 64Mi
+    requests:
+      cpu: 3m
+      memory: 32Mi
+
+
 network:
   hostname: example.com
   gateway:
