@@ -79,7 +79,8 @@ spec:
           limits:
             memory: 2Gi
           requests:
-            memory: 1700Mi
+            cpu: 1
+            memory: 1400Mi
         startupProbe:
           failureThreshold: 600
           httpGet:
