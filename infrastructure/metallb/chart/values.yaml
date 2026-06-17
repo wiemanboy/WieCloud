@@ -27,7 +27,7 @@ metallb:
         requests:
           cpu: 1m
           memory: 8Mi
-    frrReload:
+    frrMetrics:
       resources:
         limits:
           memory: 48Mi
