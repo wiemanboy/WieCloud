@@ -79,6 +79,15 @@ minecraft:
         Size: 20Gi
 
   resources:
+    limits:
+      memory: 1Gi
+    requests:
+      memory: 512Mi
+      cpu: 500m
+
+  resources:
+    limits:
+      memory: 15Gi
     requests:
       memory: 10Gi
       cpu: 2
