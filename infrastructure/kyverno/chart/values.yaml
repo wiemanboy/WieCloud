@@ -1,0 +1,30 @@
+kyverno:
+  admissionController:
+    container:
+      resources:
+        limits:
+          memory: 128Mi
+        requests:
+          cpu: 10m
+          memory: 64Mi
+  backgroundController:
+    resources:
+      limits:
+        memory: 128Mi
+      requests:
+        cpu: 4m
+        memory: 64Mi
+  cleanupController:
+    resources:
+      limits:
+        memory: 128Mi
+      requests:
+        cpu: 3m
+        memory: 64Mi
+  reportsController:
+    resources:
+      limits:
+        memory: 256Mi
+      requests:
+        cpu: 3m
+        memory: 128Mi

@@ -110,8 +110,8 @@ nextcloud:
     limits:
       memory: 1Gi
     requests:
-      memory: 512Mi
       cpu: 250m
+      memory: 512Mi
 
 network:
   hostname: example.com

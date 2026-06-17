@@ -82,15 +82,15 @@ minecraft:
     limits:
       memory: 1Gi
     requests:
-      memory: 512Mi
       cpu: 500m
+      memory: 512Mi
 
   resources:
     limits:
       memory: 15Gi
     requests:
-      memory: 10Gi
       cpu: 2
+      memory: 10Gi
 
   extraVolumes:
     - volumeMounts:
