@@ -106,6 +106,13 @@ nextcloud:
         subPath: nextcloud-client-secret
         readOnly: true
 
+  resources:
+    limits:
+      memory: 1Gi
+    requests:
+      memory: 512Gi
+      cpu: 250m
+
 network:
   hostname: example.com
   gateway:
