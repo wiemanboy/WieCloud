@@ -87,10 +87,10 @@ kube-prometheus-stack:
           cpu: 5m
           memory: 128Mi
 
- kube-state-metrics:
-  resources:
-    limits:
-      memory: 64Mi
-    requests:
-      cpu: 1m
-      memory: 32Mi
+  kube-state-metrics:
+    resources:
+      limits:
+        memory: 256Mi
+      requests:
+        cpu: 5m
+        memory: 128Mi
