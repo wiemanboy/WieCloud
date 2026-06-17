@@ -20,6 +20,7 @@ spec:
         {{ with .Values.images.wireguardserver.image -}}
         image: {{ .registry }}/{{ .repository }}:{{ .version }}
         {{ end -}}
+
         env:
         - name:  SERVERURL
           value: wireguard.{{ .Values.network.hostname }}
@@ -29,14 +30,24 @@ spec:
           value: {{ .Values.vpn.dns | join "," | quote }}
         - name: LOG_CONFS
           value: "false"
+
         securityContext:
           privileged: true
           capabilities:
             add:
               - NET_ADMIN
+
+        resources:
+          limits:
+            memory: 128Mi
+          requests:
+            cpu: 5m
+            memory: 64Mi
+
         volumeMounts:
         - name: config
           mountPath: /config
+
       volumes:
       - name: config
         persistentVolumeClaim:
