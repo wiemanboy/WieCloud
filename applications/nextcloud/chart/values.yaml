@@ -110,7 +110,7 @@ nextcloud:
     limits:
       memory: 1Gi
     requests:
-      memory: 512Gi
+      memory: 512Mi
       cpu: 250m
 
 network:
