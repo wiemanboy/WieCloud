@@ -20,12 +20,13 @@ spec:
 
   retentionPolicy: "14d"
 
-  resources:
-    limits:
-      memory: 128Mi
-    requests:
-      cpu: 10m
-      memory: 64Mi
+  instanceSidecarConfiguration:
+    resources:
+      limits:
+        memory: 128Mi
+      requests:
+        cpu: 10m
+        memory: 64Mi
 ---
 {{ if not .Values.cnpg.restore }}
 apiVersion: postgresql.cnpg.io/v1
