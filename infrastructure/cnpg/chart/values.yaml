@@ -1,3 +1,19 @@
+cloudnative-pg:
+  resources:
+    limits:
+      memory: 128Mi
+    requests:
+      cpu: 5m
+      memory: 64Mi
+
+plugin-barman-cloud:
+  resources:
+    limits:
+      memory: 128Mi
+    requests:
+      cpu: 1m
+      memory: 64Mi
+
 seaweedfs:
   backup:
     enabled: true

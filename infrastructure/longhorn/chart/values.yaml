@@ -1,3 +1,12 @@
+longhorn:
+  longhornManager:
+    resources:
+      limits:
+        memory: 512Mi
+      requests:
+        cpu: 50m
+        memory: 384Mi
+
 network:
   hostname: example.com
   gateway:

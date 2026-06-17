@@ -12,11 +12,17 @@ spec:
     targetRevision: {{ .version }}
     helm:
       valuesObject:
-        network: {{ toYaml $.Values.network | nindent 10 }}
         backups: {{ toYaml $.Values.backups | nindent 10 }}
         restores: {{ toYaml .restores | nindent 10 }}
 
         harbor:
+          expose:
+            route:
+              parentRefs:
+                - name: {{ $.Values.network.gateway.name }}
+                  sectionName: {{ $.Values.network.gateway.listener }}
+                  namespace: {{ $.Values.network.gateway.namespace }}
+              hosts: [harbor.{{ $.Values.network.hostname }}]
           externalURL: https://harbor.{{ $.Values.network.hostname }}
           core:
             extraEnvVars:
@@ -52,6 +58,12 @@ spec:
     syncOptions:
     - CreateNamespace=true
     - ServerSideApply=true
+  ignoreDifferences:
+    - group: ""
+      kind: Secret
+      namespace: harbor
+      jsonPointers:
+        - /data
 {{- end -}}
 {{- end -}}
 

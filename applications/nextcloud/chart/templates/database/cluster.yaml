@@ -18,6 +18,13 @@ spec:
   storage:
     size: 5Gi
 
+  resources:
+    limits:
+      memory: 256Mi
+    requests:
+      cpu: 20m
+      memory: 128Mi
+
   {{ if not .Values.cnpg.restore }}
   plugins:
   - name: barman-cloud.cloudnative-pg.io

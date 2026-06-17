@@ -21,3 +21,47 @@ argo-cd:
           namespace: example
       hostnames:
         - argo.example.com
+    resources:
+      limits:
+        memory: 256Gi
+      requests:
+        cpu: 15m
+        memory: 128Mi
+
+  controller:
+    resources:
+      limits:
+        memory: 1536Mi
+      requests:
+        cpu: 250m
+        memory: 768Mi
+
+  repoServer:
+    resources:
+      limits:
+        memory: 512Gi
+      requests:
+        cpu: 50m
+        memory: 256Mi
+
+  redis:
+    resources:
+      limits:
+        memory: 64Mi
+      requests:
+        cpu: 5m
+        memory: 32Mi
+
+  applicationSet:
+    resources:
+      limits:
+        memory: 64Mi
+      requests:
+        cpu: 2m
+        memory: 32Mi
+
+  dex:
+    enabled: false
+
+  notifications:
+    enabled: false

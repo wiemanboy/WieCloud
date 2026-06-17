@@ -9,14 +9,77 @@ harbor:
         annotations:
           k8up.io/backup: "true"
   expose:
-    type: NodePort
+    type: route
     tls:
       enabled: false
+    route:
+      parentRefs: []
+      hosts: []
   externalURL: https://harbor.example.com
 
-network:
-  hostname: example.com
-  gateway:
-    name: traefik-gateway
-    listener: websecure
-    namespace: gateway
+  portal:
+    resources:
+      limits:
+        memory: 32Mi
+      requests:
+        cpu: 1m
+        memory: 16Mi
+
+  core:
+    resources:
+      limits:
+        memory: 256Mi
+      requests:
+        cpu: 30m
+        memory: 128Mi
+
+  jobservice:
+    resources:
+      limits:
+        memory: 64Mi
+      requests:
+        cpu: 10m
+        memory: 32Mi
+
+  registry:
+    registry:
+      resources:
+        limits:
+          memory: 128Mi
+        requests:
+          cpu: 100m
+          memory: 64Mi
+    controller:
+      resources:
+        limits:
+          memory: 64Mi
+        requests:
+          cpu: 1m
+          memory: 32Mi
+
+  trivy:
+    resources:
+      limits:
+        memory: 256Mi
+        cpu: null
+      requests:
+        cpu: 50m
+        memory: 128Mi
+
+  database:
+    internal:
+      resources:
+        limits:
+          memory: 256Mi
+        requests:
+          cpu: 20m
+          memory: 128Mi
+
+  redis:
+    internal:
+      resources:
+        limits:
+          memory: 32Mi
+        requests:
+          cpu: 5m
+          memory: 16Mi

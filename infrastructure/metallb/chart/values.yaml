@@ -1,3 +1,40 @@
+metallb:
+  controller:
+    resources:
+      limits:
+        memory: 160Mi
+      requests:
+        cpu: 2m
+        memory: 80Mi
+  speaker:
+    resources:
+      limits:
+        memory: 144Mi
+      requests:
+        cpu: 5m
+        memory: 72Mi
+    frr:
+      resources:
+        limits:
+          memory: 96Mi
+        requests:
+          cpu: 2m
+          memory: 48Mi
+    reloader:
+      resources:
+        limits:
+          memory: 16Mi
+        requests:
+          cpu: 1m
+          memory: 8Mi
+    frrMetrics:
+      resources:
+        limits:
+          memory: 48Mi
+        requests:
+          cpu: 2m
+          memory: 24Mi
+
 network:
   hostname: example.com
   ipPool:

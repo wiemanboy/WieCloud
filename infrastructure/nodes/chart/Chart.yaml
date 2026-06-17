@@ -1,7 +1,7 @@
 apiVersion: v2
 name: nodes
 type: application
-version: 0.1.0
+version: 0.1.1
 dependencies:
   - name: shared
     version: 0.0.0
