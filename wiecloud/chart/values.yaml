@@ -103,10 +103,10 @@ applications:
           name: minecraft-datadir
     world:
       name: cobble-create
-      version: 1.2.1-update-resource-requests-ac0de81
+      version: 1.21.1
     server:
       launcher: AUTO_CURSEFORGE
-      version: 1.2.1-update-resource-requests-ac0de81
+      version: java21
     bluemap:
       file: https://www.curseforge.com/minecraft/mc-mods/bluemap/files/6239407
     mods:
