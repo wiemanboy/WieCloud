@@ -1,6 +1,36 @@
 kube-prometheus-stack:
+  prometheusOperator:
+    resources:
+      limits:
+        memory: 128Mi
+      requests:
+        cpu: 3m
+        memory: 64Mi
+    prometheusConfigReloader:
+      resources:
+        limits:
+          memory: 48Mi
+        requests:
+          cpu: 1m
+          memory: 24Mi
+
+  prometheus:
+    prometheusSpec:
+      resources:
+        limits:
+          memory: 2Gi
+        requests:
+          cpu: 10m
+          memory: 1400Mi
+
   prometheus-node-exporter:
     namespaceOverride: "node-system"
+    resources:
+      limits:
+        memory: 160Mi
+      requests:
+        cpu: 5m
+        memory: 80Mi
 
   grafana:
     envFromSecret: grafana-client-secret
@@ -26,6 +56,33 @@ kube-prometheus-stack:
         allowed_groups: /infra/grafana/admin /infra/grafana/user
         role_attribute_path: contains(groups[*], '/infra/grafana/admin') && 'GrafanaAdmin' || contains(groups[*], '/infra/grafana/user') && 'Editor' || 'Viewer'
 
+    resources:
+      limits:
+        memory: 1024Mi
+      requests:
+        cpu: 20m
+        memory: 512Mi
+
+    sidecar:
+      resources:
+        limits:
+          memory: 160Mi
+        requests:
+          cpu: 3m
+          memory: 80Mi
+
     route:
       main:
         enabled: true
+
+  alertmanager:
+    enabled: false
+
+  crds:
+    upgradeJob:
+      resources:
+        limits:
+          memory: 256Mi
+        requests:
+          cpu: 5m
+          memory: 128Mi

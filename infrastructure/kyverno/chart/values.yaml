@@ -33,8 +33,8 @@ kyverno:
       podResources:
         resources:
           limits:
-            memory: 256Mi
             cpu: null
+            memory: 256Mi
           requests:
             cpu: 5m
             memory: 128Mi
