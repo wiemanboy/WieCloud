@@ -39,10 +39,10 @@ spec:
 
         resources:
           limits:
-            memory: 128Mi
+            memory: 160Mi
           requests:
             cpu: 5m
-            memory: 64Mi
+            memory: 80Mi
 
         volumeMounts:
         - name: config

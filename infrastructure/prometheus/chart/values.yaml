@@ -23,15 +23,6 @@ kube-prometheus-stack:
           cpu: 10m
           memory: 1400Mi
 
-  prometheus-node-exporter:
-    namespaceOverride: "node-system"
-    resources:
-      limits:
-        memory: 160Mi
-      requests:
-        cpu: 5m
-        memory: 80Mi
-
   grafana:
     envFromSecret: grafana-client-secret
 
@@ -75,6 +66,15 @@ kube-prometheus-stack:
       main:
         enabled: true
 
+  prometheus-node-exporter:
+    namespaceOverride: "node-system"
+    resources:
+      limits:
+        memory: 160Mi
+      requests:
+        cpu: 5m
+        memory: 80Mi
+
   alertmanager:
     enabled: false
 
@@ -86,3 +86,11 @@ kube-prometheus-stack:
         requests:
           cpu: 5m
           memory: 128Mi
+
+ kube-state-metrics:
+  resources:
+    limits:
+      memory: 64Mi
+    requests:
+      cpu: 1m
+      memory: 32Mi
