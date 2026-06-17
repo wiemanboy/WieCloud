@@ -1,3 +1,10 @@
 seaweedfs-operator:
   webhook:
     enabled: true
+  resources:
+    limits:
+      cpu: null
+      memory: 128Mi
+    requests:
+      cpu: 5m
+      memory: 64Mi
