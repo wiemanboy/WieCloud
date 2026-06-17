@@ -93,7 +93,7 @@ targetRepository:
 applications:
   minecraft:
     deploy: true
-    version: 1.2.1-update-resource-requests-a11d053
+    version: 1.2.1-update-resource-requests-405edbe
     restores:
       - name: minecraft-restore
         enabled: false
@@ -125,7 +125,7 @@ applications:
 
   nextcloud:
     deploy: true
-    version: 1.0.1-update-resource-requests-a11d053
+    version: 1.0.1-update-resource-requests-405edbe
     cnpg:
       restore: false
     restores:
@@ -145,15 +145,15 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.3.1-update-resource-requests-a11d053
+    version: 0.3.1-update-resource-requests-405edbe
 
   certmanager:
     deploy: true
-    version: 0.2.6-update-resource-requests-a11d053
+    version: 0.2.6-update-resource-requests-405edbe
 
   cnpg:
     deploy: true
-    version: 0.0.1-update-resource-requests-a11d053
+    version: 0.0.1-update-resource-requests-405edbe
     seaweedfs:
       backup:
         enabled: true
@@ -167,19 +167,19 @@ infrastructure:
 
   envoygateway:
     deploy: true
-    version: 0.1.1-update-resource-requests-a11d053
+    version: 0.1.1-update-resource-requests-405edbe
 
   externaldns:
     deploy: true
-    version: 0.1.3-update-resource-requests-a11d053
+    version: 0.1.3-update-resource-requests-405edbe
 
   externalsecrets:
     deploy: true
-    version: 0.0.2-update-resource-requests-a11d053
+    version: 0.0.2-update-resource-requests-405edbe
 
   harbor:
     deploy: true
-    version: 1.3.4-update-resource-requests-a11d053
+    version: 1.3.4-update-resource-requests-405edbe
     restores:
       - name: harbor-registry-restore
         enabled: false
@@ -196,11 +196,11 @@ infrastructure:
 
   k8up:
     deploy: true
-    version: 1.0.5-update-resource-requests-a11d053
+    version: 1.0.5-update-resource-requests-405edbe
 
   keycloak:
     deploy: true
-    version: 3.0.1-update-resource-requests-a11d053
+    version: 3.0.1-update-resource-requests-405edbe
     clientCreationPermissions:
       - name: argocd
         namespace: argocd
@@ -222,19 +222,19 @@ infrastructure:
 
   kyverno:
     deploy: true
-    version: 0.0.1-update-resource-requests-a11d053
+    version: 0.0.1-update-resource-requests-405edbe
 
   longhorn:
     deploy: true
-    version: 0.0.10-update-resource-requests-a11d053
+    version: 0.0.10-update-resource-requests-405edbe
 
   metallb:
     deploy: true
-    version: 0.0.11-update-resource-requests-a11d053
+    version: 0.0.11-update-resource-requests-405edbe
 
   nodes:
     deploy: true
-    version: 0.1.1-update-resource-requests-a11d053
+    version: 0.1.1-update-resource-requests-405edbe
     proxmox:
       api:
         url: https://192.168.178.166:8006/api2/json
@@ -248,15 +248,15 @@ infrastructure:
 
   prometheus:
     deploy: true
-    version: 0.0.3-update-resource-requests-a11d053
+    version: 0.0.3-update-resource-requests-405edbe
 
   seaweedfs:
     deploy: true
-    version: 0.1.1-update-resource-requests-a11d053
+    version: 0.1.1-update-resource-requests-405edbe
 
   wireguard:
     deploy: true
-    version: 0.0.2-update-resource-requests-a11d053
+    version: 0.0.2-update-resource-requests-405edbe
     vpn:
       peers:
         - pc
