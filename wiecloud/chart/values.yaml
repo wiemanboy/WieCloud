@@ -145,15 +145,15 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.3.1-update-resource-requests-537fb9e
+    version: 0.3.1-update-resource-requests-cf6e5db
 
   certmanager:
     deploy: true
-    version: 0.2.6-update-resource-requests-537fb9e
+    version: 0.2.6-update-resource-requests-cf6e5db
 
   cnpg:
     deploy: true
-    version: 0.0.1-update-resource-requests-537fb9e
+    version: 0.0.1-update-resource-requests-cf6e5db
     seaweedfs:
       backup:
         enabled: true
@@ -167,19 +167,19 @@ infrastructure:
 
   envoygateway:
     deploy: true
-    version: 0.1.1-update-resource-requests-537fb9e
+    version: 0.1.1-update-resource-requests-cf6e5db
 
   externaldns:
     deploy: true
-    version: 0.1.3-update-resource-requests-537fb9e
+    version: 0.1.3-update-resource-requests-cf6e5db
 
   externalsecrets:
     deploy: true
-    version: 0.0.2-update-resource-requests-537fb9e
+    version: 0.0.2-update-resource-requests-cf6e5db
 
   harbor:
     deploy: true
-    version: 1.3.4-update-resource-requests-537fb9e
+    version: 1.3.4-update-resource-requests-cf6e5db
     restores:
       - name: harbor-registry-restore
         enabled: false
@@ -196,11 +196,11 @@ infrastructure:
 
   k8up:
     deploy: true
-    version: 1.0.5-update-resource-requests-537fb9e
+    version: 1.0.5-update-resource-requests-cf6e5db
 
   keycloak:
     deploy: true
-    version: 3.0.1-update-resource-requests-537fb9e
+    version: 3.0.1-update-resource-requests-cf6e5db
     clientCreationPermissions:
       - name: argocd
         namespace: argocd
@@ -226,11 +226,11 @@ infrastructure:
 
   longhorn:
     deploy: true
-    version: 0.0.9
+    version: 0.0.10-update-resource-requests-cf6e5db
 
   metallb:
     deploy: true
-    version: 0.0.10
+    version: 0.0.10-update-resource-requests-cf6e5db
 
   nodes:
     deploy: true
@@ -252,11 +252,11 @@ infrastructure:
 
   seaweedfs:
     deploy: true
-    version: 0.1.0
+    version: 0.1.0-update-resource-requests-cf6e5db
 
   wireguard:
     deploy: true
-    version: 0.0.1
+    version: 0.0.1-update-resource-requests-cf6e5db
     vpn:
       peers:
         - pc
