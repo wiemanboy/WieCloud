@@ -67,9 +67,18 @@ spec:
         spec:
           containers:
           - name: tofudeployer
+
+            resources:
+              limits:
+                memory: 256Mi
+              requests:
+                cpu: 2m
+                memory: 128Mi
+
             volumeMounts:
             - name: data
               mountPath: /data
+              
           volumes:
           - name: data
             persistentVolumeClaim:
