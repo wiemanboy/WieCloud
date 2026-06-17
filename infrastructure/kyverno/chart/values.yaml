@@ -28,3 +28,13 @@ kyverno:
       requests:
         cpu: 3m
         memory: 128Mi
+  crd:
+    migration:
+      podResources:
+        resources:
+          limits:
+            memory: 256Mi
+            cpu: null
+          requests:
+            cpu: 5m
+            memory: 128Mi
