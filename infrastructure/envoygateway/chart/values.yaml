@@ -1,3 +1,21 @@
+gateway-helm:
+  deployment:
+    envoyGateway:
+      resources:
+        limits:
+          memory: 128Mi
+        requests:
+          cpu: 2m
+          memory: 64Mi
+  certGen:
+    job:
+      resources:
+        limits:
+          memory: 64Mi
+        requests:
+          cpu: 1m
+          memory: 32Mi
+
 network:
   hostname: test.wieman.cloud
   externalIp: 0.0.0.0
@@ -12,13 +30,3 @@ network:
         kind: ClusterIssuer
       hostnames:
         - "example.com"
-
-gateway-helm:
-  deployment:
-    envoyGateway:
-      resources:
-        limits:
-          memory: 128Mi
-        requests:
-          cpu: 2m
-          memory: 64Mi
