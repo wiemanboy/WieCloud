@@ -1,4 +1,7 @@
 kyverno:
+  config:
+    excludeKyvernoNamespace: false
+
   admissionController:
     container:
       resources:
@@ -7,6 +10,7 @@ kyverno:
         requests:
           cpu: 10m
           memory: 64Mi
+
   backgroundController:
     resources:
       limits:
@@ -14,13 +18,27 @@ kyverno:
       requests:
         cpu: 4m
         memory: 64Mi
+
   cleanupController:
+    rbac:
+      clusterRole:
+        extraResources:
+          - apiGroups:
+              - batch
+            resources:
+              - jobs
+            verbs:
+              - delete
+              - list
+              - watch
+
     resources:
       limits:
         memory: 128Mi
       requests:
         cpu: 3m
         memory: 64Mi
+
   reportsController:
     resources:
       limits:
