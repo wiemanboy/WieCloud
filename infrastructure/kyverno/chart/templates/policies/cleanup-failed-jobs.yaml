@@ -1,0 +1,23 @@
+apiVersion: policies.kyverno.io/v1
+kind: DeletingPolicy
+metadata:
+  name: cleanup-jobs
+  namespace: production
+spec:
+  schedule: '0 0 0/2 *'
+  matchConstraints:
+    resourceRules:
+      - apiGroups: ['batch']
+        apiVersions: ['v1']
+        resources: ['jobs']
+  conditions:
+    - name: 'completed-jobs'
+      # Delete jobs that are completed, Failed and older than 2 hours
+      expression: |
+        (
+          Object.status.conditions[?(@.type == "Complete" && @.status == "True")].length() > 0 ||
+          Object.status.conditions[?(@.type == "Failed" && @.status == "True")].length() > 0
+        ) &&
+        (
+          Object.metadata.creationTimestamp < time.now().addDuration("-2h")
+        )
