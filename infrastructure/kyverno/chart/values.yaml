@@ -1,7 +1,4 @@
 kyverno:
-  config:
-    excludeKyvernoNamespace: false
-
   admissionController:
     container:
       resources:
