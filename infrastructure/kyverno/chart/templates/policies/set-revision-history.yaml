@@ -14,7 +14,7 @@ spec:
       applyConfiguration:
         expression: >
           Object{
-            spec: Object.spec{
+            spec: {
               revisionHistoryLimit: 0
             }
           }
