@@ -222,7 +222,7 @@ infrastructure:
 
   kyverno:
     deploy: true
-    version: 0.0.2-create-kyverno-history-limit-policy-72b1ea2
+    version: 0.0.2-create-kyverno-history-limit-policy-7dd95fd
 
   longhorn:
     deploy: true
