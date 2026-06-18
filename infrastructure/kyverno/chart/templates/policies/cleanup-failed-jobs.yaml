@@ -19,6 +19,5 @@ spec:
         )
         &&
         (
-          object.metadata.creationTimestamp <
-          time_since('2h')
+          object.metadata.creationTimestamp < time.now() - duration("2h")
         )
