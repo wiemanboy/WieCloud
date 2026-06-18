@@ -11,7 +11,7 @@ spec:
         apiVersions: ['v1']
         resources: ['jobs']
   conditions:
-    - name: failed-and-older-than-2h
-      expression: >
-        object.status.conditions.exists(c, c.type == 'Failed' && c.status == 'True') &&
-        object.status.startTime < time.now() - duration("2h")
+    - name: failed-and-older-than-24h
+      expression: |
+        (has(object.status.failed) && object.status.failed > 0) &&
+        (timestamp(object.status.startTime) < time.now() - duration("24h"))
