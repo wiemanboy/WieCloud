@@ -4,7 +4,7 @@ metadata:
   name: cleanup-failed-jobs
   namespace: production
 spec:
-  schedule: '0/1 * * * *'
+  schedule: '0/3 * * * *'
   matchConstraints:
     resourceRules:
       - apiGroups: ['batch']
