@@ -4,20 +4,14 @@ metadata:
   name: cleanup-failed-jobs
   namespace: production
 spec:
-  schedule: '0 0 0/2 *'
+  schedule: '0/1 * * * *'
   matchConstraints:
     resourceRules:
       - apiGroups: ['batch']
         apiVersions: ['v1']
         resources: ['jobs']
   conditions:
-    - name: completed-failed-and-older-than-2h
+    - name: failed-and-older-than-2h
       expression: >
-        (
-          object.status.conditions.exists(c, c.type == 'Complete' && c.status == 'True') ||
-          object.status.conditions.exists(c, c.type == 'Failed' && c.status == 'True')
-        )
-        &&
-        (
-          object.metadata.creationTimestamp < time.now() - duration("2h")
-        )
+        object.status.conditions.exists(c, c.type == 'Failed' && c.status == 'True') &&
+        object.status.startTime < time.now() - duration("2h")
