@@ -13,28 +13,28 @@ argo-cd:
         discovery.lua: |
           local actions = {}
 
-          actions["create-backup"] = {
+          actions["backup"] = {
             ["iconClass"] = "fa fa-fw fa-floppy-disk",
-            ["displayName"] = "Create Backup",
+            ["displayName"] = "Backup",
             ["disabled"] = obj.spec.backup == nil
           }
 
-          actions["create-check"] = {
+          actions["check"] = {
             ["iconClass"] = "fa fa-fw fa-magnifying-glass",
-            ["displayName"] = "Create Check",
+            ["displayName"] = "Check",
             ["disabled"] = obj.spec.check == nil
           }
 
-          actions["create-prune"] = {
+          actions["prune"] = {
             ["iconClass"] = "fa fa-fw fa-broom",
-            ["displayName"] = "Create Prune",
+            ["displayName"] = "Prune",
             ["disabled"] = obj.spec.prune == nil
           }
 
           return actions
 
         definitions:
-        - name: create-backup
+        - name: backup
           action.lua: |
             local backup = {
               apiVersion = "k8up.io/v1",
@@ -67,7 +67,7 @@ argo-cd:
               }
             }
 
-        - name: create-check
+        - name: check
           action.lua: |
             local check = {
               apiVersion = "k8up.io/v1",
@@ -100,7 +100,7 @@ argo-cd:
               }
             }
 
-        - name: create-prune
+        - name: prune
           action.lua: |
             local prune = {
               apiVersion = "k8up.io/v1",
