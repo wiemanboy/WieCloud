@@ -145,7 +145,7 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.4.0-create-k8up-argo-resource-actions-898eb90
+    version: 0.4.0-create-k8up-argo-resource-actions-ab2d2ee
 
   certmanager:
     deploy: true
