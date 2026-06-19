@@ -54,6 +54,10 @@ argo-cd:
 
             backup.spec.backend = obj.spec.backend
 
+            if backup.spec.resources ~= nil and next(backup.spec.resources) == nil then
+              backup.spec.resources = nil
+            end
+
             return {
               {
                 operation = "create",
@@ -85,6 +89,10 @@ argo-cd:
 
             check.spec.backend = obj.spec.backend
 
+            if check.spec.resources ~= nil and next(check.spec.resources) == nil then
+              check.spec.resources = nil
+            end
+
             return {
               {
                 operation = "create",
@@ -115,6 +123,10 @@ argo-cd:
             }
 
             prune.spec.backend = obj.spec.backend
+
+            if prune.spec.resources ~= nil and next(prune.spec.resources) == nil then
+              prune.spec.resources = nil
+            end
 
             return {
               {
