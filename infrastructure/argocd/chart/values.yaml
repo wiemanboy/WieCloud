@@ -148,6 +148,8 @@ argo-cd:
         definitions:
         - name: backup
           action.lua: |
+            local os = require("os")
+
             local backup = {
               apiVersion = "postgresql.cnpg.io/v1",
               kind = "Backup",
