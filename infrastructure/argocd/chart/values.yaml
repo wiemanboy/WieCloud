@@ -152,7 +152,7 @@ argo-cd:
               apiVersion = "postgresql.cnpg.io/v1",
               kind = "Backup",
               metadata = {
-                generateName = obj.metadata.name .. "-",
+                name = obj.metadata.name .. "-" .. os.date("%Y%m%d%H%M%S"),
                 namespace = obj.metadata.namespace,
                 labels = {
                   ["cnpg.io/cluster"] = obj.spec.cluster.name,
