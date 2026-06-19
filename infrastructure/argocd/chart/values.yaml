@@ -133,6 +133,62 @@ argo-cd:
               }
             }
 
+      resource.customizations.actions.postgresql.cnpg.io_ScheduledBackup: |
+        discovery.lua: |
+          local actions = {}
+
+          actions["backup"] = {
+            ["iconClass"] = "fa fa-fw fa-floppy-disk",
+            ["displayName"] = "Backup",
+            ["disabled"] = false
+          }
+
+          return actions
+
+        definitions:
+        - name: backup
+          action.lua: |
+            local backup = {
+              apiVersion = "postgresql.cnpg.io/v1",
+              kind = "Backup",
+              metadata = {
+                generateName = obj.metadata.name .. "-",
+                namespace = obj.metadata.namespace,
+                labels = {
+                  ["cnpg.io/cluster"] = obj.spec.cluster.name,
+                  ["cnpg.io/immediateBackup"] = "true",
+                  ["cnpg.io/scheduled-backup"] = obj.metadata.name
+                },
+                ownerReferences = {
+                  {
+                    apiVersion = obj.apiVersion,
+                    kind = obj.kind,
+                    name = obj.metadata.name,
+                    uid = obj.metadata.uid,
+                    controller = true
+                  }
+                }
+              },
+              spec = {
+                cluster = obj.spec.cluster
+              }
+            }
+
+            if obj.spec.method ~= nil then
+              backup.spec.method = obj.spec.method
+            end
+
+            if obj.spec.pluginConfiguration ~= nil then
+              backup.spec.pluginConfiguration = obj.spec.pluginConfiguration
+            end
+
+            return {
+              {
+                operation = "create",
+                resource = backup
+              }
+            }
+
     rbac:
       policy.csv: |
         g, /infra/argocd/admin, role:admin
