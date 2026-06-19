@@ -11,28 +11,30 @@ argo-cd:
 
       resource.customizations.actions.k8up.io_Schedule: |
         discovery.lua: |
-          actions = {}
+          local actions = {}
 
-          actions["create-backup"] = {["disabled"] = true}
-          actions["create-check"] = {["disabled"] = true}
-          actions["create-prune"] = {["disabled"] = true}
+          actions["create-backup"] = {
+            ["iconClass"] = "fa fa-fw fa-floppy-disk",
+            ["displayName"] = "Create Backup",
+            ["disabled"] = obj.spec.backup == nil
+          }
 
-          if obj.spec.backup ~= nil then
-              actions["create-backup"]["disabled"] = false
-          end
-          if obj.spec.check ~= nil then
-              actions["create-check"]["disabled"] = false
-          end
-          if obj.spec.prune ~= nil then
-              actions["create-prune"]["disabled"] = false
-          end
+          actions["create-check"] = {
+            ["iconClass"] = "fa fa-fw fa-magnifying-glass",
+            ["displayName"] = "Create Check",
+            ["disabled"] = obj.spec.check == nil
+          }
+
+          actions["create-prune"] = {
+            ["iconClass"] = "fa fa-fw fa-broom",
+            ["displayName"] = "Create Prune",
+            ["disabled"] = obj.spec.prune == nil
+          }
 
           return actions
 
         definitions:
         - name: create-backup
-          iconClass: "fa-solid fa-floppy-disk"
-          displayName: "Create Backup"
           action.lua: |
             local backup = {
               apiVersion = "k8up.io/v1",
@@ -66,8 +68,6 @@ argo-cd:
             }
 
         - name: create-check
-          iconClass: "fa-solid fa-magnifying-glass"
-          displayName: "Create Check"
           action.lua: |
             local check = {
               apiVersion = "k8up.io/v1",
@@ -101,8 +101,6 @@ argo-cd:
             }
 
         - name: create-prune
-          iconClass: "fa-solid fa-broom"
-          displayName: "Create Prune"
           action.lua: |
             local prune = {
               apiVersion = "k8up.io/v1",
