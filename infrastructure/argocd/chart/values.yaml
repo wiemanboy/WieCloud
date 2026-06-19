@@ -32,7 +32,7 @@ argo-cd:
         definitions:
         - name: create-backup
           iconClass: "fa-solid fa-floppy-disk"
-          displayName: Create Backup
+          displayName: "Create Backup"
           action.lua: |
             local backup = {
               apiVersion = "k8up.io/v1",
@@ -63,7 +63,7 @@ argo-cd:
 
         - name: create-check
           iconClass: "fa-solid fa-magnifying-glass"
-          displayName: Create Check
+          displayName: "Create Check"
           action.lua: |
             local check = {
               apiVersion = "k8up.io/v1",
@@ -94,7 +94,7 @@ argo-cd:
 
         - name: create-prune
           iconClass: "fa-solid fa-broom"
-          displayName: Create Prune
+          displayName: "Create Prune"
           action.lua: |
             local prune = {
               apiVersion = "k8up.io/v1",
