@@ -30,7 +30,8 @@ argo-cd:
           return actions
 
         definitions:
-        - name: Create Backup
+        - name: create-backup
+          displayName: Create Backup
           action.lua: |
             local backup = {
               apiVersion = "k8up.io/v1",
@@ -60,6 +61,7 @@ argo-cd:
             }
 
         - name: create-check
+          displayName: Create Check
           action.lua: |
             local check = {
               apiVersion = "k8up.io/v1",
@@ -89,6 +91,7 @@ argo-cd:
             }
 
         - name: create-prune
+          displayName: Create Prune
           action.lua: |
             local prune = {
               apiVersion = "k8up.io/v1",
