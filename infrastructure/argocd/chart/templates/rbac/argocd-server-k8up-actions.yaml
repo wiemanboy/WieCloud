@@ -1,0 +1,25 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: argocd-server-k8up-actions
+rules:
+  - apiGroups: ["k8up.io"]
+    resources:
+      - backups
+      - checks
+      - prunes
+    verbs:
+      - create
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: argocd-server-k8up-actions
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: argocd-server-k8up-actions
+subjects:
+  - kind: ServiceAccount
+    name: argocd-server
+    namespace: {{ .Release.Namespace }}

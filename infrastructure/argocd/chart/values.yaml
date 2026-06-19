@@ -8,10 +8,194 @@ argo-cd:
       url: https://argo.example.com
       exec.enabled: true
       oidc.config: "overwritten"
+
+      resource.customizations.actions.k8up.io_Schedule: |
+        discovery.lua: |
+          local actions = {}
+
+          actions["backup"] = {
+            ["iconClass"] = "fa fa-fw fa-floppy-disk",
+            ["displayName"] = "Backup",
+            ["disabled"] = obj.spec.backup == nil
+          }
+
+          actions["check"] = {
+            ["iconClass"] = "fa fa-fw fa-magnifying-glass",
+            ["displayName"] = "Check",
+            ["disabled"] = obj.spec.check == nil
+          }
+
+          actions["prune"] = {
+            ["iconClass"] = "fa fa-fw fa-broom",
+            ["displayName"] = "Prune",
+            ["disabled"] = obj.spec.prune == nil
+          }
+
+          return actions
+
+        definitions:
+        - name: backup
+          action.lua: |
+            local backup = {
+              apiVersion = "k8up.io/v1",
+              kind = "Backup",
+              metadata = {
+                generateName = obj.metadata.name .. "-backup-",
+                namespace = obj.metadata.namespace,
+                ownerReferences = {
+                  {
+                    apiVersion = obj.apiVersion,
+                    kind = obj.kind,
+                    name = obj.metadata.name,
+                    uid = obj.metadata.uid
+                  }
+                }
+              },
+              spec = obj.spec.backup
+            }
+
+            backup.spec.backend = obj.spec.backend
+
+            if backup.spec.resources ~= nil and next(backup.spec.resources) == nil then
+              backup.spec.resources = nil
+            end
+
+            return {
+              {
+                operation = "create",
+                resource = backup
+              }
+            }
+
+        - name: check
+          action.lua: |
+            local check = {
+              apiVersion = "k8up.io/v1",
+              kind = "Check",
+              metadata = {
+                generateName = obj.metadata.name .. "-check-",
+                namespace = obj.metadata.namespace,
+                ownerReferences = {
+                  {
+                    apiVersion = obj.apiVersion,
+                    kind = obj.kind,
+                    name = obj.metadata.name,
+                    uid = obj.metadata.uid
+                  }
+                }
+              },
+              spec = obj.spec.check
+            }
+
+            check.spec.backend = obj.spec.backend
+
+            if check.spec.resources ~= nil and next(check.spec.resources) == nil then
+              check.spec.resources = nil
+            end
+
+            return {
+              {
+                operation = "create",
+                resource = check
+              }
+            }
+
+        - name: prune
+          action.lua: |
+            local prune = {
+              apiVersion = "k8up.io/v1",
+              kind = "Prune",
+              metadata = {
+                generateName = obj.metadata.name .. "-prune-",
+                namespace = obj.metadata.namespace,
+                ownerReferences = {
+                  {
+                    apiVersion = obj.apiVersion,
+                    kind = obj.kind,
+                    name = obj.metadata.name,
+                    uid = obj.metadata.uid
+                  }
+                }
+              },
+              spec = obj.spec.prune
+            }
+
+            prune.spec.backend = obj.spec.backend
+
+            if prune.spec.resources ~= nil and next(prune.spec.resources) == nil then
+              prune.spec.resources = nil
+            end
+
+            return {
+              {
+                operation = "create",
+                resource = prune
+              }
+            }
+
+      resource.customizations.actions.postgresql.cnpg.io_ScheduledBackup: |
+        discovery.lua: |
+          local actions = {}
+
+          actions["backup"] = {
+            ["iconClass"] = "fa fa-fw fa-floppy-disk",
+            ["displayName"] = "Backup",
+            ["disabled"] = false
+          }
+
+          return actions
+
+        definitions:
+        - name: backup
+          action.lua: |
+            local os = require("os")
+
+            local backup = {
+              apiVersion = "postgresql.cnpg.io/v1",
+              kind = "Backup",
+              metadata = {
+                name = obj.metadata.name .. "-" .. os.date("%Y%m%d%H%M%S"),
+                namespace = obj.metadata.namespace,
+                labels = {
+                  ["cnpg.io/cluster"] = obj.spec.cluster.name,
+                  ["cnpg.io/immediateBackup"] = "true",
+                  ["cnpg.io/scheduled-backup"] = obj.metadata.name
+                },
+                ownerReferences = {
+                  {
+                    apiVersion = obj.apiVersion,
+                    kind = obj.kind,
+                    name = obj.metadata.name,
+                    uid = obj.metadata.uid,
+                    controller = true
+                  }
+                }
+              },
+              spec = {
+                cluster = obj.spec.cluster
+              }
+            }
+
+            if obj.spec.method ~= nil then
+              backup.spec.method = obj.spec.method
+            end
+
+            if obj.spec.pluginConfiguration ~= nil then
+              backup.spec.pluginConfiguration = obj.spec.pluginConfiguration
+            end
+
+            return {
+              {
+                operation = "create",
+                resource = backup
+              }
+            }
+
     rbac:
       policy.csv: |
         g, /infra/argocd/admin, role:admin
         g, /infra/argocd/reader, role:readonly
+
   server:
     httproute:
       enabled: true
@@ -21,6 +205,7 @@ argo-cd:
           namespace: example
       hostnames:
         - argo.example.com
+
     resources:
       limits:
         memory: 256Gi
