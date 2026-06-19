@@ -22,7 +22,6 @@ spec:
           resources:
             limits:
               memory: 176Mi
-              cpu: null
             requests:
               cpu: 1m
               memory: 88Mi
