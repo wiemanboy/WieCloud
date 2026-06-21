@@ -42,7 +42,7 @@ infrastructure:
     deploy: false
 
   externalsecrets:
-    deploy: false
+    deploy: true
 
   harbor:
     deploy: false
@@ -57,7 +57,7 @@ infrastructure:
     deploy: false
 
   longhorn:
-    deploy: false
+    deploy: true
 
   metallb:
     deploy: false

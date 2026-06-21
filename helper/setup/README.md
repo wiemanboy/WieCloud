@@ -1,8 +1,7 @@
 # Cluster setup
 
 1. Check if argo and cilium versions are up-to-date
-2. Set `spec.source.path` to the cluster chart in `application.yaml`
-3. Run `./setup.sh`
+2. Run `./setup.sh`
 
 ## Useful commands
 
