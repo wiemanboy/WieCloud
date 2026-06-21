@@ -31,9 +31,9 @@ resource "proxmox_storage_iso" "dell_pve_0_metal_amd64_iso" {
 
 resource "talos_machine_secrets" "dev_machine_secret" {
   talos_version = local.dev_talos_version
-  lifecycle {
-    prevent_destroy = true
-  }
+  # lifecycle {
+  #   prevent_destroy = true
+  # }
 }
 
 module "dev_talos_controlplane_0" {
