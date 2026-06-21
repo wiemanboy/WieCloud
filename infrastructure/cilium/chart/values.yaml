@@ -1,5 +1,5 @@
 cilium:
-  l2announcement:
+  l2announcements :
     enabled: true
 
   ipam:
