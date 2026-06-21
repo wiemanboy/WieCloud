@@ -7,5 +7,5 @@ spec:
     matchLabels:
       expose: l2
   interfaces:
-    - ^eth0$
+    - ^ens18$
   loadBalancerIPs: true
