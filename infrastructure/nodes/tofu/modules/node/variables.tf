@@ -97,6 +97,6 @@ variable "oidc" {
 
 variable "extra_config" {
   description = "Extra talos configuration passed to the machine"
-  type        = object(any)
+  type        = map(any)
   default     = {}
 }
