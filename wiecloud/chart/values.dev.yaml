@@ -30,16 +30,16 @@ infrastructure:
     deploy: false
 
   certmanager:
-    deploy: false
+    deploy: true
 
   cnpg:
     deploy: false
 
   envoygateway:
-    deploy: false
+    deploy: true
 
   externaldns:
-    deploy: false
+    deploy: true
 
   externalsecrets:
     deploy: true
@@ -48,7 +48,7 @@ infrastructure:
     deploy: false
 
   k8up:
-    deploy: false
+    deploy: true
 
   keycloak:
     deploy: false
