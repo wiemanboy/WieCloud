@@ -234,7 +234,7 @@ infrastructure:
 
   nodes:
     deploy: true
-    version: 0.2.0-create-dev-cluster-tofu-ea4045f
+    version: 0.2.0-create-dev-cluster-tofu-d2c2117
     proxmox:
       api:
         url: https://192.168.178.166:8006/api2/json
