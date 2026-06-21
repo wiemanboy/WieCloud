@@ -149,7 +149,7 @@ infrastructure:
 
   certmanager:
     deploy: true
-    version: 0.2.6
+    version: 0.2.7-create-dev-cluster-tofu-e69d012
 
   cnpg:
     deploy: true
@@ -226,7 +226,7 @@ infrastructure:
 
   longhorn:
     deploy: true
-    version: 0.0.11-create-dev-cluster-tofu-5c8176d
+    version: 0.0.11-create-dev-cluster-tofu-e69d012
 
   metallb:
     deploy: true
@@ -234,7 +234,7 @@ infrastructure:
 
   nodes:
     deploy: true
-    version: 0.2.0-create-dev-cluster-tofu-5c8176d
+    version: 0.2.0-create-dev-cluster-tofu-e69d012
     proxmox:
       api:
         url: https://192.168.178.166:8006/api2/json
