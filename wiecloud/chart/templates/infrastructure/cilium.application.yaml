@@ -1,0 +1,26 @@
+{{- with .Values.infrastructure.cilium -}}
+{{- if .deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cilium
+  namespace: argocd
+spec:
+  source:
+    chart: cilium
+    repoURL: {{ $.Values.infrastructure.repository }}
+    targetRevision: {{ .version }}
+
+  destination:
+    namespace: kube-system
+    server: https://kubernetes.default.svc
+  project: infrastructure
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
+{{- end -}}
+{{- end -}}

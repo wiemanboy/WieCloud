@@ -32,6 +32,9 @@ infrastructure:
   certmanager:
     deploy: true
 
+  cilium:
+    deploy: true
+
   cnpg:
     deploy: false
 

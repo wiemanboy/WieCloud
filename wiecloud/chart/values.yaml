@@ -151,6 +151,10 @@ infrastructure:
     deploy: true
     version: 0.2.7-create-dev-cluster-tofu-e69d012
 
+  cilium:
+    deploy: false
+    version: 0.0.0
+
   cnpg:
     deploy: true
     version: 0.0.1
