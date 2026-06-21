@@ -1,4 +1,4 @@
-{{ - if not .Values.seaweedfs.backup.restore.enabled -}}
+{{- if not .Values.seaweedfs.backup.restore.enabled -}}
 apiVersion: seaweed.seaweedfs.com/v1
 kind: Seaweed
 metadata:
