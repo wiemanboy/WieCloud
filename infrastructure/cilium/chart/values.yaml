@@ -1,4 +1,7 @@
 cilium:
+  l2announcement:
+    enabled: true
+
   ipam:
     mode: kubernetes
 
