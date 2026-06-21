@@ -4,7 +4,7 @@
 2. Run `./setup.sh`
 3. Switch to the mirrored DockerHub registry `docker.io/wiemanboy`
 4. Deploy `longhorn` `cilium` and `externalsecrets`
-5. Deploy secret
+5. Deploy secret store `aws-secret`; `kubectl create secret generic aws-secret --from-literal=accessKey=$access_key --from-literal=secretKey=$secret_key -n external-secrets`
 6. Deploy `envoygateway`, `certmanager`, `externaldns` and `k8up`
 7. If PVC backups need to be restored:
     1. Enable restore mode for associated products
