@@ -17,7 +17,6 @@ resource "talos_machine_configuration_apply" "config_apply" {
   machine_configuration_input = data.talos_machine_configuration.machine_config.machine_configuration
   node                        = var.node
   config_patches = [
-    yamlencode(var.extra_config),
     yamlencode({
       machine = {
         install = {
@@ -68,6 +67,8 @@ resource "talos_machine_configuration_apply" "config_apply" {
         }
       }
     }) : null
+    ,
+    yamlencode(var.extra_config),
   ]
 }
 
