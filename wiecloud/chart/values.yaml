@@ -226,7 +226,7 @@ infrastructure:
 
   longhorn:
     deploy: true
-    version: 0.0.10
+    version: 0.0.11-create-dev-cluster-tofu-5c8176d
 
   metallb:
     deploy: true
@@ -234,7 +234,7 @@ infrastructure:
 
   nodes:
     deploy: true
-    version: 0.2.0-create-dev-cluster-tofu-c2ea25f
+    version: 0.2.0-create-dev-cluster-tofu-5c8176d
     proxmox:
       api:
         url: https://192.168.178.166:8006/api2/json
