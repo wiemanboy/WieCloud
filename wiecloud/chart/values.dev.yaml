@@ -72,7 +72,7 @@ infrastructure:
     deploy: false
 
   seaweedfs:
-    deploy: false
+    deploy: true
 
   wireguard:
     deploy: false
