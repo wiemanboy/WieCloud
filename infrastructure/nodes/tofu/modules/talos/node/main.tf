@@ -17,8 +17,7 @@ resource "talos_machine_configuration_apply" "config_apply" {
   machine_configuration_input = data.talos_machine_configuration.machine_config.machine_configuration
   node                        = var.node
   config_patches = [
-    file("./talos/bare-metal.config.yaml"),
-    file("./talos/${var.role}.config.yaml"),
+    yamlencode(var.extra_config),
     yamlencode({
       machine = {
         install = {
@@ -30,6 +29,29 @@ resource "talos_machine_configuration_apply" "config_apply" {
         nodeLabels = {
           "topology.kubernetes.io/region" = var.region
           "topology.kubernetes.io/zone"   = var.zone
+        }
+        kubelet = {
+          extraMounts = [
+            {
+              destination = "/var/lib/longhorn"
+              type        = bind
+              source      = "/var/lib/longhorn"
+              options     = ["rbind", "rshared", "rw"]
+            }
+          ]
+        }
+        systemctls = {
+          "vm.nr_hugepages" = "1024"
+        }
+        kernel = {
+          modules = [
+            {
+              name = "nvme_tcp"
+            },
+            {
+              name = "vfio_pci"
+            }
+          ]
         }
       }
     }),

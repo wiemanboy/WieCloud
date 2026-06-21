@@ -20,6 +20,8 @@ spec:
         proxmox:
           api:
             url: {{ .proxmox.api.url }}
+        tofudeployer:
+          dryRun: {{ .tofudeployer.dryRun | quote }}
 
   destination:
     namespace: nodes
