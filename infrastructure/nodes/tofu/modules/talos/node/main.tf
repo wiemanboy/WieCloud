@@ -40,7 +40,7 @@ resource "talos_machine_configuration_apply" "config_apply" {
             }
           ]
         }
-        systemctls = {
+        sysctls = {
           "vm.nr_hugepages" = "1024"
         }
         kernel = {
