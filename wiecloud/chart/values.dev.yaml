@@ -1,0 +1,75 @@
+network:
+  hostname: dev.wieman.cloud
+  externalIp: 85.148.81.86
+  ipPool:
+    - 192.168.178.210 - 192.168.178.220
+  gateway:
+    certificate:
+      hostnames:
+        - "dev.wieman.cloud"
+        - "*.dev.wieman.cloud"
+        - "*.s3.dev.wieman.cloud"
+
+auth:
+  oidc:
+    endpoint: https://keycloak.dev.wieman.cloud/realms/wiecloud
+
+
+applications:
+  minecraft:
+    deploy: false
+
+  nextcloud:
+    deploy: false
+
+  website:
+    deploy: false
+
+infrastructure:
+  argocd:
+    deploy: false
+
+  certmanager:
+    deploy: false
+
+  cnpg:
+    deploy: false
+
+  envoygateway:
+    deploy: false
+
+  externaldns:
+    deploy: false
+
+  externalsecrets:
+    deploy: false
+
+  harbor:
+    deploy: false
+
+  k8up:
+    deploy: false
+
+  keycloak:
+    deploy: false
+
+  kyverno:
+    deploy: false
+
+  longhorn:
+    deploy: false
+
+  metallb:
+    deploy: false
+
+  nodes:
+    deploy: false
+
+  prometheus:
+    deploy: false
+
+  seaweedfs:
+    deploy: false
+
+  wireguard:
+    deploy: false

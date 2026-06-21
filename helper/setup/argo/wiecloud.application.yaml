@@ -7,8 +7,12 @@ spec:
   project: infrastructure
   source:
     repoURL: https://github.com/wiemanboy/WieCloud.git
-    targetRevision: master
-    path: path/to/cluster/chart
+    targetRevision: create-dev-cluster-tofu
+    path: wiecloud/chart
+    helm:
+      valueFiles:
+        - values.dev.yaml
+
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
