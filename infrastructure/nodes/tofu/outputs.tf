@@ -17,3 +17,8 @@ output "talosconfig" {
   })
   sensitive = true
 }
+
+output "dev_kubeconfig" {
+  value     = module.dev_talos_controlplane_0.kubeconfig.kubeconfig_raw
+  sensitive = true
+}
