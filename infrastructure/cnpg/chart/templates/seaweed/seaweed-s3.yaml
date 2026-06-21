@@ -1,3 +1,4 @@
+{{ - if not .Values.seaweedfs.backup.restore.enabled -}}
 apiVersion: seaweed.seaweedfs.com/v1
 kind: Seaweed
 metadata:
@@ -68,3 +69,4 @@ spec:
         - name: "{{ .Values.seaweedfs.name }}-filer"
           namespace: {{ .Release.Namespace }}
           port: 8333
+{{- end -}}

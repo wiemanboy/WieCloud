@@ -37,6 +37,18 @@ infrastructure:
 
   cnpg:
     deploy: true
+    seaweedfs:
+      backup:
+        enabled: false
+      restore:
+        enabled: true
+    restores:
+      - name: seaweed-restore
+        enabled: true
+        fromBackup: aws
+        snapshot: "36ee995b0f17a6e06f3f71b36d29f069df6209891eccc1d4cead2bd2b29e6d96"
+        claim:
+          name: seaweed-backup
 
   envoygateway:
     deploy: true
