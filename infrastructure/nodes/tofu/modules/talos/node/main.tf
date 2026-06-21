@@ -34,7 +34,7 @@ resource "talos_machine_configuration_apply" "config_apply" {
           extraMounts = [
             {
               destination = "/var/lib/longhorn"
-              type        = bind
+              type        = "bind"
               source      = "/var/lib/longhorn"
               options     = ["rbind", "rshared", "rw"]
             }
