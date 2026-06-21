@@ -1,6 +1,6 @@
 locals {
   dev_cluster                = "dev"
-  dev_talos_version          = "v1.11.5"
+  dev_talos_version          = "v1.13.4"
   dev_image                  = "factory.talos.dev/installer/${module.dev_talos_image.id}:${module.dev_talos_image.talos_version}"
   dell_pve_0_metal_amd64_iso = "${proxmox_storage_iso.dell_pve_0_metal_amd64_iso.storage}:iso/${proxmox_storage_iso.dell_pve_0_metal_amd64_iso.filename}"
 }
