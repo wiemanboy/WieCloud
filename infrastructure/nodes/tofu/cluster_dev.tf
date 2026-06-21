@@ -1,21 +1,21 @@
-locals {
-  dev_cluster                = "dev"
-  dev_talos_version          = "v1.11.5"
-  dev_image                  = "factory.talos.dev/installer/${module.dev_talos_image.id}:${module.dev_talos_image.talos_version}"
-  dell_pve_0_metal_amd64_iso = "${proxmox_storage_iso.dell_pve_0_metal_amd64_iso.storage}:iso/${proxmox_storage_iso.dell_pve_0_metal_amd64_iso.filename}"
-  dev_cilium_config = {
-    cluster = {
-      network = {
-        cni = {
-          name = "none"
-        }
-      }
-      proxy = {
-        disabled = true
-      }
-    }
-  }
-}
+# locals {
+#   dev_cluster                = "dev"
+#   dev_talos_version          = "v1.11.5"
+#   dev_image                  = "factory.talos.dev/installer/${module.dev_talos_image.id}:${module.dev_talos_image.talos_version}"
+#   dell_pve_0_metal_amd64_iso = "${proxmox_storage_iso.dell_pve_0_metal_amd64_iso.storage}:iso/${proxmox_storage_iso.dell_pve_0_metal_amd64_iso.filename}"
+#   dev_cilium_config = {
+#     cluster = {
+#       network = {
+#         cni = {
+#           name = "none"
+#         }
+#       }
+#       proxy = {
+#         disabled = true
+#       }
+#     }
+#   }
+# }
 
 # module "dev_talos_image" {
 #   source        = "./modules/talos/image_factory"
