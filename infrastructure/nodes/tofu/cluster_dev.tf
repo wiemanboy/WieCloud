@@ -3,6 +3,18 @@ locals {
   dev_talos_version          = "v1.11.5"
   dev_image                  = "factory.talos.dev/installer/${module.dev_talos_image.id}:${module.dev_talos_image.talos_version}"
   dell_pve_0_metal_amd64_iso = "${proxmox_storage_iso.dell_pve_0_metal_amd64_iso.storage}:iso/${proxmox_storage_iso.dell_pve_0_metal_amd64_iso.filename}"
+  dev_cilium_config = yamlencode({
+    cluster = {
+      network = {
+        cni = {
+          name = "none"
+        }
+      }
+      proxy = {
+        disabled = true
+      }
+    }
+  })
 }
 
 module "dev_talos_image" {
@@ -51,6 +63,8 @@ module "dev_talos_controlplane_0" {
   oidc = {
     issuer_url = var.oidc_issuer_url
   }
+
+  extra_config = local.dev_cilium_config
 }
 
 module "dev_talos_worker_0" {
@@ -77,4 +91,6 @@ module "dev_talos_worker_0" {
     disk_size = 100
     memory    = 16384
   }
+
+  extra_config = local.dev_cilium_config
 }

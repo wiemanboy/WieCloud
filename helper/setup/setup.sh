@@ -1,9 +1,22 @@
 set -e
 
+cilium_version=1.19.5
+argocd_version=9.5.15
+
+# Setup Cilium
+
+helm repo add cilium https://helm.cilium.io/ || exit 1
+helm repo update
+
+helm install cilium cilium/cilium --version ${cilium_version} --namespace kube-system --values ./cilium/values.yaml
+
+# Setup ArgoCD
+
 helm repo add argo https://argoproj.github.io/argo-helm || exit 1
+helm repo update
 
 echo "installing argocd helm chart"
-helm install argocd argo/argo-cd --version 9.1.3 -n argocd --create-namespace
+helm install argocd argo/argo-cd --version ${argocd_version} -n argocd --create-namespace
 
 echo "creating root application"
 kubectl apply -f argo/infrastructure.project.yaml
