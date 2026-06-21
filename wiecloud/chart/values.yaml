@@ -149,15 +149,15 @@ infrastructure:
 
   certmanager:
     deploy: true
-    version: 0.2.7-create-dev-cluster-tofu-31864ac
+    version: 0.2.7-create-dev-cluster-tofu-ea9a7bd
 
   cilium:
     deploy: false
-    version: 0.0.0-create-dev-cluster-tofu-31864ac
+    version: 0.0.0-create-dev-cluster-tofu-ea9a7bd
 
   cnpg:
     deploy: true
-    version: 0.1.0-create-dev-cluster-tofu-31864ac
+    version: 0.1.0-create-dev-cluster-tofu-ea9a7bd
     seaweedfs:
       backup:
         enabled: true
@@ -171,7 +171,7 @@ infrastructure:
 
   envoygateway:
     deploy: true
-    version: 0.2.0-create-dev-cluster-tofu-31864ac
+    version: 0.2.0-create-dev-cluster-tofu-ea9a7bd
 
   externaldns:
     deploy: true
@@ -230,7 +230,7 @@ infrastructure:
 
   longhorn:
     deploy: true
-    version: 0.0.11-create-dev-cluster-tofu-31864ac
+    version: 0.0.11-create-dev-cluster-tofu-ea9a7bd
 
   metallb:
     deploy: true
@@ -238,7 +238,7 @@ infrastructure:
 
   nodes:
     deploy: true
-    version: 0.2.0-create-dev-cluster-tofu-31864ac
+    version: 0.2.0-create-dev-cluster-tofu-ea9a7bd
     proxmox:
       api:
         url: https://192.168.178.166:8006/api2/json
