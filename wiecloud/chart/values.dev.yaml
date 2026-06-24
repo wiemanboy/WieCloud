@@ -14,13 +14,28 @@ auth:
   oidc:
     endpoint: https://keycloak.dev.wieman.cloud/realms/wiecloud
 
-
 applications:
   minecraft:
     deploy: false
+    restores:
+      - name: minecraft-restore
+        enabled: true
+        fromBackup: aws
+        snapshot: ""
+        claim:
+          name: minecraft-datadir
 
   nextcloud:
     deploy: false
+    cnpg:
+      restore: true
+    restores:
+      - name: nextcloud-restore
+        enabled: true
+        fromBackup: aws
+        snapshot: ""
+        claim:
+          name: nextcloud-nextcloud
 
   website:
     deploy: false
@@ -61,12 +76,36 @@ infrastructure:
 
   harbor:
     deploy: false
+    restores:
+      - name: harbor-registry-restore
+        enabled: true
+        fromBackup: aws
+        snapshot: ""
+        claim:
+          name: harbor-registry
+      - name: harbor-database-restore
+        enabled: false
+        fromBackup: aws
+        snapshot: ""
+        claim:
+          name: database-data-harbor-database-0
 
   k8up:
     deploy: true
 
   keycloak:
     deploy: false
+    cnpg:
+      restore: true
+    tofudeployer:
+      dryRun: true
+    restores:
+      - name: tfstate-restore
+        enabled: true
+        fromBackup: aws
+        snapshot: ""
+        claim:
+          name: tofudeployer-state
 
   kyverno:
     deploy: false
@@ -79,6 +118,15 @@ infrastructure:
 
   nodes:
     deploy: false
+    tofudeployer:
+      dryRun: true
+    restores:
+      - name: tfstate-restore
+        enabled: true
+        fromBackup: aws
+        snapshot: ""
+        claim:
+          name: tofudeployer-state
 
   prometheus:
     deploy: false
