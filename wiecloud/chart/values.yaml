@@ -216,6 +216,8 @@ infrastructure:
         namespace: prometheus
     cnpg:
       restore: false
+    tofudeployer:
+      dryRun: true
     restores:
       - name: tfstate-restore
         enabled: false
