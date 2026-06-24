@@ -4,5 +4,8 @@ metadata:
   name: ip-pool
 spec:
   blocks:
-    - start: 192.168.178.230
-      stop: 192.168.178.240
+    {{- range .Values.network.ipPool }}
+    {{- $parts := splitList " - " . }}
+    - start: {{ index $parts 0 }}
+      stop: {{ index $parts 1 }}
+    {{- end }}

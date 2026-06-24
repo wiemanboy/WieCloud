@@ -13,6 +13,7 @@ spec:
     helm:
       valuesObject:
         network: {{ toYaml $.Values.network | nindent 10 }}
+
   destination:
     namespace: metallb-system
     server: https://kubernetes.default.svc

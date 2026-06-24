@@ -2,7 +2,7 @@ network:
   hostname: dev.wieman.cloud
   externalIp: 85.148.81.86
   ipPool:
-    - 192.168.178.210 - 192.168.178.220
+    - 192.168.178.230 - 192.168.178.240
   gateway:
     certificate:
       hostnames:

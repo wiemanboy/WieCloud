@@ -1,5 +1,5 @@
 cilium:
-  l2announcements :
+  l2announcements:
     enabled: true
 
   ipam:
@@ -34,3 +34,12 @@ cilium:
 
   k8sServiceHost: localhost
   k8sServicePort: 7445
+
+network:
+  hostname: example.com
+  ipPool:
+    - 0.0.0.0 - 0.0.0.0
+  gateway:
+    name: example-gateway
+    listener: web-example
+    namespace: example
