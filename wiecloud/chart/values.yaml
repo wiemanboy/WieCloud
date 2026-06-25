@@ -125,7 +125,7 @@ applications:
 
   nextcloud:
     deploy: true
-    version: 1.0.3-create-dev-cluster-tofu-072e5ca
+    version: 1.0.3-create-dev-cluster-tofu-b3e3574
     cnpg:
       restore: false
     restores:
@@ -149,15 +149,15 @@ infrastructure:
 
   certmanager:
     deploy: true
-    version: 0.2.7-create-dev-cluster-tofu-072e5ca
+    version: 0.2.7-create-dev-cluster-tofu-b3e3574
 
   cilium:
     deploy: false
-    version: 0.0.0-create-dev-cluster-tofu-072e5ca
+    version: 0.0.0-create-dev-cluster-tofu-b3e3574
 
   cnpg:
     deploy: true
-    version: 0.1.0-create-dev-cluster-tofu-072e5ca
+    version: 0.1.0-create-dev-cluster-tofu-b3e3574
     seaweedfs:
       backup:
         enabled: true
@@ -171,7 +171,7 @@ infrastructure:
 
   envoygateway:
     deploy: true
-    version: 0.2.0-create-dev-cluster-tofu-072e5ca
+    version: 0.2.0-create-dev-cluster-tofu-b3e3574
 
   externaldns:
     deploy: true
@@ -204,7 +204,7 @@ infrastructure:
 
   keycloak:
     deploy: true
-    version: 3.0.2-create-dev-cluster-tofu-072e5ca
+    version: 3.0.3-create-dev-cluster-tofu-b3e3574
     clientCreationPermissions:
       - name: argocd
         namespace: argocd
@@ -232,7 +232,7 @@ infrastructure:
 
   longhorn:
     deploy: true
-    version: 0.0.11-create-dev-cluster-tofu-072e5ca
+    version: 0.0.11-create-dev-cluster-tofu-b3e3574
 
   metallb:
     deploy: true
@@ -240,7 +240,7 @@ infrastructure:
 
   nodes:
     deploy: true
-    version: 0.2.0-create-dev-cluster-tofu-072e5ca
+    version: 0.2.0-create-dev-cluster-tofu-b3e3574
     proxmox:
       api:
         url: https://192.168.178.166:8006/api2/json
