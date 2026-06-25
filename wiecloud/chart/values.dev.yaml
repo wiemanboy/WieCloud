@@ -92,7 +92,7 @@ infrastructure:
     deploy: true
 
   keycloak:
-    deploy: false
+    deploy: true
     cnpg:
       restore: true
     tofudeployer:
@@ -101,7 +101,7 @@ infrastructure:
       - name: tfstate-restore
         enabled: true
         fromBackup: aws
-        snapshot: ""
+        snapshot: "154bfdce"
         claim:
           name: tofudeployer-state
 
