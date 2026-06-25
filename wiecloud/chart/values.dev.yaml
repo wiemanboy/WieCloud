@@ -59,7 +59,7 @@ infrastructure:
       - name: seaweed-restore
         enabled: true
         fromBackup: aws
-        snapshot: "36ee995b0f17a6e06f3f71b36d29f069df6209891eccc1d4cead2bd2b29e6d96"
+        snapshot: "1e411e3afb9320f69694c3a718686422a1cfcac198d6607e0c0d6b3c86208230"
         claim:
           name: seaweed-backup
 
