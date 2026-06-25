@@ -55,8 +55,6 @@ infrastructure:
     seaweedfs:
       backup:
         enabled: false
-      restore:
-        enabled: true
     restores:
       - name: seaweed-restore
         enabled: true
@@ -108,7 +106,7 @@ infrastructure:
           name: tofudeployer-state
 
   kyverno:
-    deploy: false
+    deploy: true
 
   longhorn:
     deploy: true
