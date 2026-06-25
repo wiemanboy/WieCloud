@@ -20,7 +20,7 @@ spec:
     requests:
       cpu: 5m
       memory: 64Mi
-      storage: 100Gi
+      storage: 50Gi
 
   filer:
     replicas: 1
