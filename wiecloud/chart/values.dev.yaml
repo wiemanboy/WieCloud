@@ -54,6 +54,8 @@ infrastructure:
     deploy: true
     seaweedfs:
       backup:
+        enabled: false
+      restore:
         enabled: true
     restores:
       - name: seaweed-restore
