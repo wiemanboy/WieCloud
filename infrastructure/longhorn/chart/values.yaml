@@ -1,4 +1,6 @@
 longhorn:
+  persistence:
+    dataEngine: "V2"
   longhornManager:
     resources:
       limits:
