@@ -13,13 +13,10 @@ spec:
         patch:
           type: StrategicMerge
           value:
-            spec:
-              externalIPs:
-                - 192.168.178.201
+            metadata:
+              labels:
+                expose: l2
       envoyDeployment:
-        pod:
-          nodeSelector:
-            kubernetes.io/hostname: talos-worker-0
         patch:
           type: StrategicMerge
           value:

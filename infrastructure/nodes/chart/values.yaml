@@ -2,6 +2,9 @@ proxmox:
   api:
     url: https://example:8006/api2/json
 
+tofudeployer:
+  dryRun: false
+
 auth:
   oidc:
     provider: example

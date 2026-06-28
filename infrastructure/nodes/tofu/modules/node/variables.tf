@@ -94,3 +94,10 @@ variable "oidc" {
   nullable = true
   default  = null
 }
+
+variable "extra_config" {
+  description = "Extra talos configuration passed to the machine"
+  type        = map(any)
+  nullable    = true
+  default     = null
+}

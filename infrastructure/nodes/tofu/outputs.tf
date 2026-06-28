@@ -17,3 +17,23 @@ output "talosconfig" {
   })
   sensitive = true
 }
+
+output "dev_kubeconfig" {
+  value     = module.dev_talos_controlplane_0.kubeconfig.kubeconfig_raw
+  sensitive = true
+}
+
+output "dev_talosconfig" {
+  value = yamlencode({
+    context = module.dev_talos_controlplane_0.cluster
+    contexts = {
+      "${module.dev_talos_controlplane_0.cluster}" = {
+        endpoints = [module.talos-controlplane-0.ip]
+        ca        = talos_machine_secrets.dev_machine_secret.client_configuration.ca_certificate
+        crt       = talos_machine_secrets.dev_machine_secret.client_configuration.client_certificate
+        key       = talos_machine_secrets.dev_machine_secret.client_configuration.client_key
+      }
+    }
+  })
+  sensitive = true
+}

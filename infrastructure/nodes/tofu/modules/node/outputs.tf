@@ -5,6 +5,7 @@ output "kubeconfig" {
 output "cluster" {
   value = var.cluster
 }
+
 output "ip" {
   value = var.ip
 }
