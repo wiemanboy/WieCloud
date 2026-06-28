@@ -232,6 +232,10 @@ infrastructure:
     deploy: true
     version: 0.0.11
 
+  metallb:
+    deploy: true
+    version: 0.0.0
+
   nodes:
     deploy: true
     version: 0.1.1
