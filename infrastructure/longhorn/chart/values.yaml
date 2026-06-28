@@ -1,9 +1,4 @@
 longhorn:
-  persistence:
-    dataEngine: "V2"
-  defaultSettings:
-    v2DataEngine: true
-
   longhornManager:
     resources:
       limits:
