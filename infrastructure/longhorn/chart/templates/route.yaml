@@ -46,6 +46,14 @@ spec:
       - action: Allow
         principal:
           jwt:
+            provider: oidc
             claims:
-            - name: group
-              value: /infra/longhorn/admin
+              - name: groups
+                values: [ /infra/longhorn/admin ]
+
+  jwt:
+    providers:
+      - name: {{ .Values.auth.oidc.provider }}
+        issuer: {{ .Values.auth.oidc.endpoint }}
+        remoteJWKS:
+          uri: {{ .Values.auth.oidc.provider }}/protocol/openid-connect/certs
