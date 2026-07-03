@@ -37,7 +37,10 @@ resource "talos_machine_configuration_apply" "config_apply" {
               source      = "/var/lib/longhorn"
               options     = ["rbind", "rshared", "rw"]
             }
-          ]
+          ],
+          extraArgs = {
+            "rotate-server-certificates" = true
+          }
         }
         sysctls = {
           "vm.nr_hugepages" = "1024"

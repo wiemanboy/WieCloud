@@ -1,4 +1,5 @@
 metrics-server:
+  fullnameOverride: metrics-server
   resources:
     limits:
       memory: 256Mi
