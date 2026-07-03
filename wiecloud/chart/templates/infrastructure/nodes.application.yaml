@@ -17,9 +17,11 @@ spec:
         images: {{ toYaml $.Values.images | nindent 10 }}
         backups: {{ toYaml $.Values.backups | nindent 10 }}
         restores: {{ toYaml .restores | nindent 10 }}
+
         proxmox:
           api:
             url: {{ .proxmox.api.url }}
+
         tofudeployer:
           dryRun: {{ .tofudeployer.dryRun | quote }}
 

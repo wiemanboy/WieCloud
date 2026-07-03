@@ -10,6 +10,7 @@ spec:
     chart: externaldns
     repoURL: {{ $.Values.infrastructure.repository }}
     targetRevision: {{ .version }}
+    
   destination:
     namespace: external-dns
     server: https://kubernetes.default.svc
