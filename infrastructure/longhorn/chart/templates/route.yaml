@@ -39,3 +39,13 @@ spec:
       name: longhorn-client-secret
     redirectURL: https://longhorn.{{ .Values.network.hostname }}/oauth2/callback
     logoutPath: /logout
+
+  authorization:
+    defaultAction: Deny
+    rules:
+      - action: Allow
+        principal:
+          jwt:
+            claims:
+            - name: group
+              value: /infra/longhorn/admin
