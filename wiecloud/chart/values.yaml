@@ -207,7 +207,7 @@ infrastructure:
 
   keycloak:
     deploy: true
-    version: 3.0.4-add-longhorn-route-with-oidc-c05d7ad
+    version: 3.0.4-add-longhorn-route-with-oidc-673ef3c
     clientCreationPermissions:
       - name: argocd
         namespace: argocd
@@ -237,7 +237,7 @@ infrastructure:
 
   longhorn:
     deploy: true
-    version: 0.1.0-add-longhorn-route-with-oidc-c05d7ad
+    version: 0.1.0-add-longhorn-route-with-oidc-673ef3c
 
   metallb:
     deploy: true
