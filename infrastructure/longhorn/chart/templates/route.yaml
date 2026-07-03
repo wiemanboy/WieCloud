@@ -39,6 +39,10 @@ spec:
       name: longhorn-client-secret
     redirectURL: https://longhorn.{{ .Values.network.hostname }}/oauth2/callback
     logoutPath: /logout
+    cookieNames:
+      accessToken: access-token
+      idToken: id-token
+      refreshToken: refresh-token
 
   authorization:
     defaultAction: Deny
@@ -46,9 +50,10 @@ spec:
       - action: Allow
         principal:
           jwt:
-            provider: oidc
+            provider: {{ .Values.auth.oidc.provider }}
             claims:
               - name: groups
+                valueType: StringArray
                 values: [ /infra/longhorn/admin ]
 
   jwt:
@@ -56,4 +61,7 @@ spec:
       - name: {{ .Values.auth.oidc.provider }}
         issuer: {{ .Values.auth.oidc.endpoint }}
         remoteJWKS:
-          uri: {{ .Values.auth.oidc.provider }}/protocol/openid-connect/certs
+          uri: {{ .Values.auth.oidc.endpoint }}/protocol/openid-connect/certs
+        extractFrom:
+          cookies:
+            - id-token
