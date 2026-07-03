@@ -16,11 +16,11 @@ spec:
   volume:
     replicas: 1
     limits:
-      memory: 128Mi
+      memory: 512Mi
     requests:
       cpu: 5m
       memory: 64Mi
-      storage: 100Gi
+      storage: 20Gi
 
   filer:
     replicas: 1
@@ -39,7 +39,7 @@ spec:
       enabled = true
       dir = "/data/filerldb2"
     limits:
-      memory: 256Mi
+      memory: 512Mi
     requests:
       cpu: 5m
       memory: 128Mi

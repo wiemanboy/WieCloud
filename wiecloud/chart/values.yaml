@@ -125,9 +125,14 @@ applications:
 
   nextcloud:
     deploy: true
-    version: 1.0.2
+    version: 1.0.3
     cnpg:
       restore: false
+    seaweedfs:
+      backup:
+        enabled: true
+      restore:
+        enabled: false
     restores:
       - name: nextcloud-restore
         enabled: false
@@ -149,14 +154,20 @@ infrastructure:
 
   certmanager:
     deploy: true
-    version: 0.2.6
+    version: 0.2.7
+
+  cilium:
+    deploy: false
+    version: 0.0.0
 
   cnpg:
     deploy: true
-    version: 0.0.1
+    version: 0.1.0
     seaweedfs:
       backup:
         enabled: true
+      restore:
+        enabled: false
     restores:
       - name: seaweed-restore
         enabled: false
@@ -167,7 +178,7 @@ infrastructure:
 
   envoygateway:
     deploy: true
-    version: 0.1.1
+    version: 0.2.0
 
   externaldns:
     deploy: true
@@ -200,7 +211,7 @@ infrastructure:
 
   keycloak:
     deploy: true
-    version: 3.0.2
+    version: 3.0.3
     clientCreationPermissions:
       - name: argocd
         namespace: argocd
@@ -212,6 +223,8 @@ infrastructure:
         namespace: prometheus
     cnpg:
       restore: false
+    tofudeployer:
+      dryRun: true
     restores:
       - name: tfstate-restore
         enabled: false
@@ -226,7 +239,7 @@ infrastructure:
 
   longhorn:
     deploy: true
-    version: 0.0.10
+    version: 0.0.11
 
   metallb:
     deploy: true
@@ -238,10 +251,12 @@ infrastructure:
 
   nodes:
     deploy: true
-    version: 0.1.1
+    version: 0.2.0
     proxmox:
       api:
         url: https://192.168.178.166:8006/api2/json
+    tofudeployer:
+      dryRun: true
     restores:
       - name: tfstate-restore
         enabled: false
