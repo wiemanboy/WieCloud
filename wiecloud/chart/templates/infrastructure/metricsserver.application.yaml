@@ -1,18 +1,18 @@
-{{- with .Values.infrastructure.externalsecrets -}}
+{{- with .Values.infrastructure.metricsserver -}}
 {{- if .deploy -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: externalsecrets
+  name: metricsserver
   namespace: argocd
 spec:
   source:
-    chart: externalsecrets
+    chart: metricsserver
     repoURL: {{ $.Values.infrastructure.repository }}
     targetRevision: {{ .version }}
 
   destination:
-    namespace: external-secrets
+    namespace: metrics-server
     server: https://kubernetes.default.svc
   project: infrastructure
   syncPolicy:

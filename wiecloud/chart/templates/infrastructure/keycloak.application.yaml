@@ -23,6 +23,10 @@ spec:
         cnpg:
           restore: {{ .cnpg.restore }}
 
+        tofudeployer:
+          dryRun: {{ .tofudeployer.dryRun | quote }}
+
+
   destination:
     namespace: keycloak
     server: https://kubernetes.default.svc

@@ -37,7 +37,10 @@ resource "talos_machine_configuration_apply" "config_apply" {
               source      = "/var/lib/longhorn"
               options     = ["rbind", "rshared", "rw"]
             }
-          ]
+          ],
+          extraArgs = {
+            "rotate-server-certificates" = true
+          }
         }
         sysctls = {
           "vm.nr_hugepages" = "1024"
@@ -52,6 +55,12 @@ resource "talos_machine_configuration_apply" "config_apply" {
             }
           ]
         }
+      },
+      cluster = {
+        extraManifests = [
+          "https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/main/deploy/standalone-install.yaml",
+          "https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml"
+        ]
       }
     }),
 

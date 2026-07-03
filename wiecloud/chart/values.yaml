@@ -224,7 +224,7 @@ infrastructure:
     cnpg:
       restore: false
     tofudeployer:
-      dryRun: true
+      dryRun: false
     restores:
       - name: tfstate-restore
         enabled: false
@@ -245,6 +245,10 @@ infrastructure:
     deploy: true
     version: 0.0.11
 
+  metricsserver:
+    deploy: true
+    version: 0.0.0
+
   nodes:
     deploy: true
     version: 0.2.0
@@ -252,7 +256,7 @@ infrastructure:
       api:
         url: https://192.168.178.166:8006/api2/json
     tofudeployer:
-      dryRun: true
+      dryRun: false
     restores:
       - name: tfstate-restore
         enabled: false
@@ -263,7 +267,7 @@ infrastructure:
 
   prometheus:
     deploy: true
-    version: 0.0.3
+    version: 0.0.4
 
   seaweedfs:
     deploy: true
