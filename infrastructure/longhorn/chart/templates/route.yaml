@@ -37,6 +37,5 @@ spec:
     clientID: longhorn
     clientSecret:
       name: longhorn-client-secret
-      key: secret
     redirectURL: https://longhorn.{{ .Values.network.hostname }}/oauth2/callback
     logoutPath: /logout
