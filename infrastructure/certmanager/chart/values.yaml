@@ -1,4 +1,7 @@
 cert-manager:
+  crds:
+    enabled: true
+
   resources:
     limits:
       memory: 128Mi

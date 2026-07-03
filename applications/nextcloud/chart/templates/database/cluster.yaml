@@ -12,6 +12,7 @@ spec:
     {{ end }}
     {{ if .Values.cnpg.restore }}
     recovery:
+      database: nextcloud
       source: source
     {{ end }}
 

@@ -18,6 +18,12 @@ keycloak:
     - name: grafana
       namespace: prometheus
 
+cnpg:
+  restore: false
+
+tofudeployer:
+  dryRun: false
+
 network:
   hostname: example.com
   gateway:
@@ -41,6 +47,3 @@ images:
       registry: example.com
       repository: products/tofudeployer
       version: 0.0.0
-
-cnpg:
-  restore: false

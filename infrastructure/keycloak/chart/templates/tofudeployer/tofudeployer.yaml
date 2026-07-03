@@ -21,7 +21,7 @@ spec:
             {{- end }}
             env:
             - name: DRY_RUN
-              value: "false"
+              value: {{ .Values.tofudeployer.dryRun | quote }}
             - name: REPOSITORY_URL
               value: {{ .Values.targetRepository.url }}
             - name: REPOSITORY_BRANCH

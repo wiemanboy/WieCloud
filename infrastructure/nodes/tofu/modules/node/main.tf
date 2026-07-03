@@ -22,4 +22,5 @@ module "talos_node" {
   bootstrap      = var.bootstrap
   talos_version  = var.talos_version
   oidc           = var.oidc
+  extra_config   = var.extra_config
 }
