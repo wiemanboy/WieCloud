@@ -247,7 +247,7 @@ infrastructure:
 
   metricsserver:
     deploy: true
-    version: 0.0.0-implement-metrics-server-81487a1
+    version: 0.0.0
 
   nodes:
     deploy: true
@@ -267,7 +267,7 @@ infrastructure:
 
   prometheus:
     deploy: true
-    version: 0.0.4-implement-metrics-server-81487a1
+    version: 0.0.4
 
   seaweedfs:
     deploy: true
