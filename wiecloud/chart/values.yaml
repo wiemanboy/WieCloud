@@ -26,10 +26,6 @@ network:
         - "*.carnaval.lol"
 
 auth:
-  basic:
-    name: basic-auth
-    secret:
-      name: server-auth-secret
   oidc:
     provider: Keycloak
     endpoint: https://keycloak.wieman.cloud/realms/wiecloud
@@ -221,6 +217,8 @@ infrastructure:
         namespace: nextcloud
       - name: grafana
         namespace: prometheus
+      - name: longhorn
+        namespace: longhorn-system
     cnpg:
       restore: false
     tofudeployer:

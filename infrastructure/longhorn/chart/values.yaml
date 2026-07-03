@@ -15,7 +15,6 @@ network:
     namespace: example
 
 auth:
-  basic:
-    name: example-auth
-    secret:
-      name: example-auth-secret
+  oidc:
+    provider: example
+    endpoint: https://example.com

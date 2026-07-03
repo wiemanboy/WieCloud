@@ -1,0 +1,42 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: longhorn
+spec:
+  parentRefs:
+    - name: {{ .Values.network.gateway.name }}
+      sectionName: {{ .Values.network.gateway.listener }}
+      namespace: {{ .Values.network.gateway.namespace }}
+
+  hostnames:
+    - longhorn.{{ .Values.network.hostname }}
+
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+
+      backendRefs:
+        - name: longhorn-frontend
+          namespace: {{ .Release.Namespace }}
+          port: 80
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: oidc
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: longhorn
+  oidc:
+    provider:
+      issuer: {{ .Values.auth.oidc.endpoint }}
+    clientID: longhorn
+    clientSecret:
+      name: longhorn-client-secret
+      key: secret
+    redirectURL: https://longhorn.{{ .Values.network.hostname }}/oauth2/callback
+    logoutPath: /logout
