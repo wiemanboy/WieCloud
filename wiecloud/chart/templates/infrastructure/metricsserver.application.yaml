@@ -1,13 +1,13 @@
-{{- with .Values.infrastructure.metricserver -}}
+{{- with .Values.infrastructure.metricsserver -}}
 {{- if .deploy -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: metricserver
+  name: metricsserver
   namespace: argocd
 spec:
   source:
-    chart: metricserver
+    chart: metricsserver
     repoURL: {{ $.Values.infrastructure.repository }}
     targetRevision: {{ .version }}
 

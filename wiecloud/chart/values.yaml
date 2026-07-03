@@ -245,7 +245,7 @@ infrastructure:
     deploy: true
     version: 0.0.11
 
-  metricserver:
+  metricsserver:
     deploy: true
     version: 0.0.0-implement-metrics-server-4b389a7
 

@@ -1,12 +1,12 @@
-name: Build metricserver
+name: Build metricsserver
 
 on:
   pull_request:
     branches:
     - master
     paths:
-    - infrastructure/metricserver/chart**
-    - .github/workflows/helm_build_metricserver.yaml
+    - infrastructure/metricsserver/chart**
+    - .github/workflows/helm_build_metricsserver.yaml
     - .github/workflows/helm_build.yaml
     - pipeline/build/scripts/helm/**
 
@@ -15,8 +15,8 @@ jobs:
     name: Build
     uses: ./.github/workflows/helm_build.yaml
     with:
-      chart_name: metricserver
-      chart_path: infrastructure/metricserver/chart
+      chart_name: metricsserver
+      chart_path: infrastructure/metricsserver/chart
       registry: oci://harbor.wieman.cloud
       repository: infrastructure
     secrets:
