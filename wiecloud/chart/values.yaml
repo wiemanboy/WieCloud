@@ -128,6 +128,11 @@ applications:
     version: 1.0.3-create-dev-cluster-tofu-f81f8d4
     cnpg:
       restore: false
+    seaweedfs:
+      backup:
+        enabled: true
+      restore:
+        enabled: false
     restores:
       - name: nextcloud-restore
         enabled: false
