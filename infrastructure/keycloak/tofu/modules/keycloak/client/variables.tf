@@ -15,6 +15,12 @@ variable "namespace" {
   default     = null
 }
 
+variable "secret_key" {
+  description = "Key that the client secret will be placed into, defaults to secret"
+  type        = string
+  default     = "secret"
+}
+
 variable "access_type" {
   description = "Access type of the client, can be either 'PUBLIC' or 'CONFIDENTIAL'"
   type        = string

@@ -76,6 +76,7 @@ module "longhorn_client" {
 
   name        = "longhorn"
   namespace   = "longhorn-system"
+  secret_key  = "client-secret"
   access_type = "CONFIDENTIAL"
 
   urls = {
