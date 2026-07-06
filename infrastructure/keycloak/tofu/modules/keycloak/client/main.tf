@@ -6,7 +6,7 @@ resource "kubernetes_secret_v1" "oidc_client_secret" {
     namespace = var.namespace
   }
   data = {
-    secret = keycloak_openid_client.oidc_client.client_secret
+    "${var.secret_key}" = keycloak_openid_client.oidc_client.client_secret
   }
 }
 

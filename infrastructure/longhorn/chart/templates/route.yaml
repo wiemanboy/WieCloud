@@ -1,0 +1,67 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: longhorn
+spec:
+  parentRefs:
+    - name: {{ .Values.network.gateway.name }}
+      sectionName: {{ .Values.network.gateway.listener }}
+      namespace: {{ .Values.network.gateway.namespace }}
+
+  hostnames:
+    - longhorn.{{ .Values.network.hostname }}
+
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+
+      backendRefs:
+        - name: longhorn-frontend
+          namespace: {{ .Release.Namespace }}
+          port: 80
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: oidc
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: longhorn
+  oidc:
+    provider:
+      issuer: {{ .Values.auth.oidc.endpoint }}
+    clientID: longhorn
+    clientSecret:
+      name: longhorn-client-secret
+    redirectURL: https://longhorn.{{ .Values.network.hostname }}/oauth2/callback
+    logoutPath: /logout
+    cookieNames:
+      accessToken: access-token
+      idToken: id-token
+      refreshToken: refresh-token
+
+  authorization:
+    defaultAction: Deny
+    rules:
+      - action: Allow
+        principal:
+          jwt:
+            provider: {{ .Values.auth.oidc.provider }}
+            claims:
+              - name: groups
+                valueType: StringArray
+                values: [ /infra/longhorn/admin ]
+
+  jwt:
+    providers:
+      - name: {{ .Values.auth.oidc.provider }}
+        issuer: {{ .Values.auth.oidc.endpoint }}
+        remoteJWKS:
+          uri: {{ .Values.auth.oidc.endpoint }}/protocol/openid-connect/certs
+        extractFrom:
+          cookies:
+            - id-token

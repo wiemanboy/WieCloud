@@ -41,6 +41,7 @@ module "admin_memberships" {
     module.infra_grafana_group.child_groups.admin.id,
     module.infra_harbor_group.child_groups.admin.id,
     module.infra_keycloak_group.child_groups.admin.id,
+    module.infra_longhorn_group.child_groups.admin.id,
     module.infra_kubernetes_group.child_groups.admin.id,
   ]
 

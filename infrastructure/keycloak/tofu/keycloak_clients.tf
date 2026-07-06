@@ -70,6 +70,21 @@ module "kubeapi_client" {
   }
 }
 
+module "longhorn_client" {
+  source   = "./modules/keycloak/client"
+  realm_id = keycloak_realm.wiecloud.id
+
+  name        = "longhorn"
+  namespace   = "longhorn-system"
+  secret_key  = "client-secret"
+  access_type = "CONFIDENTIAL"
+
+  urls = {
+    root     = "https://longhorn.${var.hostname}"
+    redirect = ["https://longhorn.${var.hostname}/oauth2/callback"]
+  }
+}
+
 module "nextcloud_client" {
   source   = "./modules/keycloak/client"
   realm_id = keycloak_realm.wiecloud.id
