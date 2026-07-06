@@ -29,6 +29,7 @@ data:
       --clientsecret="${client_secret}" \
       --discoveryuri="{{ .Values.auth.oidc.endpoint }}/.well-known/openid-configuration" \
       --scope="openid email profile groups offline_access" \
+      --mapping-groups="groups" \
       --group-restrict-login-to-whitelist=1 \
       --group-whitelist-regex="^/app/nextcloud/(admin|user)$" \
       || true
