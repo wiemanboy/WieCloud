@@ -121,7 +121,7 @@ applications:
 
   nextcloud:
     deploy: true
-    version: 1.0.4-configure-authorization-643245b
+    version: 1.0.4-configure-authorization-226b901
     cnpg:
       restore: false
     seaweedfs:
