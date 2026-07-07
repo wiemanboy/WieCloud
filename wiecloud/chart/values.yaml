@@ -121,7 +121,7 @@ applications:
 
   nextcloud:
     deploy: true
-    version: 1.0.3
+    version: 1.0.4
     cnpg:
       restore: false
     seaweedfs:

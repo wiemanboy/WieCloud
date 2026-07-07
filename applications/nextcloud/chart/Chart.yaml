@@ -1,7 +1,7 @@
 apiVersion: v2
 name: nextcloud
 type: application
-version: 1.0.3
+version: 1.0.4
 dependencies:
   - name: shared
     version: 0.0.0
