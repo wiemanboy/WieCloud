@@ -31,5 +31,5 @@ data:
       --scope="openid email profile groups offline_access" \
       --mapping-groups="groups" \
       --group-restrict-login-to-whitelist=1 \
-      --group-whitelist-regex="^/app/nextcloud/(admin|user)$" \
+      --group-whitelist-regex="\/app\/nextcloud\/(admin|user)$" \
       || true
