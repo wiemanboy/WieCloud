@@ -172,6 +172,10 @@ infrastructure:
         claim:
           name: seaweed-backup
 
+  dragonflydb:
+    deploy: true
+    version: 0.0.0
+
   envoygateway:
     deploy: true
     version: 0.2.0
