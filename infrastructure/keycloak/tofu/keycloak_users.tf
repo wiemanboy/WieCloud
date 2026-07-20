@@ -7,7 +7,7 @@ resource "keycloak_user" "jarno_wieman" {
   username       = "jarno_wieman"
   first_name     = "Jarno"
   last_name      = "Wieman"
-  email          = "wiemanboy@gmail.com"
+  email          = "jarno.wieman@wieman.cloud"
   email_verified = true
   enabled        = true
 
