@@ -28,7 +28,7 @@ resource "keycloak_user" "jarno_wieman" {
   }
 }
 
-resource "random_password" "jarno_wieman_password" {
+resource "random_password" "jarno_vienna_shared_password" {
   length = 20
 }
 
@@ -42,7 +42,7 @@ resource "keycloak_user" "jarno_vienna_shared" {
   enabled        = true
 
   initial_password {
-    value     = random_password.jarno_wieman_password.result
+    value     = random_password.jarno_vienna_shared_password.result
     temporary = true
   }
 
