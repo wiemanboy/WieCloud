@@ -86,5 +86,5 @@ module "nextcloud_memberships" {
     module.app_nextcloud_group.child_groups.user.id,
   ]
 
-  members = [keycloak_user.jarno_wieman.username]
+  members = [keycloak_user.jarno_vienna_shared.username]
 }
