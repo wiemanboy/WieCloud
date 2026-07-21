@@ -8,13 +8,8 @@ variable "host" {
   type        = string
 }
 
-variable "zone" {
-  description = "Name of the zone the host is located in"
-  type        = string
-}
-
-variable "region" {
-  description = "Name of the region the host is located in"
+variable "rack" {
+  description = "Name of the rack the host is located in"
   type        = string
 }
 
