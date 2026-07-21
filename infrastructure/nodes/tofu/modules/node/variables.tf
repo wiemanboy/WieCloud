@@ -3,13 +3,18 @@ variable "name" {
   type        = string
 }
 
-variable "node" {
-  description = "Name of the node to create the vm on"
+variable "host" {
+  description = "Name of the host to create the vm on"
+  type        = string
+}
+
+variable "zone" {
+  description = "Name of the zone the host is located in"
   type        = string
 }
 
 variable "region" {
-  description = "Name of the region the node is located in"
+  description = "Name of the region the host is located in"
   type        = string
 }
 
