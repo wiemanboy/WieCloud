@@ -1,0 +1,20 @@
+dragonfly-operator:
+  crds:
+    keep: false
+
+  rbacProxy:
+    resources:
+      limits:
+        cpu: null
+        memory: 128Mi
+      requests:
+        cpu: 10m
+        memory: 64Mi
+
+  manager:
+    resources:
+      limits:
+        memory: 128Mi
+      requests:
+        cpu: 10m
+        memory: 64Mi
