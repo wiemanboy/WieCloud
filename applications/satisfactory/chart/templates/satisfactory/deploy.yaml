@@ -49,6 +49,15 @@ spec:
               name: satisfactory-certs
               subPath: tls.key
 
+          readinessProbe:
+            exec:
+              command:
+                - /home/steam/healthcheck.sh
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
       securityContext:
         fsGroup: 1000
       volumes:
