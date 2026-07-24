@@ -13,6 +13,5 @@ spec:
       protocol: UDP
       targetPort: game-udp
   selector:
-    app.kubernetes.io/instance: satisfactory
-    app.kubernetes.io/name: satisfactory
+    app: satisfactory
   type: ClusterIP
