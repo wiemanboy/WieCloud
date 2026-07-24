@@ -50,13 +50,8 @@ spec:
               kubernetes.io/metadata.name: minecraft
 
     - name: satisfactory-tcp
-      protocol: HTTPS
+      protocol: TCP
       port: 7777
-      tls:
-        mode: Terminate
-        certificateRefs:
-          - name: letsencrypt-certificate
-            kind: Secret
       allowedRoutes:
         namespaces:
           from: Selector

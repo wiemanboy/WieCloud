@@ -15,4 +15,4 @@ spec:
   selector:
     app.kubernetes.io/instance: satisfactory
     app.kubernetes.io/name: satisfactory
-  type: NodePort
+  type: ClusterIP
