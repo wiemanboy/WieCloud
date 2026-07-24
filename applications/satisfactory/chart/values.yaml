@@ -6,6 +6,7 @@ satisfactory:
         k8up.io/backup: "true"
       accessModes:
         - ReadWriteOnce
+      storageClass: ""
       size: 1Gi
     - name: server-files
       enabled: true
@@ -13,6 +14,7 @@ satisfactory:
         k8up.io/backup: "true"
       accessModes:
         - ReadWriteOnce
+      storageClass: ""
       size: 20Gi
 
   resources:
