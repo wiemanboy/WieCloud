@@ -1,0 +1,9 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: satisfactory-cert
+spec:
+  secretName: satisfactory-cert-secret
+  dnsNames:
+    - satisfactory.{{ .Values.network.hostname }}
+  issuerRef: {{ toYaml .Values.network.gateway.certificate.issuerRef | nindent 4}}

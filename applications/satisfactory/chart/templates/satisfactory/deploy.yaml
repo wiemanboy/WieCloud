@@ -41,6 +41,14 @@ spec:
               name: satisfactory-config
             - mountPath: /config/gamefiles
               name: satisfactory-gamefiles
+
+            - mountPath: /config/gamefiles/FactoryGame/Certificates/cert_chain.pem
+              name: satisfactory-certs
+              subPath: tls.crt
+            - mountPath: /config/gamefiles/FactoryGame/Certificates/private_key.pem
+              name: satisfactory-certs
+              subPath: tls.key
+
       securityContext:
         fsGroup: 1000
       volumes:
@@ -50,3 +58,7 @@ spec:
         - name: satisfactory-gamefiles
           persistentVolumeClaim:
             claimName: satisfactory-gamefiles
+
+        - name: satisfactory-certs
+          secret:
+            secretName: satisfactory-cert-secret

@@ -22,6 +22,10 @@ network:
     name: example-gateway
     listener: web-example
     namespace: example
+    certificate:
+      issuerRef:
+        name: example
+        kind: ClusterIssuer
 
 images:
   satisfactory:
