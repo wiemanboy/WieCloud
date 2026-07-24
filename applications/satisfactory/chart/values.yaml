@@ -22,3 +22,10 @@ network:
     name: example-gateway
     listener: web-example
     namespace: example
+
+images:
+  satisfactory:
+    image:
+      registry: example.com
+      repository: satisfactory
+      version: 0.0.0
