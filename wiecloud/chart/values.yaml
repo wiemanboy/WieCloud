@@ -191,7 +191,7 @@ infrastructure:
 
   dragonflydb:
     deploy: true
-    version: 0.0.0-implement-dragonflydb-3592a8f
+    version: 0.0.0-implement-dragonflydb-aaa0193
 
   envoygateway:
     deploy: true
