@@ -30,21 +30,35 @@ spec:
           namespace: {{ .Release.Namespace }}
           port: 7777
 ---
-# apiVersion: gateway.networking.k8s.io/v1
-# kind: HTTPRoute
-# metadata:
-#   name: satisfactory
-# spec:
-#   parentRefs:
-#     - name: {{ .Values.network.gateway.name }}
-#       sectionName: satisfactory-tcp
-#       namespace: {{ .Values.network.gateway.namespace }}
-
-#   hostnames:
-#     - satisfactory.{{ .Values.network.hostname }}
-
-#   rules:
-#     - backendRefs:
-#         - name: satisfactory
-#           namespace: {{ .Release.Namespace }}
-#           port: 7777
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: satisfactory
+spec:
+  parentRefs:
+    - name: {{ .Values.network.gateway.name }}
+      sectionName: {{ .Values.network.gateway.listener }}
+      namespace: {{ .Values.network.gateway.namespace }}
+  hostnames:
+    - satisfactory.{{ .Values.network.hostname }}
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyExtensionPolicy
+metadata:
+  name: satisfactory-direct-response
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: satisfactory
+  response:
+    code: 200
+    body: "OK - Satisfactory"
+    headers:
+      - name: "content-type"
+        value: "text/plain"
