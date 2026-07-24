@@ -1,0 +1,27 @@
+{{ with .Values.satisfactory.persistence.config }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations: {{ toYaml .annotations | nindent 4 }}
+  name: satisfactory-config
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .size }}
+{{ end }}
+---
+{{ with .Values.satisfactory.persistence.gamefiles }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations: {{ toYaml .annotations | nindent 4 }}
+  name: satisfactory-gamefiles
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .size }}
+{{ end }}

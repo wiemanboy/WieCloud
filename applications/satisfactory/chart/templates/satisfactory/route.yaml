@@ -1,0 +1,66 @@
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: TCPRoute
+metadata:
+  name: satisfactory
+spec:
+  parentRefs:
+    - name: {{ .Values.network.gateway.name }}
+      sectionName: satisfactory-tcp
+      namespace: {{ .Values.network.gateway.namespace }}
+
+  rules:
+    - backendRefs:
+        - name: satisfactory
+          namespace: {{ .Release.Namespace }}
+          port: 7777
+---
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: UDPRoute
+metadata:
+  name: satisfactory
+spec:
+  parentRefs:
+    - name: {{ .Values.network.gateway.name }}
+      sectionName: satisfactory-udp
+      namespace: {{ .Values.network.gateway.namespace }}
+
+  rules:
+    - backendRefs:
+        - name: satisfactory
+          namespace: {{ .Release.Namespace }}
+          port: 7777
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: satisfactory
+spec:
+  parentRefs:
+    - name: {{ .Values.network.gateway.name }}
+      sectionName: {{ .Values.network.gateway.listener }}
+      namespace: {{ .Values.network.gateway.namespace }}
+  hostnames:
+    - satisfactory.{{ .Values.network.hostname }}
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      filters:
+        - type: ExtensionRef
+          extensionRef:
+            group: gateway.envoyproxy.io
+            kind: HTTPRouteFilter
+            name: direct-response
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: HTTPRouteFilter
+metadata:
+  name: direct-response
+spec:
+  directResponse:
+    contentType: text/plain
+    statusCode: 200
+    body:
+      type: Inline
+      inline: "OK - Satisfactory"
