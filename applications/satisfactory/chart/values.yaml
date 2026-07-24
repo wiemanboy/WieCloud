@@ -1,0 +1,30 @@
+satisfactory:
+  persistence:
+    - name: config
+      enabled: true
+      annotations:
+        k8up.io/backup: "true"
+      accessModes:
+        - ReadWriteOnce
+      size: 1Gi
+    - name: server-files
+      enabled: true
+      annotations:
+        k8up.io/backup: "true"
+      accessModes:
+        - ReadWriteOnce
+      size: 20Gi
+
+  resources:
+    limits:
+      memory: 16Gi
+    requests:
+      cpu: 500m
+      memory: 12Gi
+
+network:
+  hostname: example.com
+  gateway:
+    name: example-gateway
+    listener: web-example
+    namespace: example

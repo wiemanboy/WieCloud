@@ -137,6 +137,23 @@ applications:
         claim:
           name: nextcloud-nextcloud
 
+  satisfactory:
+    deploy: true
+    version: 0.0.0
+    restores:
+      - name: server-files-restore
+        enabled: false
+        fromBackup: local
+        snapshot: ""
+        claim:
+          name: satisfactory-server-files
+      - name: config-restore
+        enabled: false
+        fromBackup: local
+        snapshot: ""
+        claim:
+          name: satisfactory-config
+
   website:
     deploy: true
     namespace: website

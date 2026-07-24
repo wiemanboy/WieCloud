@@ -1,0 +1,31 @@
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: TCPRoute
+metadata:
+  name: satisfactory
+spec:
+  parentRefs:
+    - name: {{ .Values.network.gateway.name }}
+      sectionName: satisfactory-tcp
+      namespace: {{ .Values.network.gateway.namespace }}
+
+  rules:
+    - backendRefs:
+        - name: satisfactory-satisfactory
+          namespace: {{ .Release.Namespace }}
+          port: 7777
+---
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: UDPRoute
+metadata:
+  name: satisfactory
+spec:
+  parentRefs:
+    - name: {{ .Values.network.gateway.name }}
+      sectionName: satisfactory-udp
+      namespace: {{ .Values.network.gateway.namespace }}
+
+  rules:
+    - backendRefs:
+        - name: satisfactory-satisfactory
+          namespace: {{ .Release.Namespace }}
+          port: 7777
