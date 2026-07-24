@@ -46,19 +46,21 @@ spec:
         - path:
             type: PathPrefix
             value: /
+      filters:
+        - type: ExtensionRef
+          extensionRef:
+            group: gateway.envoyproxy.io
+            kind: HTTPRouteFilter
+            name: direct-response
 ---
 apiVersion: gateway.envoyproxy.io/v1alpha1
-kind: EnvoyExtensionPolicy
+kind: HTTPRouteFilter
 metadata:
-  name: satisfactory-direct-response
+  name: direct-response
 spec:
-  targetRefs:
-    - group: gateway.networking.k8s.io
-      kind: HTTPRoute
-      name: satisfactory
-  response:
-    code: 200
-    body: "OK - Satisfactory"
-    headers:
-      - name: "content-type"
-        value: "text/plain"
+  directResponse:
+    contentType: text/plain
+    statusCode: 200
+    body:
+      type: Inline
+      inline: "OK - Satisfactory"
