@@ -6,9 +6,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/instance: satisfactory
-      app.kubernetes.io/name: satisfactory
+      app: keycloak
   template:
+    metadata:
+      labels:
+        app: satisfactory
     spec:
       containers:
         - name: satisfactory
