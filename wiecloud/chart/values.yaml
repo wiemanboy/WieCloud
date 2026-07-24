@@ -139,7 +139,7 @@ applications:
 
   satisfactory:
     deploy: true
-    version: 0.0.0-implement-satisfactory-f564789
+    version: 0.0.0-implement-satisfactory-d1f0b94
     restores:
       - name: server-files-restore
         enabled: false
@@ -191,7 +191,7 @@ infrastructure:
 
   envoygateway:
     deploy: true
-    version: 0.3.0-implement-satisfactory-f564789
+    version: 0.3.0-implement-satisfactory-d1f0b94
 
   externaldns:
     deploy: true
