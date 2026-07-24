@@ -1,0 +1,8 @@
+apiVersion: v2
+name: satisfactory
+type: application
+version: 0.0.0
+dependencies:
+  - name: shared
+    version: 0.0.0
+    repository: oci://harbor.wieman.cloud/products

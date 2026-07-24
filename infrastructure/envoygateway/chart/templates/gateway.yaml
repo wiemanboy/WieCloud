@@ -30,7 +30,7 @@ spec:
         namespaces:
           from: All
 
-    - name:  minecraft
+    - name: minecraft
       protocol: TCP
       port: 25565
       allowedRoutes:
@@ -39,7 +39,7 @@ spec:
           selector:
             matchLabels:
               kubernetes.io/metadata.name: minecraft
-    - name:  minecraft-voicechat
+    - name: minecraft-voicechat
       protocol: UDP
       port: 24454
       allowedRoutes:
@@ -48,6 +48,25 @@ spec:
           selector:
             matchLabels:
               kubernetes.io/metadata.name: minecraft
+
+    - name: satisfactory-tcp
+      protocol: TCP
+      port: 7777
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: satisfactory
+    - name: satisfactory-udp
+      protocol: UDP
+      port: 7777
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: satisfactory
 
 ---
 apiVersion: cert-manager.io/v1

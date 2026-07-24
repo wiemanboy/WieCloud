@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: satisfactory
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: satisfactory
+  template:
+    metadata:
+      labels:
+        app: satisfactory
+    spec:
+      containers:
+        - name: satisfactory
+          {{ with .Values.images.satisfactory.image -}}
+          image: {{ .registry }}/{{ .repository }}:{{ .version }}
+          {{ end -}}
+          ports:
+            - containerPort: 7777
+              name: game-tcp
+              protocol: TCP
+            - containerPort: 7777
+              name: game-udp
+              protocol: UDP
+          resources: {{ toYaml .Values.satisfactory.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: false
+            runAsGroup: 1000
+            runAsNonRoot: true
+            runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
+          volumeMounts:
+            - mountPath: /config
+              name: satisfactory-config
+            - mountPath: /config/gamefiles
+              name: satisfactory-gamefiles
+
+            - mountPath: /config/gamefiles/FactoryGame/Certificates/cert_chain.pem
+              name: satisfactory-certs
+              subPath: tls.crt
+            - mountPath: /config/gamefiles/FactoryGame/Certificates/private_key.pem
+              name: satisfactory-certs
+              subPath: tls.key
+
+          readinessProbe:
+            exec:
+              command:
+                - /home/steam/healthcheck.sh
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+      securityContext:
+        fsGroup: 1000
+      volumes:
+        - name: satisfactory-config
+          persistentVolumeClaim:
+            claimName: satisfactory-config
+        - name: satisfactory-gamefiles
+          persistentVolumeClaim:
+            claimName: satisfactory-gamefiles
+
+        - name: satisfactory-certs
+          secret:
+            secretName: satisfactory-cert-secret

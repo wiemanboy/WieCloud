@@ -137,6 +137,23 @@ applications:
         claim:
           name: nextcloud-nextcloud
 
+  satisfactory:
+    deploy: true
+    version: 0.0.0
+    restores:
+      - name: server-files-restore
+        enabled: false
+        fromBackup: local
+        snapshot: ""
+        claim:
+          name: satisfactory-server-files
+      - name: config-restore
+        enabled: false
+        fromBackup: local
+        snapshot: ""
+        claim:
+          name: satisfactory-config
+
   website:
     deploy: true
     namespace: website
@@ -178,7 +195,7 @@ infrastructure:
 
   envoygateway:
     deploy: true
-    version: 0.2.0
+    version: 0.3.0
 
   externaldns:
     deploy: true
@@ -306,6 +323,12 @@ images:
       registry: harbor.wieman.cloud
       repository: tools/rconcli
       version: 1.1.5
+
+  satisfactory:
+    image:
+      registry: docker.io
+      repository: wolveix/satisfactory-server
+      version: v1.9.10
 
   tofudeployer:
     image:

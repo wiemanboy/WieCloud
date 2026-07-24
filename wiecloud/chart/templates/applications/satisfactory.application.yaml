@@ -1,0 +1,32 @@
+{{- with .Values.applications.satisfactory -}}
+{{- if .deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: satisfactory
+  namespace: argocd
+spec:
+  source:
+    chart: satisfactory
+    repoURL: {{ $.Values.applications.repository }}
+    targetRevision: {{ .version }}
+    helm:
+      valuesObject:
+        network: {{ toYaml $.Values.network | nindent 10 }}
+        images: {{ toYaml $.Values.images | nindent 10 }}
+        backups: {{ toYaml $.Values.backups | nindent 10 }}
+        restores: {{ toYaml .restores | nindent 10 }}
+
+  destination:
+    namespace: satisfactory
+    server: https://kubernetes.default.svc
+  project: applications
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
+{{- end -}}
+{{- end -}}
