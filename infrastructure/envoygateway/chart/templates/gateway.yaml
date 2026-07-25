@@ -67,7 +67,15 @@ spec:
           selector:
             matchLabels:
               kubernetes.io/metadata.name: satisfactory
-
+    - name: satisfactory-messaging
+      protocol: TCP
+      port: 8888
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: satisfactory
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
