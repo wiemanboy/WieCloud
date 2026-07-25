@@ -26,7 +26,7 @@ spec:
               protocol: UDP
             - containerPort: 8888
               name: messaging
-              protocol: UDP
+              protocol: TCP
           resources: {{ toYaml .Values.satisfactory.resources | nindent 12 }}
           securityContext:
             allowPrivilegeEscalation: false
