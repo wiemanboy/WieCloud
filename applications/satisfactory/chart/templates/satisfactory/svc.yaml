@@ -13,7 +13,7 @@ spec:
       protocol: UDP
       targetPort: game-udp
     - name: messaging
-      port: 7777
+      port: 8888
       protocol: TCP
       targetPort: messaging
   selector:
