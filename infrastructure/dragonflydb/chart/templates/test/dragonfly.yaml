@@ -8,7 +8,11 @@ spec:
     - --proactor_threads=1
   resources:
     limits:
-      memory: 512Mi
+      memory: 320Mi
     requests:
       cpu: 50m
       memory: 256Mi
+    authentication:
+      passwordFromSecret:
+        name: dragonfly-credentials
+        key: password
