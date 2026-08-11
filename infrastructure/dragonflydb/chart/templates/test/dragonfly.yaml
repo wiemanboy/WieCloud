@@ -5,8 +5,8 @@ metadata:
 spec:
   replicas: 3
   resources:
-    # limits:
-    #   memory: 750Mi
-    # requests:
-    #   cpu: 500m
-    #   memory: 500Mi
+    limits:
+      memory: 64Mi
+    requests:
+      cpu: 5m
+      memory: 32Mi
