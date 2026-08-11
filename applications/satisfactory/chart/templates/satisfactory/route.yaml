@@ -30,6 +30,22 @@ spec:
           namespace: {{ .Release.Namespace }}
           port: 7777
 ---
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: TCPRoute
+metadata:
+  name: satisfactory-messaging
+spec:
+  parentRefs:
+    - name: {{ .Values.network.gateway.name }}
+      sectionName: satisfactory-messaging
+      namespace: {{ .Values.network.gateway.namespace }}
+
+  rules:
+    - backendRefs:
+        - name: satisfactory
+          namespace: {{ .Release.Namespace }}
+          port: 8888
+---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
