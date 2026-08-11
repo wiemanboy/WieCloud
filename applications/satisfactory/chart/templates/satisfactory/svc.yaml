@@ -12,6 +12,10 @@ spec:
       port: 7777
       protocol: UDP
       targetPort: game-udp
+    - name: messaging
+      port: 8888
+      protocol: TCP
+      targetPort: messaging
   selector:
     app: satisfactory
   type: ClusterIP
