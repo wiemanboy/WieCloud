@@ -4,8 +4,8 @@ metadata:
   name: dragonfly-sample
 spec:
   replicas: 3
-args:
-  - --proactor_threads=1
+  args:
+    - --proactor_threads=1
   resources:
     limits:
       memory: 512Mi
