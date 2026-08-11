@@ -4,15 +4,18 @@ metadata:
   name: dragonfly-sample
 spec:
   replicas: 3
+
   args:
     - --proactor_threads=1
+
+  authentication:
+    passwordFromSecret:
+      name: dragonfly-credentials
+      key: password
+
   resources:
     limits:
       memory: 320Mi
     requests:
       cpu: 50m
       memory: 256Mi
-    authentication:
-      passwordFromSecret:
-        name: dragonfly-credentials
-        key: password
