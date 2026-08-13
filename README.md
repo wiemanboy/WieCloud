@@ -4,7 +4,6 @@
 
 ### Global
 
-- `foundation/`: Deployment of underlying nodes and cluster configuration
 - `helper/`: Helper scripts for local use
 - `infrastructure/`: Helm charts for infrastructure, used to keep applications running
 - `applications/`: Helm charts for applications, used by end users
