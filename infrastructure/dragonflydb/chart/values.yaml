@@ -8,7 +8,7 @@ dragonfly-operator:
         cpu: null
         memory: 64Mi
       requests:
-        cpu: 1m
+        cpu: 3m
         memory: 32Mi
 
   manager:
@@ -16,5 +16,5 @@ dragonfly-operator:
       limits:
         memory: 128Mi
       requests:
-        cpu: 1m
+        cpu: 5m
         memory: 64Mi
