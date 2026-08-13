@@ -1,0 +1,11 @@
+apiVersion: v2
+name: gitlab
+type: application
+version: 0.0.0
+dependencies:
+  - name: shared
+    version: 0.0.0
+    repository: oci://harbor.wieman.cloud/products
+  - name: gitlab
+    version: 10.2.2
+    repository: https://charts.gitlab.io/

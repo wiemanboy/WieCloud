@@ -1,0 +1,26 @@
+{{- with .Values.applications.gitlab -}}
+{{- if .deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gitlab
+  namespace: argocd
+spec:
+  source:
+    chart: gitlab
+    repoURL: {{ $.Values.applications.repository }}
+    targetRevision: {{ .version }}-not-found
+
+  destination:
+    namespace: gitlab
+    server: https://kubernetes.default.svc
+  project: applications
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
+{{- end -}}
+{{- end -}}

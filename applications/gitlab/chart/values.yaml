@@ -1,0 +1,69 @@
+gitlab:
+  global:
+    edition: ce
+    hosts:
+      domain: example.com
+      https: false
+
+    gatewayApi:
+      enabled: false
+      installEnvoy: true
+      configureCertmanager: false
+      httpToHttpsRedirect: false
+      # gatewayRef:
+      #   name: example
+      #   listener: https
+      #   namespace: example
+
+    psql:
+      host: gitlab-postgres-cluster-rw
+      database: gitlab
+      username: gitlab
+      password:
+        useSecret: true
+        secret: gitlab-postgres-cluster-app
+        key: password
+
+    redis:
+      host: placeholder
+      auth:
+        enabled: true
+        secret: gitlab-dragonfly-credentials
+        key: password
+
+    appConfig:
+      object_store:
+        enabled: true
+
+  gitlab:
+    toolbox:
+      backups:
+        objectStorage:
+          config:
+            secret: placeholder
+            key: placeholder
+
+  gitlab-runner:
+    runners:
+      locked: false
+      config: |
+        [[runners]]
+          [runners.kubernetes]
+          image = "ubuntu:22.04"
+
+  registry:
+    enabled: false
+
+  workspaces:
+    enabled: false
+
+  pages:
+    enabled: false
+
+installCertmanager: false
+
+prometheus:
+  install: false
+
+registry:
+  enabled: false
