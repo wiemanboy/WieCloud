@@ -60,10 +60,10 @@ gitlab:
   pages:
     enabled: false
 
-installCertmanager: false
+  installCertmanager: false
 
-prometheus:
-  install: false
+  prometheus:
+    install: false
 
-registry:
-  enabled: false
+  registry:
+    enabled: false
