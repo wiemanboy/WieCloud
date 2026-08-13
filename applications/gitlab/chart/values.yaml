@@ -5,16 +5,6 @@ gitlab:
       domain: example.com
       https: false
 
-    gatewayApi:
-      enabled: false
-      installEnvoy: true
-      configureCertmanager: false
-      httpToHttpsRedirect: false
-      # gatewayRef:
-      #   name: example
-      #   listener: https
-      #   namespace: example
-
     psql:
       host: gitlab-postgres-cluster-rw
       database: gitlab
@@ -67,3 +57,13 @@ gitlab:
 
   registry:
     enabled: false
+
+global:
+  gatewayApi:
+    enabled: true
+    gatewayRef:
+      name: example
+      namespace: example
+    installEnvoy: false
+    configureCertmanager: false
+    httpToHttpsRedirect: false
