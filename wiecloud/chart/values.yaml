@@ -89,7 +89,7 @@ targetRepository:
 applications:
   gitlab:
     deploy: true
-    version: 0.0.0-implement-gitlab-9efbed2
+    version: 0.0.0-implement-gitlab-77fa213
 
   minecraft:
     deploy: true
