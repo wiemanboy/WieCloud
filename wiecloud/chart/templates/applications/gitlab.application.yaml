@@ -9,7 +9,7 @@ spec:
   source:
     chart: gitlab
     repoURL: {{ $.Values.applications.repository }}
-    targetRevision: {{ .version }}-not-found
+    targetRevision: {{ .version }}
 
   destination:
     namespace: gitlab
