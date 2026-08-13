@@ -6,15 +6,15 @@ dragonfly-operator:
     resources:
       limits:
         cpu: null
-        memory: 128Mi
-      requests:
-        cpu: 10m
         memory: 64Mi
+      requests:
+        cpu: 1m
+        memory: 32Mi
 
   manager:
     resources:
       limits:
         memory: 128Mi
       requests:
-        cpu: 10m
+        cpu: 1m
         memory: 64Mi
