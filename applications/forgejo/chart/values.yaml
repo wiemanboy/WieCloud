@@ -1,4 +1,5 @@
 forgejo:
+  replicaCount: 3
   gitea:
     config:
       APP_NAME: 'Forgejo'

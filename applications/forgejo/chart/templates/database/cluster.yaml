@@ -1,0 +1,44 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: forgejo-postgres-cluster
+spec:
+  instances: 3
+
+  bootstrap:
+    {{ if not .Values.cnpg.restore }}
+    initdb:
+      database: forgejo
+    {{ end }}
+    {{ if .Values.cnpg.restore }}
+    recovery:
+      database: forgejo
+      source: source
+    {{ end }}
+
+  storage:
+    size: 3Gi
+
+  resources:
+    limits:
+      memory: 256Mi
+    requests:
+      cpu: 20m
+      memory: 128Mi
+
+  {{ if not .Values.cnpg.restore }}
+  plugins:
+  - name: barman-cloud.cloudnative-pg.io
+    isWALArchiver: true
+    parameters:
+      barmanObjectName: cnpg-backup-s3
+  {{ end }}
+  {{ if .Values.cnpg.restore }}
+  externalClusters:
+  - name: source
+    plugin:
+      name: barman-cloud.cloudnative-pg.io
+      parameters:
+        barmanObjectName: cnpg-backup-s3
+        serverName: forgejo-postgres-cluster
+  {{ end }}
