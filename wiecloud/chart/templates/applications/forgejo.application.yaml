@@ -25,7 +25,7 @@ spec:
                 autoDiscoverUrl: {{.endpoint }}/.well-known/openid-configuration
               {{- end }}
 
-          httproute:
+          httpRoute:
             {{ with $.Values.network.gateway }}
             parentRefs:
               - name: {{ .name }}
@@ -35,7 +35,7 @@ spec:
               - forgejo.{{ $.Values.network.hostname }}
             {{- end }}
 
-          tcproute:
+          tcpRoute:
             {{ with $.Values.network.gateway }}
             parentRefs:
               - name: {{ .name }}
