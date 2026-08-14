@@ -87,6 +87,10 @@ targetRepository:
   branch: master
 
 applications:
+  forgejo:
+    deploy: true
+    version: 0.0.0
+
   minecraft:
     deploy: true
     version: 1.2.1

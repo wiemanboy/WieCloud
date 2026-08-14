@@ -1,0 +1,58 @@
+{{- with .Values.applications.forgejo -}}
+{{- if .deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: forgejo
+  namespace: argocd
+spec:
+  source:
+    chart: forgejo
+    repoURL: {{ $.Values.applications.repository }}
+    targetRevision: {{ .version }}
+    helm:
+      valuesObject:
+        backups: {{ toYaml $.Values.backups | nindent 10 }}
+        restores: {{ toYaml .restores | nindent 10 }}
+
+        forgejo:
+          gitea:
+            oauth:
+              {{ with $.Values.auth.oidc}}
+              - name: {{ .provider }}
+                provider: openidConnect
+                existingSecret: forgejo-client-secret
+                autoDiscoverUrl: {{.endpoint }}/.well-known/openid-configuration
+              {{- end }}
+
+          httproute:
+            {{ with $.Values.network.gateway }}
+            parentRefs:
+              - name: {{ .name }}
+                sectionName: {{ .listener }}
+                namespace: {{ .namespace }}
+            hostnames:
+              - forgejo.{{ $.Values.network.hostname }}
+            {{- end }}
+
+          tcproute:
+            {{ with $.Values.network.gateway }}
+            parentRefs:
+              - name: {{ .name }}
+                sectionName: ssh
+                namespace: {{ .namespace }}
+            {{- end }}
+
+  destination:
+    namespace: forgejo
+    server: https://kubernetes.default.svc
+  project: applications
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
+{{- end -}}
+{{- end -}}
