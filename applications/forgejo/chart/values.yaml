@@ -46,7 +46,7 @@ forgejo:
   strategy:
     type: Recreate
 
-  httproute:
+  httpRoute:
     enabled: true
     parentRefs:
       - name: example
@@ -55,13 +55,12 @@ forgejo:
     hostnames:
       - forgejo.example.com
 
-  tcproute:
+  tcpRoute:
     enabled: true
     parentRefs:
       - name: example
         sectionName: ssh
         namespace: example
-
 
   persistence:
     enabled: true
@@ -80,3 +79,6 @@ forgejo:
   #   - name: forgejo-themes
   #     readOnly: true
   #     mountPath: '/data/gitea/public/assets/css'
+
+cnpg:
+  restore: false

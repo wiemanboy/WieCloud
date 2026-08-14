@@ -43,6 +43,9 @@ spec:
                 namespace: {{ .namespace }}
             {{- end }}
 
+        cnpg:
+          restore: {{ .cnpg.restore }}
+
   destination:
     namespace: forgejo
     server: https://kubernetes.default.svc
