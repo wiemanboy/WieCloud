@@ -2,7 +2,32 @@ forgejo:
   replicaCount: 3
   gitea:
     config:
-      APP_NAME: 'Forgejo'
+      APP_NAME: Forgejo
+      APP_SLOGAN: The WieCloud git server
+
+      ui.meta:
+        AUTHOR: Forgejo
+
+      repository:
+        MAX_CREATION_LIMIT: 100
+        DISABLED_REPO_UNITS: repo.packages
+        ALLOW_FORK_WITHOUT_MAXIMUM_LIMIT: false
+
+      admin:
+        DISABLE_REGULAR_ORG_CREATION:
+        EXTERNAL_USER_DISABLE_FEATURES: manage_password
+
+      oauth2_client:
+        UPDATE_AVATAR: true
+        ENABLE_AUTO_REGISTRATION: true
+
+      service:
+        DISABLE_REGISTRATION: true
+        ENABLE_BASIC_AUTHENTICATION: false
+        ENABLE_INTERNAL_SIGNIN: false
+
+      packages:
+        ENABLED: false
 
       database:
         DB_TYPE: postgres
