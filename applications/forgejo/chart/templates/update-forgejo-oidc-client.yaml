@@ -3,21 +3,12 @@ kind: ServiceAccount
 metadata:
   name: update-forgejo-oidc-secret
   namespace: {{ .Release.Namespace }}
-  annotations:
-    helm.sh/hook: post-install,post-upgrade
-    helm.sh/hook-weight: "-2"
-    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
-
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: update-forgejo-oidc-secret
   namespace: {{ .Release.Namespace }}
-  annotations:
-    helm.sh/hook: post-install,post-upgrade
-    helm.sh/hook-weight: "-2"
-    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
 rules:
   - apiGroups: [""]
     resources: ["secrets"]
@@ -31,17 +22,12 @@ rules:
     resources: ["secrets"]
     verbs:
       - create
-
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: update-forgejo-oidc-secret
   namespace: {{ .Release.Namespace }}
-  annotations:
-    helm.sh/hook: post-install,post-upgrade
-    helm.sh/hook-weight: "-2"
-    helm.shook-delete-policy: before-hook-creation,hook-succeeded
 subjects:
   - kind: ServiceAccount
     name: update-forgejo-oidc-secret
@@ -50,7 +36,6 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
   name: update-forgejo-oidc-secret
-
 ---
 apiVersion: batch/v1
 kind: Job
@@ -58,9 +43,8 @@ metadata:
   name: update-forgejo-oidc-secret
   namespace: {{ .Release.Namespace }}
   annotations:
-    helm.sh/hook: post-install,post-upgrade
-    helm.sh/hook-weight: "0"
-    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded
 spec:
   backoffLimit: 1
   template:
