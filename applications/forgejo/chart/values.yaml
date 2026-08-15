@@ -42,13 +42,13 @@ forgejo:
             name: forgejo-postgres-cluster-app
             key: password
 
-      # - name: GITEA_OAUTH_KEY_0
-      #   value: forgejo
-      # - name: GITEA_OAUTH_SECRET_0
-      #   valueFrom:
-      #     secretKeyRef:
-      #       name: forgejo-client-secret
-      #       key: secret
+      - name: GITEA_OAUTH_KEY_0
+        value: forgejo
+      - name: GITEA_OAUTH_SECRET_0
+        valueFrom:
+          secretKeyRef:
+            name: forgejo-client-secret
+            key: secret
 
   strategy:
     type: RollingUpdate
