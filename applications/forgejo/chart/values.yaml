@@ -10,15 +10,15 @@ forgejo:
 
       queue:
         TYPE: redis
-        CONN_STR: redis://forgejo-dragonflydb:6379/0
+        CONN_STR: redis://forgejo-dragonfly:6379/0
 
       cache:
         ADAPTER: redis
-        HOST: redis://forgejo-dragonflydb:6379/0
+        HOST: redis://forgejo-dragonfly:6379/0
 
       session:
         PROVIDER: redis
-        PROVIDER_CONFIG: redis://forgejo-dragonflydb:6379/0
+        PROVIDER_CONFIG: redis://forgejo-dragonfly:6379/0
 
     # oauth:
     #   - name: example
