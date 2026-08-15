@@ -43,7 +43,7 @@ metadata:
   name: update-forgejo-oidc-secret
   namespace: {{ .Release.Namespace }}
   annotations:
-    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook: PreSync
     argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded
 spec:
   backoffLimit: 1
