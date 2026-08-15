@@ -20,11 +20,11 @@ forgejo:
         PROVIDER: redis
         PROVIDER_CONFIG: redis://forgejo-dragonflydb:6379/0
 
-    oauth:
-      - name: example
-        provider: openidConnect
-        existingSecret: forgejo-client-secret
-        autoDiscoverUrl: https://example.com/.well-known/openid-configuration
+    # oauth:
+    #   - name: example
+    #     provider: openidConnect
+    #     existingSecret: forgejo-client-secret
+    #     autoDiscoverUrl: https://example.com/.well-known/openid-configuration
 
     additionalConfigFromEnvs:
       - name: FORGEJO__DATABASE__NAME
