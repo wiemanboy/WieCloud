@@ -23,6 +23,7 @@ spec:
                 provider: openidConnect
                 autoDiscoverUrl: {{.endpoint }}/.well-known/openid-configuration
                 scopes: openid,email,profile,offline_access
+                existingSecret: forgejo-oidc-client
               {{- end }}
 
           httpRoute:
