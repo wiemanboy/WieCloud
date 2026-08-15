@@ -42,9 +42,9 @@ forgejo:
             name: forgejo-postgres-cluster-app
             key: password
 
-      # - name: FORGEJO__OAUTH2_CLIENT__KEYCLOAK_KEY
+      # - name: GITEA_OAUTH_KEY_0
       #   value: forgejo
-      # - name: FORGEJO__OAUTH2_CLIENT__KEYCLOAK_SECRET
+      # - name: GITEA_OAUTH_SECRET_0
       #   valueFrom:
       #     secretKeyRef:
       #       name: forgejo-client-secret
