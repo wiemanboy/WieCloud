@@ -89,7 +89,7 @@ targetRepository:
 applications:
   forgejo:
     deploy: true
-    version: 0.0.0-implement-forgejo-5e4a192
+    version: 0.0.0-implement-forgejo-a2a248d
     cnpg:
       restore: false
     restores:
