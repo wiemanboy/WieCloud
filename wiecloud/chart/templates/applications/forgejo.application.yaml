@@ -24,6 +24,10 @@ spec:
                 autoDiscoverUrl: {{.endpoint }}/.well-known/openid-configuration
                 scopes: openid,email,profile,offline_access
                 existingSecret: forgejo-oidc-client
+                groupClaimName: groups
+                adminGroup: /app/forgejo/admin
+                allowUsernameChange: true
+                skipLocal2fa
               {{- end }}
 
           httpRoute:
