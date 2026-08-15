@@ -64,6 +64,7 @@ module "admin_memberships" {
   realm_id = keycloak_realm.wiecloud.id
   groups = [
     module.app_group.child_groups.admin.id,
+    module.app_forgejo_group.child_groups.admin.id,
     module.app_nextcloud_group.child_groups.admin.id,
 
     module.infra_group.child_groups.admin.id,

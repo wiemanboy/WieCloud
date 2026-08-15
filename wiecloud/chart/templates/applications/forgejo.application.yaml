@@ -27,7 +27,7 @@ spec:
                 groupClaimName: groups
                 adminGroup: /app/forgejo/admin
                 allowUsernameChange: true
-                skipLocal2fa
+                skipLocal2fa: true
               {{- end }}
 
           httpRoute:
