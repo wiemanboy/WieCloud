@@ -16,15 +16,14 @@ spec:
         restores: {{ toYaml .restores | nindent 10 }}
 
         forgejo:
-          # gitea:
-          #   oauth:
-          #     {{ with $.Values.auth.oidc}}
-          #     - name: {{ .provider }}
-          #       provider: openidConnect
-          #       existingSecret: forgejo-client-secret
-          #       autoDiscoverUrl: {{.endpoint }}/.well-known/openid-configuration
-          #       scopes: openid,email,profile,offline_access
-          #     {{- end }}
+          gitea:
+            oauth:
+              {{ with $.Values.auth.oidc}}
+              - name: {{ .provider }}
+                provider: openidConnect
+                autoDiscoverUrl: {{.endpoint }}/.well-known/openid-configuration
+                scopes: openid,email,profile,offline_access
+              {{- end }}
 
           httpRoute:
             {{ with $.Values.network.gateway }}

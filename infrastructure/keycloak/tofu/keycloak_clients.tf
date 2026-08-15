@@ -36,7 +36,7 @@ module "forgejo_client" {
 
   urls = {
     root     = "https://forgejo.${var.hostname}"
-    redirect = ["https://forgejo.${var.hostname}/oauth2/callback"]
+    redirect = ["https://forgejo.${var.hostname}/user/oauth2/Keycloak/callback"]
   }
 }
 

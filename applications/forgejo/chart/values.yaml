@@ -20,11 +20,10 @@ forgejo:
         PROVIDER: redis
         PROVIDER_CONFIG: redis://forgejo-dragonfly:6379/0
 
-    # oauth:
-    #   - name: example
-    #     provider: openidConnect
-    #     existingSecret: forgejo-client-secret
-    #     autoDiscoverUrl: https://example.com/.well-known/openid-configuration
+    oauth:
+      - name: example
+        provider: openidConnect
+        autoDiscoverUrl: https://example.com/.well-known/openid-configuration
 
     additionalConfigFromEnvs:
       - name: FORGEJO__DATABASE__NAME
@@ -42,6 +41,14 @@ forgejo:
           secretKeyRef:
             name: forgejo-postgres-cluster-app
             key: password
+            
+      - name: FORGEJO__OAUTH2_CLIENT__KEYCLOAK_KEY
+        value: forgejo
+      - name: FORGEJO__OAUTH2_CLIENT__KEYCLOAK_SECRET
+        valueFrom:
+          secretKeyRef:
+            name: forgejo-client-secret
+            key: secret
 
   strategy:
     type: Recreate
