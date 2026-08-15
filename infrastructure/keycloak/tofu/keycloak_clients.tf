@@ -30,6 +30,20 @@ module "grafana_client" {
   source   = "./modules/keycloak/client"
   realm_id = keycloak_realm.wiecloud.id
 
+  name        = "forgejo"
+  namespace   = "forgejo"
+  access_type = "CONFIDENTIAL"
+
+  urls = {
+    root     = "https://forgejo.${var.hostname}"
+    redirect = ["https://forgejo.${var.hostname}/oauth2/callback"]
+  }
+}
+
+module "grafana_client" {
+  source   = "./modules/keycloak/client"
+  realm_id = keycloak_realm.wiecloud.id
+
   name        = "grafana"
   namespace   = "prometheus"
   access_type = "CONFIDENTIAL"

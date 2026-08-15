@@ -100,7 +100,6 @@ applications:
         claim:
           name: gitea-shared-storage
 
-
   minecraft:
     deploy: true
     version: 1.2.1
@@ -246,14 +245,16 @@ infrastructure:
     clientCreationPermissions:
       - name: argocd
         namespace: argocd
-      - name: harbor
-        namespace: harbor
-      - name: nextcloud
-        namespace: nextcloud
+      - name: forgejo
+        namespace: forgejo
       - name: grafana
         namespace: prometheus
+      - name: harbor
+        namespace: harbor
       - name: longhorn
         namespace: longhorn-system
+      - name: nextcloud
+        namespace: nextcloud
     cnpg:
       restore: false
     tofudeployer:
