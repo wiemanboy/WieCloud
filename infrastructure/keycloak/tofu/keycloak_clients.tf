@@ -26,7 +26,7 @@ module "argocd_client" {
   }
 }
 
-module "grafana_client" {
+module "forgejo_client" {
   source   = "./modules/keycloak/client"
   realm_id = keycloak_realm.wiecloud.id
 
