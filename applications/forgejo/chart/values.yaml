@@ -41,7 +41,7 @@ forgejo:
           secretKeyRef:
             name: forgejo-postgres-cluster-app
             key: password
-            
+
       - name: FORGEJO__OAUTH2_CLIENT__KEYCLOAK_KEY
         value: forgejo
       - name: FORGEJO__OAUTH2_CLIENT__KEYCLOAK_SECRET
@@ -51,7 +51,7 @@ forgejo:
             key: secret
 
   strategy:
-    type: Recreate
+    type: RollingUpdate
 
   httpRoute:
     enabled: true

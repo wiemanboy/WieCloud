@@ -23,6 +23,8 @@ spec:
                 provider: openidConnect
                 autoDiscoverUrl: {{.endpoint }}/.well-known/openid-configuration
                 scopes: openid,email,profile,offline_access
+                key: placeholder
+                secret: placeholder
               {{- end }}
 
           httpRoute:
