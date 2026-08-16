@@ -28,6 +28,7 @@ spec:
                 adminGroup: /app/forgejo/admin
                 allowUsernameChange: ""
                 skipLocal2fa: ""
+                active: ""
               {{- end }}
 
           httpRoute:
