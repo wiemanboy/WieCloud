@@ -333,10 +333,16 @@ images:
       repository: docker
       version: 29.7.2-dind
 
+  forgejo:
+    image:
+      registry: data.forgejo.org
+      repository: forgejo/forgejo
+      version: 16.0.2
+
   forgejorunner:
     image:
-      registry: data.forgejo.org/forgejo
-      repository: runner
+      registry: data.forgejo.org
+      repository: forgejo/runner
       version: 13.0.0
 
   keycloakserver:
@@ -344,6 +350,12 @@ images:
       registry: docker.io
       repository: keycloak/keycloak
       version: 26.6.2
+
+  kubectl:
+    image:
+      registry: docker.io
+      repository: alpine/kubectl
+      version: 1.36.3
 
   rconcli:
     image:

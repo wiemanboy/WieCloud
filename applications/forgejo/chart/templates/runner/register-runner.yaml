@@ -1,0 +1,52 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: forgejo-runner-registration
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+
+      serviceAccountName: forgejo-runner-registration
+
+      initContainers:
+        - name: create-runner-secret
+          image:
+          command:
+            - /bin/sh
+            - -ec
+            - |
+              if kubectl get secret forgejo-runner >/dev/null 2>&1; then
+                echo "forgejo-runner secret already exists"
+                exit 0
+              fi
+
+              echo "Creating forgejo-runner secret"
+
+              SECRET="$(head -c 20 /dev/urandom | od -An -tx1 | tr -d ' \n')"
+
+              kubectl create secret generic forgejo-runner \
+                --from-literal=secret="$SECRET"
+
+      containers:
+        - name: register
+          image:
+
+          env:
+            - name: RUNNER_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: forgejo-runner
+                  key: secret
+
+          command:
+            - /bin/sh
+            - -ec
+            - |
+              {{ with .Values.runner.config }}
+              forgejo forgejo-cli actions register \
+                --no-interactive \
+                --name {{ .name }} \
+                --instance {{ .instance }} \
+                --secret "$RUNNER_SECRET"
+              {{- end }}

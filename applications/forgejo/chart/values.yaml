@@ -109,6 +109,8 @@ cnpg:
 
 runner:
   config:
+      name: wiecloud-runner
+      instance: example.com
     file:
       log:
         level: info
@@ -153,10 +155,6 @@ runner:
 
       host:
         workdir_parent:
-
-      server:
-        connections:
-
 
 images:
   dind:

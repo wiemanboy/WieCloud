@@ -57,6 +57,10 @@ spec:
         cnpg:
           restore: {{ .cnpg.restore }}
 
+        runner:
+          config:
+            instance: forgejo.{{ $.Values.network.hostname }}
+
   destination:
     namespace: forgejo
     server: https://kubernetes.default.svc
