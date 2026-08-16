@@ -337,7 +337,7 @@ images:
     image:
       registry: data.forgejo.org/forgejo
       repository: runner
-      version: v13.0.0
+      version: 13.0.0
 
   keycloakserver:
     image:
