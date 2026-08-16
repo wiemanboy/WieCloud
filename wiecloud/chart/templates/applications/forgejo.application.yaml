@@ -26,8 +26,10 @@ spec:
                 existingSecret: forgejo-oidc-client
                 groupClaimName: groups
                 adminGroup: /app/forgejo/admin
-                # allowUsernameChange: ""
-                # skipLocal2fa: ""
+                {{ if not ($.Values.applications.forgejo.initialBoot | default false) }}
+                allowUsernameChange: ""
+                skipLocal2fa: ""
+                {{- end }}
               {{- end }}
 
           httpRoute:
