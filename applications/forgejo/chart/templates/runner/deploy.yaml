@@ -44,3 +44,15 @@ spec:
           securityContext:
             privileged: true
           resources: {}
+          volumeMounts:
+            - name: runner-data
+              mountPath: /data
+            - name: runner-config
+              mountPath: /etc/runner
+
+      volumes:
+        - name: runner-data
+          emptyDir: {}
+        - name: runner-config
+          configMap:
+            name: forgejo-runner-config
