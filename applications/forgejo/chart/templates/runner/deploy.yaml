@@ -27,21 +27,20 @@ spec:
         resources: {}
 
       containers:
-      - name: forgejo-runner
-        {{ with .Values.images.forgejorunner.image -}}
-        image: {{ .registry }}/{{ .repository }}:{{ .version }}
-        {{ end -}}
+        - name: forgejo-runner
+          {{ with .Values.images.forgejorunner.image -}}
+          image: {{ .registry }}/{{ .repository }}:{{ .version }}
+          {{ end -}}
           command:
             - "sh"
             - "-c"
             - |
-              while ! nc -z 127.0.0.1 2376 </dev/null; do
-              echo 'waiting for docker daemon...';
-                sleep 5;
+              while ! nc -z 127.0.0.1 2375 </dev/null; do
+                echo 'waiting for docker daemon...'
+                sleep 5
               done
 
               /bin/forgejo-runner --config /etc/runner/config.yaml daemon
-
           securityContext:
-          privileged: true
-        resources: {}
+            privileged: true
+          resources: {}
