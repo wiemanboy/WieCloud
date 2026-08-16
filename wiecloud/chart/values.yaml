@@ -327,6 +327,18 @@ products:
     version: 0.0.0
 
 images:
+  dind:
+    image:
+      registry: docker.io
+      repository: docker
+      version: 29.7.2-dind
+
+  forgejorunner:
+    image:
+      registry: code.forgejo.org/forgejo
+      repository: runner
+      version: v13.0.0
+
   keycloakserver:
     image:
       registry: docker.io

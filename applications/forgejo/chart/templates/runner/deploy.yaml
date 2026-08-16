@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: forgejo-runner
+  name: forgejo-runner
+  namespace: {{ .Release.Namespace }}-runner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: forgejo-runner
+  template:
+    metadata:
+      labels:
+        app: forgejo-runner
+    spec:
+      initContainers:
+      - name: dind
+        {{ with .Values.images.dind.image -}}
+        image: {{ .registry }}/{{ .repository }}:{{ .version }}
+        {{ end -}}
+        restartPolicy: Always
+        command: ['dockerd', '-H', 'tcp://0.0.0.0:2375', '--tls=false']
+        securityContext:
+          privileged: true
+        resources: {}
+
+      containers:
+      - name: forgejo-runner
+        {{ with .Values.images.forgejorunner.image -}}
+        image: {{ .registry }}/{{ .repository }}:{{ .version }}
+        {{ end -}}
+          command:
+            - "sh"
+            - "-c"
+            - |
+              while ! nc -z 127.0.0.1 2376 </dev/null; do
+              echo 'waiting for docker daemon...';
+                sleep 5;
+              done
+
+              /bin/forgejo-runner --config /etc/runner/config.yaml daemon
+
+          securityContext:
+          privileged: true
+        resources: {}

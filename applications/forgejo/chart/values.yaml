@@ -106,3 +106,16 @@ forgejo:
 
 cnpg:
   restore: false
+
+images:
+  dind:
+    image:
+      registry: docker.io
+      repository: docker
+      version: dind
+
+  forgejorunner:
+    image:
+      registry: code.forgejo.org/forgejo
+      repository: runner
+      version: v13
