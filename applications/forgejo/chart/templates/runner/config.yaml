@@ -4,4 +4,4 @@ metadata:
   name: forgejo-runner-config
   namespace: {{ .Release.Namespace }}-runner-system
 data:
-  config.yaml: {{ toYaml .Values.runner.config.file | nindent 2}}
+  config.yaml: | {{ toYaml .Values.runner.config.file | nindent 8}}
