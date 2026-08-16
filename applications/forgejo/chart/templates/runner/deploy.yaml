@@ -4,7 +4,7 @@ metadata:
   labels:
     app: forgejo-runner
   name: forgejo-runner
-  namespace: {{ .Release.Namespace }}-runner
+  namespace: {{ .Release.Namespace }}-runner-system
 spec:
   replicas: 1
   selector:
