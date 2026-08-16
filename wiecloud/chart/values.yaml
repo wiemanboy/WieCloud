@@ -335,7 +335,7 @@ images:
 
   forgejorunner:
     image:
-      registry: code.forgejo.org/forgejo
+      registry: data.forgejo.org/forgejo
       repository: runner
       version: v13.0.0
 
