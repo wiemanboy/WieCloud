@@ -26,6 +26,9 @@ spec:
                 existingSecret: forgejo-oidc-client
                 groupClaimName: groups
                 adminGroup: /app/forgejo/admin
+                iconUrl: https://keycloak.{{ $.Values.network.hostname }}/resources/vkm3c/login/keycloak.v2/img/favicon.ico
+                requiredClaimName: groups
+                requiredClaimValue: /app/forgejo/user
                 {{ if not ($.Values.applications.forgejo.initialBoot | default false) }}
                 allowUsernameChange: ""
                 skipLocal2fa: ""
