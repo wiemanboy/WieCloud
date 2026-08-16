@@ -58,7 +58,7 @@ resource "keycloak_user" "jarno_vienna_shared" {
   }
 }
 
-module "admin_memberships" {
+module "super_admin_memberships" {
   source = "./modules/keycloak/groups_memberships"
 
   realm_id = keycloak_realm.wiecloud.id
@@ -74,6 +74,27 @@ module "admin_memberships" {
     module.infra_keycloak_group.child_groups.admin.id,
     module.infra_longhorn_group.child_groups.admin.id,
     module.infra_kubernetes_group.child_groups.admin.id,
+  ]
+
+  members = [keycloak_user.jarno_wieman.username]
+}
+
+module "super_user_memberships" {
+  source = "./modules/keycloak/groups_memberships"
+
+  realm_id = keycloak_realm.wiecloud.id
+  groups = [
+    module.app_group.child_groups.user.id,
+    module.app_forgejo_group.child_groups.user.id,
+    module.app_nextcloud_group.child_groups.user.id,
+
+    module.infra_group.child_groups.user.id,
+    module.infra_argocd_group.child_groups.user.id,
+    module.infra_grafana_group.child_groups.user.id,
+    module.infra_harbor_group.child_groups.user.id,
+    module.infra_keycloak_group.child_groups.user.id,
+    module.infra_longhorn_group.child_groups.user.id,
+    module.infra_kubernetes_group.child_groups.user.id,
   ]
 
   members = [keycloak_user.jarno_wieman.username]
