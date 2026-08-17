@@ -59,7 +59,7 @@ spec:
 
         runner:
           config:
-            instance: forgejo.{{ $.Values.network.hostname }}
+            instance: https://forgejo.{{ $.Values.network.hostname }}
 
   destination:
     namespace: forgejo
