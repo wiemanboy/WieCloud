@@ -62,9 +62,10 @@ spec:
             instance: https://forgejo.{{ $.Values.network.hostname }}
             file:
               runner:
-                {{ with $.Values.images.wiecloudactions.image -}}
-                labels: wiecloud:docker://{{ .registry }}/{{ .repository }}:{{ .version }}
-                {{- end }}
+                labels:
+                  {{ with $.Values.images.wiecloudactions.image -}}
+                  - wiecloud:docker://{{ .registry }}/{{ .repository }}:{{ .version }}
+                  {{- end }}
 
   destination:
     namespace: forgejo
