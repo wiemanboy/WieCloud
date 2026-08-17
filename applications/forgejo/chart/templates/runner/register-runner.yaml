@@ -30,6 +30,9 @@ spec:
               mkdir -p /data/.runner
               chmod 775 /data/.runner
 
+          securityContext:
+            runAsUser: 0
+
           volumeMounts:
             - name: forgejo-storage
               mountPath: /data
