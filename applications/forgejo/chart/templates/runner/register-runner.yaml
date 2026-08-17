@@ -11,7 +11,9 @@ spec:
 
       initContainers:
         - name: create-runner-secret
-          image:
+          {{ with .Values.images.kubectl.image -}}
+          image: {{ .registry }}/{{ .repository }}:{{ .version }}
+          {{ end -}}
           command:
             - /bin/sh
             - -ec
@@ -30,7 +32,9 @@ spec:
 
       containers:
         - name: register
-          image:
+          {{ with .Values.images.forgejo.image -}}
+          image: {{ .registry }}/{{ .repository }}:{{ .version }}
+          {{ end -}}
 
           env:
             - name: RUNNER_SECRET
