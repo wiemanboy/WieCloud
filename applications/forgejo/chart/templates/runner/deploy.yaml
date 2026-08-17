@@ -52,7 +52,22 @@ spec:
             - "sh"
             - "-c"
             - |
-              sed -i -z 's/\(  connections:\)\(\n    [^\n]*\)*/\1\n    ${RUNNER_NAME}:\n      url: ${RUNNER_INSTANCE}\n      uuid: ${RUNNER_UUID}\n      token: ${RUNNER_SECRET}/g' /etc/runner/config.yaml
+              awk "/^  connections:/ && !done {
+                print \$0
+                print \"    \${RUNNER_NAME}:\"
+                print \"      url: \${RUNNER_INSTANCE}\"
+                print \"      uuid: \${RUNNER_UUID}\"
+                print \"      token: \${RUNNER_SECRET}\"
+                done=1
+                next
+              }
+              done && /^  [^ ]/ {
+                done=0
+              }
+              done {
+                next
+              }
+              1" /etc/runner/config.yaml > /etc/runner/config.yaml.tmp && mv /etc/runner/config.yaml.tmp /etc/runner/config.yaml
 
               while ! nc -z 127.0.0.1 2375 </dev/null; do
                 echo 'waiting for docker daemon...'
