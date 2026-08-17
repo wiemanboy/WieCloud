@@ -31,16 +31,36 @@ spec:
           {{ with .Values.images.forgejorunner.image -}}
           image: {{ .registry }}/{{ .repository }}:{{ .version }}
           {{ end -}}
+
+          env:
+            - name: RUNNER_NAME
+              value: {{ .Values.runner.config.name }}
+            - name: RUNNER_INSTANCE
+              value: {{ .Values.runner.config.instance }}
+            - name: RUNNER_UUID
+              valueFrom:
+                secretKeyRef:
+                  name: forgejo-runner
+                  key: uuid
+            - name: RUNNER_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: forgejo-runner
+                  key: secret
+
           command:
             - "sh"
             - "-c"
             - |
+              sed -i -z 's/\(  connections:\)\(\n    [^\n]*\)*/\1\n    ${RUNNER_NAME}:\n      url: ${RUNNER_INSTANCE}\n      uuid: ${RUNNER_UUID}\n      token: ${RUNNER_SECRET}/g' /etc/runner/config.yaml
+
               while ! nc -z 127.0.0.1 2375 </dev/null; do
                 echo 'waiting for docker daemon...'
                 sleep 5
               done
 
               /bin/forgejo-runner --config /etc/runner/config.yaml daemon
+
           securityContext:
             privileged: true
           resources: {}
