@@ -386,3 +386,9 @@ images:
       registry: docker.io
       repository: linuxserver/wireguard
       version: 1.0.20250521
+
+  wiecloudrunner:
+    image:
+      registry: harbor.wieman.cloud
+      repository: products/wiecloudactions
+      version: 0.0.1

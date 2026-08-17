@@ -93,7 +93,6 @@ forgejo:
     size: 10Gi
     annotations:
       k8up.io/backup: "true"
-
   # extraVolumes:
   #   - name: forgejo-themes
   #     secret:
@@ -129,9 +128,7 @@ runner:
         fetch_timeout: 30s
         fetch_interval: 2s
         report_interval: 1s
-        labels:
-          - "ubuntu:docker://docker.io/ubuntu:latest"
-          - "alpine:docker://docker.io/alpine:latest"
+        labels: []
 
       cache:
         enabled: true
@@ -151,12 +148,13 @@ runner:
         options:
         workdir_parent:
         valid_volumes: []
-        docker_host: "-"
+        docker_host: "tcp://127.0.0.1:2375"
         force_pull: false
         force_rebuild: false
 
       host:
         workdir_parent:
+
 
 images:
   alpine:
