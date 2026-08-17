@@ -12,6 +12,10 @@ spec:
     spec:
       restartPolicy: OnFailure
       serviceAccountName: forgejo-runner-registration
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
 
       initContainers:
         - name: register
@@ -41,11 +45,6 @@ spec:
               {{ end }}
 
               echo "Runner successfully registered: $(cat /data/.runner/uuid)"
-
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
 
           volumeMounts:
             - name: forgejo-storage
