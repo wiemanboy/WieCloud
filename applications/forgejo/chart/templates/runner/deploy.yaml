@@ -5,8 +5,10 @@ metadata:
     app: forgejo-runner
   name: forgejo-runner
   namespace: {{ .Release.Namespace }}-runner-system
+  annotations:
+    runner-config-checksum: {{ include "forgejo.runner.configmap" . | sha256sum }}
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: forgejo-runner

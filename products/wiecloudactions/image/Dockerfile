@@ -1,14 +1,14 @@
 FROM alpine/helm:4.2.3 AS helm
 FROM docker:29.7.2-dind AS docker
 
-FROM alpine:3.18
+FROM alpine:3.18.2
 
 COPY --from=docker /usr/local/bin/docker* /usr/local/bin/
 COPY --from=docker /usr/local/bin/containerd* /usr/local/bin/
 
 COPY --from=helm /usr/bin/helm /usr/bin/helm
 
-RUN apk add --no-cache \
+RUN apk update apk add --no-cache \
     ca-certificates \
     bash \
     jq \
