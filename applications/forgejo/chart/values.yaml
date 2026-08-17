@@ -109,8 +109,8 @@ cnpg:
 
 runner:
   config:
-      name: wiecloud-runner
-      instance: example.com
+    name: wiecloud-runner
+    instance: example.com
     file:
       log:
         level: info
