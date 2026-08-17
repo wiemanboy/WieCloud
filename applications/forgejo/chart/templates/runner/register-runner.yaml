@@ -18,6 +18,22 @@ spec:
         fsGroup: 1000
 
       initContainers:
+        - name: fix-permissions
+          {{ with .Values.images.alpine.image }}
+          image: {{ .registry }}/{{ .repository }}:{{ .version }}
+          {{ end }}
+          command:
+            - sh
+            - -c
+            - |
+              echo "Creating shared dir"
+              mkdir -p /data/.runner
+              chmod 775 /data/.runner
+
+          volumeMounts:
+            - name: forgejo-storage
+              mountPath: /data
+
         - name: register
           {{ with .Values.images.forgejo.image }}
           image: {{ .registry }}/{{ .repository }}:{{ .version }}
@@ -29,12 +45,18 @@ spec:
             - /bin/sh
             - -ec
             - |
-              echo "Creating shared dir"
-              mkdir -p /data/.runner
+              if [ ! -f /data/.runner/secret ]
+              then
+                echo "Generating secret"
+                SECRET="$(tr -dc 'a-f0-9' </dev/urandom | head -c 40)"
+                echo "${SECRET}" > /data/.runner/secret
+              fi
 
-              echo "Generating secret"
-              SECRET="$(tr -dc 'a-f0-9' </dev/urandom | head -c 40)"
-              echo "${SECRET}" > /data/.runner/secret
+              if [ -f /data/.runner/uuid ]
+              then
+                echo "Runner already configured"
+                exit 0
+              fi
 
               echo "Registering runner"
               {{ with .Values.runner.config }}

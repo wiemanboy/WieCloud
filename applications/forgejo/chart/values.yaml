@@ -157,6 +157,12 @@ runner:
         workdir_parent:
 
 images:
+  alpine:
+    image:
+      registry: docker.io
+      repository: alpine
+      version: 3.18.2
+
   dind:
     image:
       registry: docker.io
