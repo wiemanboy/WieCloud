@@ -36,7 +36,6 @@ spec:
               {{ with .Values.runner.config }}
               forgejo forgejo-cli actions register \
                 --name {{ .name }} \
-                --scope {{ .scope }} \
                 --secret "${SECRET}" \
                 > /data/.runner/uuid
               {{ end }}
