@@ -52,6 +52,8 @@ spec:
             - "sh"
             - "-c"
             - |
+              cp /tmp/runner/config.yaml /etc/runner/config.yaml
+
               awk "/^  connections:/ && !done {
                 print \$0
                 print \"    \${RUNNER_NAME}:\"
@@ -80,12 +82,16 @@ spec:
             privileged: true
           resources: {}
           volumeMounts:
+            - name: runner
+              mountPath: /etc/runner
             - name: runner-data
               mountPath: /data
             - name: runner-config
-              mountPath: /etc/runner
+              mountPath: /tmp/runner
 
       volumes:
+        - name: runner
+          emptyDir: {}
         - name: runner-data
           emptyDir: {}
         - name: runner-config
