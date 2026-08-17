@@ -37,10 +37,10 @@ spec:
               forgejo forgejo-cli actions register \
                 --name {{ .name }} \
                 --secret "${SECRET}" \
-                > /data/.runner/uuid
+                > /data/.runner/uuid 2>&1
               {{ end }}
 
-              echo "Runner successfully registered"
+              echo "Runner successfully registered: $(cat /data/.runner/uuid)"
 
           volumeMounts:
             - name: forgejo-storage
