@@ -163,8 +163,20 @@ images:
       repository: docker
       version: dind
 
+  forgejo:
+    image:
+      registry: data.forgejo.org
+      repository: forgejo/forgejo
+      version: 16.0.2
+
   forgejorunner:
     image:
       registry: code.forgejo.org/forgejo
       repository: runner
       version: v13
+
+  kubectl:
+    image:
+      registry: docker.io
+      repository: alpine/kubectl
+      version: 1.36.3
