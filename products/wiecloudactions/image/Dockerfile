@@ -8,7 +8,7 @@ COPY --from=docker /usr/local/bin/containerd* /usr/local/bin/
 
 COPY --from=helm /usr/bin/helm /usr/bin/helm
 
-RUN apk update apk add --no-cache \
+RUN apk update && apk add --no-cache \
     ca-certificates \
     bash \
     jq \
