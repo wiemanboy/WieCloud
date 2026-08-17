@@ -10,3 +10,5 @@ data:
     server:
       connections:
 {{- end }}
+
+{{ include "forgejo.runner.configmap" . }}
