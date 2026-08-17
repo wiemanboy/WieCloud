@@ -64,8 +64,7 @@ spec:
               runner:
                 {{ with $.Values.images.wiecloudactions.image -}}
                 labels: wiecloud:docker://{{ .registry }}/{{ .repository }}:{{ .version }}
-                {{ end -}}
-
+                {{- end }}
 
   destination:
     namespace: forgejo
