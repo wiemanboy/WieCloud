@@ -25,12 +25,14 @@ spec:
             - /bin/sh
             - -ec
             - |
+              echo "Creating shared dir"
               mkdir -p /data/.runner
 
+              echo "Generating secret"
               SECRET="$(tr -dc 'a-f0-9' </dev/urandom | head -c 40)"
-
               echo "${SECRET}" > /data/.runner/secret
 
+              echo "Registering runner"
               {{ with .Values.runner.config }}
               forgejo forgejo-cli actions register \
                 --name {{ .name }} \
@@ -38,6 +40,9 @@ spec:
                 --secret "${SECRET}" \
                 > /data/.runner/uuid
               {{ end }}
+
+              echo "Runner successfully registered"
+
           volumeMounts:
             - name: forgejo-storage
               mountPath: /data
@@ -52,7 +57,6 @@ spec:
             - -ec
             - |
               echo "Creating/updating forgejo-runner secret in runner namespace"
-
               kubectl create secret generic forgejo-runner \
                 --from-file=uuid=/data/.runner/uuid \
                 --from-file=secret=/data/.runner/secret \
