@@ -54,12 +54,13 @@ spec:
             - |
               cp /tmp/runner/config.yaml /etc/runner/config.yaml
 
-              awk "/^  connections:/ && !done {
-                print \$0
-                print \"    \${RUNNER_NAME}:\"
-                print \"      url: \${RUNNER_INSTANCE}\"
-                print \"      uuid: \${RUNNER_UUID}\"
-                print \"      token: \${RUNNER_SECRET}\"
+              awk -v name="$RUNNER_NAME" -v url="$RUNNER_INSTANCE" -v uuid="$RUNNER_UUID" -v token="$RUNNER_SECRET" '
+              /^  connections:/ && !done {
+                print $0
+                print "    " name ":"
+                print "      url: " url
+                print "      uuid: " uuid
+                print "      token: " token
                 done=1
                 next
               }
@@ -69,7 +70,7 @@ spec:
               done {
                 next
               }
-              1" /etc/runner/config.yaml > /etc/runner/config.yaml.tmp && mv /etc/runner/config.yaml.tmp /etc/runner/config.yaml
+              1' /etc/runner/config.yaml > /etc/runner/config.yaml.tmp && mv /etc/runner/config.yaml.tmp /etc/runner/config.yaml
 
               while ! nc -z 127.0.0.1 2375 </dev/null; do
                 echo 'waiting for docker daemon...'
