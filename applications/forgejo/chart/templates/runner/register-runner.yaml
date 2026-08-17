@@ -2,7 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: forgejo-runner-registration
-  namespace: {{ .Release.Namespace }}-runner-system
+  namespace: {{ .Release.Namespace }}
   annotations:
     "helm.sh/hook": pre-install,pre-upgrade
     "helm.sh/hook-weight": "0"
@@ -11,7 +11,6 @@ spec:
   template:
     spec:
       restartPolicy: OnFailure
-
       serviceAccountName: forgejo-runner-registration
 
       initContainers:
@@ -19,11 +18,9 @@ spec:
           {{ with .Values.images.forgejo.image }}
           image: {{ .registry }}/{{ .repository }}:{{ .version }}
           {{ end }}
-
           env:
             - name: GITEA_WORK_DIR
               value: "/data"
-
           command:
             - /bin/sh
             - -ec
@@ -41,7 +38,6 @@ spec:
                 --secret "${SECRET}" \
                 > /data/.runner/uuid
               {{ end }}
-
           volumeMounts:
             - name: forgejo-storage
               mountPath: /data
@@ -51,12 +47,11 @@ spec:
           {{ with .Values.images.kubectl.image }}
           image: {{ .registry }}/{{ .repository }}:{{ .version }}
           {{ end }}
-
           command:
             - /bin/sh
             - -ec
             - |
-              echo "Creating/updating forgejo-runner secret"
+              echo "Creating/updating forgejo-runner secret in runner namespace"
 
               kubectl create secret generic forgejo-runner \
                 --from-file=uuid=/data/.runner/uuid \
@@ -78,7 +73,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: forgejo-runner-registration
-  namespace: {{ .Release.Namespace }}-runner-system
+  namespace: {{ .Release.Namespace }}
   annotations:
     "helm.sh/hook": pre-install,pre-upgrade
     "helm.sh/hook-weight": "-10"
@@ -87,7 +82,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: forgejo-runner-registration
-  namespace: {{ .Release.Namespace }}-runner-system
+  namespace: {{ .Release.Namespace }}
   annotations:
     "helm.sh/hook": pre-install,pre-upgrade
     "helm.sh/hook-weight": "-10"
@@ -106,6 +101,42 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: forgejo-runner-registration
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-weight": "-10"
+subjects:
+  - kind: ServiceAccount
+    name: forgejo-runner-registration
+    namespace: {{ .Release.Namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: forgejo-runner-registration
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: forgejo-runner-registration-secret
+  namespace: {{ .Release.Namespace }}-runner-system
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-weight": "-10"
+rules:
+  - apiGroups: [""]
+    resources:
+      - secrets
+    verbs:
+      - get
+      - create
+      - update
+      - patch
+      - delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: forgejo-runner-registration-secret
   namespace: {{ .Release.Namespace }}-runner-system
   annotations:
     "helm.sh/hook": pre-install,pre-upgrade
@@ -113,8 +144,8 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: forgejo-runner-registration
-
+    namespace: {{ .Release.Namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: forgejo-runner-registration
+  name: forgejo-runner-registration-secret
