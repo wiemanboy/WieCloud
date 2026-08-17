@@ -5,8 +5,6 @@ metadata:
     app: forgejo-runner
   name: forgejo-runner
   namespace: {{ .Release.Namespace }}-runner-system
-  annotations:
-    runner-config-checksum: {{ include "forgejo.runner.configmap" . | sha256sum }}
 spec:
   replicas: 2
   selector:
@@ -16,6 +14,8 @@ spec:
     metadata:
       labels:
         app: forgejo-runner
+      annotations:
+        runner-config-checksum: {{ include "forgejo.runner.configmap" . | sha256sum }}
     spec:
       initContainers:
       - name: dind
