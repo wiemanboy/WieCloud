@@ -42,6 +42,11 @@ spec:
 
               echo "Runner successfully registered: $(cat /data/.runner/uuid)"
 
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+
           volumeMounts:
             - name: forgejo-storage
               mountPath: /data
