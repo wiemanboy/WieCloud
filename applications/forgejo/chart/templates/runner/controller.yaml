@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: forgejo-runner-controller
+  name: forgejo-runner-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: forgejo-runner-controller
+  template:
+    metadata:
+      labels:
+        app: forgejo-runner-controller
+    spec:
+      containers:
+      - name: controller
+        {{ with .Values.images.forgejorunnercontroller.image -}}
+        image: {{ .registry }}/{{ .repository }}:{{ .version }}
+        {{ end -}}
+        env:
+          - name: DESIRED_RUNNERS
+            value: "2"
+          - name: RUNNER_SECRET_NAME
+            value: test-secret
+          - name: RUNNER_NAMESPACE
+            value: {{ .Release.Namespace }}-runner-system
+          - name: FORGEJO_NAMESPACE
+            values: {{ .Release.Namespace}}
+        resources: {}

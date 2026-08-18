@@ -351,6 +351,12 @@ images:
       repository: forgejo/runner
       version: 13.0.0
 
+  forgejorunnercontroller:
+    image:
+      registry: harbor.wieman.cloud
+      repository: products/forgejorunnercontroller
+      version: 0.0.0
+
   keycloakserver:
     image:
       registry: docker.io

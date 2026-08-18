@@ -181,6 +181,12 @@ images:
       repository: runner
       version: v13
 
+  forgejorunnercontroller:
+    image:
+      registry: harbor.wieman.cloud
+      repository: products/forgejorunnercontroller
+      version: 0.0.0
+
   kubectl:
     image:
       registry: docker.io
