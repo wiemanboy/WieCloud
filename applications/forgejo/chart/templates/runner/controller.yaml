@@ -70,5 +70,5 @@ spec:
           - name: RUNNER_NAMESPACE
             value: {{ .Release.Namespace }}-runner-system
           - name: FORGEJO_NAMESPACE
-            values: {{ .Release.Namespace}}
+            value: {{ .Release.Namespace}}
         resources: {}
