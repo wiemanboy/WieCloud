@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"time"
 
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
@@ -23,9 +24,13 @@ func main() {
 		log.Fatal(err)
 	}
 
-	log.Println("Acquire secret")
-	secret.Acquire(appConfig.RunnerSecretName, appConfig.RunnerNamespace, client)
+	for {
+		log.Println("Acquire secret")
+		secret, _ := secret.Acquire(appConfig.RunnerSecretName, appConfig.RunnerNamespace, client)
 
-	log.Println("Create ", appConfig.DesiredRunners, " runners")
-	runner.Create(appConfig.DesiredRunners, client)
+		log.Println("Create ", appConfig.DesiredRunners, " runners")
+		runner.Create(appConfig.DesiredRunners, secret, appConfig.ForgejoNamespace, client)
+
+		time.Sleep(5 * time.Second)
+	}
 }
