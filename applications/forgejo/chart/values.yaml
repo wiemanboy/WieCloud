@@ -42,6 +42,11 @@ forgejo:
         PROVIDER: redis
         PROVIDER_CONFIG: redis://forgejo-dragonfly:6379/0
 
+      cron.cleanup_offline_runners:
+        ENABLED: true
+        SCHEDULE: "*/1 * * * *"
+        OLDER_THAN: 1m
+
     # oauth:
     #   - name: example
     #     provider: openidConnect
