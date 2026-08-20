@@ -36,7 +36,7 @@ func count(namespace string, client *kubernetes.Clientset) (int, error) {
 
 	log.Println("Label selector:", labels.Set(labelSelector.MatchLabels).String())
 
-	pods, err := client.CoreV1().Pods(namespace).List(context.Background(), metav1.ListOptions{LabelSelector: labels.Set(labelSelector.MatchLabels).String()}})
+	pods, err := client.CoreV1().Pods(namespace).List(context.Background(), metav1.ListOptions{LabelSelector: labels.Set(labelSelector.MatchLabels).String()})
 	jobs, err := client.BatchV1().Jobs(namespace).List(context.Background(), metav1.ListOptions{LabelSelector: labels.Set(labelSelector.MatchLabels).String()})
 
 	if err != nil {
