@@ -8,6 +8,7 @@ import (
 	batchv1 "k8s.io/api/batch/v1"
 	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+  "k8s.io/apimachinery/pkg/labels"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/utils/ptr"
 )
@@ -30,8 +31,13 @@ func Create(amount int, secret string, namespace string, client *kubernetes.Clie
 
 func count(namespace string, client *kubernetes.Clientset) (int, error) {
 	log.Println("Counting runners")
-	pods, err := client.CoreV1().Pods(namespace).List(context.Background(), metav1.ListOptions{LabelSelector: runnerLabel + "="})
-	jobs, err := client.BatchV1().Jobs(namespace).List(context.Background(), metav1.ListOptions{LabelSelector: runnerLabel + "="})
+
+  labelSelector := metav1.LabelSelector{MatchLabels: map[string]string{runnerLabel:""}}
+
+	log.Println("Label selector:", labels.Set(labelSelector.MatchLabels).String())
+
+	pods, err := client.CoreV1().Pods(namespace).List(context.Background(), metav1.ListOptions{LabelSelector: labels.Set(labelSelector.MatchLabels).String()}})
+	jobs, err := client.BatchV1().Jobs(namespace).List(context.Background(), metav1.ListOptions{LabelSelector: labels.Set(labelSelector.MatchLabels).String()})
 
 	if err != nil {
 		log.Println("Failed to list jobs")
