@@ -79,6 +79,13 @@ func job(secret string, forgejoNamespace string, forgejoImage string, kubectlIma
 		> /shared/uuid 2>&1
 	`
 
+	createRunnerCmd := `
+	UUID=$(/shared/uuid)
+	NAME=%s-${UUID}
+
+	echo "%s" | kubectl apply -f -
+	`
+
 	return &batchv1.Job{
 		ObjectMeta: metav1.ObjectMeta{
 			GenerateName: "register-runner-",
@@ -119,13 +126,7 @@ func job(secret string, forgejoNamespace string, forgejoImage string, kubectlIma
 						Command: []string{
 							"/bin/sh",
 							"-ec",
-							fmt.Sprintf(`
-							UUID=$(/shared/uuid)
-							NAME=%s-${UUID}
-
-							echo %s | kubectl apply -f -
-
-							`, runnerName, podYaml),
+							fmt.Sprintf(strings.TrimSpace(createRunnerCmd), runnerName, podYaml),
 						},
 						VolumeMounts: []v1.VolumeMount{{
 							Name:      "shared-data",
