@@ -2,6 +2,7 @@ package runner
 
 import (
 	"context"
+	"fmt"
 	"log"
 
 	batchv1 "k8s.io/api/batch/v1"
@@ -69,22 +70,22 @@ func createJob(secret string, forgejoNamespace string, runnerNamespace string, f
 }
 
 func job(secret string, forgejoNamespace string, forgejoImage string, kubectlImage string, podYaml string) *batchv1.Job {
-	registerCmd := `
+	registerCmd := fmt.Sprintf(`
 forgejo forgejo-cli actions register \
-  --name "test" \
-  --secret "test" \
+  --name "%s" \
+  --secret "%s" \
   --ephemeral \
-  > /shared/uuid 2>&1
-`
+  > /shared/uuid 2>
+`, runnerName, secret)
 
-	createRunnerCmd := `
+	createRunnerCmd := fmt.Sprintf(`
 UUID=$(cat /shared/uuid)
 NAME=%s-${UUID}
 
 kubectl apply -f - <<EOF
 %s
 EOF
-`
+`, runnerName, podYaml)
 
 	return &batchv1.Job{
 		ObjectMeta: metav1.ObjectMeta{
