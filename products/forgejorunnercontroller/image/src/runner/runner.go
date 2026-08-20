@@ -80,7 +80,7 @@ func job(secret string, forgejoNamespace string, forgejoImage string, kubectlIma
 			BackoffLimit: ptr.To(int32(0)),
 			Template: v1.PodTemplateSpec{
 				Spec: v1.PodSpec{
-					RestartPolicy:      "Never",
+					RestartPolicy:      v1.RestartPolicyNever,
 					ServiceAccountName: "forgejo-runner-registration",
 					InitContainers: []v1.Container{{
 						Name:  "register",
@@ -209,6 +209,20 @@ func pod(secret string, forgejoInstance string, namespace string, forgejoImage s
 				},
 				SecurityContext: &v1.SecurityContext{
 					Privileged: ptr.To(true),
+				},
+				VolumeMounts: []v1.VolumeMount{
+					{
+						Name:      "runner",
+						MountPath: "/etc/runner",
+					},
+					{
+						Name:      "runner-data",
+						MountPath: "/data",
+					},
+					{
+						Name:      "runner-config",
+						MountPath: "/tmp/runner",
+					},
 				},
 			}},
 
