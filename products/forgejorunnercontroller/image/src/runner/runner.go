@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"strings"
 
 	batchv1 "k8s.io/api/batch/v1"
 	v1 "k8s.io/api/core/v1"
@@ -70,6 +71,14 @@ func createJob(secret string, forgejoNamespace string, runnerNamespace string, f
 }
 
 func job(secret string, forgejoNamespace string, forgejoImage string, kubectlImage string, podYaml string) *batchv1.Job {
+	registerCmd := `
+	forgejo forgejo-cli actions register \
+		--name "%s"\
+		--secret "%s" \
+		--ephemeral \
+		> /shared/uuid 2>&1
+	`
+
 	return &batchv1.Job{
 		ObjectMeta: metav1.ObjectMeta{
 			GenerateName: "register-runner-",
@@ -92,13 +101,7 @@ func job(secret string, forgejoNamespace string, forgejoImage string, kubectlIma
 						Command: []string{
 							"/bin/sh",
 							"-ec",
-							fmt.Sprintf(`
-              forgejo forgejo-cli actions register \
-                --name "%s"\
-                --secret "%s" \
-								--ephemeral \
-                > /shared/uuid 2>&1
-							`, runnerName, secret),
+							fmt.Sprintf(strings.TrimSpace(registerCmd), runnerName, secret),
 						}, VolumeMounts: []v1.VolumeMount{
 							{
 								Name:      "shared-data",
@@ -146,6 +149,30 @@ func job(secret string, forgejoNamespace string, forgejoImage string, kubectlIma
 }
 
 func pod(secret string, forgejoInstance string, namespace string, forgejoImage string, dindImage string) *v1.Pod {
+	runnerCmd := `
+	cp /tmp/runner/config.yaml /etc/runner/config.yaml
+
+	awk -v name="%s" -v url="%s" -v uuid="$RUNNER_UUID" -v token="$RUNNER_SECRET" '
+	/^  connections:/ && !done {
+		print $0
+		print "    " name ":"
+		print "      url: " url
+		print "      uuid: " uuid
+		print "      token: " token
+		done=1
+		next
+	}
+	done && /^  [^ ]/ {
+		done=0
+	}
+	done {
+		next
+	}
+	1' /etc/runner/config.yaml > /etc/runner/config.yaml.tmp && mv /etc/runner/config.yaml.tmp /etc/runner/config.yaml
+
+	/bin/forgejo-runner --config /etc/runner/config.yaml daemon
+	`
+
 	return &v1.Pod{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "${NAME}",
@@ -183,29 +210,7 @@ func pod(secret string, forgejoInstance string, namespace string, forgejoImage s
 				Command: []string{
 					"sh",
 					"-c",
-					fmt.Sprintf(`
-              cp /tmp/runner/config.yaml /etc/runner/config.yaml
-
-              awk -v name="%s" -v url="%s" -v uuid="$RUNNER_UUID" -v token="$RUNNER_SECRET" '
-              /^  connections:/ && !done {
-                print $0
-                print "    " name ":"
-                print "      url: " url
-                print "      uuid: " uuid
-                print "      token: " token
-                done=1
-                next
-              }
-              done && /^  [^ ]/ {
-                done=0
-              }
-              done {
-                next
-              }
-              1' /etc/runner/config.yaml > /etc/runner/config.yaml.tmp && mv /etc/runner/config.yaml.tmp /etc/runner/config.yaml
-
-              /bin/forgejo-runner --config /etc/runner/config.yaml daemon
-					`, runnerName, forgejoInstance),
+					fmt.Sprintf(strings.TrimSpace(runnerCmd), runnerName, forgejoInstance),
 				},
 				SecurityContext: &v1.SecurityContext{
 					Privileged: ptr.To(true),
