@@ -2,9 +2,7 @@ package runner
 
 import (
 	"context"
-	"fmt"
 	"log"
-	"strings"
 
 	batchv1 "k8s.io/api/batch/v1"
 	v1 "k8s.io/api/core/v1"
@@ -71,28 +69,22 @@ func createJob(secret string, forgejoNamespace string, runnerNamespace string, f
 }
 
 func job(secret string, forgejoNamespace string, forgejoImage string, kubectlImage string, podYaml string) *batchv1.Job {
-// 	registerCmd := `
-// forgejo forgejo-cli actions register \
-// 	--name "%s"\
-// 	--secret "%s" \
-// 	--ephemeral \
-// 	> /shared/uuid 2>&1
-// 	`
+	registerCmd := `
+forgejo forgejo-cli actions register \
+	--name "%s"\
+	--secret "%s" \
+	--ephemeral \
+	> /shared/uuid 2>&1
+	`
 
-// 	createRunnerCmd := `
-// UUID=$(/shared/uuid)
-// NAME=%s-${UUID}
+	createRunnerCmd := `
+UUID=$(cat /shared/uuid)
+NAME=%s-${UUID}
 
-// kubectl apply -f - <<EOF
-// %s
-// EOF
-// 	`
-
-	testCmd := `
-echo "do something"
-echo "do something"
-echo "do something"
-`
+kubectl apply -f - <<EOF
+%s
+EOF
+	`
 
 	return &batchv1.Job{
 		ObjectMeta: metav1.ObjectMeta{
@@ -116,7 +108,7 @@ echo "do something"
 						Command: []string{
 							"/bin/sh",
 							"-ec",
-							testCmd,
+							registerCmd,
 						}, VolumeMounts: []v1.VolumeMount{
 							{
 								Name:      "shared-data",
@@ -134,7 +126,7 @@ echo "do something"
 						Command: []string{
 							"/bin/sh",
 							"-ec",
-							testCmd,
+							createRunnerCmd,
 						},
 						VolumeMounts: []v1.VolumeMount{{
 							Name:      "shared-data",
@@ -219,7 +211,7 @@ done {
 				Command: []string{
 					"sh",
 					"-c",
-					fmt.Sprintf(strings.TrimSpace(runnerCmd), runnerName, forgejoInstance),
+					runnerCmd,
 				},
 				SecurityContext: &v1.SecurityContext{
 					Privileged: ptr.To(true),
