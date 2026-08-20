@@ -30,8 +30,8 @@ func Create(amount int, secret string, namespace string, client *kubernetes.Clie
 
 func count(namespace string, client *kubernetes.Clientset) (int, error) {
 	log.Println("Counting runners")
-	pods, err := client.CoreV1().Pods(namespace).List(context.Background(), metav1.ListOptions{LabelSelector: runnerLabel})
-	jobs, err := client.BatchV1().Jobs(namespace).List(context.Background(), metav1.ListOptions{LabelSelector: runnerLabel})
+	pods, err := client.CoreV1().Pods(namespace).List(context.Background(), metav1.ListOptions{LabelSelector: runnerLabel + "="})
+	jobs, err := client.BatchV1().Jobs(namespace).List(context.Background(), metav1.ListOptions{LabelSelector: runnerLabel + "="})
 
 	if err != nil {
 		log.Println("Failed to list jobs")
@@ -48,7 +48,7 @@ func createJob(secret string, namespace string, client *kubernetes.Clientset) {
 		ObjectMeta: metav1.ObjectMeta{
 			GenerateName: "register-runner",
 			Namespace:    namespace,
-			Labels:       map[string]string{"wieman.cloud/forgejo-runner": ""},
+			Labels:       map[string]string{runnerLabel: ""},
 		},
 		Spec: batchv1.JobSpec{
 			BackoffLimit: ptr.To(int32(0)),
