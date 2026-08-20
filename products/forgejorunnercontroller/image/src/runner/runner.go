@@ -17,12 +17,14 @@ var runnerLabel = "wieman.cloud/forgejo-runner"
 
 func Create(amount int, secret string, namespace string, client *kubernetes.Clientset) error {
 	runnerCount, _ := count(namespace, client)
+	log.Println("Counted", runnerCount, "runners")
 
 	if runnerCount < amount {
 		createJob(secret, namespace, client)
 		Create(amount, secret, namespace, client)
 	}
 
+	log.Println("All runners created")
 	return nil
 }
 
