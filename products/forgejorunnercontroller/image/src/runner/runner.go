@@ -71,22 +71,28 @@ func createJob(secret string, forgejoNamespace string, runnerNamespace string, f
 }
 
 func job(secret string, forgejoNamespace string, forgejoImage string, kubectlImage string, podYaml string) *batchv1.Job {
-	registerCmd := `
-forgejo forgejo-cli actions register \
-	--name "%s"\
-	--secret "%s" \
-	--ephemeral \
-	> /shared/uuid 2>&1
-	`
+// 	registerCmd := `
+// forgejo forgejo-cli actions register \
+// 	--name "%s"\
+// 	--secret "%s" \
+// 	--ephemeral \
+// 	> /shared/uuid 2>&1
+// 	`
 
-	createRunnerCmd := `
-UUID=$(/shared/uuid)
-NAME=%s-${UUID}
+// 	createRunnerCmd := `
+// UUID=$(/shared/uuid)
+// NAME=%s-${UUID}
 
-kubectl apply -f - <<EOF
-%s
-EOF
-	`
+// kubectl apply -f - <<EOF
+// %s
+// EOF
+// 	`
+
+	testCmd := `
+echo "do something"
+echo "do something"
+echo "do something"
+`
 
 	return &batchv1.Job{
 		ObjectMeta: metav1.ObjectMeta{
@@ -110,7 +116,7 @@ EOF
 						Command: []string{
 							"/bin/sh",
 							"-ec",
-							fmt.Sprintf(strings.TrimSpace(registerCmd), runnerName, secret),
+							testCmd,
 						}, VolumeMounts: []v1.VolumeMount{
 							{
 								Name:      "shared-data",
@@ -128,7 +134,7 @@ EOF
 						Command: []string{
 							"/bin/sh",
 							"-ec",
-							fmt.Sprintf(strings.TrimSpace(createRunnerCmd), runnerName, podYaml),
+							testCmd,
 						},
 						VolumeMounts: []v1.VolumeMount{{
 							Name:      "shared-data",
