@@ -10,29 +10,30 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/utils/ptr"
+	"sigs.k8s.io/yaml"
 )
 
 var runnerName = "wiecloud-runner"
 var runnerLabel = "wieman.cloud/forgejo-runner"
 
-func Create(amount int, secret string, namespace string, client *kubernetes.Clientset) error {
-	runnerCount, _ := count(namespace, client)
+func Create(amount int, secret string, forgejoNamespace string, runnerNamespace string, forgejoImage string, runnerImage string, dindImage string, kubectlImage string, client *kubernetes.Clientset) error {
+	runnerCount, _ := count(forgejoNamespace, client)
 	log.Println("Counted", runnerCount, "runners")
 
 	if runnerCount < amount {
-		createJob(secret, namespace, client)
-		Create(amount, secret, namespace, client)
+		createJob(secret, forgejoNamespace, runnerNamespace, forgejoImage, runnerImage, dindImage, kubectlImage, client)
+		Create(amount, secret, forgejoNamespace, runnerNamespace, forgejoImage, runnerImage, dindImage, kubectlImage, client)
 	}
 
 	log.Println("All runners created")
 	return nil
 }
 
-func count(namespace string, client *kubernetes.Clientset) (int, error) {
+func count(forgejoNamespace string, client *kubernetes.Clientset) (int, error) {
 	log.Println("Counting runners")
 
-	pods, err := client.CoreV1().Pods(namespace).List(context.Background(), metav1.ListOptions{LabelSelector: runnerLabel})
-	jobs, err := client.BatchV1().Jobs(namespace).List(context.Background(), metav1.ListOptions{LabelSelector: runnerLabel})
+	pods, err := client.CoreV1().Pods(forgejoNamespace).List(context.Background(), metav1.ListOptions{LabelSelector: runnerLabel})
+	jobs, err := client.BatchV1().Jobs(forgejoNamespace).List(context.Background(), metav1.ListOptions{LabelSelector: runnerLabel})
 
 	if err != nil {
 		log.Println("Failed to list jobs")
@@ -43,33 +44,47 @@ func count(namespace string, client *kubernetes.Clientset) (int, error) {
 	return len(pods.Items) + len(jobs.Items), nil
 }
 
-func createJob(secret string, namespace string, client *kubernetes.Clientset) {
+func createJob(secret string, forgejoNamespace string, runnerNamespace string, forgejoImage string, runnerImage string, dindImage string, kubectlImage string, client *kubernetes.Clientset) {
 	log.Println("Creating job")
 
-	job := &batchv1.Job{
+	runnerPod := pod(secret, "forgejo.wieman.cloud", forgejoNamespace, forgejoImage, dindImage)
+
+	podBytes, _ := yaml.Marshal(runnerPod)
+	podYaml := string(podBytes)
+
+	_, err := client.BatchV1().Jobs(forgejoNamespace).Create(
+		context.Background(),
+		job(
+			secret,
+			forgejoNamespace,
+			forgejoImage,
+			kubectlImage,
+			podYaml,
+		),
+		metav1.CreateOptions{})
+
+	if err != nil {
+		log.Println("Error creating job")
+		log.Println(err)
+	}
+}
+
+func job(secret string, forgejoNamespace string, forgejoImage string, kubectlImage string, podYaml string) *batchv1.Job {
+	return &batchv1.Job{
 		ObjectMeta: metav1.ObjectMeta{
 			GenerateName: "register-runner-",
-			Namespace:    namespace,
+			Namespace:    forgejoNamespace,
 			Labels:       map[string]string{runnerLabel: ""},
 		},
 		Spec: batchv1.JobSpec{
 			BackoffLimit: ptr.To(int32(0)),
 			Template: v1.PodTemplateSpec{
 				Spec: v1.PodSpec{
-					RestartPolicy: "Never",
-					Volumes: []v1.Volume{
-						{
-							Name:         "shared-data",
-							VolumeSource: v1.VolumeSource{EmptyDir: &v1.EmptyDirVolumeSource{}},
-						},
-						{
-							Name:         "forgejo-data",
-							VolumeSource: v1.VolumeSource{PersistentVolumeClaim: &v1.PersistentVolumeClaimVolumeSource{ClaimName: "gitea-shared-storage"}},
-						},
-					},
+					RestartPolicy:      "Never",
+					ServiceAccountName: "forgejo-runner-registration",
 					InitContainers: []v1.Container{{
 						Name:  "register",
-						Image: "forgejo-image",
+						Image: forgejoImage,
 						Env: []v1.EnvVar{{
 							Name:  "GITEA_WORK_DIR",
 							Value: "/data",
@@ -97,25 +112,126 @@ func createJob(secret string, namespace string, client *kubernetes.Clientset) {
 					}},
 					Containers: []v1.Container{{
 						Name:  "create-runner",
-						Image: "kubectl-image",
+						Image: kubectlImage,
 						Command: []string{
 							"/bin/sh",
 							"-ec",
+							fmt.Sprintf(`
+							UUID=$(/shared/uuid)
+							NAME=%s-${UUID}
+
+							echo %s | kubectl apply -f -
+
+							`, runnerName, podYaml),
 						},
 						VolumeMounts: []v1.VolumeMount{{
 							Name:      "shared-data",
 							MountPath: "/shared",
 						}}},
 					},
+					Volumes: []v1.Volume{
+						{
+							Name:         "shared-data",
+							VolumeSource: v1.VolumeSource{EmptyDir: &v1.EmptyDirVolumeSource{}},
+						},
+						{
+							Name:         "forgejo-data",
+							VolumeSource: v1.VolumeSource{PersistentVolumeClaim: &v1.PersistentVolumeClaimVolumeSource{ClaimName: "gitea-shared-storage"}},
+						},
+					},
 				},
 			},
 		},
 	}
+}
 
-	_, err := client.BatchV1().Jobs(namespace).Create(context.Background(), job, metav1.CreateOptions{})
+func pod(secret string, forgejoInstance string, namespace string, forgejoImage string, dindImage string) *v1.Pod {
+	return &v1.Pod{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      "${NAME}",
+			Namespace: namespace,
+			Labels:    map[string]string{runnerLabel: ""},
+		},
+		Spec: v1.PodSpec{
+			InitContainers: []v1.Container{{
+				Name:  "dind",
+				Image: dindImage,
+				Command: []string{
+					"dockerd",
+					"-H",
+					"tcp://0.0.0.0:2375",
+					"--tls=false",
+				},
+				SecurityContext: &v1.SecurityContext{
+					Privileged: ptr.To(true),
+				},
+			}},
 
-	if err != nil {
-		log.Println("Error creating job")
-		log.Println(err)
+			Containers: []v1.Container{{
+				Name:  "forgejo-runner",
+				Image: forgejoImage,
+				Env: []v1.EnvVar{
+					{
+						Name:  "RUNNER_SECRET",
+						Value: secret,
+					},
+					{
+						Name:  "RUNNER_UUID",
+						Value: "${UUID}",
+					},
+				},
+				Command: []string{
+					"sh",
+					"-c",
+					fmt.Sprintf(`
+              cp /tmp/runner/config.yaml /etc/runner/config.yaml
+
+              awk -v name="%s" -v url="%s" -v uuid="$RUNNER_UUID" -v token="$RUNNER_SECRET" '
+              /^  connections:/ && !done {
+                print $0
+                print "    " name ":"
+                print "      url: " url
+                print "      uuid: " uuid
+                print "      token: " token
+                done=1
+                next
+              }
+              done && /^  [^ ]/ {
+                done=0
+              }
+              done {
+                next
+              }
+              1' /etc/runner/config.yaml > /etc/runner/config.yaml.tmp && mv /etc/runner/config.yaml.tmp /etc/runner/config.yaml
+
+              /bin/forgejo-runner --config /etc/runner/config.yaml daemon
+					`, runnerName, forgejoInstance),
+				},
+				SecurityContext: &v1.SecurityContext{
+					Privileged: ptr.To(true),
+				},
+			}},
+
+			Volumes: []v1.Volume{
+				{
+					Name:         "runner",
+					VolumeSource: v1.VolumeSource{EmptyDir: &v1.EmptyDirVolumeSource{}},
+				},
+				{
+					Name:         "runner-data",
+					VolumeSource: v1.VolumeSource{EmptyDir: &v1.EmptyDirVolumeSource{}},
+				},
+				{
+					Name: "runner-config",
+					VolumeSource: v1.VolumeSource{
+						ConfigMap: &v1.ConfigMapVolumeSource{
+							LocalObjectReference: v1.LocalObjectReference{
+								Name: "forgejo-runner-config",
+							},
+						},
+					},
+				},
+			},
+		},
 	}
 }

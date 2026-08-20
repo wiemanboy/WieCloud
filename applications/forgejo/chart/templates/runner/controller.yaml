@@ -83,6 +83,22 @@ spec:
             value: test-secret
           - name: RUNNER_NAMESPACE
             value: {{ .Release.Namespace }}-runner-system
+          - name: RUNNER_IMAGE
+            {{ with .Values.images.forgejorunner.image -}}
+            value: {{ .registry }}/{{ .repository }}:{{ .version }}
+            {{ end -}}
+          - name: DIND_IMAGE
+            {{ with .Values.images.dind.image -}}
+            value: {{ .registry }}/{{ .repository }}:{{ .version }}
+            {{ end -}}
           - name: FORGEJO_NAMESPACE
             value: {{ .Release.Namespace}}
+          - name: FORGEJO_IMAGE
+            {{ with .Values.images.forgejo.image -}}
+            value: {{ .registry }}/{{ .repository }}:{{ .version }}
+            {{ end -}}
+          - name: KUBECTL_IMAGE
+            {{ with .Values.images.kubectl.image -}}
+            value: {{ .registry }}/{{ .repository }}:{{ .version }}
+            {{ end -}}
         resources: {}

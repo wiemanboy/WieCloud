@@ -29,7 +29,17 @@ func main() {
 		secret, _ := secret.Acquire(appConfig.RunnerSecretName, appConfig.RunnerNamespace, client)
 
 		log.Println("Create ", appConfig.DesiredRunners, " runners")
-		runner.Create(appConfig.DesiredRunners, secret, appConfig.ForgejoNamespace, client)
+		runner.Create(
+			appConfig.DesiredRunners,
+			secret,
+			appConfig.ForgejoNamespace,
+			appConfig.RunnerNamespace,
+			appConfig.ForgejoImage,
+			appConfig.RunnerImage,
+			appConfig.DindImage,
+			appConfig.KubectlImage,
+			client,
+		)
 
 		time.Sleep(5 * time.Second)
 	}
