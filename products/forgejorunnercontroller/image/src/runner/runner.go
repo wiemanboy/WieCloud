@@ -36,6 +36,7 @@ func count(namespace string, client *kubernetes.Clientset) (int, error) {
 
 	if err != nil {
 		log.Println("Failed to list jobs")
+		log.Println(err)
 		return 0, err
 	}
 
@@ -109,5 +110,11 @@ func createJob(secret string, namespace string, client *kubernetes.Clientset) {
 			},
 		},
 	}
-	client.BatchV1().Jobs(namespace).Create(context.Background(), job, metav1.CreateOptions{})
+
+	_, err := client.BatchV1().Jobs(namespace).Create(context.Background(), job, metav1.CreateOptions{})
+
+	if err != nil {
+		log.Println("Error creating job")
+		log.Println(err)
+	}
 }
