@@ -76,6 +76,7 @@ forgejo forgejo-cli actions register \
   --secret "%s" \
   --ephemeral
 `, runnerName, secret)
+	//   > /shared/uuid
 
 	createRunnerCmd := fmt.Sprintf(`
 UUID=$(cat /shared/uuid)
@@ -98,6 +99,11 @@ EOF
 				Spec: v1.PodSpec{
 					RestartPolicy:      v1.RestartPolicyNever,
 					ServiceAccountName: "forgejo-runner-registration",
+					SecurityContext: &v1.PodSecurityContext{
+						RunAsUser:  ptr.To(int64(1000)),
+						RunAsGroup: ptr.To(int64(1000)),
+						FSGroup:    ptr.To(int64(1000)),
+					},
 					InitContainers: []v1.Container{{
 						Name:  "register",
 						Image: forgejoImage,
