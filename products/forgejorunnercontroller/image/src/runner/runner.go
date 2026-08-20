@@ -75,7 +75,7 @@ forgejo forgejo-cli actions register \
 	--secret "%s" \
 	--ephemeral \
 	> /shared/uuid 2>&1
-	`
+`
 
 	createRunnerCmd := `
 UUID=$(cat /shared/uuid)
@@ -84,7 +84,7 @@ NAME=%s-${UUID}
 kubectl apply -f - <<EOF
 %s
 EOF
-	`
+`
 
 	return &batchv1.Job{
 		ObjectMeta: metav1.ObjectMeta{
@@ -172,7 +172,7 @@ done {
 1' /etc/runner/config.yaml > /etc/runner/config.yaml.tmp && mv /etc/runner/config.yaml.tmp /etc/runner/config.yaml
 
 /bin/forgejo-runner --config /etc/runner/config.yaml daemon
-	`
+`
 
 	return &v1.Pod{
 		ObjectMeta: metav1.ObjectMeta{
