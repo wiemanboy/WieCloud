@@ -71,10 +71,10 @@ func createJob(secret string, forgejoNamespace string, runnerNamespace string, f
 func job(secret string, forgejoNamespace string, forgejoImage string, kubectlImage string, podYaml string) *batchv1.Job {
 	registerCmd := `
 forgejo forgejo-cli actions register \
-	--name "%s"\
-	--secret "%s" \
-	--ephemeral \
-	> /shared/uuid 2>&1
+  --name "test" \
+  --secret "test" \
+  --ephemeral \
+  > /shared/uuid 2>&1
 `
 
 	createRunnerCmd := `
