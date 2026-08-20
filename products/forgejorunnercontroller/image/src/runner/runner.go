@@ -48,7 +48,7 @@ func createJob(secret string, namespace string, client *kubernetes.Clientset) {
 
 	job := &batchv1.Job{
 		ObjectMeta: metav1.ObjectMeta{
-			GenerateName: "register-runner",
+			GenerateName: "register-runner-",
 			Namespace:    namespace,
 			Labels:       map[string]string{runnerLabel: ""},
 		},
@@ -56,6 +56,7 @@ func createJob(secret string, namespace string, client *kubernetes.Clientset) {
 			BackoffLimit: ptr.To(int32(0)),
 			Template: v1.PodTemplateSpec{
 				Spec: v1.PodSpec{
+					RestartPolicy: "Never",
 					Volumes: []v1.Volume{
 						{
 							Name:         "shared-data",
