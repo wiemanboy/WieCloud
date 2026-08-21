@@ -6,7 +6,7 @@ import (
 	"log"
 
 	batchv1 "k8s.io/api/batch/v1"
-	v1 "k8s.io/api/core/v1"
+	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/utils/ptr"
@@ -92,22 +92,23 @@ EOF
 			GenerateName: "register-runner-",
 			Namespace:    forgejoNamespace,
 			Labels:       map[string]string{runnerLabel: ""},
+			Annotations:  map[string]string{"argocd.argoproj.io/tracking-id": "forgejo:apps/Deployment:forgejo/forgejo-runner-controller"},
 		},
 		Spec: batchv1.JobSpec{
 			BackoffLimit: ptr.To(int32(0)),
-			Template: v1.PodTemplateSpec{
-				Spec: v1.PodSpec{
-					RestartPolicy:      v1.RestartPolicyNever,
+			Template: corev1.PodTemplateSpec{
+				Spec: corev1.PodSpec{
+					RestartPolicy:      corev1.RestartPolicyNever,
 					ServiceAccountName: "create-runner",
-					SecurityContext: &v1.PodSecurityContext{
+					SecurityContext: &corev1.PodSecurityContext{
 						RunAsUser:  ptr.To(int64(1000)),
 						RunAsGroup: ptr.To(int64(1000)),
 						FSGroup:    ptr.To(int64(1000)),
 					},
-					InitContainers: []v1.Container{{
+					InitContainers: []corev1.Container{{
 						Name:  "register",
 						Image: forgejoImage,
-						Env: []v1.EnvVar{{
+						Env: []corev1.EnvVar{{
 							Name:  "GITEA_WORK_DIR",
 							Value: "/data",
 						}},
@@ -115,7 +116,7 @@ EOF
 							"/bin/sh",
 							"-ec",
 							registerCmd,
-						}, VolumeMounts: []v1.VolumeMount{
+						}, VolumeMounts: []corev1.VolumeMount{
 							{
 								Name:      "shared-data",
 								MountPath: "/shared",
@@ -126,7 +127,7 @@ EOF
 							},
 						},
 					}},
-					Containers: []v1.Container{{
+					Containers: []corev1.Container{{
 						Name:  "create-runner",
 						Image: kubectlImage,
 						Command: []string{
@@ -134,19 +135,19 @@ EOF
 							"-ec",
 							createRunnerCmd,
 						},
-						VolumeMounts: []v1.VolumeMount{{
+						VolumeMounts: []corev1.VolumeMount{{
 							Name:      "shared-data",
 							MountPath: "/shared",
 						}}},
 					},
-					Volumes: []v1.Volume{
+					Volumes: []corev1.Volume{
 						{
 							Name:         "shared-data",
-							VolumeSource: v1.VolumeSource{EmptyDir: &v1.EmptyDirVolumeSource{}},
+							VolumeSource: corev1.VolumeSource{EmptyDir: &corev1.EmptyDirVolumeSource{}},
 						},
 						{
 							Name:         "forgejo-data",
-							VolumeSource: v1.VolumeSource{PersistentVolumeClaim: &v1.PersistentVolumeClaimVolumeSource{ClaimName: "gitea-shared-storage"}},
+							VolumeSource: corev1.VolumeSource{PersistentVolumeClaim: &corev1.PersistentVolumeClaimVolumeSource{ClaimName: "gitea-shared-storage"}},
 						},
 					},
 				},
@@ -155,7 +156,7 @@ EOF
 	}
 }
 
-func pod(secret string, forgejoInstance string, namespace string, forgejoImage string, dindImage string) *v1.Pod {
+func pod(secret string, forgejoInstance string, namespace string, forgejoImage string, dindImage string) *corev1.Pod {
 	runnerCmd := `
 cp /tmp/runner/config.yaml /etc/runner/config.yaml
 
@@ -180,18 +181,19 @@ done {
 /bin/forgejo-runner --config /etc/runner/config.yaml daemon
 `
 
-	return &v1.Pod{
+	return &corev1.Pod{
 		TypeMeta: metav1.TypeMeta{
 			APIVersion: "v1",
 			Kind:       "Pod",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      "${NAME}",
-			Namespace: namespace,
-			Labels:    map[string]string{runnerLabel: ""},
+			Name:        "${NAME}",
+			Namespace:   namespace,
+			Labels:      map[string]string{runnerLabel: ""},
+			Annotations: map[string]string{"argocd.argoproj.io/tracking-id": "forgejo:apps/Deployment:forgejo/forgejo-runner-controller"},
 		},
-		Spec: v1.PodSpec{
-			InitContainers: []v1.Container{{
+		Spec: corev1.PodSpec{
+			InitContainers: []corev1.Container{{
 				Name:  "dind",
 				Image: dindImage,
 				Command: []string{
@@ -200,15 +202,15 @@ done {
 					"tcp://0.0.0.0:2375",
 					"--tls=false",
 				},
-				SecurityContext: &v1.SecurityContext{
+				SecurityContext: &corev1.SecurityContext{
 					Privileged: ptr.To(true),
 				},
 			}},
 
-			Containers: []v1.Container{{
+			Containers: []corev1.Container{{
 				Name:  "forgejo-runner",
 				Image: forgejoImage,
-				Env: []v1.EnvVar{
+				Env: []corev1.EnvVar{
 					{
 						Name:  "RUNNER_SECRET",
 						Value: secret,
@@ -223,10 +225,10 @@ done {
 					"-c",
 					runnerCmd,
 				},
-				SecurityContext: &v1.SecurityContext{
+				SecurityContext: &corev1.SecurityContext{
 					Privileged: ptr.To(true),
 				},
-				VolumeMounts: []v1.VolumeMount{
+				VolumeMounts: []corev1.VolumeMount{
 					{
 						Name:      "runner",
 						MountPath: "/etc/runner",
@@ -242,20 +244,20 @@ done {
 				},
 			}},
 
-			Volumes: []v1.Volume{
+			Volumes: []corev1.Volume{
 				{
 					Name:         "runner",
-					VolumeSource: v1.VolumeSource{EmptyDir: &v1.EmptyDirVolumeSource{}},
+					VolumeSource: corev1.VolumeSource{EmptyDir: &corev1.EmptyDirVolumeSource{}},
 				},
 				{
 					Name:         "runner-data",
-					VolumeSource: v1.VolumeSource{EmptyDir: &v1.EmptyDirVolumeSource{}},
+					VolumeSource: corev1.VolumeSource{EmptyDir: &corev1.EmptyDirVolumeSource{}},
 				},
 				{
 					Name: "runner-config",
-					VolumeSource: v1.VolumeSource{
-						ConfigMap: &v1.ConfigMapVolumeSource{
-							LocalObjectReference: v1.LocalObjectReference{
+					VolumeSource: corev1.VolumeSource{
+						ConfigMap: &corev1.ConfigMapVolumeSource{
+							LocalObjectReference: corev1.LocalObjectReference{
 								Name: "forgejo-runner-config",
 							},
 						},
