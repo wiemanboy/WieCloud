@@ -46,7 +46,7 @@ func get(name string, namespace string, client *kubernetes.Clientset) (string, e
 
 func create(name string, namespace string, client *kubernetes.Clientset) (string, error) {
 
-	secret := rand.String(40)
+	secret := rand.HexString(40)
 
 	k8sSecret := &corev1.Secret{
 		Type: corev1.SecretTypeOpaque,
