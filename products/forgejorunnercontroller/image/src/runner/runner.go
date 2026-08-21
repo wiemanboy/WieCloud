@@ -98,7 +98,7 @@ EOF
 			Template: v1.PodTemplateSpec{
 				Spec: v1.PodSpec{
 					RestartPolicy:      v1.RestartPolicyNever,
-					ServiceAccountName: "forgejo-runner-registration",
+					ServiceAccountName: "create-runner",
 					SecurityContext: &v1.PodSecurityContext{
 						RunAsUser:  ptr.To(int64(1000)),
 						RunAsGroup: ptr.To(int64(1000)),

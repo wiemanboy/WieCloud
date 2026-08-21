@@ -59,6 +59,7 @@ kind: Deployment
 metadata:
   labels:
     app: forgejo-runner-controller
+    wieman.cloud/forgejo-runner-controller: ""
   name: forgejo-runner-controller
 spec:
   replicas: 1
@@ -77,6 +78,10 @@ spec:
         image: {{ .registry }}/{{ .repository }}:{{ .version }}
         {{ end -}}
         env:
+          - name: CONTROLLER_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
           - name: DESIRED_RUNNERS
             value: "2"
           - name: RUNNER_SECRET_NAME
