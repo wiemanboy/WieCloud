@@ -74,8 +74,7 @@ func job(secret string, forgejoNamespace string, forgejoImage string, kubectlIma
 forgejo forgejo-cli actions register \
   --name "%s" \
   --secret "%s" \
-  --ephemeral
-	> /shared/uuid 2>&1
+  > /shared/uuid 2>&1
 `, runnerName, secret)
 
 	createRunnerCmd := fmt.Sprintf(`
