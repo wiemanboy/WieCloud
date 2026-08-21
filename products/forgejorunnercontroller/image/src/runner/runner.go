@@ -179,8 +179,8 @@ done {
 1' /etc/runner/config.yaml > /etc/runner/config.yaml.tmp && mv /etc/runner/config.yaml.tmp /etc/runner/config.yaml
 
 while ! nc -z 127.0.0.1 2375 </dev/null; do
-	echo 'waiting for docker daemon...'
-	sleep 5
+  echo 'waiting for docker daemon...'
+  sleep 5
 done
 
 /bin/forgejo-runner --config /etc/runner/config.yaml daemon
