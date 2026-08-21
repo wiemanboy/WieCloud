@@ -47,7 +47,7 @@ func count(forgejoNamespace string, client *kubernetes.Clientset) (int, error) {
 func createJob(secret string, forgejoNamespace string, runnerNamespace string, forgejoImage string, runnerImage string, dindImage string, kubectlImage string, client *kubernetes.Clientset) {
 	log.Println("Creating job")
 
-	runnerPod := pod(secret, "forgejo.wieman.cloud", forgejoNamespace, forgejoImage, dindImage)
+	runnerPod := pod(secret, "forgejo.wieman.cloud", runnerNamespace, forgejoImage, dindImage)
 
 	podBytes, _ := yaml.Marshal(runnerPod)
 	podYaml := string(podBytes)
@@ -183,7 +183,7 @@ done {
 	return &v1.Pod{
 		TypeMeta: metav1.TypeMeta{
 			APIVersion: "v1",
-			Kind: "Pod",
+			Kind:       "Pod",
 		},
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "${NAME}",
