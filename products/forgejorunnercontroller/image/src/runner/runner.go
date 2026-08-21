@@ -47,7 +47,7 @@ func count(forgejoNamespace string, client *kubernetes.Clientset) (int, error) {
 func createJob(secret string, forgejoNamespace string, runnerNamespace string, forgejoImage string, runnerImage string, dindImage string, kubectlImage string, client *kubernetes.Clientset) {
 	log.Println("Creating job")
 
-	runnerPod := pod(secret, "forgejo.wieman.cloud", runnerNamespace, forgejoImage, dindImage)
+	runnerPod := pod(secret, "forgejo.wieman.cloud", runnerNamespace, runnerImage, dindImage)
 
 	podBytes, _ := yaml.Marshal(runnerPod)
 	podYaml := string(podBytes)
@@ -156,7 +156,7 @@ EOF
 	}
 }
 
-func pod(secret string, forgejoInstance string, namespace string, forgejoImage string, dindImage string) *corev1.Pod {
+func pod(secret string, forgejoInstance string, namespace string, runnerImage string, dindImage string) *corev1.Pod {
 	runnerCmd := `
 cp /tmp/runner/config.yaml /etc/runner/config.yaml
 
@@ -215,7 +215,7 @@ done
 
 			Containers: []corev1.Container{{
 				Name:  "forgejo-runner",
-				Image: forgejoImage,
+				Image: runnerImage,
 				Env: []corev1.EnvVar{
 					{
 						Name:  "RUNNER_SECRET",
