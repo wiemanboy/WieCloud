@@ -75,13 +75,14 @@ forgejo forgejo-cli actions register \
   --name "%s" \
   --secret "%s" \
   --ephemeral
-	> /shared/uuid
+	> /shared/uuid 2>&1
 `, runnerName, secret)
 
 	createRunnerCmd := fmt.Sprintf(`
 UUID=$(cat /shared/uuid)
 NAME=%s-${UUID}
 
+echo "Creating ${NAME}"
 kubectl create -f - <<EOF
 %s
 EOF
