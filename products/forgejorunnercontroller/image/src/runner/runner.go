@@ -82,7 +82,7 @@ forgejo forgejo-cli actions register \
 UUID=$(cat /shared/uuid)
 NAME=%s-${UUID}
 
-kubectl apply -f - <<EOF
+kubectl create -f - <<EOF
 %s
 EOF
 `, runnerName, podYaml)
