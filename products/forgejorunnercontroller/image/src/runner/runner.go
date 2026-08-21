@@ -75,8 +75,8 @@ forgejo forgejo-cli actions register \
   --name "%s" \
   --secret "%s" \
   --ephemeral
+	> /shared/uuid
 `, runnerName, secret)
-	//   > /shared/uuid
 
 	createRunnerCmd := fmt.Sprintf(`
 UUID=$(cat /shared/uuid)
