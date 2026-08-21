@@ -161,19 +161,19 @@ cp /tmp/runner/config.yaml /etc/runner/config.yaml
 
 awk -v name="%s" -v url="%s" -v uuid="$RUNNER_UUID" -v token="$RUNNER_SECRET" '
 /^  connections:/ && !done {
-	print $0
-	print "    " name ":"
-	print "      url: " url
-	print "      uuid: " uuid
-	print "      token: " token
-	done=1
-	next
+  print $0
+  print "    " name ":"
+  print "      url: " url
+  print "      uuid: " uuid
+  print "      token: " token
+  done=1
+  next
 }
 done && /^  [^ ]/ {
-	done=0
+  done=0
 }
 done {
-	next
+  next
 }
 1' /etc/runner/config.yaml > /etc/runner/config.yaml.tmp && mv /etc/runner/config.yaml.tmp /etc/runner/config.yaml
 
