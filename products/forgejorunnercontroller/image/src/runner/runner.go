@@ -181,6 +181,10 @@ done {
 `
 
 	return &v1.Pod{
+		TypeMeta: metav1.TypeMeta{
+			APIVersion: "v1",
+			Kind: "Pod",
+		},
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "${NAME}",
 			Namespace: namespace,
