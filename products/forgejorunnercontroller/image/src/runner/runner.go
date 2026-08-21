@@ -106,8 +106,9 @@ EOF
 						FSGroup:    ptr.To(int64(1000)),
 					},
 					InitContainers: []corev1.Container{{
-						Name:  "register",
-						Image: forgejoImage,
+						Name:          "register",
+						Image:         forgejoImage,
+						RestartPolicy: ptr.To(corev1.ContainerRestartPolicyAlways),
 						Env: []corev1.EnvVar{{
 							Name:  "GITEA_WORK_DIR",
 							Value: "/data",
