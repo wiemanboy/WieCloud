@@ -106,9 +106,8 @@ EOF
 						FSGroup:    ptr.To(int64(1000)),
 					},
 					InitContainers: []corev1.Container{{
-						Name:          "register",
-						Image:         forgejoImage,
-						RestartPolicy: ptr.To(corev1.ContainerRestartPolicyAlways),
+						Name:  "register",
+						Image: forgejoImage,
 						Env: []corev1.EnvVar{{
 							Name:  "GITEA_WORK_DIR",
 							Value: "/data",
@@ -179,6 +178,11 @@ done {
 }
 1' /etc/runner/config.yaml > /etc/runner/config.yaml.tmp && mv /etc/runner/config.yaml.tmp /etc/runner/config.yaml
 
+while ! nc -z 127.0.0.1 2375 </dev/null; do
+	echo 'waiting for docker daemon...'
+	sleep 5
+done
+
 /bin/forgejo-runner --config /etc/runner/config.yaml daemon
 `
 
@@ -195,8 +199,9 @@ done {
 		},
 		Spec: corev1.PodSpec{
 			InitContainers: []corev1.Container{{
-				Name:  "dind",
-				Image: dindImage,
+				Name:          "dind",
+				Image:         dindImage,
+				RestartPolicy: ptr.To(corev1.ContainerRestartPolicyAlways),
 				Command: []string{
 					"dockerd",
 					"-H",
