@@ -2,7 +2,6 @@ package secret
 
 import (
 	"context"
-	"crypto/rand"
 	"errors"
 	"log"
 
@@ -10,6 +9,7 @@ import (
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
+	"wieman.cloud/forgejorunnercontroller/utils/rand"
 )
 
 func Acquire(name string, namespace string, client *kubernetes.Clientset) (string, error) {
@@ -46,7 +46,7 @@ func get(name string, namespace string, client *kubernetes.Clientset) (string, e
 
 func create(name string, namespace string, client *kubernetes.Clientset) (string, error) {
 
-	secret := rand.Text()
+	secret := rand.String(40)
 
 	k8sSecret := &corev1.Secret{
 		Type: corev1.SecretTypeOpaque,
