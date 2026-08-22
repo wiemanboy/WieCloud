@@ -157,7 +157,7 @@ EOF
 }
 
 func pod(secret string, forgejoInstance string, namespace string, runnerImage string, dindImage string) *corev1.Pod {
-	runnerCmd := `
+	runnerCmd := fmt.Sprintf(`
 cp /tmp/runner/config.yaml /etc/runner/config.yaml
 
 awk -v name="%s" -v url="%s" -v uuid="$RUNNER_UUID" -v token="$RUNNER_SECRET" '
@@ -184,7 +184,7 @@ while ! nc -z 127.0.0.1 2375 </dev/null; do
 done
 
 /bin/forgejo-runner --config /etc/runner/config.yaml daemon
-`
+`, "wiecloud-runner", "forgejo.wieman.cloud")
 
 	return &corev1.Pod{
 		TypeMeta: metav1.TypeMeta{
