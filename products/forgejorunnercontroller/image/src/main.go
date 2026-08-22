@@ -8,7 +8,6 @@ import (
 	"k8s.io/client-go/rest"
 	"wieman.cloud/forgejorunnercontroller/config"
 	"wieman.cloud/forgejorunnercontroller/runner"
-	"wieman.cloud/forgejorunnercontroller/secret"
 )
 
 func main() {
@@ -25,13 +24,10 @@ func main() {
 	}
 
 	for {
-		log.Println("Acquire secret")
-		secret, _ := secret.Acquire(appConfig.RunnerSecretName, appConfig.RunnerNamespace, client)
-
 		log.Println("Create ", appConfig.DesiredRunners, " runners")
 		runner.Create(
 			appConfig.DesiredRunners,
-			secret,
+			appConfig.RunnerSecretName,
 			runner.Register{
 				Namespace:    appConfig.ForgejoNamespace,
 				ForgejoImage: appConfig.ForgejoImage,

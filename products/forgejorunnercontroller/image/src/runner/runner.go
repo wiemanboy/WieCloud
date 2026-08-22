@@ -11,6 +11,7 @@ import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/utils/ptr"
 	"sigs.k8s.io/yaml"
+	"wieman.cloud/forgejorunnercontroller/runner/secret"
 )
 
 type Register struct {
@@ -28,13 +29,22 @@ type Runner struct {
 	DindImage string
 }
 
-func Create(amount int, secret string, register Register, runner Runner, client *kubernetes.Clientset) error {
+func Create(amount int, secretName string, register Register, runner Runner, client *kubernetes.Clientset) error {
 	runnerCount, _ := count(register.Namespace, runner.Label, client)
 	log.Println("Counted", runnerCount, "runners")
 
 	if runnerCount < amount {
-		createJob(secret, register, runner, client)
-		Create(amount, secret, register, runner, client)
+		secretRefs, _ := secret.Create(
+			secret.Secret{
+				Name:              secretName,
+				Label:             runner.Label,
+				RegisterNamespace: register.Namespace,
+				RunnerNamespace:   runner.Namespace,
+			},
+			client,
+		)
+		createJob(secretRefs, register, runner, client)
+		Create(amount, secretName, register, runner, client)
 	}
 
 	log.Println("All runners created")
@@ -56,10 +66,10 @@ func count(namespace string, label string, client *kubernetes.Clientset) (int, e
 	return len(pods.Items) + len(jobs.Items), nil
 }
 
-func createJob(secret string, register Register, runner Runner, client *kubernetes.Clientset) {
+func createJob(secretRefs secret.SecretsRefs, register Register, runner Runner, client *kubernetes.Clientset) {
 	log.Println("Creating job")
 
-	runnerPod := pod(secret, runner)
+	runnerPod := pod(secretRefs, runner)
 
 	podBytes, _ := yaml.Marshal(runnerPod)
 	podYaml := string(podBytes)
@@ -67,7 +77,7 @@ func createJob(secret string, register Register, runner Runner, client *kubernet
 	_, err := client.BatchV1().Jobs(register.Namespace).Create(
 		context.Background(),
 		job(
-			secret,
+			secretRefs,
 			register,
 			runner,
 			podYaml,
@@ -80,13 +90,13 @@ func createJob(secret string, register Register, runner Runner, client *kubernet
 	}
 }
 
-func job(secret string, register Register, runner Runner, podYaml string) *batchv1.Job {
+func job(secretRefs secret.SecretsRefs, register Register, runner Runner, podYaml string) *batchv1.Job {
 	registerCmd := fmt.Sprintf(`
 forgejo forgejo-cli actions register \
   --name "%s" \
-  --secret "%s" \
+  --secret "${SECRET}" \
   > /shared/uuid 2>&1
-`, runner.Name, secret)
+`, runner.Name)
 
 	createRunnerCmd := fmt.Sprintf(`
 UUID=$(cat /shared/uuid)
@@ -119,10 +129,21 @@ EOF
 					InitContainers: []corev1.Container{{
 						Name:  "register",
 						Image: register.ForgejoImage,
-						Env: []corev1.EnvVar{{
-							Name:  "GITEA_WORK_DIR",
-							Value: "/data",
-						}},
+						Env: []corev1.EnvVar{
+							{
+								Name:  "GITEA_WORK_DIR",
+								Value: "/data",
+							},
+							{
+								Name: "SECRET",
+								ValueFrom: &corev1.EnvVarSource{
+									SecretKeyRef: &corev1.SecretKeySelector{
+										LocalObjectReference: corev1.LocalObjectReference{Name: secretRefs.RegisterSecret.Name},
+										Key:                  "secret",
+									},
+								},
+							},
+						},
 						Command: []string{
 							"/bin/sh",
 							"-ec",
@@ -167,7 +188,7 @@ EOF
 	}
 }
 
-func pod(secret string, runner Runner) *corev1.Pod {
+func pod(secretRefs secret.SecretsRefs, runner Runner) *corev1.Pod {
 	// Below command needs to be bash escaped
 	runnerCmd := fmt.Sprintf(`
 cp /tmp/runner/config.yaml /etc/runner/config.yaml
@@ -232,8 +253,13 @@ done
 				Image: runner.Image,
 				Env: []corev1.EnvVar{
 					{
-						Name:  "RUNNER_SECRET",
-						Value: secret,
+						Name: "RUNNER_SECRET",
+						ValueFrom: &corev1.EnvVarSource{
+							SecretKeyRef: &corev1.SecretKeySelector{
+								LocalObjectReference: corev1.LocalObjectReference{Name: secretRefs.RunnerSecret.Name},
+								Key:                  "secret",
+							},
+						},
 					},
 					{
 						Name:  "RUNNER_UUID",

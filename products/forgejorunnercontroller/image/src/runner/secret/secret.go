@@ -14,41 +14,41 @@ import (
 type Secret struct {
 	Name             string
 	Label            string
-	ForgejoNamespace string
+	RegisterNamespace string
 	RunnerNamespace  string
 }
 
-type secretRef struct {
-	name      string
-	namespace string
-	uid       string
+type SecretRef struct {
+	Name      string
+	Namespace string
+	Uid       string
 }
 
-type secretsRefs struct {
-	ForgejoSecret secretRef
-	RunnerSecret  secretRef
+type SecretsRefs struct {
+	RegisterSecret SecretRef
+	RunnerSecret  SecretRef
 }
 
-func Create(secret Secret, namespaces []string, client *kubernetes.Clientset) (secretsRefs, error) {
+func Create(secret Secret, client *kubernetes.Clientset) (SecretsRefs, error) {
 	sharedSecret := rand.HexString(40)
 	namePostfix := strings.ToLower(rand.String(5))
 
-	forgejoSecret, err := createSecret(sharedSecret, secret.ForgejoNamespace, namePostfix, secret, client)
+	forgejoSecret, err := createSecret(sharedSecret, secret.RegisterNamespace, namePostfix, secret, client)
 	runnerSecret, err := createSecret(sharedSecret, secret.RunnerNamespace, namePostfix, secret, client)
 
 	if err != nil {
 		log.Println("Failed creating secrets")
 		log.Println(err)
-		return secretsRefs{}, nil
+		return SecretsRefs{}, nil
 	}
 
-	return secretsRefs{
-		ForgejoSecret: forgejoSecret,
+	return SecretsRefs{
+		RegisterSecret: forgejoSecret,
 		RunnerSecret:  runnerSecret,
 	}, nil
 }
 
-func createSecret(value string, namespace string, namePostfix string, secret Secret, client *kubernetes.Clientset) (secretRef, error) {
+func createSecret(value string, namespace string, namePostfix string, secret Secret, client *kubernetes.Clientset) (SecretRef, error) {
 	k8sSecret := &corev1.Secret{
 		Type: corev1.SecretTypeOpaque,
 		ObjectMeta: metav1.ObjectMeta{
@@ -67,12 +67,12 @@ func createSecret(value string, namespace string, namePostfix string, secret Sec
 	if err != nil {
 		log.Println("Failed creating secret")
 		log.Println(err)
-		return secretRef{}, err
+		return SecretRef{}, err
 	}
 
-	return secretRef{
-		name:      createdSecret.Name,
-		namespace: createdSecret.Namespace,
-		uid:       string(createdSecret.GetUID()),
+	return SecretRef{
+		Name:      createdSecret.Name,
+		Namespace: createdSecret.Namespace,
+		Uid:       string(createdSecret.GetUID()),
 	}, nil
 }
