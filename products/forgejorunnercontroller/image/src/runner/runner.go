@@ -288,6 +288,20 @@ done
 					},
 				},
 				Spec: corev1.PodSpec{
+					TopologySpreadConstraints: []corev1.TopologySpreadConstraint{
+						{
+							MaxSkew:           1,
+							TopologyKey:       "topology.kubernetes.io/zone",
+							WhenUnsatisfiable: corev1.ScheduleAnyway,
+							LabelSelector:     &metav1.LabelSelector{MatchLabels: map[string]string{"app": runner.Name}},
+						},
+						{
+							MaxSkew:           1,
+							TopologyKey:       "kubernetes.io/hostname",
+							WhenUnsatisfiable: corev1.ScheduleAnyway,
+							LabelSelector:     &metav1.LabelSelector{MatchLabels: map[string]string{"app": runner.Name}},
+						},
+					},
 					InitContainers: []corev1.Container{{
 						Name:          "dind",
 						Image:         runner.DindImage,
