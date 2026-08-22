@@ -16,6 +16,18 @@ import (
 var runnerName = "wiecloud-runner"
 var runnerLabel = "wieman.cloud/forgejo-runner"
 
+type Runner struct {
+	namespace string
+	image     string
+	dindImage string
+}
+
+type Register struct {
+	namespace    string
+	forgejoImage string
+	kubectlImage string
+}
+
 func Create(amount int, secret string, forgejoNamespace string, runnerNamespace string, forgejoImage string, runnerImage string, dindImage string, kubectlImage string, client *kubernetes.Clientset) error {
 	runnerCount, _ := count(forgejoNamespace, client)
 	log.Println("Counted", runnerCount, "runners")
@@ -177,6 +189,8 @@ done {
   next
 }
 1' /etc/runner/config.yaml > /etc/runner/config.yaml.tmp && mv /etc/runner/config.yaml.tmp /etc/runner/config.yaml
+
+cat /etc/runner/config.yaml
 
 while ! nc -z 127.0.0.1 2375 </dev/null; do
   echo 'waiting for docker daemon...'
