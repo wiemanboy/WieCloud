@@ -54,6 +54,29 @@ func Create(amount int, secretName string, register Register, runner Runner, cli
 	return nil
 }
 
+func UpdateChecksums(runner Runner, client *kubernetes.Clientset) error {
+	deployments, err := client.AppsV1().Deployments(runner.Namespace).List(context.Background(), metav1.ListOptions{LabelSelector: runner.Label})
+
+	if err != nil {
+		log.Println("Failed to list deployments")
+		log.Println(err)
+		return err
+	}
+
+	for _, deployment := range deployments.Items {
+		deployment.Spec.Template.Annotations["wieman.cloud/runner-config-checksum"] = runner.ConfigChecksum
+		_, err := client.AppsV1().Deployments(runner.Namespace).Update(context.Background(), &deployment, metav1.UpdateOptions{})
+
+		if err != nil {
+			log.Println("Failed to update deployment")
+			log.Println(err)
+			return err
+		}
+	}
+
+	return nil
+}
+
 func createJob(secretRefs secret.SecretsRefs, register Register, runner Runner, client *kubernetes.Clientset) {
 	log.Println("Creating job")
 

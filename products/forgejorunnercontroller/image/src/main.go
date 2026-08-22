@@ -33,7 +33,18 @@ func main() {
 			log.Fatal(err)
 		}
 
+		runnerSpec := runner.Runner{
+			Name:           "wiecloud-runner",
+			Label:          "wieman.cloud/forgejo-runner",
+			Instance:       "https://forgejo.wieman.cloud",
+			Namespace:      appConfig.RunnerNamespace,
+			Image:          appConfig.RunnerImage,
+			DindImage:      appConfig.DindImage,
+			ConfigChecksum: configChecksum,
+		}
+
 		log.Println("Update deploy checksum annotation")
+		runner.UpdateChecksums(runnerSpec, client)
 
 		log.Println("Create ", appConfig.DesiredRunners, " runners")
 		err = runner.Create(
@@ -44,15 +55,7 @@ func main() {
 				ForgejoImage: appConfig.ForgejoImage,
 				KubectlImage: appConfig.KubectlImage,
 			},
-			runner.Runner{
-				Name:           "wiecloud-runner",
-				Label:          "wieman.cloud/forgejo-runner",
-				Instance:       "https://forgejo.wieman.cloud",
-				Namespace:      appConfig.RunnerNamespace,
-				Image:          appConfig.RunnerImage,
-				DindImage:      appConfig.DindImage,
-				ConfigChecksum: configChecksum,
-			},
+			runnerSpec,
 			client,
 		)
 
