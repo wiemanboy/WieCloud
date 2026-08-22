@@ -7,26 +7,27 @@ import (
 
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
 	"wieman.cloud/forgejorunnercontroller/utils/rand"
 )
 
 type Secret struct {
-	Name             string
-	Label            string
+	Name              string
+	Label             string
 	RegisterNamespace string
-	RunnerNamespace  string
+	RunnerNamespace   string
 }
 
 type SecretRef struct {
 	Name      string
 	Namespace string
-	Uid       string
+	UID       types.UID
 }
 
 type SecretsRefs struct {
 	RegisterSecret SecretRef
-	RunnerSecret  SecretRef
+	RunnerSecret   SecretRef
 }
 
 func Create(secret Secret, client *kubernetes.Clientset) (SecretsRefs, error) {
@@ -44,7 +45,7 @@ func Create(secret Secret, client *kubernetes.Clientset) (SecretsRefs, error) {
 
 	return SecretsRefs{
 		RegisterSecret: forgejoSecret,
-		RunnerSecret:  runnerSecret,
+		RunnerSecret:   runnerSecret,
 	}, nil
 }
 
@@ -52,10 +53,10 @@ func createSecret(value string, namespace string, namePostfix string, secret Sec
 	k8sSecret := &corev1.Secret{
 		Type: corev1.SecretTypeOpaque,
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      secret.Name + "-" + namePostfix,
-			Namespace: namespace,
-			Labels:    map[string]string{secret.Label: ""},
-			Annotations:  map[string]string{"argocd.argoproj.io/tracking-id": "forgejo:apps/Deployment:forgejo/forgejo-runner-controller"},
+			Name:        secret.Name + "-" + namePostfix,
+			Namespace:   namespace,
+			Labels:      map[string]string{secret.Label: ""},
+			Annotations: map[string]string{"argocd.argoproj.io/tracking-id": "forgejo:apps/Deployment:forgejo/forgejo-runner-controller"},
 		},
 		StringData: map[string]string{
 			"secret": value,
@@ -73,6 +74,6 @@ func createSecret(value string, namespace string, namePostfix string, secret Sec
 	return SecretRef{
 		Name:      createdSecret.Name,
 		Namespace: createdSecret.Namespace,
-		Uid:       string(createdSecret.GetUID()),
+		UID:       createdSecret.GetUID(),
 	}, nil
 }

@@ -114,6 +114,12 @@ EOF
 			Namespace:    register.Namespace,
 			Labels:       map[string]string{runner.Label: ""},
 			Annotations:  map[string]string{"argocd.argoproj.io/tracking-id": "forgejo:apps/Deployment:forgejo/forgejo-runner-controller"},
+			OwnerReferences: []metav1.OwnerReference{{
+				Name:               secretRefs.RegisterSecret.Name,
+				UID:                secretRefs.RegisterSecret.UID,
+				Controller:         ptr.To(true),
+				BlockOwnerDeletion: ptr.To(true),
+			}},
 		},
 		Spec: batchv1.JobSpec{
 			BackoffLimit: ptr.To(int32(0)),
@@ -231,6 +237,12 @@ done
 			Namespace:   runner.Namespace,
 			Labels:      map[string]string{runner.Label: ""},
 			Annotations: map[string]string{"argocd.argoproj.io/tracking-id": "forgejo:apps/Deployment:forgejo/forgejo-runner-controller"},
+			OwnerReferences: []metav1.OwnerReference{{
+				Name:               secretRefs.RunnerSecret.Name,
+				UID:                secretRefs.RunnerSecret.UID,
+				Controller:         ptr.To(true),
+				BlockOwnerDeletion: ptr.To(true),
+			}},
 		},
 		Spec: corev1.PodSpec{
 			InitContainers: []corev1.Container{{
