@@ -89,7 +89,7 @@ targetRepository:
 applications:
   forgejo:
     deploy: true
-    version: 0.0.0-implement-forgejo-fe82ae4
+    version: 0.0.0-implement-forgejo-66f8991
     initialBoot: true
     cnpg:
       restore: false
@@ -356,7 +356,7 @@ images:
     image:
       registry: harbor.wieman.cloud
       repository: products/forgejorunnercontroller
-      version: 0.0.0-implement-forgejo-fe82ae4
+      version: 0.0.0-implement-forgejo-66f8991
 
   keycloakserver:
     image:
@@ -398,4 +398,4 @@ images:
     image:
       registry: harbor.wieman.cloud
       repository: products/wiecloudactions
-      version: 0.0.0-implement-forgejo-fe82ae4
+      version: 0.0.0-implement-forgejo-66f8991
