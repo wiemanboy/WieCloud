@@ -4,7 +4,7 @@ metadata:
   name: cnpg-backup-s3
 spec:
   configuration:
-    destinationPath: s3://wiecloud-nextcloud-postgres-backups/
+    destinationPath: s3://wiecloud-forgejo-postgres-backups/
     endpointURL: https://cnpg.s3.wieman.cloud
 
     s3Credentials:
