@@ -160,7 +160,7 @@ func pod(secret string, forgejoInstance string, namespace string, runnerImage st
 	runnerCmd := fmt.Sprintf(`
 cp /tmp/runner/config.yaml /etc/runner/config.yaml
 
-awk -v name="%s" -v url="%s" -v uuid="$RUNNER_UUID" -v token="$RUNNER_SECRET" '
+awk -v name="%s" -v url="%s" -v uuid="\${RUNNER_UUID}" -v token="\${RUNNER_SECRET}" '
 /^  connections:/ && !done {
   print $0
   print "    " name ":"
