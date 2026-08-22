@@ -102,7 +102,9 @@ echo "Creating ${NAME}"
 kubectl create --validate=false -f - <<EOF
 %s
 EOF
-`, runner.Name, deploymentYaml)
+
+kubectl delete secret %s -n %s
+`, runner.Name, deploymentYaml, secretRefs.RegisterSecret.Name, secretRefs.RegisterSecret.Namespace)
 
 	return &batchv1.Job{
 		ObjectMeta: metav1.ObjectMeta{
