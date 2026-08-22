@@ -10,7 +10,7 @@ metadata:
   name: create-runner
   namespace: {{ .Release.Namespace }}-runner-system
 rules:
-  - apiGroups: [""]
+  - apiGroups: ["apps"]
     resources:
       - deployments
     verbs:
