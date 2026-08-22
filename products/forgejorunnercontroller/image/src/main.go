@@ -39,7 +39,7 @@ func main() {
 			},
 			runner.Runner{
 				Name:      "wiecloud-runner",
-				Label:     "wieman.cloud/wiecloud-runner",
+				Label:     "wieman.cloud/forgejo-runner",
 				Instance:  "https://forgejo.wieman.cloud",
 				Namespace: appConfig.RunnerNamespace,
 				Image:     appConfig.RunnerImage,

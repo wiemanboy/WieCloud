@@ -42,13 +42,13 @@ func Create(amount int, secret string, register Register, runner Runner, client 
 }
 
 func count(namespace string, label string, client *kubernetes.Clientset) (int, error) {
-	log.Println("Counting runners")
+	log.Println("Counting runners with label " + label + " in namespace " + namespace)
 
 	pods, err := client.CoreV1().Pods(namespace).List(context.Background(), metav1.ListOptions{LabelSelector: label})
 	jobs, err := client.BatchV1().Jobs(namespace).List(context.Background(), metav1.ListOptions{LabelSelector: label})
 
 	if err != nil {
-		log.Println("Failed to list jobs")
+		log.Println("Failed to list runners")
 		log.Println(err)
 		return 0, err
 	}
