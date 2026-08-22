@@ -20,9 +20,11 @@ type Secret struct {
 }
 
 type SecretRef struct {
-	Name      string
-	Namespace string
-	UID       types.UID
+	Name       string
+	Namespace  string
+	UID        types.UID
+	ApiVersion string
+	Kind       string
 }
 
 type SecretsRefs struct {
@@ -72,9 +74,11 @@ func createSecret(value string, namespace string, namePostfix string, secret Sec
 	}
 
 	return SecretRef{
-		Name:      createdSecret.Name,
-		Namespace: createdSecret.Namespace,
-		UID:       createdSecret.GetUID(),
+		Name:       createdSecret.Name,
+		Namespace:  createdSecret.Namespace,
+		UID:        createdSecret.GetUID(),
+		ApiVersion: createdSecret.APIVersion,
+		Kind:       createdSecret.Kind,
 	}, nil
 }
 

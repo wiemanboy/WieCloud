@@ -104,6 +104,8 @@ EOF
 				UID:                secretRefs.RegisterSecret.UID,
 				Controller:         ptr.To(true),
 				BlockOwnerDeletion: ptr.To(true),
+				APIVersion:         secretRefs.RegisterSecret.ApiVersion,
+				Kind:               secretRefs.RegisterSecret.Kind,
 			}},
 		},
 		Spec: batchv1.JobSpec{
@@ -227,6 +229,8 @@ done
 				UID:                secretRefs.RunnerSecret.UID,
 				Controller:         ptr.To(true),
 				BlockOwnerDeletion: ptr.To(true),
+				APIVersion:         secretRefs.RunnerSecret.ApiVersion,
+				Kind:               secretRefs.RunnerSecret.Kind,
 			}},
 		},
 		Spec: corev1.PodSpec{
