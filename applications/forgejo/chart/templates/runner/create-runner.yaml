@@ -34,20 +34,20 @@ roleRef:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: create-runner
-  namespace: {{ .Release.Namespace }}-runner-system
+  name: delete-runner-secret
+  namespace: {{ .Release.Namespace }}
 rules:
   - apiGroups: [""]
     resources:
       - secrets
     verbs:
       - delete
-    
+
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: create-runner
+  name: delete-runner-secret
   namespace: {{ .Release.Namespace }}
 subjects:
   - kind: ServiceAccount
@@ -56,4 +56,4 @@ subjects:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: create-runner
+  name: delete-runner-secret
