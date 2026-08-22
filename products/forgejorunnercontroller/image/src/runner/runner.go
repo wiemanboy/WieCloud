@@ -59,8 +59,8 @@ func createJob(secretRefs secret.SecretsRefs, register Register, runner Runner, 
 
 	runnerDeployment := deployment(secretRefs, runner)
 
-	podBytes, _ := yaml.Marshal(runnerDeployment)
-	podYaml := string(podBytes)
+	deploymentBytes, _ := yaml.Marshal(runnerDeployment)
+	deploymentYaml := string(deploymentBytes)
 
 	_, err := client.BatchV1().Jobs(register.Namespace).Create(
 		context.Background(),
@@ -68,7 +68,7 @@ func createJob(secretRefs secret.SecretsRefs, register Register, runner Runner, 
 			secretRefs,
 			register,
 			runner,
-			podYaml,
+			deploymentYaml,
 		),
 		metav1.CreateOptions{})
 
@@ -78,12 +78,20 @@ func createJob(secretRefs secret.SecretsRefs, register Register, runner Runner, 
 	}
 }
 
-func job(secretRefs secret.SecretsRefs, register Register, runner Runner, podYaml string) *batchv1.Job {
+func job(secretRefs secret.SecretsRefs, register Register, runner Runner, deploymentYaml string) *batchv1.Job {
 	registerCmd := fmt.Sprintf(`
+NAME=%s
+
+echo "Registering ${NAME}"
+
 forgejo forgejo-cli actions register \
-  --name "%s" \
+  --name "${NAME}" \
   --secret "${SECRET}" \
   > /shared/uuid 2>&1
+
+UUID=$(cat /shared/uuid)
+
+echo "Successfully registered ${NAME} with uuid ${UUID}"
 `, runner.Name)
 
 	createRunnerCmd := fmt.Sprintf(`
@@ -91,10 +99,10 @@ UUID=$(cat /shared/uuid)
 NAME=%s-${UUID}
 
 echo "Creating ${NAME}"
-kubectl create -f - <<EOF
+kubectl create --validate=false -f - <<EOF
 %s
 EOF
-`, runner.Name, podYaml)
+`, runner.Name, deploymentYaml)
 
 	return &batchv1.Job{
 		ObjectMeta: metav1.ObjectMeta{
