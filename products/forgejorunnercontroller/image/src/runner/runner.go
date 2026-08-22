@@ -29,7 +29,7 @@ type Runner struct {
 }
 
 func Create(amount int, secret string, register Register, runner Runner, client *kubernetes.Clientset) error {
-	runnerCount, _ := count(runner.Namespace, runner.Label, client)
+	runnerCount, _ := count(register.Namespace, runner.Label, client)
 	log.Println("Counted", runnerCount, "runners")
 
 	if runnerCount < amount {
