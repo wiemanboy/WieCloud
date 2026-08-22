@@ -55,15 +55,13 @@ func Create(amount int, secretName string, register Register, runner Runner, cli
 }
 
 func UpdateChecksums(runner Runner, client *kubernetes.Clientset) error {
-	deployments, err := client.AppsV1().Deployments(runner.Namespace).List(context.Background(), metav1.ListOptions{LabelSelector: runner.Label})
+	deployments, err := getDeployments(runner.Namespace, runner.Label, client)
 
 	if err != nil {
-		log.Println("Failed to list deployments")
-		log.Println(err)
 		return err
 	}
 
-	for _, deployment := range deployments.Items {
+	for _, deployment := range deployments {
 		deployment.Spec.Template.Annotations["wieman.cloud/runner-config-checksum"] = runner.ConfigChecksum
 		_, err := client.AppsV1().Deployments(runner.Namespace).Update(context.Background(), &deployment, metav1.UpdateOptions{})
 
@@ -75,6 +73,45 @@ func UpdateChecksums(runner Runner, client *kubernetes.Clientset) error {
 	}
 
 	return nil
+}
+
+func Cleanup(desiredAmount int, runner Runner, client *kubernetes.Clientset) error {
+	deployments, err := getDeployments(runner.Namespace, runner.Label, client)
+	runnerCount, err := secret.Count(runner.Namespace, runner.Label, client)
+	log.Println("Counted", runnerCount, "runners")
+
+	if err != nil {
+		return err
+	}
+
+	for _, deployment := range deployments {
+		if len(deployments) > desiredAmount {
+			log.Println("Deleting runner " + deployment.Name)
+			err := client.CoreV1().Secrets(deployment.Namespace).Delete(context.Background(), deployment.OwnerReferences[0].Name, metav1.DeleteOptions{})
+
+			if err != nil {
+				log.Println("Failed to delete runner " + deployment.Name)
+				log.Println(err)
+				return err
+			}
+
+			Cleanup(desiredAmount, runner, client)
+		}
+	}
+
+	return nil
+}
+
+func getDeployments(namespace string, label string, client *kubernetes.Clientset) ([]appsv1.Deployment, error) {
+	deployments, err := client.AppsV1().Deployments(namespace).List(context.Background(), metav1.ListOptions{LabelSelector: label})
+
+	if err != nil {
+		log.Println("Failed to list deployments")
+		log.Println(err)
+		return []appsv1.Deployment{}, err
+	}
+
+	return deployments.Items, nil
 }
 
 func createJob(secretRefs secret.SecretsRefs, register Register, runner Runner, client *kubernetes.Clientset) {

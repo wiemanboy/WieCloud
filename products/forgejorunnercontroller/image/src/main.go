@@ -43,6 +43,9 @@ func main() {
 			ConfigChecksum: configChecksum,
 		}
 
+		log.Println("Cleaning up runners")
+		runner.Cleanup(appConfig.DesiredRunners, runnerSpec, client)
+
 		log.Println("Update deploy checksum annotation")
 		runner.UpdateChecksums(runnerSpec, client)
 
