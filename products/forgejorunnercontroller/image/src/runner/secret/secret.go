@@ -77,8 +77,8 @@ func createSecret(value string, namespace string, namePostfix string, secret Sec
 		Name:       createdSecret.Name,
 		Namespace:  createdSecret.Namespace,
 		UID:        createdSecret.GetUID(),
-		ApiVersion: createdSecret.APIVersion,
-		Kind:       createdSecret.Kind,
+		ApiVersion: "v1",
+		Kind:       "Secret",
 	}, nil
 }
 
