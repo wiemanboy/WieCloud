@@ -13,7 +13,6 @@ rules:
   - apiGroups: [""]
     resources:
       - deployments
-      - pods
     verbs:
       - create
 ---
