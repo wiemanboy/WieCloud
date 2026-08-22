@@ -45,7 +45,7 @@ forgejo:
       cron.cleanup_offline_runners:
         ENABLED: true
         SCHEDULE: "*/1 * * * *"
-        OLDER_THAN: 2m
+        OLDER_THAN: 1m
 
     # oauth:
     #   - name: example
