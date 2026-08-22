@@ -4,12 +4,14 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"time"
 
 	appsv1 "k8s.io/api/apps/v1"
 	batchv1 "k8s.io/api/batch/v1"
-
 	corev1 "k8s.io/api/core/v1"
+	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/util/wait"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/utils/ptr"
 	"sigs.k8s.io/yaml"
@@ -88,6 +90,27 @@ func Cleanup(desiredAmount int, runner Runner, client *kubernetes.Clientset) err
 		if len(deployments) > desiredAmount {
 			log.Println("Deleting runner " + deployment.Name)
 			err := client.CoreV1().Secrets(deployment.Namespace).Delete(context.Background(), deployment.OwnerReferences[0].Name, metav1.DeleteOptions{})
+
+			err = wait.PollUntilContextTimeout(
+				context.Background(),
+				500*time.Millisecond,
+				30*time.Second,
+				true,
+				func(ctx context.Context) (bool, error) {
+					_, err := client.CoreV1().
+						Secrets(deployment.Namespace).
+						Get(ctx, deployment.OwnerReferences[0].Name, metav1.GetOptions{})
+
+					if apierrors.IsNotFound(err) {
+						return true, nil
+					}
+					if err != nil {
+						return false, err
+					}
+
+					return false, nil
+				},
+			)
 
 			if err != nil {
 				log.Println("Failed to delete runner " + deployment.Name)
