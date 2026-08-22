@@ -134,7 +134,6 @@ kubectl delete secret %s -n %s
 			GenerateName: "register-runner-",
 			Namespace:    register.Namespace,
 			Labels:       map[string]string{runner.Label: ""},
-			Annotations:  map[string]string{"argocd.argoproj.io/tracking-id": "forgejo:apps/Deployment:forgejo/forgejo-runner-controller"},
 			OwnerReferences: []metav1.OwnerReference{{
 				Name:               secretRefs.RegisterSecret.Name,
 				UID:                secretRefs.RegisterSecret.UID,
@@ -262,7 +261,6 @@ done
 				runner.Label: "",
 				"app":        runner.Name,
 			},
-			Annotations: map[string]string{"argocd.argoproj.io/tracking-id": "forgejo:apps/Deployment:forgejo/forgejo-runner-controller"},
 			OwnerReferences: []metav1.OwnerReference{{
 				Name:               secretRefs.RunnerSecret.Name,
 				UID:                secretRefs.RunnerSecret.UID,

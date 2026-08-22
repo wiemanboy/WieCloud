@@ -72,7 +72,7 @@ func createSecret(value string, namespace string, namePostfix string, secret Sec
 			Name:        secret.Name + "-" + namePostfix,
 			Namespace:   namespace,
 			Labels:      map[string]string{secret.Label: ""},
-			Annotations: map[string]string{"argocd.argoproj.io/tracking-id": "forgejo:apps/Deployment:forgejo/forgejo-runner-controller"},
+			Annotations: map[string]string{"argocd.argoproj.io/tracking-id": "forgejo:apps/Secret:forgejo/forgejo-runner"},
 		},
 		StringData: map[string]string{
 			"secret": value,
