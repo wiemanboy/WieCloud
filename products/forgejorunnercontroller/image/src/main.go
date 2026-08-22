@@ -32,12 +32,19 @@ func main() {
 		runner.Create(
 			appConfig.DesiredRunners,
 			secret,
-			appConfig.ForgejoNamespace,
-			appConfig.RunnerNamespace,
-			appConfig.ForgejoImage,
-			appConfig.RunnerImage,
-			appConfig.DindImage,
-			appConfig.KubectlImage,
+			runner.Register{
+				Namespace:    appConfig.ForgejoNamespace,
+				ForgejoImage: appConfig.ForgejoImage,
+				KubectlImage: appConfig.KubectlImage,
+			},
+			runner.Runner{
+				Name:      "wiecloud-runner",
+				Label:     "wieman.cloud/wiecloud-runner",
+				Instance:  "https://forgejo.wieman.cloud",
+				Namespace: appConfig.RunnerNamespace,
+				Image:     appConfig.RunnerImage,
+				DindImage: appConfig.DindImage,
+			},
 			client,
 		)
 

@@ -13,39 +13,39 @@ import (
 	"sigs.k8s.io/yaml"
 )
 
-var runnerName = "wiecloud-runner"
-var runnerLabel = "wieman.cloud/forgejo-runner"
+type Register struct {
+	Namespace    string
+	ForgejoImage string
+	KubectlImage string
+}
 
 type Runner struct {
-	namespace string
-	image     string
-	dindImage string
+	Name      string
+	Instance  string
+	Label     string
+	Namespace string
+	Image     string
+	DindImage string
 }
 
-type Register struct {
-	namespace    string
-	forgejoImage string
-	kubectlImage string
-}
-
-func Create(amount int, secret string, forgejoNamespace string, runnerNamespace string, forgejoImage string, runnerImage string, dindImage string, kubectlImage string, client *kubernetes.Clientset) error {
-	runnerCount, _ := count(forgejoNamespace, client)
+func Create(amount int, secret string, register Register, runner Runner, client *kubernetes.Clientset) error {
+	runnerCount, _ := count(runner.Namespace, runner.Label, client)
 	log.Println("Counted", runnerCount, "runners")
 
 	if runnerCount < amount {
-		createJob(secret, forgejoNamespace, runnerNamespace, forgejoImage, runnerImage, dindImage, kubectlImage, client)
-		Create(amount, secret, forgejoNamespace, runnerNamespace, forgejoImage, runnerImage, dindImage, kubectlImage, client)
+		createJob(secret, register, runner, client)
+		Create(amount, secret, register, runner, client)
 	}
 
 	log.Println("All runners created")
 	return nil
 }
 
-func count(forgejoNamespace string, client *kubernetes.Clientset) (int, error) {
+func count(namespace string, label string, client *kubernetes.Clientset) (int, error) {
 	log.Println("Counting runners")
 
-	pods, err := client.CoreV1().Pods(forgejoNamespace).List(context.Background(), metav1.ListOptions{LabelSelector: runnerLabel})
-	jobs, err := client.BatchV1().Jobs(forgejoNamespace).List(context.Background(), metav1.ListOptions{LabelSelector: runnerLabel})
+	pods, err := client.CoreV1().Pods(namespace).List(context.Background(), metav1.ListOptions{LabelSelector: label})
+	jobs, err := client.BatchV1().Jobs(namespace).List(context.Background(), metav1.ListOptions{LabelSelector: label})
 
 	if err != nil {
 		log.Println("Failed to list jobs")
@@ -56,21 +56,20 @@ func count(forgejoNamespace string, client *kubernetes.Clientset) (int, error) {
 	return len(pods.Items) + len(jobs.Items), nil
 }
 
-func createJob(secret string, forgejoNamespace string, runnerNamespace string, forgejoImage string, runnerImage string, dindImage string, kubectlImage string, client *kubernetes.Clientset) {
+func createJob(secret string, register Register, runner Runner, client *kubernetes.Clientset) {
 	log.Println("Creating job")
 
-	runnerPod := pod(secret, "forgejo.wieman.cloud", runnerNamespace, runnerImage, dindImage)
+	runnerPod := pod(secret, runner)
 
 	podBytes, _ := yaml.Marshal(runnerPod)
 	podYaml := string(podBytes)
 
-	_, err := client.BatchV1().Jobs(forgejoNamespace).Create(
+	_, err := client.BatchV1().Jobs(register.Namespace).Create(
 		context.Background(),
 		job(
 			secret,
-			forgejoNamespace,
-			forgejoImage,
-			kubectlImage,
+			register,
+			runner,
 			podYaml,
 		),
 		metav1.CreateOptions{})
@@ -81,13 +80,13 @@ func createJob(secret string, forgejoNamespace string, runnerNamespace string, f
 	}
 }
 
-func job(secret string, forgejoNamespace string, forgejoImage string, kubectlImage string, podYaml string) *batchv1.Job {
+func job(secret string, register Register, runner Runner, podYaml string) *batchv1.Job {
 	registerCmd := fmt.Sprintf(`
 forgejo forgejo-cli actions register \
   --name "%s" \
   --secret "%s" \
   > /shared/uuid 2>&1
-`, runnerName, secret)
+`, runner.Name, secret)
 
 	createRunnerCmd := fmt.Sprintf(`
 UUID=$(cat /shared/uuid)
@@ -97,13 +96,13 @@ echo "Creating ${NAME}"
 kubectl create -f - <<EOF
 %s
 EOF
-`, runnerName, podYaml)
+`, runner.Name, podYaml)
 
 	return &batchv1.Job{
 		ObjectMeta: metav1.ObjectMeta{
 			GenerateName: "register-runner-",
-			Namespace:    forgejoNamespace,
-			Labels:       map[string]string{runnerLabel: ""},
+			Namespace:    register.Namespace,
+			Labels:       map[string]string{runner.Label: ""},
 			Annotations:  map[string]string{"argocd.argoproj.io/tracking-id": "forgejo:apps/Deployment:forgejo/forgejo-runner-controller"},
 		},
 		Spec: batchv1.JobSpec{
@@ -119,7 +118,7 @@ EOF
 					},
 					InitContainers: []corev1.Container{{
 						Name:  "register",
-						Image: forgejoImage,
+						Image: register.ForgejoImage,
 						Env: []corev1.EnvVar{{
 							Name:  "GITEA_WORK_DIR",
 							Value: "/data",
@@ -141,7 +140,7 @@ EOF
 					}},
 					Containers: []corev1.Container{{
 						Name:  "create-runner",
-						Image: kubectlImage,
+						Image: register.KubectlImage,
 						Command: []string{
 							"/bin/sh",
 							"-ec",
@@ -168,7 +167,7 @@ EOF
 	}
 }
 
-func pod(secret string, forgejoInstance string, namespace string, runnerImage string, dindImage string) *corev1.Pod {
+func pod(secret string, runner Runner) *corev1.Pod {
 	runnerCmd := fmt.Sprintf(`
 cp /tmp/runner/config.yaml /etc/runner/config.yaml
 
@@ -198,7 +197,7 @@ while ! nc -z 127.0.0.1 2375 </dev/null; do
 done
 
 /bin/forgejo-runner --config /etc/runner/config.yaml daemon
-`, "wiecloud-runner", "forgejo.wieman.cloud")
+`, runner.Name, runner.Instance)
 
 	return &corev1.Pod{
 		TypeMeta: metav1.TypeMeta{
@@ -207,14 +206,14 @@ done
 		},
 		ObjectMeta: metav1.ObjectMeta{
 			Name:        "${NAME}",
-			Namespace:   namespace,
-			Labels:      map[string]string{runnerLabel: ""},
+			Namespace:   runner.Namespace,
+			Labels:      map[string]string{runner.Label: ""},
 			Annotations: map[string]string{"argocd.argoproj.io/tracking-id": "forgejo:apps/Deployment:forgejo/forgejo-runner-controller"},
 		},
 		Spec: corev1.PodSpec{
 			InitContainers: []corev1.Container{{
 				Name:          "dind",
-				Image:         dindImage,
+				Image:         runner.DindImage,
 				RestartPolicy: ptr.To(corev1.ContainerRestartPolicyAlways),
 				Command: []string{
 					"dockerd",
@@ -229,7 +228,7 @@ done
 
 			Containers: []corev1.Container{{
 				Name:  "forgejo-runner",
-				Image: runnerImage,
+				Image: runner.Image,
 				Env: []corev1.EnvVar{
 					{
 						Name:  "RUNNER_SECRET",
