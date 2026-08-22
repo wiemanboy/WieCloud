@@ -77,3 +77,17 @@ func createSecret(value string, namespace string, namePostfix string, secret Sec
 		UID:       createdSecret.GetUID(),
 	}, nil
 }
+
+func Count(namespace string, label string, client *kubernetes.Clientset) (int, error) {
+	log.Println("Counting secrets with label " + label + " in namespace " + namespace)
+
+	secrets, err := client.CoreV1().Secrets(namespace).List(context.Background(), metav1.ListOptions{LabelSelector: label})
+
+	if err != nil {
+		log.Println("Failed to list secrets")
+		log.Println(err)
+		return 99999, err
+	}
+
+	return len(secrets.Items), nil
+}

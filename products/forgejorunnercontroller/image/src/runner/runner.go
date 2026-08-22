@@ -30,7 +30,7 @@ type Runner struct {
 }
 
 func Create(amount int, secretName string, register Register, runner Runner, client *kubernetes.Clientset) error {
-	runnerCount, _ := count(register.Namespace, runner.Label, client)
+	runnerCount, _ := secret.Count(register.Namespace, runner.Label, client)
 	log.Println("Counted", runnerCount, "runners")
 
 	if runnerCount < amount {
@@ -49,21 +49,6 @@ func Create(amount int, secretName string, register Register, runner Runner, cli
 
 	log.Println("All runners created")
 	return nil
-}
-
-func count(namespace string, label string, client *kubernetes.Clientset) (int, error) {
-	log.Println("Counting runners with label " + label + " in namespace " + namespace)
-
-	pods, err := client.CoreV1().Pods(namespace).List(context.Background(), metav1.ListOptions{LabelSelector: label})
-	jobs, err := client.BatchV1().Jobs(namespace).List(context.Background(), metav1.ListOptions{LabelSelector: label})
-
-	if err != nil {
-		log.Println("Failed to list runners")
-		log.Println(err)
-		return 0, err
-	}
-
-	return len(pods.Items) + len(jobs.Items), nil
 }
 
 func createJob(secretRefs secret.SecretsRefs, register Register, runner Runner, client *kubernetes.Clientset) {
