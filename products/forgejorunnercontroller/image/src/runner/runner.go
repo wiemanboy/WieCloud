@@ -168,12 +168,13 @@ EOF
 }
 
 func pod(secret string, runner Runner) *corev1.Pod {
+	// Below command needs to be bash escaped
 	runnerCmd := fmt.Sprintf(`
 cp /tmp/runner/config.yaml /etc/runner/config.yaml
 
 awk -v name="%s" -v url="%s" -v uuid="\${RUNNER_UUID}" -v token="\${RUNNER_SECRET}" '
 /^  connections:/ && !done {
-  print $0
+  print \$0
   print "    " name ":"
   print "      url: " url
   print "      uuid: " uuid
