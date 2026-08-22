@@ -32,7 +32,7 @@ rules:
 
   - apiGroups: ["apps"]
     resources:
-      - deployment
+      - deployments
     verbs:
       - get
       - list
