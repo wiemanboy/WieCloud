@@ -85,7 +85,9 @@ spec:
           - name: DESIRED_RUNNERS
             value: "2"
           - name: RUNNER_SECRET_NAME
-            value: test-secret
+            value: forgejo-runner-secret
+          - name: RUNNER_CONFIG_NAME
+            value: forgejo-runner-config
           - name: RUNNER_NAMESPACE
             value: {{ .Release.Namespace }}-runner-system
           - name: RUNNER_IMAGE

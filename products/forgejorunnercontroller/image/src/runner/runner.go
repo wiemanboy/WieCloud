@@ -21,16 +21,17 @@ type Register struct {
 }
 
 type Runner struct {
-	Name      string
-	Instance  string
-	Label     string
-	Namespace string
-	Image     string
-	DindImage string
+	Name           string
+	Instance       string
+	Label          string
+	Namespace      string
+	Image          string
+	DindImage      string
+	ConfigChecksum string
 }
 
 func Create(amount int, secretName string, register Register, runner Runner, client *kubernetes.Clientset) error {
-	runnerCount, _ := secret.Count(register.Namespace, runner.Label, client)
+	runnerCount, _ := secret.Count(runner.Namespace, runner.Label, client)
 	log.Println("Counted", runnerCount, "runners")
 
 	if runnerCount < amount {

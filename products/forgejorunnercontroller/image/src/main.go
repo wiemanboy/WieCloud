@@ -8,6 +8,7 @@ import (
 	"k8s.io/client-go/rest"
 	"wieman.cloud/forgejorunnercontroller/config"
 	"wieman.cloud/forgejorunnercontroller/runner"
+	"wieman.cloud/forgejorunnercontroller/runner/configmap"
 )
 
 func main() {
@@ -24,8 +25,18 @@ func main() {
 	}
 
 	for {
+		log.Println("Get config checksum")
+		configChecksum, err := configmap.GetChecksum(appConfig.RunnerConfigName, appConfig.RunnerNamespace, client)
+
+		if err != nil {
+			log.Println("Error getting config checksum")
+			log.Fatal(err)
+		}
+
+		log.Println("Update deploy checksum annotation")
+
 		log.Println("Create ", appConfig.DesiredRunners, " runners")
-		runner.Create(
+		err = runner.Create(
 			appConfig.DesiredRunners,
 			appConfig.RunnerSecretName,
 			runner.Register{
@@ -34,15 +45,21 @@ func main() {
 				KubectlImage: appConfig.KubectlImage,
 			},
 			runner.Runner{
-				Name:      "wiecloud-runner",
-				Label:     "wieman.cloud/forgejo-runner",
-				Instance:  "https://forgejo.wieman.cloud",
-				Namespace: appConfig.RunnerNamespace,
-				Image:     appConfig.RunnerImage,
-				DindImage: appConfig.DindImage,
+				Name:           "wiecloud-runner",
+				Label:          "wieman.cloud/forgejo-runner",
+				Instance:       "https://forgejo.wieman.cloud",
+				Namespace:      appConfig.RunnerNamespace,
+				Image:          appConfig.RunnerImage,
+				DindImage:      appConfig.DindImage,
+				ConfigChecksum: configChecksum,
 			},
 			client,
 		)
+
+		if err != nil {
+			log.Println("Error creating runners")
+			log.Fatal(err)
+		}
 
 		time.Sleep(5 * time.Second)
 	}

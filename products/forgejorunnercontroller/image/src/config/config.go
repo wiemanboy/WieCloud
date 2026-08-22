@@ -6,9 +6,9 @@ import (
 )
 
 type Config struct {
-	ControllerName   string
 	DesiredRunners   int
 	RunnerSecretName string
+	RunnerConfigName string
 	RunnerNamespace  string
 	RunnerImage      string
 	DindImage        string
@@ -19,9 +19,9 @@ type Config struct {
 
 func LoadConfig() *Config {
 	return &Config{
-		ControllerName:   os.Getenv("CONTROLLER_NAME"),
 		DesiredRunners:   toInt(os.Getenv("DESIRED_RUNNERS")),
 		RunnerSecretName: os.Getenv("RUNNER_SECRET_NAME"),
+		RunnerConfigName: os.Getenv("RUNNER_CONFIG_NAME"),
 		RunnerNamespace:  os.Getenv("RUNNER_NAMESPACE"),
 		RunnerImage:      os.Getenv("RUNNER_IMAGE"),
 		DindImage:        os.Getenv("DIND_IMAGE"),
