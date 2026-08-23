@@ -1,0 +1,82 @@
+{{- with .Values.applications.forgejo -}}
+{{- if .deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: forgejo
+  namespace: argocd
+spec:
+  source:
+    chart: forgejo
+    repoURL: {{ $.Values.applications.repository }}
+    targetRevision: {{ .version }}
+    helm:
+      valuesObject:
+        images: {{ toYaml $.Values.images | nindent 10 }}
+        backups: {{ toYaml $.Values.backups | nindent 10 }}
+        restores: {{ toYaml .restores | nindent 10 }}
+
+        forgejo:
+          gitea:
+            oauth:
+              {{ with $.Values.auth.oidc}}
+              - name: {{ .provider }}
+                provider: openidConnect
+                autoDiscoverUrl: {{.endpoint }}/.well-known/openid-configuration
+                scopes: openid,email,profile,offline_access
+                existingSecret: forgejo-oidc-client
+                groupClaimName: groups
+                adminGroup: /app/forgejo/admin
+                iconUrl: https://keycloak.{{ $.Values.network.hostname }}/resources/vkm3c/login/keycloak.v2/img/favicon.ico
+                requiredClaimName: groups
+                requiredClaimValue: /app/forgejo/user
+                {{ if not ($.Values.applications.forgejo.initialBoot | default false) }}
+                allowUsernameChange: ""
+                skipLocal2fa: ""
+                {{- end }}
+              {{- end }}
+
+          httpRoute:
+            {{ with $.Values.network.gateway }}
+            parentRefs:
+              - name: {{ .name }}
+                sectionName: {{ .listener }}
+                namespace: {{ .namespace }}
+            hostnames:
+              - forgejo.{{ $.Values.network.hostname }}
+            {{- end }}
+
+          tcpRoute:
+            {{ with $.Values.network.gateway }}
+            parentRefs:
+              - name: {{ .name }}
+                sectionName: ssh
+                namespace: {{ .namespace }}
+            {{- end }}
+
+        cnpg:
+          restore: {{ .cnpg.restore }}
+
+        runner:
+          config:
+            instance: https://forgejo.{{ $.Values.network.hostname }}
+            file:
+              runner:
+                labels:
+                  {{ with $.Values.images.wiecloudactions.image -}}
+                  - wiecloud:docker://{{ .registry }}/{{ .repository }}:{{ .version }}
+                  {{- end }}
+
+  destination:
+    namespace: forgejo
+    server: https://kubernetes.default.svc
+  project: applications
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
+{{- end -}}
+{{- end -}}

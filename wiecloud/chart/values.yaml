@@ -87,6 +87,19 @@ targetRepository:
   branch: master
 
 applications:
+  forgejo:
+    deploy: true
+    version: 0.0.0
+    cnpg:
+      restore: false
+    restores:
+      - name: forgejo-restore
+        enabled: false
+        fromBackup: local
+        snapshot: ""
+        claim:
+          name: gitea-shared-storage
+
   minecraft:
     deploy: true
     version: 1.2.1
@@ -232,14 +245,16 @@ infrastructure:
     clientCreationPermissions:
       - name: argocd
         namespace: argocd
-      - name: harbor
-        namespace: harbor
-      - name: nextcloud
-        namespace: nextcloud
+      - name: forgejo
+        namespace: forgejo
       - name: grafana
         namespace: prometheus
+      - name: harbor
+        namespace: harbor
       - name: longhorn
         namespace: longhorn-system
+      - name: nextcloud
+        namespace: nextcloud
     cnpg:
       restore: false
     tofudeployer:
@@ -312,11 +327,47 @@ products:
     version: 0.0.0
 
 images:
+  alpine:
+    image:
+      registry: docker.io
+      repository: alpine
+      version: 3.18.2
+
+  dind:
+    image:
+      registry: docker.io
+      repository: docker
+      version: 29.7.2-dind
+
+  forgejo:
+    image:
+      registry: data.forgejo.org
+      repository: forgejo/forgejo
+      version: 16.0.2
+
+  forgejorunner:
+    image:
+      registry: data.forgejo.org
+      repository: forgejo/runner
+      version: 13.0.0
+
+  forgejorunnercontroller:
+    image:
+      registry: harbor.wieman.cloud
+      repository: products/forgejorunnercontroller
+      version: 0.0.0
+
   keycloakserver:
     image:
       registry: docker.io
       repository: keycloak/keycloak
       version: 26.6.2
+
+  kubectl:
+    image:
+      registry: docker.io
+      repository: alpine/kubectl
+      version: 1.36.3
 
   rconcli:
     image:
@@ -341,3 +392,9 @@ images:
       registry: docker.io
       repository: linuxserver/wireguard
       version: 1.0.20250521
+
+  wiecloudactions:
+    image:
+      registry: harbor.wieman.cloud
+      repository: products/wiecloudactions
+      version: 0.0.0

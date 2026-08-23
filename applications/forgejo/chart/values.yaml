@@ -1,0 +1,200 @@
+forgejo:
+  replicaCount: 3
+  gitea:
+    config:
+      APP_NAME: Forgejo
+      APP_SLOGAN: The WieCloud git server
+
+      repository:
+        MAX_CREATION_LIMIT: 100
+        DISABLED_REPO_UNITS: repo.packages
+        ALLOW_FORK_WITHOUT_MAXIMUM_LIMIT: false
+
+      admin:
+        DISABLE_REGULAR_ORG_CREATION: true
+        EXTERNAL_USER_DISABLE_FEATURES: deletion, manage_password
+
+      oauth2_client:
+        UPDATE_AVATAR: true
+        ENABLE_AUTO_REGISTRATION: true
+
+      service:
+        DISABLE_REGISTRATION: true
+        ENABLE_BASIC_AUTHENTICATION: false
+        ENABLE_INTERNAL_SIGNIN: false
+
+      packages:
+        ENABLED: false
+
+      database:
+        DB_TYPE: postgres
+        HOST: forgejo-postgres-cluster-rw
+
+      queue:
+        TYPE: redis
+        CONN_STR: redis://forgejo-dragonfly:6379/0
+
+      cache:
+        ADAPTER: redis
+        HOST: redis://forgejo-dragonfly:6379/0
+
+      session:
+        PROVIDER: redis
+        PROVIDER_CONFIG: redis://forgejo-dragonfly:6379/0
+
+      cron.cleanup_offline_runners:
+        ENABLED: true
+        SCHEDULE: "*/1 * * * *"
+        OLDER_THAN: 3m
+
+    # oauth:
+    #   - name: example
+    #     provider: openidConnect
+    #     autoDiscoverUrl: https://example.com/.well-known/openid-configuration
+
+    additionalConfigFromEnvs:
+      - name: FORGEJO__DATABASE__NAME
+        valueFrom:
+          secretKeyRef:
+            name: forgejo-postgres-cluster-app
+            key: dbname
+      - name: FORGEJO__DATABASE__USER
+        valueFrom:
+          secretKeyRef:
+            name: forgejo-postgres-cluster-app
+            key: username
+      - name: FORGEJO__DATABASE__PASSWD
+        valueFrom:
+          secretKeyRef:
+            name: forgejo-postgres-cluster-app
+            key: password
+
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+
+  httpRoute:
+    enabled: true
+    parentRefs:
+      - name: example
+        sectionName: https
+        namespace: example
+    hostnames:
+      - forgejo.example.com
+
+  tcpRoute:
+    enabled: true
+    parentRefs:
+      - name: example
+        sectionName: ssh
+        namespace: example
+
+  persistence:
+    enabled: true
+    accessModes:
+      - ReadWriteMany
+    size: 10Gi
+    annotations:
+      k8up.io/backup: "true"
+
+  extraVolumes:
+    - name: homepage
+      configMap:
+        name: forgejo-homepage
+
+  extraVolumeMounts:
+    - name: homepage
+      readOnly: true
+      mountPath: /data/gitea/templates
+
+cnpg:
+  restore: false
+
+runner:
+  config:
+    name: wiecloud-runner
+    instance: https://example.com
+    file:
+      log:
+        level: info
+        job_level: info
+
+      runner:
+        file: .runner
+        capacity: 1
+        # envs:
+        #   A_TEST_ENV_NAME_1: a_test_env_value_1
+        #   A_TEST_ENV_NAME_2: a_test_env_value_2
+        env_file: .env
+        timeout: 3h
+        shutdown_timeout: 3h
+        insecure: false
+        fetch_timeout: 30s
+        fetch_interval: 2s
+        report_interval: 1s
+        labels: []
+
+      cache:
+        enabled: true
+        port: 0
+        dir: ""
+        external_server: ""
+        secret: ""
+        secret_url: ""
+        host: ""
+        proxy_port: 0
+        actions_cache_url_override: ""
+
+      container:
+        network: ""
+        enable_ipv6: false
+        privileged: false
+        options:
+        workdir_parent:
+        valid_volumes: []
+        docker_host: "tcp://127.0.0.1:2375"
+        force_pull: false
+        force_rebuild: false
+
+      host:
+        workdir_parent:
+
+
+images:
+  alpine:
+    image:
+      registry: docker.io
+      repository: alpine
+      version: 3.18.2
+
+  dind:
+    image:
+      registry: docker.io
+      repository: docker
+      version: dind
+
+  forgejo:
+    image:
+      registry: data.forgejo.org
+      repository: forgejo/forgejo
+      version: 16.0.2
+
+  forgejorunner:
+    image:
+      registry: code.forgejo.org/forgejo
+      repository: runner
+      version: v13
+
+  forgejorunnercontroller:
+    image:
+      registry: harbor.wieman.cloud
+      repository: products/forgejorunnercontroller
+      version: 0.0.0
+
+  kubectl:
+    image:
+      registry: docker.io
+      repository: alpine/kubectl
+      version: 1.36.3
