@@ -98,15 +98,16 @@ forgejo:
     size: 10Gi
     annotations:
       k8up.io/backup: "true"
-  # extraVolumes:
-  #   - name: forgejo-themes
-  #     secret:
-  #       secretName: forgejo-themes
 
-  # extraVolumeMounts:
-  #   - name: forgejo-themes
-  #     readOnly: true
-  #     mountPath: '/data/gitea/public/assets/css'
+  extraVolumes:
+    - name: homepage
+      configMap:
+        name: forgejo-homepage
+
+  extraVolumeMounts:
+    - name: homepage
+      readOnly: true
+      mountPath: /data/gitea/templates
 
 cnpg:
   restore: false

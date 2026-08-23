@@ -1,0 +1,8 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: forgejo-homepage
+data:
+  home.tmpl: |
+    {{- .Files.Get "pages/home.tmpl" | nindent 4 }}
+
