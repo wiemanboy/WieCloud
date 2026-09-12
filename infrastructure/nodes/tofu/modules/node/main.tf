@@ -9,7 +9,9 @@ module "proxmox_vm" {
 }
 
 module "talos_node" {
-  source         = "../talos/node"
+  source     = "../talos/node"
+  depends_on = [module.proxmox_vm]
+
   name           = var.name
   zone           = var.host
   region         = var.rack

@@ -6,7 +6,7 @@ locals {
 }
 
 module "wiecloud_vlan" {
-  source       = "./modules/network/vlan"
+  source       = "./modules/routeros/vlan"
   vlan_name    = "wiecloud"
   vlan_id      = 10
   subnet       = "10.0.0.1/24"
