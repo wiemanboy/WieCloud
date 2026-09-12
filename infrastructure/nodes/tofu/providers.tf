@@ -8,5 +8,9 @@ terraform {
       source  = "siderolabs/talos"
       version = "0.9.0"
     }
+    routeros = {
+      source = "terraform-routeros/routeros"
+      version = "1.99.1"
+    }
   }
 }
