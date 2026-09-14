@@ -134,7 +134,7 @@ applications:
 
   nextcloud:
     deploy: true
-    version: 1.0.4
+    version: 1.0.4-add-pantry-app-for-nextcloud-165b14d
     cnpg:
       restore: false
     seaweedfs:
