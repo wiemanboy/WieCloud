@@ -88,57 +88,58 @@ resource "keycloak_user" "vienna_babetti" {
   }
 }
 
-module "groups_memberships" {
+module "super_admin_memberships" {
   source = "./modules/keycloak/groups_memberships"
 
   realm_id = keycloak_realm.wiecloud.id
-  group_memberships = [
-    {
-      name = "super_admin"
-      groups = [
-        module.app_group.child_groups.admin.id,
-        module.app_forgejo_group.child_groups.admin.id,
-        module.app_nextcloud_group.child_groups.admin.id,
+  groups = [
+    module.app_group.child_groups.admin.id,
+    module.app_forgejo_group.child_groups.admin.id,
+    module.app_nextcloud_group.child_groups.admin.id,
 
-        module.infra_group.child_groups.admin.id,
-        module.infra_argocd_group.child_groups.admin.id,
-        module.infra_grafana_group.child_groups.admin.id,
-        module.infra_harbor_group.child_groups.admin.id,
-        module.infra_keycloak_group.child_groups.admin.id,
-        module.infra_longhorn_group.child_groups.admin.id,
-        module.infra_kubernetes_group.child_groups.admin.id,
-      ]
+    module.infra_group.child_groups.admin.id,
+    module.infra_argocd_group.child_groups.admin.id,
+    module.infra_grafana_group.child_groups.admin.id,
+    module.infra_harbor_group.child_groups.admin.id,
+    module.infra_keycloak_group.child_groups.admin.id,
+    module.infra_longhorn_group.child_groups.admin.id,
+    module.infra_kubernetes_group.child_groups.admin.id,
+  ]
 
-      members = [keycloak_user.jarno_wieman.username]
-    },
-    {
-      name = "super_user"
-      groups = [
-        module.app_group.child_groups.user.id,
-        module.app_forgejo_group.child_groups.user.id,
-        module.app_nextcloud_group.child_groups.user.id,
+  members = [keycloak_user.jarno_wieman.username]
+}
 
-        module.infra_group.child_groups.user.id,
-        module.infra_argocd_group.child_groups.user.id,
-        module.infra_grafana_group.child_groups.user.id,
-        module.infra_harbor_group.child_groups.user.id,
-        module.infra_keycloak_group.child_groups.user.id,
-        module.infra_longhorn_group.child_groups.user.id,
-        module.infra_kubernetes_group.child_groups.user.id,
-      ]
+module "super_user_memberships" {
+  source = "./modules/keycloak/groups_memberships"
 
-      members = [keycloak_user.jarno_wieman.username]
-    },
-    {
-      name = "nextcloud_users"
-      groups = [
-        module.app_nextcloud_group.child_groups.user.id,
-      ]
+  realm_id = keycloak_realm.wiecloud.id
+  groups = [
+    module.app_group.child_groups.user.id,
+    module.app_forgejo_group.child_groups.user.id,
+    module.app_nextcloud_group.child_groups.user.id,
 
-      members = [
-        keycloak_user.jarno_vienna_shared.username,
-        keycloak_user.vienna_babetti.username,
-      ]
-    }
+    module.infra_group.child_groups.user.id,
+    module.infra_argocd_group.child_groups.user.id,
+    module.infra_grafana_group.child_groups.user.id,
+    module.infra_harbor_group.child_groups.user.id,
+    module.infra_keycloak_group.child_groups.user.id,
+    module.infra_longhorn_group.child_groups.user.id,
+    module.infra_kubernetes_group.child_groups.user.id,
+  ]
+
+  members = [keycloak_user.jarno_wieman.username]
+}
+
+module "nextcloud_memberships" {
+  source = "./modules/keycloak/groups_memberships"
+
+  realm_id = keycloak_realm.wiecloud.id
+  groups = [
+    module.app_nextcloud_group.child_groups.user.id,
+  ]
+
+  members = [
+    keycloak_user.jarno_vienna_shared.username,
+    keycloak_user.vienna_babetti.username,
   ]
 }
