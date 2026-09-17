@@ -26,7 +26,7 @@ module "infra_harbor_group" {
 }
 
 module "infra_keycloak_group" {
-  source    = "./modules/keycloak/group_Set"
+  source    = "./modules/keycloak/group_set"
   realm_id  = keycloak_realm.wiecloud.id
   parent_id = module.infra_group.id
   name      = "keycloak"
