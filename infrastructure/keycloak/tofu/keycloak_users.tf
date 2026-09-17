@@ -106,7 +106,7 @@ module "super_admin_memberships" {
     module.infra_kubernetes_group.child_groups.admin.id,
   ]
 
-  members = [keycloak_user.jarno_wieman.username]
+  members = [keycloak_user.jarno_wieman.id]
 }
 
 module "super_user_memberships" {
@@ -127,7 +127,7 @@ module "super_user_memberships" {
     module.infra_kubernetes_group.child_groups.user.id,
   ]
 
-  members = [keycloak_user.jarno_wieman.username]
+  members = [keycloak_user.jarno_wieman.id]
 }
 
 module "nextcloud_memberships" {
@@ -139,7 +139,7 @@ module "nextcloud_memberships" {
   ]
 
   members = [
-    keycloak_user.jarno_vienna_shared.username,
-    keycloak_user.vienna_babetti.username,
+    keycloak_user.jarno_vienna_shared.id,
+    keycloak_user.vienna_babetti.id,
   ]
 }
