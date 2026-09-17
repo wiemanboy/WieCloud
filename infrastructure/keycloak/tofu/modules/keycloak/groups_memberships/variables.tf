@@ -3,12 +3,11 @@ variable "realm_id" {
   type        = string
 }
 
-variable "groups" {
-  description = "Ids of the groups to add users to"
-  type        = list(string)
-}
-
-variable "members" {
-  description = "Usernames of the user to assign to groups"
-  type        = list(string)
+variable "group_memberships" {
+  description = "List of group/member sets, each assigning a list of members to a list of groups"
+  type = list(object({
+    name    = string
+    groups  = list(string)
+    members = list(string)
+  }))
 }
