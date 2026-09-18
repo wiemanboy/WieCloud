@@ -21,7 +21,7 @@ module "talos_node" {
   name           = var.name
   zone           = var.host
   region         = var.rack
-  endpoint       = var.endpoint == null ? var.endpoint : module.dhcp_lease.data.address
+  endpoint       = var.endpoint != null ? var.endpoint : module.dhcp_lease.data.address
   node           = module.dhcp_lease.data.address
   role           = var.role
   cluster        = var.cluster
