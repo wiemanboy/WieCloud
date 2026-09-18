@@ -7,3 +7,9 @@ provider "routeros" {
 resource "routeros_system_identity" "wiecloud_router" {
   name = "WieCloud_Router"
 }
+
+data "routeros_ip_dhcp_server_leases" "leases" {}
+
+output "dhcp_leases" {
+  value = data.routeros_ip_dhcp_server_leases.leases.data[1].host_name
+}
