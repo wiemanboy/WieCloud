@@ -40,12 +40,8 @@ module "talos_controlplane_000" {
   host = "dell-pve-000"
   rack = "aurora-rack-000"
 
-  endpoint = module.talos_controlplane_000.ip
-  cluster  = local.cluster
-  role     = "controlplane"
-
-  ip      = "192.168.178.50"
-  macaddr = "BC:24:11:B7:11:94"
+  cluster = local.cluster
+  role    = "controlplane"
 
   machine_secret = talos_machine_secrets.wiecloud_machine_secret
   talos_version  = local.talos_version
@@ -75,9 +71,6 @@ module "talos_worker_000" {
   endpoint = module.talos_controlplane_000.ip
   cluster  = local.cluster
   role     = "worker"
-
-  ip      = "192.168.178.201"
-  macaddr = "BC:24:11:CE:8D:AC"
 
   machine_secret = talos_machine_secrets.machine_secret
   talos_version  = local.talos_version

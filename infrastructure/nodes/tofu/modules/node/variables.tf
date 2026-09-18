@@ -16,6 +16,8 @@ variable "rack" {
 variable "endpoint" {
   description = "Ip of the controlplane"
   type        = string
+  nullable    = true
+  default     = null
 }
 
 variable "cluster" {
@@ -30,15 +32,6 @@ variable "role" {
     condition     = contains(["worker", "controlplane"], var.role)
     error_message = "Role must be either 'worker' or 'controlplane'."
   }
-}
-
-variable "ip" {
-  description = "Ip of the vm"
-  type        = string
-}
-variable "macaddr" {
-  description = "Mac address of the vm"
-  type        = string
 }
 
 variable "disk" {

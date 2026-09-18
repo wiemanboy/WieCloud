@@ -31,7 +31,6 @@ resource "proxmox_vm_qemu" "vm" {
     id      = 0
     model   = "virtio"
     bridge  = "vmbr0"
-    macaddr = var.macaddr
   }
 
   lifecycle {

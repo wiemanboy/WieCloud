@@ -13,11 +13,6 @@ variable "iso" {
   type        = string
 }
 
-variable "macaddr" {
-  description = "Mac address of the vm"
-  type        = string
-}
-
 variable "disk" {
   description = "Disk that should be used for storage"
   type        = string
