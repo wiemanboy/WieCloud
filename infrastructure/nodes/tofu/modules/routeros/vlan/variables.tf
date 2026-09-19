@@ -18,7 +18,7 @@ variable "ip_range" {
   type        = string
 }
 
-variable "gateway_port" {
-  description = "Ethernet port to use as a gateway to the VLAN"
-  type        = string
+variable "gateway_ports" {
+  description = "Ethernet ports to use as a gateway to the VLAN"
+  type        = list(string)
 }

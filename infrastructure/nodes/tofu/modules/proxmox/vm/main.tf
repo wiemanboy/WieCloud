@@ -41,3 +41,7 @@ resource "proxmox_vm_qemu" "vm" {
     ]
   }
 }
+
+output "macaddr" {
+  value = proxmox_vm_qemu.vm.network[0].macaddr
+}

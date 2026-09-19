@@ -1,8 +1,8 @@
-terraform {
-  backend "local" {
-    path = "/data/state/terraform.tfstate"
-  }
-}
+# terraform {
+#   backend "local" {
+#     path = "/data/state/terraform.tfstate"
+#   }
+# }
 
 provider "proxmox" {
   pm_api_url          = var.proxmox_api_url

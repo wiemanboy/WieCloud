@@ -1,4 +1,4 @@
-variable "hostname" {
-  description = "Hostname to look for to get the dhcp lease"
+variable "mac_address" {
+  description = "MAC address to look for to get the dhcp lease"
   type        = string
 }

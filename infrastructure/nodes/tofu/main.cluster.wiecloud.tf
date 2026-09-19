@@ -6,12 +6,12 @@ locals {
 }
 
 module "wiecloud_vlan" {
-  source       = "./modules/routeros/vlan"
-  vlan_name    = "wiecloud"
-  vlan_id      = 10
-  subnet       = "10.0.0.1/24"
-  ip_range     = "10.0.0.100-10.0.0.200"
-  gateway_port = "ether2"
+  source        = "./modules/routeros/vlan"
+  vlan_name     = "wiecloud"
+  vlan_id       = 10
+  subnet        = "10.0.0.1/24"
+  ip_range      = "10.0.0.100-10.0.0.200"
+  gateway_ports = ["ether2", "ether3"]
 }
 
 module "talos_image" {
@@ -37,11 +37,13 @@ module "talos_controlplane_000" {
   source = "./modules/node"
 
   name = "talos-controlplane-000"
-  host = "dell-pve-000"
+  host = "dell-pve-0"
   rack = "aurora-rack-000"
 
   cluster = local.cluster
   role    = "controlplane"
+
+  endpoint = "10.0.0.102"
 
   machine_secret = talos_machine_secrets.wiecloud_machine_secret
   talos_version  = local.talos_version
@@ -72,7 +74,7 @@ module "talos_worker_000" {
   cluster  = local.cluster
   role     = "worker"
 
-  machine_secret = talos_machine_secrets.machine_secret
+  machine_secret = talos_machine_secrets.wiecloud_machine_secret
   talos_version  = local.talos_version
   iso            = local.dell_pve_0_metal_amd64_iso
   image          = local.image

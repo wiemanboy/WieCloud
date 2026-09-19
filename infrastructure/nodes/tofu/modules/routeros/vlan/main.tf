@@ -4,15 +4,16 @@ locals {
 
 resource "routeros_interface_bridge" "bridge" {
   comment        = local.resource_tag
-  name           = var.vlan_name + "-bridge"
+  name           = "${var.vlan_name}-bridge"
   frame_types    = "admit-only-vlan-tagged"
   vlan_filtering = true
 }
 
 resource "routeros_interface_bridge_port" "bridge_port" {
+  for_each    = toset(var.gateway_ports)
   comment     = local.resource_tag
   bridge      = routeros_interface_bridge.bridge.name
-  interface   = var.gateway_port
+  interface   = each.value
   frame_types = "admit-only-untagged-and-priority-tagged"
   pvid        = var.vlan_id
 }
@@ -21,13 +22,13 @@ resource "routeros_interface_bridge_vlan" "bridge_vlan" {
   comment  = local.resource_tag
   bridge   = routeros_interface_bridge.bridge.name
   vlan_ids = [var.vlan_id]
-  untagged = [routeros_interface_bridge_port.bridge_port.interface]
+  untagged = var.gateway_ports
   tagged   = [routeros_interface_bridge.bridge.name]
 }
 
 resource "routeros_interface_vlan" "vlan" {
   comment   = local.resource_tag
-  name      = var.vlan_name + "-vlan"
+  name      = "${var.vlan_name}-vlan"
   interface = routeros_interface_bridge.bridge.name
   vlan_id   = var.vlan_id
 }
@@ -40,18 +41,18 @@ resource "routeros_ip_address" "gateway_ip" {
 
 resource "routeros_ip_pool" "ip_pool" {
   comment = local.resource_tag
-  name    = var.vlan_name + "-ip-pool"
+  name    = "${var.vlan_name}-ip-pool"
   ranges  = [var.ip_range]
 }
 
 resource "routeros_ip_dhcp_server" "dhcp_server" {
-  name         = var.vlan_name + "-dhcp"
+  name         = "${var.vlan_name}-dhcp"
   address_pool = routeros_ip_pool.ip_pool.name
   interface    = routeros_interface_vlan.vlan.name
 }
 
 resource "routeros_interface_list" "vlan" {
-  name = upper(var.vlan_name) + "-VLAN"
+  name = "${upper(var.vlan_name)}-VLAN"
 }
 
 resource "routeros_interface_list_member" "vlan_list_member" {

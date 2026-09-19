@@ -11,12 +11,12 @@ module "dhcp_lease" {
   source     = "../routeros/find_dhcp_lease"
   depends_on = [module.proxmox_vm]
 
-  hostname = var.name
+  mac_address = module.proxmox_vm.macaddr
 }
 
 module "talos_node" {
   source     = "../talos/node"
-  depends_on = [module.proxmox_vm, module.dhcp_lease]
+  depends_on = [module.dhcp_lease]
 
   name           = var.name
   zone           = var.host

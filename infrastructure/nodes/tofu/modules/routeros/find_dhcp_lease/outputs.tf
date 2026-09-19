@@ -27,5 +27,5 @@ output "data" {
     world
   }
   EOT
-  value = [for lease in data.routeros_ip_dhcp_server_leases.leases.data : lease if lease.host_name == var.hostname]
+  value = [for lease in data.routeros_ip_dhcp_server_leases.leases.data : lease if lease.mac_address == upper(var.mac_address)][0]
 }
