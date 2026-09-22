@@ -48,6 +48,10 @@ spec:
                   "oidc_user_claim": "preferred_username",
                   "project_creation_restriction": "adminonly"
                 }
+
+        cnpg:
+          restore: {{ .cnpg.restore }}
+
   destination:
     namespace: harbor
     server: https://kubernetes.default.svc
