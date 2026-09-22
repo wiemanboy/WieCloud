@@ -7,8 +7,9 @@ harbor:
         annotations:
           k8up.io/backup: "true"
       jobservice:
-        size: 1Gi
-        accessMode: ReadWriteMany
+        jobLog:
+          size: 1Gi
+          accessMode: ReadWriteMany
 
   expose:
     type: route
