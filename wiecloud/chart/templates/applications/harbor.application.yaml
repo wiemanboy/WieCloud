@@ -1,0 +1,70 @@
+{{- with .Values.applications.harbor -}}
+{{- if .deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: harbor-app
+  namespace: argocd
+spec:
+  source:
+    chart: harbor
+    repoURL: {{ $.Values.applications.repository }}
+    targetRevision: {{ .version }}
+    helm:
+      valuesObject:
+        backups: {{ toYaml $.Values.backups | nindent 10 }}
+        restores: {{ toYaml .restores | nindent 10 }}
+
+        harbor:
+          expose:
+            route:
+              parentRefs:
+                - name: {{ $.Values.network.gateway.name }}
+                  sectionName: {{ $.Values.network.gateway.listener }}
+                  namespace: {{ $.Values.network.gateway.namespace }}
+              hosts: [harbor-app.{{ $.Values.network.hostname }}]
+          externalURL: https://harbor-app.{{ $.Values.network.hostname }}
+          core:
+            extraEnvVars:
+            - name: OIDC_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: harbor-client-secret
+                  key: secret
+            - name: CONFIG_OVERWRITE_JSON
+              value: |
+                {
+                  "auth_mode": "oidc_auth",
+                  "primary_auth_mode": "true",
+                  "oidc_name": "{{ $.Values.auth.oidc.provider }}",
+                  "oidc_groups_claim": "groups",
+                  "oidc_admin_group": "/infra/harbor/admin",
+                  "oidc_client_id": "harbor",
+                  "oidc_endpoint": "{{ $.Values.auth.oidc.endpoint }}",
+                  "oidc_client_secret": "$(OIDC_CLIENT_SECRET)",
+                  "oidc_scope": "openid,email,profile,offline_access",
+                  "oidc_verify_cert": "true",
+                  "oidc_auto_onboard": "true",
+                  "oidc_user_claim": "preferred_username",
+                  "project_creation_restriction": "adminonly"
+                }
+  destination:
+    namespace: harbor
+    server: https://kubernetes.default.svc
+  project: infrastructure
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
+  ignoreDifferences:
+    - group: ""
+      kind: Secret
+      namespace: harbor
+      jsonPointers:
+        - /data
+{{- end -}}
+{{- end -}}
+
