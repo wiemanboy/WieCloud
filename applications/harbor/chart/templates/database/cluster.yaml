@@ -3,7 +3,7 @@ kind: Cluster
 metadata:
   name: harbor-postgres-cluster
 spec:
-  instances: 3
+  instances: 1
 
   bootstrap:
     {{ if not .Values.cnpg.restore }}
