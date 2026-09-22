@@ -28,7 +28,7 @@ harbor:
     external:
       host: harbor-postgres-cluster-rw
       username: harbor
-      database: harbor
+      coreDatabase: harbor
       existingSecret: harbor-postgres-cluster-app
 
   redis:
