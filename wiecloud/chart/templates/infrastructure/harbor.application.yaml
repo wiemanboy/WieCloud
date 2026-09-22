@@ -9,7 +9,7 @@ spec:
   source:
     chart: harbor
     repoURL: {{ $.Values.infrastructure.repository }}
-    targetRevision: 
+    targetRevision: "1.3.4"
     helm:
       valuesObject:
         backups: {{ toYaml $.Values.backups | nindent 10 }}
