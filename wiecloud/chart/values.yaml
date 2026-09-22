@@ -102,7 +102,7 @@ applications:
 
   harbor:
     deploy: true
-    version: 1.3.4-add-harbor-chart-to-applications-5c2c7e7
+    version: 1.3.4-add-harbor-chart-to-applications-55c6215
     cnpg:
       restore: false
 
@@ -226,7 +226,7 @@ infrastructure:
 
   harbor:
     deploy: true
-    version: 1.3.4-add-harbor-chart-to-applications-5c2c7e7
+    version: 1.3.4-add-harbor-chart-to-applications-55c6215
     restores:
       - name: harbor-registry-restore
         enabled: false
