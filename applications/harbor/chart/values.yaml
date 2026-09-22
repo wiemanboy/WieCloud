@@ -6,7 +6,7 @@ harbor:
         accessMode: ReadWriteMany
         annotations:
           k8up.io/backup: "true"
-      jobService:
+      jobservice:
         size: 1Gi
         accessMode: ReadWriteMany
 
