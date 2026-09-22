@@ -1,5 +1,0 @@
-# {{ include "shared.backups.tpl" (dict
-#     "backups" .Values.backups
-#     "restores" .Values.restores
-#     "bucket" (dict "name" "wiecloud-harbor-backups")
-# ) }}

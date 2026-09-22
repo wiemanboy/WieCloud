@@ -13,8 +13,11 @@ harbor:
     tls:
       enabled: false
     route:
-      parentRefs: []
-      hosts: []
+      parentRefs:
+        - name: example
+          sectionName: example
+          namespace: example
+      hosts: ["example.com"]
   externalURL: https://harbor.example.com
 
   portal:
