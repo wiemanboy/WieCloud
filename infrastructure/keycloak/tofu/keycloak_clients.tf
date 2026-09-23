@@ -64,7 +64,7 @@ module "harbor_client" {
 
   urls = {
     root     = "https://harbor.${var.hostname}"
-    redirect = ["https://harbor.${var.hostname}/c/oidc/callback"]
+    redirect = ["https://harbor.${var.hostname}/c/oidc/callback", "https://harbor-app.${var.hostname}/c/oidc/callback"]
   }
 }
 
