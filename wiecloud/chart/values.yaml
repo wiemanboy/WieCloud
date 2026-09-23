@@ -100,6 +100,12 @@ applications:
         claim:
           name: gitea-shared-storage
 
+  harbor:
+    deploy: true
+    version: 1.3.4-add-harbor-chart-to-applications-e2a8c0a
+    cnpg:
+      restore: false
+
   minecraft:
     deploy: true
     version: 1.2.1
@@ -220,7 +226,7 @@ infrastructure:
 
   harbor:
     deploy: true
-    version: 1.3.4
+    version: 1.3.4-add-harbor-chart-to-applications-e2a8c0a
     restores:
       - name: harbor-registry-restore
         enabled: false

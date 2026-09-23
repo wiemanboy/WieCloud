@@ -1,15 +1,15 @@
-{{- with .Values.infrastructure.harbor -}}
+{{- with .Values.applications.harbor -}}
 {{- if .deploy -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: harbor
+  name: harbor-app
   namespace: argocd
 spec:
   source:
     chart: harbor
-    repoURL: {{ $.Values.infrastructure.repository }}
-    targetRevision: "1.3.4"
+    repoURL: {{ $.Values.applications.repository }}
+    targetRevision: {{ .version }}
     helm:
       valuesObject:
         backups: {{ toYaml $.Values.backups | nindent 10 }}
@@ -22,8 +22,8 @@ spec:
                 - name: {{ $.Values.network.gateway.name }}
                   sectionName: {{ $.Values.network.gateway.listener }}
                   namespace: {{ $.Values.network.gateway.namespace }}
-              hosts: [harbor.{{ $.Values.network.hostname }}]
-          externalURL: https://harbor.{{ $.Values.network.hostname }}
+              hosts: [harbor-app.{{ $.Values.network.hostname }}]
+          externalURL: https://harbor-app.{{ $.Values.network.hostname }}
           core:
             extraEnvVars:
             - name: OIDC_CLIENT_SECRET
@@ -48,6 +48,10 @@ spec:
                   "oidc_user_claim": "preferred_username",
                   "project_creation_restriction": "adminonly"
                 }
+
+        cnpg:
+          restore: {{ .cnpg.restore }}
+
   destination:
     namespace: harbor
     server: https://kubernetes.default.svc

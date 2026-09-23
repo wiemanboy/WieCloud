@@ -1,0 +1,83 @@
+harbor:
+  persistence:
+    persistentVolumeClaim:
+      registry:
+        size: 10Gi
+        accessMode: ReadWriteMany
+        annotations:
+          k8up.io/backup: "true"
+      jobservice:
+        jobLog:
+          size: 1Gi
+          accessMode: ReadWriteMany
+
+  expose:
+    type: route
+    tls:
+      enabled: false
+    route:
+      parentRefs:
+        - name: example
+          sectionName: example
+          namespace: example
+      hosts: [ "example.com" ]
+  externalURL: https://harbor.example.com
+
+  database:
+    type: external
+    external:
+      host: harbor-postgres-cluster-rw
+      username: harbor
+      coreDatabase: harbor
+      existingSecret: harbor-postgres-cluster-app
+
+  redis:
+    type: external
+    external:
+      addr: harbor-dragonfly:6379
+
+  trivy:
+    enabled: false
+
+  portal:
+    resources:
+      limits:
+        memory: 32Mi
+      requests:
+        cpu: 1m
+        memory: 16Mi
+
+  core:
+    resources:
+      limits:
+        memory: 256Mi
+      requests:
+        cpu: 30m
+        memory: 128Mi
+
+  jobservice:
+    resources:
+      limits:
+        memory: 64Mi
+      requests:
+        cpu: 10m
+        memory: 32Mi
+
+  registry:
+    registry:
+      resources:
+        limits:
+          memory: 128Mi
+        requests:
+          cpu: 100m
+          memory: 64Mi
+    controller:
+      resources:
+        limits:
+          memory: 64Mi
+        requests:
+          cpu: 1m
+          memory: 32Mi
+
+cnpg:
+  restore: false
