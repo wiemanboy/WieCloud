@@ -22,3 +22,10 @@ network:
     name: example-gateway
     listener: web-example
     namespace: example
+
+images:
+  seaweedfs:
+    image:
+      registry: dcoker.io
+      repository: chrislusf/seaweedfs
+      version: 4.47

@@ -188,7 +188,7 @@ infrastructure:
 
   cnpg:
     deploy: true
-    version: 0.1.0
+    version: 0.1.1
     seaweedfs:
       backup:
         enabled: true
@@ -237,7 +237,7 @@ infrastructure:
 
   k8up:
     deploy: true
-    version: 1.0.5
+    version: 1.0.6
 
   keycloak:
     deploy: true
@@ -305,7 +305,7 @@ infrastructure:
 
   seaweedfs:
     deploy: true
-    version: 0.1.1
+    version: 0.1.2
 
   wireguard:
     deploy: true
@@ -380,6 +380,12 @@ images:
       registry: docker.io
       repository: wolveix/satisfactory-server
       version: v1.9.10
+
+  seaweedfs:
+    image:
+      registry: dcoker.io
+      repository: chrislusf/seaweedfs
+      version: 4.47
 
   tofudeployer:
     image:
