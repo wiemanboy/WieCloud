@@ -17,6 +17,7 @@ spec:
 
   volume:
     replicas: 1
+    kind: StatefulSet
     limits:
       memory: 128Mi
     requests:
