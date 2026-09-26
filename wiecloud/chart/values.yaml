@@ -305,7 +305,7 @@ infrastructure:
 
   seaweedfs:
     deploy: true
-    version: 0.1.1-fix-seaweedfs-7d5ca6c
+    version: 0.1.2-fix-seaweedfs-5997901
 
   wireguard:
     deploy: true
