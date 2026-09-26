@@ -381,6 +381,12 @@ images:
       repository: wolveix/satisfactory-server
       version: v1.9.10
 
+  seaweedfs:
+    image:
+      registry: dcoker.io
+      repository: chrislusf/seaweedfs
+      version: 4.47
+
   tofudeployer:
     image:
       registry: harbor.wieman.cloud
