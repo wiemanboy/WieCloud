@@ -4,5 +4,5 @@ type: application
 version: 0.1.1
 dependencies:
   - name: seaweedfs-operator
-    version: 0.1.23
+    version: 0.1.42
     repository: https://seaweedfs.github.io/seaweedfs-operator/
