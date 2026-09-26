@@ -188,7 +188,7 @@ infrastructure:
 
   cnpg:
     deploy: true
-    version: 0.1.0
+    version: 0.1.0-fix-seaweedfs-d2e0f2f
     seaweedfs:
       backup:
         enabled: true
@@ -237,7 +237,7 @@ infrastructure:
 
   k8up:
     deploy: true
-    version: 1.0.5
+    version: 1.0.5-fix-seaweedfs-d2e0f2f
 
   keycloak:
     deploy: true
@@ -305,7 +305,7 @@ infrastructure:
 
   seaweedfs:
     deploy: true
-    version: 0.1.2-fix-seaweedfs-5997901
+    version: 0.1.2-fix-seaweedfs-d2e0f2f
 
   wireguard:
     deploy: true
