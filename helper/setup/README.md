@@ -11,7 +11,7 @@
 7. (Optional) follow backup procedures
 8. Deploy `keycloak`
 9. Deploy remaining infrastructure: `argocd`, `prometheus`, `harbor` `wireguard`
-10. Deploy the applications follow the backup procedures if necessary
+10. Deploy the applications, follow the backup procedures if necessary
 11. Enable backups and `tofudeployer`
 12. Done!
 

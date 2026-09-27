@@ -1,5 +1,6 @@
 locals {
   resource_tag = var.vlan_name
+  gateway      = cidrhost(var.subnet, 1)
 }
 
 resource "routeros_interface_bridge" "bridge" {
@@ -49,6 +50,14 @@ resource "routeros_ip_dhcp_server" "dhcp_server" {
   name         = "${var.vlan_name}-dhcp"
   address_pool = routeros_ip_pool.ip_pool.name
   interface    = routeros_interface_vlan.vlan.name
+  lease_time   = "2d"
+}
+
+resource "routeros_ip_dhcp_server_network" "network" {
+  address    = cidrsubnet(var.subnet, 0, 0)
+  gateway    = local.gateway
+  dns_server = [local.gateway]
+  ntp_server = [local.gateway]
 }
 
 resource "routeros_interface_list" "vlan" {
@@ -61,11 +70,20 @@ resource "routeros_interface_list_member" "vlan_list_member" {
   interface = routeros_interface_vlan.vlan.name
 }
 
-resource "routeros_ip_firewall_filter" "rule" {
-  comment           = local.resource_tag
+resource "routeros_ip_firewall_filter" "router_access" {
+  comment           = "${local.resource_tag}: allow router management"
   in_interface_list = routeros_interface_list.vlan.name
   place_before      = 0
   action            = "accept"
   chain             = "input"
   // src_address       = "10.0.0.200" // ip of the management pod
+}
+
+resource "routeros_ip_firewall_filter" "ntp_access" {
+  comment      = "${local.resource_tag}: allow ntp queries"
+  place_before = 1
+  action       = "accept"
+  chain        = "input"
+  protocol     = "udp"
+  dst_port     = 123
 }

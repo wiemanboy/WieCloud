@@ -7,3 +7,15 @@ resource "routeros_ip_firewall_nat" "vlan_nat" {
   out_interface = "ether1"
   action        = "masquerade"
 }
+
+resource "routeros_system_ntp_client" "ntp" {
+  enabled = true
+  mode    = "unicast"
+
+  servers = [
+    "pool.ntp.org",
+  ]
+}
+resource "routeros_system_ntp_server" "ntp" {
+  enabled = true
+}

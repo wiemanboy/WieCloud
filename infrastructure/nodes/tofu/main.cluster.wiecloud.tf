@@ -2,7 +2,7 @@ locals {
   cluster                    = "wiecloud"
   talos_version              = "v1.13.5"
   image                      = "factory.talos.dev/installer/${module.talos_image.id}:${module.talos_image.talos_version}"
-  dell_pve_0_metal_amd64_iso = "${proxmox_storage_iso.dell_pve_0_metal_amd64_iso.storage}:iso/${proxmox_storage_iso.dell_pve_0_metal_amd64_iso.filename}"
+  dell_pve_000_metal_amd64_iso = "${proxmox_storage_iso.dell_pve_000_metal_amd64_iso.storage}:iso/${proxmox_storage_iso.dell_pve_000_metal_amd64_iso.filename}"
 }
 
 module "wiecloud_vlan" {
@@ -19,8 +19,8 @@ module "talos_image" {
   talos_version = local.talos_version
 }
 
-resource "proxmox_storage_iso" "dell_pve_0_metal_amd64_iso" {
-  pve_node = "dell-pve-0"
+resource "proxmox_storage_iso" "dell_pve_000_metal_amd64_iso" {
+  pve_node = "dell-pve-000"
   storage  = "local"
   filename = "metal-amd64.iso"
   url      = "https://factory.talos.dev/image/${module.talos_image.id}/${module.talos_image.talos_version}/metal-amd64.iso"
@@ -29,7 +29,7 @@ resource "proxmox_storage_iso" "dell_pve_0_metal_amd64_iso" {
 resource "talos_machine_secrets" "wiecloud_machine_secret" {
   talos_version = local.talos_version
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 }
 
@@ -37,17 +37,15 @@ module "talos_controlplane_000" {
   source = "./modules/node"
 
   name = "talos-controlplane-000"
-  host = "dell-pve-0"
+  host = "dell-pve-000"
   rack = "aurora-rack-000"
 
   cluster = local.cluster
   role    = "controlplane"
 
-  endpoint = "10.0.0.102"
-
   machine_secret = talos_machine_secrets.wiecloud_machine_secret
   talos_version  = local.talos_version
-  iso            = local.dell_pve_0_metal_amd64_iso
+  iso            = local.dell_pve_000_metal_amd64_iso
   image          = local.image
   bootstrap      = true
 
@@ -76,7 +74,7 @@ module "talos_worker_000" {
 
   machine_secret = talos_machine_secrets.wiecloud_machine_secret
   talos_version  = local.talos_version
-  iso            = local.dell_pve_0_metal_amd64_iso
+  iso            = local.dell_pve_000_metal_amd64_iso
   image          = local.image
 
   spec = {
