@@ -383,7 +383,7 @@ images:
 
   seaweedfs:
     image:
-      registry: dcoker.io
+      registry: docker.io
       repository: chrislusf/seaweedfs
       version: 4.47
 
