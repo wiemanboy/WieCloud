@@ -8,7 +8,7 @@ nextcloud:
 
   persistence:
     enabled: true
-    size: 50Gi
+    size: 75Gi
     annotations:
       k8up.io/backup: "true"
     labels:
