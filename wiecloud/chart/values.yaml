@@ -188,7 +188,7 @@ infrastructure:
 
   cnpg:
     deploy: true
-    version: 0.1.0
+    version: 0.1.0-add-harbor-chart-to-applications-5c5d38c
     seaweedfs:
       backup:
         enabled: true
@@ -220,7 +220,7 @@ infrastructure:
 
   harbor:
     deploy: true
-    version: 1.3.4-add-harbor-chart-to-applications-e2a8c0a
+    version: 1.3.4-add-harbor-chart-to-applications-5c5d38c
     restores:
       - name: harbor-registry-restore
         enabled: false
@@ -237,7 +237,7 @@ infrastructure:
 
   k8up:
     deploy: true
-    version: 1.0.5
+    version: 1.0.5-add-harbor-chart-to-applications-5c5d38c
 
   keycloak:
     deploy: true
@@ -305,7 +305,7 @@ infrastructure:
 
   seaweedfs:
     deploy: true
-    version: 0.1.1
+    version: 0.1.1-add-harbor-chart-to-applications-5c5d38c
 
   wireguard:
     deploy: true
