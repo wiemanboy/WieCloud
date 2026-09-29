@@ -1,12 +1,32 @@
 external-dns:
+  policy: sync
+
   provider:
-    name: cloudflare
+    name: cloudflare # ovh
+
   env:
     - name: CF_API_TOKEN
       valueFrom:
         secretKeyRef:
           name: cloudflare-api-token
           key: api-token
+
+    # - name: OVH_APPLICATION_KEY
+    #    valueFrom:
+    #     secretKeyRef:
+    #       name: ovh-credentials
+    #       key: applicationKey
+    # - name: OVH_APPLICATION_SECRET
+    #   valueFrom:
+    #     secretKeyRef:
+    #       name: ovh-credentials
+    #       key: applicationSecret
+    # - name: OVH_CONSUMER_KEY
+    #   valueFrom:
+    #     secretKeyRef:
+    #       name: ovh-credentials
+    #       key: consumerKey
+
   sources:
     - service
     - crd
