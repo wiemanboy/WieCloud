@@ -1,0 +1,30 @@
+ovh:
+  groupName: acme.example.com
+  issuers:
+    - name: ovh
+      create: true
+
+      ovhEndpointName: ovh-eu
+      acmeServerUrl: https://acme-v02.api.letsencrypt.org/directory
+
+      kind: ClusterIssuer
+      email: email@example.com
+
+      ovhAuthenticationMethod: oauth2
+      ovhAuthenticationRef:
+        oauth2ClientIDRef:
+          name: ovh-credentials
+          key: clientID
+        oauth2ClientSecretRef:
+          name: ovh-credentials
+          key: clientSecret
+
+  pod:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+
+      limits:
+        cpu: 20m
+        memory: 96Mi
