@@ -1,6 +1,8 @@
-# Providers
+# External Secrets
 
-## OVH
+## Providers
+
+### OVH
 
 External secrets authentication for OVH is setup via mtls
 
