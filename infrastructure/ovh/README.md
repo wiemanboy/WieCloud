@@ -6,7 +6,7 @@ The `cert-manager-webhook-ovh` chart is used to allow cert-manager to create dns
 
 To allow these actions the webhook needs a service account with the correct policies linked to it.
 
-1. Go to the OVHCloud portal
+1. Go to the OVH Cloud Manager
 2. Go to `Identity, Security & Operations > Identities > Service account > Add a service account`
 3. Save the generated credentials
 4. Got to `policies > Create policy`

@@ -8,7 +8,7 @@ External secrets authentication for OVH is setup via mtls
 
 To generate the mtls certificates for this:
 
-1. Go to the OVHCloud portal
+1. Go to the OVH Cloud Manager
 2. Go to `Identity, Security & Operations`
 3. Go to `Identities > Service Accounts > Add a service account`
 4. Go to `Key Management Service > OKMS > Access Certificates > generate an access certificate`
