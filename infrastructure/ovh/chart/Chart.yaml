@@ -1,9 +1,9 @@
 apiVersion: v2
-name: certmanagerovh
+name: ovh
 type: application
 version: 0.0.0
 dependencies:
   - name: cert-manager-webhook-ovh
     version: 0.9.17
     repository: https://aureq.github.io/cert-manager-webhook-ovh
-    alias: ovh
+    alias: certmanagerWebhook

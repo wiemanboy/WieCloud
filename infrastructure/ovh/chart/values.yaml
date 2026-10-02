@@ -1,4 +1,4 @@
-ovh:
+certmanagerWebhook:
   groupName: acme.example.com
   issuers:
     - name: ovh
