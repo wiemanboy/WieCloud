@@ -1,0 +1,19 @@
+apiVersion: external-secrets.io/v1
+kind: ClusterSecretStore
+metadata:
+  name: ovh
+spec:
+  provider:
+    ovh:
+      server: https://eu-west-gra.okms.ovh.net
+      okmsid: e16aea02-da98-480a-8bc4-2a51646d7e50
+      auth:
+        mtls:
+          certSecretRef:
+            name: ovh-mtls
+            key: tls.crt
+            namespace: {{ .Release.Namespace }}
+          keySecretRef:
+            name: ovh-mtls
+            key: tls.key
+            namespace: {{ .Release.Namespace }}
