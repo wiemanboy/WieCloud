@@ -273,7 +273,7 @@ infrastructure:
 
   longhorn:
     deploy: true
-    version: 0.2.0-add-auto-filesystem-trim-2bc3518
+    version: 0.2.0-add-auto-filesystem-trim-0fe181a
 
   metallb:
     deploy: true
