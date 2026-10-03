@@ -1,4 +1,7 @@
 longhorn:
+  persistence:
+    createStorageClass: false
+
   longhornManager:
     resources:
       limits:
