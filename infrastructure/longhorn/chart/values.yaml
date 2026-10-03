@@ -1,6 +1,8 @@
 longhorn:
   persistence:
-    createStorageClass: false
+  recurringJobSelector:
+    enable: true
+    jobList: [ filesystem-trim ]
 
   longhornManager:
     resources:
