@@ -16,6 +16,7 @@ To allow these actions the webhook needs a service account with the correct poli
   Resource groups: `<appropriate resource group>`
   Actions: `dnsZone:apiovh:record/create`, `dnsZone:apiovh:record/delete`, `dnsZone:apiovh:record/edit`, `dnsZone:apiovh:refresh`, `dnsZone:apiovh:record/get`, `dnsZone:apiovh:status/get`
 6. Create the policy.
-7. Add the generated credentials to secret manager.
-
-//TODO: secret manager steps
+7. Add the generated credentials to secret manager:
+  Region: `eu-west-gra`
+  Path: `wiecloud/cert/ovh`
+  Values: `oath2_client_id`, `oauth2_client_secret`
