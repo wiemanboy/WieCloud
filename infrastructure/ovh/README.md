@@ -9,7 +9,7 @@ To allow these actions the webhook needs a service account with the correct poli
 1. Go to the OVH Cloud Manager
 2. Go to `Identity, Security & Operations > Identities > Service account > Add a service account`
 3. Save the generated credentials
-4. Got to `policies > Create policy`
+4. Go to `policies > Create policy`
 5. Fill in the following values
   Service accounts: `<appropriate service account>`
   Product types: `DNS Zone`
