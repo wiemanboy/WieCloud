@@ -1,4 +1,5 @@
-{{- if .Values.infrastructure.crossplane.deploy -}}
+{{- with .Values.infrastructure.crossplane -}}
+{{- if .deploy -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -7,22 +8,13 @@ metadata:
 spec:
   source:
     chart: crossplane
-    repoURL: {{ .Values.infrastructure.repository }}
-    targetRevision: {{ .Values.infrastructure.crossplane.version }}
-    helm:
-      values: |
-        environment: {{ toYaml .Values.environment | nindent 10 }}
+    repoURL: {{ $.Values.infrastructure.repository }}
+    targetRevision: {{ .version }}
 
   destination:
     namespace: crossplane
-    server: {{ .Values.infrastructure.server }}
+    server: https://kubernetes.default.svc
   project: infrastructure
-  ignoreDifferences:
-    - group: ""
-      kind: PersistentVolumeClaim
-      jsonPointers:
-        - /spec
-        - /metadata/annotations
   syncPolicy:
     automated:
       prune: true
@@ -30,4 +22,6 @@ spec:
     syncOptions:
     - CreateNamespace=true
     - ServerSideApply=true
-{{- end }}
+{{- end -}}
+{{- end -}}
+
