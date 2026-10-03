@@ -1,13 +1,3 @@
-environment:
-  hostname: example.com
-  gateway:
-    name: example-gateway
-    listener: web-example
-    namespace: example
-  oidc:
-    provider: Example
-    endpoint: https://example.com
-
 nextcloud:
   nodeSelector:
     topology.kubernetes.io/zone: gigabyte-pve-0
@@ -29,10 +19,10 @@ nextcloud:
   externalDatabase:
     enabled: true
     type: postgresql
-    host: postgresql-db-service
+    host: nextcloud-postgres-cluster-rw
     existingSecret:
       enabled: true
-      secretName: nextcloud-db-secret
+      secretName: nextcloud-postgres-cluster-app
       usernameKey: username
       passwordKey: password
 
@@ -40,44 +30,47 @@ nextcloud:
     host: example.com
 
     apps:
-    - name: user_oidc
-      enabled: true
+      - name: user_oidc
+        enabled: true
 
-    - name: contacts
-      enabled: true
+      - name: contacts
+        enabled: true
 
-    - name: deck
-      enabled: true
+      - name: deck
+        enabled: true
 
-    - name: maps
-      enabled: true
+      - name: maps
+        enabled: true
 
-    - name: calendar
-      enabled: true
+      - name: calendar
+        enabled: true
 
-    - name: whiteboard
-      enabled: true
+      - name: whiteboard
+        enabled: true
 
-    - name: notes
-      enabled: true
+      - name: notes
+        enabled: true
 
-    - name: memories
-      enabled: true
+      - name: memories
+        enabled: true
 
-    - name: forms
-      enabled: true
+      - name: forms
+        enabled: true
 
-    - name: tasks
-      enabled: true
+      - name: tasks
+        enabled: true
 
-    - name: drawio
-      enabled: true
+      - name: drawio
+        enabled: true
 
-    - name: metadata
-      enabled: true
+      - name: metadata
+        enabled: true
 
-    - name: onlyoffice
-      enabled: true
+      - name: onlyoffice
+        enabled: true
+
+      - name: pantry
+        enabled: true
 
     configs:
       setup.config.php: |-
@@ -87,31 +80,53 @@ nextcloud:
         );
 
     extraVolumes:
-    - name: configure
-      configMap:
-        name: configure
-        defaultMode: 493
-        items:
-        - key: configure.sh
-          path: configure.sh
-    - name: nextcloud-client-secret
-      secret:
-        secretName: nextcloud-client-secret
-        items:
-        - key: secret
-          path: nextcloud-client-secret
+      - name: configure
+        configMap:
+          name: configure
+          defaultMode: 493
+          items:
+            - key: configure.sh
+              path: configure.sh
+      - name: nextcloud-client-secret
+        secret:
+          secretName: nextcloud-client-secret
+          items:
+            - key: secret
+              path: nextcloud-client-secret
 
     extraVolumeMounts:
-    - name: configure
-      mountPath: /docker-entrypoint-hooks.d/post-installation/configure.sh
-      subPath: configure.sh
-      readOnly: true
-    - name: configure
-      mountPath: /docker-entrypoint-hooks.d/before-starting/configure.sh
-      subPath: configure.sh
-      readOnly: true
+      - name: configure
+        mountPath: /docker-entrypoint-hooks.d/post-installation/configure.sh
+        subPath: configure.sh
+        readOnly: true
+      - name: configure
+        mountPath: /docker-entrypoint-hooks.d/before-starting/configure.sh
+        subPath: configure.sh
+        readOnly: true
 
-    - name: nextcloud-client-secret
-      mountPath: /var/run/secrets/nextcloud-client-secret
-      subPath: nextcloud-client-secret
-      readOnly: true
+      - name: nextcloud-client-secret
+        mountPath: /var/run/secrets/nextcloud-client-secret
+        subPath: nextcloud-client-secret
+        readOnly: true
+
+  resources:
+    limits:
+      memory: 1Gi
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+network:
+  hostname: example.com
+  gateway:
+    name: example-gateway
+    listener: web-example
+    namespace: example
+
+auth:
+  oidc:
+    provider: Example
+    endpoint: https://example.com
+
+cnpg:
+  restore: false

@@ -20,12 +20,11 @@ spec:
           ports:
             - containerPort: 3000
           resources:
-            requests:
-              memory: "64Mi"
-              cpu: "50m"
             limits:
-              memory: "128Mi"
-              cpu: "100m"
+              memory: 176Mi
+            requests:
+              cpu: 1m
+              memory: 88Mi
 ---
 apiVersion: v1
 kind: Service
@@ -45,9 +44,9 @@ metadata:
   name: wiemansite
 spec:
   parentRefs:
-    - name: traefik-gateway
-      sectionName: websecure
-      namespace: gateway
+    - name: default-envoy-gateway
+      sectionName: https
+      namespace: envoy-gateway
 
   hostnames:
     - site.wieman.cloud

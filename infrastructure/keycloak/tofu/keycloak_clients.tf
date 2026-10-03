@@ -15,40 +15,28 @@ module "argocd_client" {
   source   = "./modules/keycloak/client"
   realm_id = keycloak_realm.wiecloud.id
 
-  name      = "argocd"
-  namespace = "argocd"
+  name        = "argocd"
+  namespace   = "argocd"
+  access_type = "CONFIDENTIAL"
 
   urls = {
-    root     = "https://argo.${local.values.environment.hostname}"
-    base     = "https://argo.${local.values.environment.hostname}/applications"
-    redirect = ["https://argo.${local.values.environment.hostname}/auth/callback"]
+    root     = "https://argo.${var.hostname}"
+    base     = "https://argo.${var.hostname}/applications"
+    redirect = ["https://argo.${var.hostname}/auth/callback"]
   }
 }
 
-module "harbor_client" {
+module "forgejo_client" {
   source   = "./modules/keycloak/client"
   realm_id = keycloak_realm.wiecloud.id
 
-  name      = "harbor"
-  namespace = "harbor"
+  name        = "forgejo"
+  namespace   = "forgejo"
+  access_type = "CONFIDENTIAL"
 
   urls = {
-    root     = "https://harbor.${local.values.environment.hostname}"
-    redirect = ["https://harbor.${local.values.environment.hostname}/c/oidc/callback"]
-  }
-}
-
-module "nextcloud_client" {
-  source   = "./modules/keycloak/client"
-  realm_id = keycloak_realm.wiecloud.id
-
-  name      = "nextcloud"
-  namespace = "nextcloud"
-
-  urls = {
-    root                 = "https://next.${local.values.environment.hostname}"
-    redirect             = ["https://next.${local.values.environment.hostname}/apps/user_oidc/code"]
-    post_logout_redirect = ["https://next.${local.values.environment.hostname}/"]
+    root     = "https://forgejo.${var.hostname}"
+    redirect = ["https://forgejo.${var.hostname}/user/oauth2/Keycloak/callback"]
   }
 }
 
@@ -56,11 +44,73 @@ module "grafana_client" {
   source   = "./modules/keycloak/client"
   realm_id = keycloak_realm.wiecloud.id
 
-  name      = "grafana"
-  namespace = "prometheus"
+  name        = "grafana"
+  namespace   = "prometheus"
+  access_type = "CONFIDENTIAL"
 
   urls = {
-    root     = "https://grafana.${local.values.environment.hostname}"
-    redirect = ["https://grafana.${local.values.environment.hostname}/login/generic_oauth"]
+    root     = "https://grafana.${var.hostname}"
+    redirect = ["https://grafana.${var.hostname}/login/generic_oauth"]
   }
 }
+
+module "harbor_client" {
+  source   = "./modules/keycloak/client"
+  realm_id = keycloak_realm.wiecloud.id
+
+  name        = "harbor"
+  namespace   = "harbor"
+  access_type = "CONFIDENTIAL"
+
+  urls = {
+    root     = "https://harbor.${var.hostname}"
+    redirect = ["https://harbor.${var.hostname}/c/oidc/callback"]
+  }
+}
+
+module "kubeapi_client" {
+  source   = "./modules/keycloak/client"
+  realm_id = keycloak_realm.wiecloud.id
+
+  name        = "kubeapi"
+  access_type = "PUBLIC"
+
+  urls = {
+    root = "http://localhost:8000"
+    redirect = [
+      "http://localhost:8000",
+      "http://127.0.0.1:8000"
+    ]
+  }
+}
+
+module "longhorn_client" {
+  source   = "./modules/keycloak/client"
+  realm_id = keycloak_realm.wiecloud.id
+
+  name        = "longhorn"
+  namespace   = "longhorn-system"
+  secret_key  = "client-secret"
+  access_type = "CONFIDENTIAL"
+
+  urls = {
+    root     = "https://longhorn.${var.hostname}"
+    redirect = ["https://longhorn.${var.hostname}/oauth2/callback"]
+  }
+}
+
+module "nextcloud_client" {
+  source   = "./modules/keycloak/client"
+  realm_id = keycloak_realm.wiecloud.id
+
+  name        = "nextcloud"
+  namespace   = "nextcloud"
+  access_type = "CONFIDENTIAL"
+
+  urls = {
+    root                 = "https://next.${var.hostname}"
+    redirect             = ["https://next.${var.hostname}/apps/user_oidc/code"]
+    post_logout_redirect = ["https://next.${var.hostname}/"]
+  }
+}
+

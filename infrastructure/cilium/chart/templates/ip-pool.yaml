@@ -1,0 +1,11 @@
+apiVersion: cilium.io/v2alpha1
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: ip-pool
+spec:
+  blocks:
+    {{- range .Values.network.ipPool }}
+    {{- $parts := splitList " - " . }}
+    - start: {{ index $parts 0 }}
+      stop: {{ index $parts 1 }}
+    {{- end }}

@@ -1,0 +1,87 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: {{ .Values.network.gateway.name }}
+  annotations:
+    external-dns.alpha.kubernetes.io/target: {{ .Values.network.hostname }}
+spec:
+  gatewayClassName: default-envoy-gateway
+  infrastructure:
+    parametersRef:
+      group: gateway.envoyproxy.io
+      kind: EnvoyProxy
+      name: envoy-proxy
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: {{ .Values.network.gateway.listener }}
+      protocol: HTTPS
+      port: 443
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: letsencrypt-certificate
+            kind: Secret
+      allowedRoutes:
+        namespaces:
+          from: All
+
+    - name: minecraft
+      protocol: TCP
+      port: 25565
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: minecraft
+    - name: minecraft-voicechat
+      protocol: UDP
+      port: 24454
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: minecraft
+
+    - name: satisfactory-tcp
+      protocol: TCP
+      port: 7777
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: satisfactory
+    - name: satisfactory-udp
+      protocol: UDP
+      port: 7777
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: satisfactory
+    - name: satisfactory-messaging
+      protocol: TCP
+      port: 8888
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: satisfactory
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: letsencrypt-certificate
+spec:
+  secretName: letsencrypt-certificate
+  dnsNames: {{ toYaml .Values.network.gateway.certificate.hostnames | nindent 4 }}
+  issuerRef: {{ toYaml .Values.network.gateway.certificate.issuerRef | nindent 4 }}

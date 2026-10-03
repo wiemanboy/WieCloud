@@ -9,6 +9,10 @@ spec:
     repoURL: https://github.com/wiemanboy/WieCloud.git
     targetRevision: master
     path: wiecloud/chart
+    # helm:
+    #   valueFiles:
+    #     - values.dev.yaml
+
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
@@ -18,3 +22,4 @@ spec:
       selfHeal: true
     syncOptions:
     - CreateNamespace=true
+    - ServerSideApply=true

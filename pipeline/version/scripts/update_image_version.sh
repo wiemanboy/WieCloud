@@ -42,4 +42,4 @@ version=$( yq .version $image_path/Image.yaml )
 
 echo "Setting image version ${version}${tag} for ${name}"
 
-sed -i "/rconcli:/,/version:/ s/^\(\s*version:\s*\).*/\1${version}${tag}/" $app_chart/values.yaml
+sed -i "/${name}:/,/version:/ s/^\(\s*version:\s*\).*/\1${version}${tag}/" $app_chart/values.yaml

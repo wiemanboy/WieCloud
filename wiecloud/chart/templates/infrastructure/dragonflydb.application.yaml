@@ -1,0 +1,26 @@
+{{- with .Values.infrastructure.dragonflydb -}}
+{{- if .deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dragonflydb
+  namespace: argocd
+spec:
+  source:
+    chart: dragonflydb
+    repoURL: {{ $.Values.infrastructure.repository }}
+    targetRevision: {{ .version }}
+
+  destination:
+    namespace: dragonflydb
+    server: https://kubernetes.default.svc
+  project: infrastructure
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
+{{- end -}}
+{{- end -}}

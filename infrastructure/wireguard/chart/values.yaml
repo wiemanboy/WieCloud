@@ -1,4 +1,4 @@
-environment:
+network:
   hostname: example.com
   gateway:
     name: example-gateway
@@ -7,8 +7,15 @@ environment:
 
 vpn:
   peers:
-  - peer1
-  - peer2
+    - peer1
+    - peer2
   dns:
-  - "0.0.0.0"
-  - "0.0.0.1"
+    - "0.0.0.0"
+    - "0.0.0.1"
+
+images:
+  wireguardserver:
+    image:
+      registry: example.com
+      repository: linuxserver/wireguard
+      version: 0.0.0

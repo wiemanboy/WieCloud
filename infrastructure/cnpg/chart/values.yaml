@@ -1,0 +1,39 @@
+cloudnative-pg:
+  resources:
+    limits:
+      memory: 128Mi
+    requests:
+      cpu: 5m
+      memory: 64Mi
+
+plugin-barman-cloud:
+  resources:
+    limits:
+      memory: 128Mi
+    requests:
+      cpu: 1m
+      memory: 64Mi
+
+seaweedfs:
+  backup:
+    enabled: true
+  restore:
+    enabled: false
+  name: backup-s3
+  endpoint: k8up.s3.example.com
+  secret:
+    name: cnpg-backup-s3-config
+
+network:
+  hostname: example.com
+  gateway:
+    name: example-gateway
+    listener: web-example
+    namespace: example
+
+images:
+  seaweedfs:
+    image:
+      registry: dcoker.io
+      repository: chrislusf/seaweedfs
+      version: 4.47

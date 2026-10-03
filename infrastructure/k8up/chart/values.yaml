@@ -1,16 +1,31 @@
-environment:
+seaweedfs:
+  name: backup-s3
+  endpoint: k8up.s3.example.com
+  secret:
+    name: local-backup-s3-config
+
+k8up:
+  k8up:
+    skipWithoutAnnotation: true
+
+  resources:
+    limits:
+      memory: 64Mi
+    requests:
+      cpu: 3m
+      memory: 32Mi
+
+
+network:
   hostname: example.com
   gateway:
     name: example-gateway
     listener: web-example
     namespace: example
 
-seaweedfs:
-  name: backup-s3
-  endpoint: k8up.s3.example.com
-  secret:
-    name: s3-config-secret
-
-k8up:
-  k8up:
-    skipWithoutAnnotation: true
+images:
+  seaweedfs:
+    image:
+      registry: dcoker.io
+      repository: chrislusf/seaweedfs
+      version: 4.47

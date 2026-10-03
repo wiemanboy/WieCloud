@@ -1,0 +1,39 @@
+{{- with .Values.infrastructure.cnpg -}}
+{{- if .deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cnpg
+  namespace: argocd
+spec:
+  source:
+    chart: cnpg
+    repoURL: {{ $.Values.infrastructure.repository }}
+    targetRevision: {{ .version }}
+    helm:
+      valuesObject:
+        network: {{ toYaml $.Values.network | nindent 10 }}
+        images: {{ toYaml $.Values.images | nindent 10 }}
+        backups: {{ toYaml $.Values.backups | nindent 10 }}
+        restores: {{ toYaml .restores | nindent 10 }}
+
+        seaweedfs:
+          endpoint: cnpg.s3.{{ $.Values.network.hostname }}
+          backup:
+            enabled: {{ .seaweedfs.backup.enabled }}
+          restore:
+            enabled: {{ .seaweedfs.restore.enabled }}
+
+  destination:
+    namespace: cnpg
+    server: https://kubernetes.default.svc
+  project: infrastructure
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
+{{- end -}}
+{{- end -}}

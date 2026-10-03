@@ -1,0 +1,17 @@
+apiVersion: policies.kyverno.io/v1
+kind: DeletingPolicy
+metadata:
+  name: cleanup-failed-jobs
+  namespace: production
+spec:
+  schedule: '0/3 * * * *'
+  matchConstraints:
+    resourceRules:
+      - apiGroups: ['batch']
+        apiVersions: ['v1']
+        resources: ['jobs']
+  conditions:
+    - name: failed-and-older-than-24h
+      expression: |
+        (has(object.status.failed) && object.status.failed > 0) &&
+        (timestamp(object.status.startTime) < time.now() - duration("24h"))

@@ -1,0 +1,35 @@
+satisfactory:
+  persistence:
+    config:
+      annotations:
+        k8up.io/backup: "true"
+      size: 1Gi
+    gamefiles:
+      annotations:
+        k8up.io/backup: "true"
+      size: 20Gi
+
+  resources:
+    limits:
+      memory: 16Gi
+    requests:
+      cpu: 500m
+      memory: 12Gi
+
+network:
+  hostname: example.com
+  gateway:
+    name: example-gateway
+    listener: web-example
+    namespace: example
+    certificate:
+      issuerRef:
+        name: example
+        kind: ClusterIssuer
+
+images:
+  satisfactory:
+    image:
+      registry: example.com
+      repository: satisfactory
+      version: 0.0.0

@@ -3,14 +3,28 @@ kind: Seaweed
 metadata:
   name: {{ .Values.seaweedfs.name }}
 spec:
-  image: chrislusf/seaweedfs:latest
+  {{ with .Values.images.seaweedfs.image -}}
+  image: {{ .registry }}/{{ .repository }}:{{ .version }}
+  {{ end -}}
   master:
     replicas: 1
     volumeSizeLimitMB: 1024
+    limits:
+      memory: 64Mi
+    requests:
+      cpu: 1m
+      memory: 32Mi
+
   volume:
     replicas: 1
+    kind: StatefulSet
+    limits:
+      memory: 128Mi
     requests:
+      cpu: 25m
+      memory: 64Mi
       storage: 100Gi
+
   filer:
     replicas: 1
     persistence:
@@ -27,6 +41,12 @@ spec:
       [leveldb2]
       enabled = true
       dir = "/data/filerldb2"
+    limits:
+      memory: 1024Mi
+    requests:
+      cpu: 100m
+      memory: 512Mi
+
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -34,9 +54,9 @@ metadata:
   name: {{ .Values.seaweedfs.name }}
 spec:
   parentRefs:
-    - name: {{ .Values.environment.gateway.name }}
-      sectionName: {{ .Values.environment.gateway.listener }}
-      namespace: {{ .Values.environment.gateway.namespace }}
+    - name: {{ .Values.network.gateway.name }}
+      sectionName: {{ .Values.network.gateway.listener }}
+      namespace: {{ .Values.network.gateway.namespace }}
 
   hostnames:
     - {{ .Values.seaweedfs.endpoint }}

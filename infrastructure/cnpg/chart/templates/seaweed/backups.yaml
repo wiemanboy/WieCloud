@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: seaweed-backup
+  annotations:
+    k8up.io/backup: "true"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: seaweed-backup-config
+data:
+  replication.toml: |
+    [sink.local]
+    enabled = true
+    directory = "/backup"
+    is_incremental = false
+---
+{{ if .Values.seaweedfs.backup.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: seaweed-backup
+  name: seaweed-backup
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: seaweed-backup
+  template:
+    metadata:
+      labels:
+        app: seaweed-backup
+    spec:
+      containers:
+        - name: seaweedfs
+          {{ with .Values.images.seaweedfs.image -}}
+          image: {{ .registry }}/{{ .repository }}:{{ .version }}
+          {{ end -}}
+          command:
+            - weed
+            - filer.backup
+            - -filer={{ .Values.seaweedfs.name }}-filer:8888
+            - -initialSnapshot
+          volumeMounts:
+            - name: backup
+              mountPath: /backup
+            - name: config
+              mountPath: /etc/seaweedfs
+          resources:
+            limits:
+              memory: 128Mi
+            requests:
+              cpu: 1m
+              memory: 64Mi
+
+      volumes:
+        - name: backup
+          persistentVolumeClaim:
+            claimName: seaweed-backup
+        - name: config
+          configMap:
+            name: seaweed-backup-config
+{{ end }}

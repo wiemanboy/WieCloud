@@ -1,0 +1,124 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: forgejo-runner-controller
+  namespace: {{ .Release.Namespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: forgejo-runner-controller
+  namespace: {{ .Release.Namespace }}
+rules:
+  - apiGroups: [""]
+    resources:
+      - secrets
+    verbs:
+      - get
+      - create
+      - list
+      - delete
+
+  - apiGroups: [""]
+    resources:
+      - configmaps
+    verbs:
+      - get
+
+  - apiGroups: ["batch"]
+    resources:
+      - jobs
+    verbs:
+      - create
+
+  - apiGroups: ["apps"]
+    resources:
+      - deployments
+    verbs:
+      - get
+      - list
+      - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: forgejo-runner-controller
+  namespace: {{ .Release.Namespace }}-runner-system
+subjects:
+  - kind: ServiceAccount
+    name: forgejo-runner-controller
+    namespace: {{ .Release.Namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: forgejo-runner-controller
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: forgejo-runner-controller
+  namespace: {{ .Release.Namespace }}
+subjects:
+  - kind: ServiceAccount
+    name: forgejo-runner-controller
+    namespace: {{ .Release.Namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: forgejo-runner-controller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: forgejo-runner-controller
+    wieman.cloud/forgejo-runner-controller: ""
+  name: forgejo-runner-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: forgejo-runner-controller
+  template:
+    metadata:
+      labels:
+        app: forgejo-runner-controller
+    spec:
+      serviceAccountName: forgejo-runner-controller
+      containers:
+      - name: controller
+        {{ with .Values.images.forgejorunnercontroller.image -}}
+        image: {{ .registry }}/{{ .repository }}:{{ .version }}
+        {{ end -}}
+        env:
+          - name: CONTROLLER_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: DESIRED_RUNNERS
+            value: "2"
+          - name: RUNNER_SECRET_NAME
+            value: forgejo-runner-secret
+          - name: RUNNER_CONFIG_NAME
+            value: forgejo-runner-config
+          - name: RUNNER_NAMESPACE
+            value: {{ .Release.Namespace }}-runner-system
+          - name: RUNNER_IMAGE
+            {{ with .Values.images.forgejorunner.image -}}
+            value: {{ .registry }}/{{ .repository }}:{{ .version }}
+            {{- end }}
+          - name: DIND_IMAGE
+            {{ with .Values.images.dind.image -}}
+            value: {{ .registry }}/{{ .repository }}:{{ .version }}
+            {{- end }}
+          - name: FORGEJO_NAMESPACE
+            value: {{ .Release.Namespace}}
+          - name: FORGEJO_IMAGE
+            {{ with .Values.images.forgejo.image -}}
+            value: {{ .registry }}/{{ .repository }}:{{ .version }}
+            {{- end }}
+          - name: KUBECTL_IMAGE
+            {{ with .Values.images.kubectl.image -}}
+            value: {{ .registry }}/{{ .repository }}:{{ .version }}
+            {{- end }}
+        resources: {}

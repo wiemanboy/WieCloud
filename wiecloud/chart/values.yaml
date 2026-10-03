@@ -1,177 +1,406 @@
-environment:
+network:
   hostname: wieman.cloud
+  externalIp: 85.148.81.86
+  ipPool:
+    - 192.168.178.201 - 192.168.178.210
   gateway:
-    name: traefik-gateway
-    listener: websecure
-    namespace: gateway
-    authentication:
-      basicAuth:
-        name: basic-auth
-        secret:
-          name: server-auth-secret
+    name: default-envoy-gateway
+    listener: https
+    namespace: envoy-gateway
+    certificate:
+      email: wiemanboy@gmail.com
+      issuerRef:
+        name: letsencrypt
+        kind: ClusterIssuer
+      hostnames:
+        - "wieman.cloud"
+        - "*.wieman.cloud"
+        - "*.s3.wieman.cloud"
+        - "wiemanboy.com"
+        - "*.wiemanboy.com"
+        - "jarnowieman.com"
+        - "*.jarnowieman.com"
+        - "jarnowieman.nl"
+        - "*.jarnowieman.nl"
+        - "carnaval.lol"
+        - "*.carnaval.lol"
+
+auth:
   oidc:
     provider: Keycloak
     endpoint: https://keycloak.wieman.cloud/realms/wiecloud
 
 backups:
-- name: local
-  s3:
-    endpoint: https://k8up.s3.wieman.cloud
-    secret:
-      name: backup-s3-secret
-      accessKey: accessKey
-      secretKey: secretKey
-  repo:
-    secret:
-      name: repo-password-secret
-      key: password
-  default:
-    schedule:
-      backup: "0 12 * * *"
-      check: "30 12 * * *"
-      prune: "0 13 * * *"
-    retention:
-      keepLast: 5
-      keepDaily: 14
+  - name: local
+    s3:
+      endpoint: https://k8up.s3.wieman.cloud
+      secret:
+        name: local-backup-s3-credentials
+        accessKey: accessKey
+        secretKey: secretKey
+        storeRef:
+          kind: ClusterSecretStore
+          name: local-backup-s3-credentials-store
+    repo:
+      secret:
+        name: local-backup-repo-password
+        key: password
+        storeRef:
+          kind: ClusterSecretStore
+          name: local-backup-repo-password-store
+    default:
+      schedule:
+        backup: "0 12 * * *"
+        check: "30 12 * * *"
+        prune: "0 13 * * *"
+      retention:
+        keepLast: 5
+        keepDaily: 14
+  - name: aws
+    s3:
+      endpoint: https://s3.eu-central-1.amazonaws.com
+      secret:
+        name: aws-backup-s3-credentials
+        accessKey: accessKey
+        secretKey: secretKey
+        storeRef:
+          kind: ClusterSecretStore
+          name: aws
+    repo:
+      secret:
+        name: aws-backup-repo-password
+        key: password
+        storeRef:
+          kind: ClusterSecretStore
+          name: aws
+    default:
+      schedule:
+        backup: "0 0 * * *"
+        check: "30 0 * * *"
+        prune: "0 1 * * *"
+      retention:
+        keepLast: 5
+        keepDaily: 14
 
-vpn:
-  peers:
-  - pc
-  - laptop
-  - s24ultra
-  dns:
-  - "1.1.1.1"
-  - "8.8.8.8"
+targetRepository:
+  url: https://github.com/wiemanboy/WieCloud.git
+  branch: master
 
 applications:
+  forgejo:
+    deploy: true
+    version: 0.0.0
+    cnpg:
+      restore: false
+    restores:
+      - name: forgejo-restore
+        enabled: false
+        fromBackup: local
+        snapshot: ""
+        claim:
+          name: gitea-shared-storage
+
   minecraft:
     deploy: true
-    version: 0.5.1
+    version: 1.2.1
     restores:
-    - name: minecraft-local-restore
-      enabled: false
-      fromBackup: local
-      snapshot: ""
-      claim:
-        name: minecraft-datadir
+      - name: minecraft-restore
+        enabled: false
+        fromBackup: local
+        snapshot: ""
+        claim:
+          name: minecraft-datadir
+    world:
+      name: cobble-create
+      version: 1.21.1
+    server:
+      launcher: AUTO_CURSEFORGE
+      version: java21
+    bluemap:
+      file: https://www.curseforge.com/minecraft/mc-mods/bluemap/files/6239407
+    mods:
+      voicechat:
+        enabled: true
+      vanillaTweaks: []
+      modrinth:
+        projects: []
+      curseforge:
+        zip:
+          deploy: true
+          file: https://next.wieman.cloud/public.php/dav/files/9cNAog5wjTWzPKb
+        pageUrl: ""
+        excludeMods: []
+        includeMods: []
 
   nextcloud:
     deploy: true
-    version: 0.1.2
+    version: 1.1.1
+    cnpg:
+      restore: false
+    seaweedfs:
+      backup:
+        enabled: true
+      restore:
+        enabled: false
     restores:
-    - name: nextcloud-local-restore
-      enabled: false
-      fromBackup: local
-      snapshot: ""
-      claim:
-        name: nextcloud-nextcloud
-    - name: postgresql-local-restore
-      enabled: false
-      fromBackup: local
-      snapshot: ""
-      claim:
-        name: data-postgresql-db-0
+      - name: nextcloud-restore
+        enabled: false
+        fromBackup: local
+        snapshot: ""
+        claim:
+          name: nextcloud-nextcloud
+
+  satisfactory:
+    deploy: true
+    version: 0.0.1
+    restores:
+      - name: server-files-restore
+        enabled: false
+        fromBackup: local
+        snapshot: ""
+        claim:
+          name: satisfactory-server-files
+      - name: config-restore
+        enabled: false
+        fromBackup: local
+        snapshot: ""
+        claim:
+          name: satisfactory-config
 
   website:
     deploy: true
     namespace: website
 
-  server: https://kubernetes.default.svc
   repository: harbor.wieman.cloud/applications
 
 infrastructure:
   argocd:
     deploy: true
-    version: 0.3.1-implement-crossplane-2328b6f
+    version: 0.4.0
 
   certmanager:
     deploy: true
-    version: 0.2.3
-    certificate:
-      email: wiemanboy@gmail.com
-      hostnames:
-      - "wieman.cloud"
-      - "*.wieman.cloud"
-      - "*.s3.wieman.cloud"
-      - "wiemanboy.com"
-      - "*.wiemanboy.com"
-      - "jarnowieman.com"
-      - "*.jarnowieman.com"
-      - "jarnowieman.nl"
-      - "*.jarnowieman.nl"
-      - "carnaval.lol"
-      - "*.carnaval.lol"
+    version: 0.2.7
 
-  crossplane:
-    deploy: true
-    version: 0.0.0-implement-crossplane-2328b6f
+  cilium:
+    deploy: false
+    version: 0.0.0
 
-  externaldns:
+  cnpg:
     deploy: true
-    version: 0.0.7
-
-  harbor:
-    deploy: true
-    version: 1.2.0
+    version: 0.1.1
+    seaweedfs:
+      backup:
+        enabled: true
+      restore:
+        enabled: false
     restores:
-    - name: harbor-registry-local-restore
-      enabled: false
-      fromBackup: local
-      snapshot: ""
-      claim:
-        name: harbor-registry
-    - name: harbor-database-local-restore
-      enabled: false
-      fromBackup: local
-      snapshot: ""
-      claim:
-        name: database-data-harbor-database-0
+      - name: seaweed-restore
+        enabled: false
+        fromBackup: local
+        snapshot: ""
+        claim:
+          name: seaweed-backup
 
-  k8up:
-    deploy: true
-    version: 0.0.1
-
-  keycloak:
-    deploy: true
-    version: 1.1.1
-    restores:
-    - name: postgresql-local-restore
-      enabled: false
-      fromBackup: local
-      snapshot: ""
-      claim:
-        name: data-postgresql-db-0
-
-  longhorn:
-    deploy: true
-    version: 0.0.7
-
-  metallb:
-    deploy: true
-    version: 0.0.9
-
-  prometheus:
-    deploy: true
-    version: 0.0.1
-
-  traefik:
-    deploy: true
-    version: 0.1.6
-
-  seaweedfs:
-    deploy: true
-    version: 0.0.1
-
-  wireguard:
+  dragonflydb:
     deploy: true
     version: 0.0.0
 
-  server: https://kubernetes.default.svc
+  envoygateway:
+    deploy: true
+    version: 0.4.0
+
+  externaldns:
+    deploy: true
+    version: 0.1.3
+
+  externalsecrets:
+    deploy: true
+    version: 0.0.2
+
+  harbor:
+    deploy: true
+    version: 1.3.4
+    restores:
+      - name: harbor-registry-restore
+        enabled: false
+        fromBackup: local
+        snapshot: ""
+        claim:
+          name: harbor-registry
+      - name: harbor-database-restore
+        enabled: false
+        fromBackup: local
+        snapshot: ""
+        claim:
+          name: database-data-harbor-database-0
+
+  k8up:
+    deploy: true
+    version: 1.0.6
+
+  keycloak:
+    deploy: true
+    version: 3.0.4
+    clientCreationPermissions:
+      - name: argocd
+        namespace: argocd
+      - name: forgejo
+        namespace: forgejo
+      - name: grafana
+        namespace: prometheus
+      - name: harbor
+        namespace: harbor
+      - name: longhorn
+        namespace: longhorn-system
+      - name: nextcloud
+        namespace: nextcloud
+    cnpg:
+      restore: false
+    tofudeployer:
+      dryRun: false
+    restores:
+      - name: tfstate-restore
+        enabled: false
+        fromBackup: local
+        snapshot: ""
+        claim:
+          name: tofudeployer-state
+
+  kyverno:
+    deploy: true
+    version: 0.1.0
+
+  longhorn:
+    deploy: true
+    version: 0.1.0
+
+  metallb:
+    deploy: true
+    version: 0.0.11
+
+  metricsserver:
+    deploy: true
+    version: 0.0.0
+
+  nodes:
+    deploy: true
+    version: 0.2.0
+    proxmox:
+      api:
+        url: https://192.168.178.166:8006/api2/json
+    tofudeployer:
+      dryRun: false
+    restores:
+      - name: tfstate-restore
+        enabled: false
+        fromBackup: local
+        snapshot: ""
+        claim:
+          name: tofudeployer-state
+
+  prometheus:
+    deploy: true
+    version: 0.0.4
+
+  seaweedfs:
+    deploy: true
+    version: 0.1.2
+
+  wireguard:
+    deploy: true
+    version: 0.0.2
+    vpn:
+      peers:
+        - pc
+        - laptop
+        - s24ultra
+      dns:
+        - "1.1.1.1"
+        - "8.8.8.8"
+
   repository: harbor.wieman.cloud/infrastructure
 
+# Placeholders so the pipelines will run
+products:
+  shared:
+    version: 0.0.0
+
 images:
+  alpine:
+    image:
+      registry: docker.io
+      repository: alpine
+      version: 3.18.2
+
+  dind:
+    image:
+      registry: docker.io
+      repository: docker
+      version: 29.7.2-dind
+
+  forgejo:
+    image:
+      registry: data.forgejo.org
+      repository: forgejo/forgejo
+      version: 16.0.2
+
+  forgejorunner:
+    image:
+      registry: data.forgejo.org
+      repository: forgejo/runner
+      version: 13.0.0
+
+  forgejorunnercontroller:
+    image:
+      registry: harbor.wieman.cloud
+      repository: products/forgejorunnercontroller
+      version: 0.0.0
+
+  keycloakserver:
+    image:
+      registry: docker.io
+      repository: keycloak/keycloak
+      version: 26.6.2
+
+  kubectl:
+    image:
+      registry: docker.io
+      repository: alpine/kubectl
+      version: 1.36.3
+
   rconcli:
     image:
       registry: harbor.wieman.cloud
       repository: tools/rconcli
-      version: 1.1.4
+      version: 1.1.5
+
+  satisfactory:
+    image:
+      registry: docker.io
+      repository: wolveix/satisfactory-server
+      version: v1.9.10
+
+  seaweedfs:
+    image:
+      registry: docker.io
+      repository: chrislusf/seaweedfs
+      version: 4.47
+
+  tofudeployer:
+    image:
+      registry: harbor.wieman.cloud
+      repository: products/tofudeployer
+      version: 0.0.1
+
+  wireguardserver:
+    image:
+      registry: docker.io
+      repository: linuxserver/wireguard
+      version: 1.0.20250521
+
+  wiecloudactions:
+    image:
+      registry: harbor.wieman.cloud
+      repository: products/wiecloudactions
+      version: 0.0.0

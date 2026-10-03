@@ -1,0 +1,98 @@
+data "talos_machine_configuration" "machine_config" {
+  cluster_name     = var.cluster
+  machine_type     = var.role
+  cluster_endpoint = "https://${var.endpoint}:6443"
+  machine_secrets  = var.machine_secret.machine_secrets
+  talos_version    = var.talos_version
+}
+
+data "talos_client_configuration" "client_config" {
+  cluster_name         = var.cluster
+  client_configuration = var.machine_secret.client_configuration
+  nodes                = [var.node]
+}
+
+resource "talos_machine_configuration_apply" "config_apply" {
+  client_configuration        = var.machine_secret.client_configuration
+  machine_configuration_input = data.talos_machine_configuration.machine_config.machine_configuration
+  node                        = var.node
+  config_patches = [
+    yamlencode({
+      machine = {
+        install = {
+          image = var.image
+        }
+        network = {
+          hostname = var.name
+        }
+        nodeLabels = {
+          "topology.kubernetes.io/region" = var.region
+          "topology.kubernetes.io/zone"   = var.zone
+        }
+        kubelet = {
+          extraMounts = [
+            {
+              destination = "/var/lib/longhorn"
+              type        = "bind"
+              source      = "/var/lib/longhorn"
+              options     = ["rbind", "rshared", "rw"]
+            }
+          ],
+          extraArgs = {
+            "rotate-server-certificates" = true
+          }
+        }
+        sysctls = {
+          "vm.nr_hugepages" = "1024"
+        }
+        kernel = {
+          modules = [
+            {
+              name = "nvme_tcp"
+            },
+            {
+              name = "vfio_pci"
+            }
+          ]
+        }
+      },
+      cluster = {
+        extraManifests = [
+          "https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/main/deploy/standalone-install.yaml",
+          "https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml"
+        ]
+      }
+    }),
+
+    var.role == "controlplane" ? yamlencode({
+      cluster = {
+        apiServer = {
+          extraArgs = {
+            "oidc-issuer-url"     = var.oidc.issuer_url
+            "oidc-client-id"      = "kubeapi"
+            "oidc-username-claim" = "preferred_username"
+            "oidc-groups-claim"   = "groups"
+          }
+        }
+      }
+    }) : null
+    ,
+    yamlencode(var.extra_config),
+  ]
+}
+
+resource "talos_machine_bootstrap" "bootstrap" {
+  count                = var.bootstrap ? 1 : 0
+  depends_on           = [talos_machine_configuration_apply.config_apply]
+  node                 = var.node
+  client_configuration = var.machine_secret.client_configuration
+}
+
+resource "talos_cluster_kubeconfig" "kubeconfig" {
+  depends_on = [
+    talos_machine_bootstrap.bootstrap
+  ]
+  count                = var.bootstrap ? 1 : 0
+  client_configuration = var.machine_secret.client_configuration
+  node                 = var.node
+}

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: forgejo-runner-config
+  namespace: {{ .Release.Namespace }}-runner-system
+data:
+  config.yaml: |
+    {{ toYaml .Values.runner.config.file | nindent 4}}
+    server:
+      connections:
+  

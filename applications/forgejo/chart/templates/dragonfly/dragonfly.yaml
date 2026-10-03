@@ -1,0 +1,16 @@
+apiVersion: dragonflydb.io/v1alpha1
+kind: Dragonfly
+metadata:
+  name: forgejo-dragonfly
+spec:
+  replicas: 3
+
+  args:
+    - --proactor_threads=1
+
+  resources:
+    limits:
+      memory: 320Mi
+    requests:
+      cpu: 50m
+      memory: 256Mi
