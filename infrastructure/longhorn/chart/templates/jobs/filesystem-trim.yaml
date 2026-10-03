@@ -4,7 +4,7 @@ metadata:
   name: filesystem-trim
 spec:
   task: filesystem-trim
-  cron: '* * * * *'
+  cron: '0 8 * * *'
   retain: 1
   concurrency: 1
   groups:
