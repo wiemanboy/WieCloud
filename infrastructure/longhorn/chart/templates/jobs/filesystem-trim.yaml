@@ -7,3 +7,5 @@ spec:
   cron: '* * * * *'
   retain: 1
   concurrency: 1
+  groups:
+    - default

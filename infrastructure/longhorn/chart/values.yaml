@@ -1,9 +1,4 @@
 longhorn:
-  persistence:
-    recurringJobSelector:
-      enable: true
-      jobList: [ filesystem-trim ]
-
   longhornManager:
     resources:
       limits:
