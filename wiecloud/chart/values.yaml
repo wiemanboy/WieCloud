@@ -81,6 +81,31 @@ backups:
       retention:
         keepLast: 5
         keepDaily: 14
+  # - name: ovh
+  #   s3:
+  #     endpoint: https://s3.gra.io.cloud.ovh.net/
+  #     secret:
+  #       name: ovh-backup-s3-credentials
+  #       accessKey: accessKey
+  #       secretKey: secretKey
+  #       storeRef:
+  #         kind: ClusterSecretStore
+  #         name: ovh
+  #   repo:
+  #     secret:
+  #       name: ovh-backup-repo-password
+  #       key: password
+  #       storeRef:
+  #         kind: ClusterSecretStore
+  #         name: ovh
+  #   default:
+  #     schedule:
+  #       backup: "0 0 * * *"
+  #       check: "30 0 * * *"
+  #       prune: "0 1 * * *"
+  #     retention:
+  #       keepLast: 5
+  #       keepDaily: 14
 
 targetRepository:
   url: https://github.com/wiemanboy/WieCloud.git
@@ -212,11 +237,11 @@ infrastructure:
 
   externaldns:
     deploy: true
-    version: 0.1.3
+    version: 1.0.0-switch-external-services-to-ovhcloud-80abf05
 
   externalsecrets:
     deploy: true
-    version: 0.0.2
+    version: 0.1.0-switch-external-services-to-ovhcloud-80abf05
 
   harbor:
     deploy: true
