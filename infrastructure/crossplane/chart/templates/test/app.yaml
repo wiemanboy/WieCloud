@@ -1,4 +1,4 @@
-apiVersion: example.crossplane.io/v1
+apiVersion: wieman.cloud/v1
 kind: App
 metadata:
   namespace: default
