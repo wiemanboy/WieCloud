@@ -176,7 +176,7 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.4.0
+    version: 0.4.1-implement-crossplane-a0a470c
 
   certmanager:
     deploy: true
@@ -204,7 +204,7 @@ infrastructure:
 
   crossplane:
     deploy: true
-    version: 0.0.0-implement-crossplane-f4b20a4
+    version: 0.0.0-implement-crossplane-a0a470c
 
   dragonflydb:
     deploy: true
