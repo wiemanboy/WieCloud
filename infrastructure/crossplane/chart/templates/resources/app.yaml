@@ -1,10 +1,10 @@
 apiVersion: apiextensions.crossplane.io/v1
 kind: Composition
 metadata:
-  name: app-kcl
+  name: app
 spec:
   compositeTypeRef:
-    apiVersion: example.crossplane.io/v1
+    apiVersion: wieman.cloud/v1
     kind: App
   mode: Pipeline
   pipeline:
