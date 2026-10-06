@@ -204,7 +204,7 @@ infrastructure:
 
   crossplane:
     deploy: true
-    version: 0.0.0-implement-crossplane-985c40c
+    version: 0.0.0-implement-crossplane-1b9744f
 
   dragonflydb:
     deploy: true
