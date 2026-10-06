@@ -224,10 +224,10 @@ argo-cd:
   repoServer:
     resources:
       limits:
-        memory: 512Gi
+        memory: 2Gi
       requests:
         cpu: 50m
-        memory: 256Mi
+        memory: 512Mi
 
   redis:
     resources:
