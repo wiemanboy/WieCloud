@@ -75,7 +75,7 @@ _desired_route: {str:any} = {
           value = "/"
         }
       }]
-      backednRefs = [{
+      backendRefs = [{
         name = _desired_service.metadata.name
         namespace = "default"
         port = 8080
@@ -84,10 +84,15 @@ _desired_route: {str:any} = {
   }
 }
 
+observed_route = option("params").ocds["httproute"]?.Resource
+if observed_route?.spec?.hostnames[0]:
+  _desired_route.metadata.annotations["krm.kcl.dev/ready"] = "True"
+
 # Update status
 _desired_xr: {str:any} = {
   **option("params").dxr
   status.address = observed_service?.spec?.clusterIP or ""
+  status.hostname = observed_route?.spec?.hostnames[0] or ""
   status.replicas = observed_deployment?.status?.availableReplicas or 0
 }
 
