@@ -3,9 +3,13 @@ kind: EnvironmentConfig
 metadata:
   name: network
 data:
+  {{- with .Values.network }}
   network:
-    hostname: wieman.cloud
+    hostname: {{ .hostname }}
+    {{- with .gateway }}
     gateway:
-      name: default-envoy-gateway
-      sectionName: https
-      namespace: envoy-gateway
+      name: {{ .name }}
+      sectionName: {{ .listener }}
+      namespace: {{ .namespace }}
+    {{ end }}
+  {{ end }}

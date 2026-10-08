@@ -10,6 +10,9 @@ spec:
     chart: crossplane
     repoURL: {{ $.Values.infrastructure.repository }}
     targetRevision: {{ .version }}
+    helm:
+      valuesObject:
+        network: {{ toYaml $.Values.network | nindent 10 }}
 
   destination:
     namespace: crossplane
