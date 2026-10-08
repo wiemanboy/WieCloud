@@ -1,7 +1,7 @@
 observed_xr = option("params").oxr
 
 # Deployment
-_desired_deployment: {str:str | {str:{str:any}} | {str:int | {str:{str:any}}}} = {
+_desired_deployment: {str:any} = {
   apiVersion = "apps/v1"
   kind = "Deployment"
   metadata = {
@@ -30,7 +30,7 @@ if any_true([c.type == "Available" and c.status == "True" for c in observed_depl
   _desired_deployment.metadata.annotations["krm.kcl.dev/ready"] = "True"
 
 # Service
-_desired_service: {str:str | {str:{str:any} | [{str:str | int}]}} = {
+_desired_service: {str:any} = {
   apiVersion = "v1"
   kind = "Service"
   metadata = {
