@@ -28,3 +28,4 @@ spec:
         spec:
           source: |
             {{- .Files.Get "src/resources/app.k" | nindent 12 }}
+            items = compose(option("params"))
