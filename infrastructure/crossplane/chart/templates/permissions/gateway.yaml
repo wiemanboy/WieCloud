@@ -10,4 +10,4 @@ rules:
     resources:
       - httproutes
       - httproutes/status
-    verbs: [ get, list, create, patch, update, delete ]
+    verbs: [ get, list, watch, create, patch, update, delete ]
