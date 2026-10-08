@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: {{ $.Values.targetRepository.url }}
-    targetRevision: implement-crossplane # {{ $.Values.targetRepository.branch }}
+    targetRevision: {{ $.Values.targetRepository.branch }}
     path: applications/website
   destination:
     server: https://kubernetes.default.svc
