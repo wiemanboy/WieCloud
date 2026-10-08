@@ -1,11 +1,11 @@
 observed_xr = option("params").oxr
 
 # Deployment
-
 _desired_deployment: {str:str | {str:{str:any}} | {str:int | {str:{str:any}}}} = {
   apiVersion = "apps/v1"
   kind = "Deployment"
   metadata = {
+    name = observed_xr.metadata.name
     annotations = {
       "krm.kcl.dev/composition-resource-name" = "deployment"
     }
@@ -30,11 +30,11 @@ if any_true([c.type == "Available" and c.status == "True" for c in observed_depl
   _desired_deployment.metadata.annotations["krm.kcl.dev/ready"] = "True"
 
 # Service
-
 _desired_service: {str:str | {str:{str:any} | [{str:str | int}]}} = {
   apiVersion = "v1"
   kind = "Service"
   metadata = {
+    name = observed_xr.metadata.name
     annotations = {
       "krm.kcl.dev/composition-resource-name" = "service"
     }
@@ -51,7 +51,6 @@ if observed_service?.spec?.clusterIP:
   _desired_service.metadata.annotations["krm.kcl.dev/ready"] = "True"
 
 # Update status
-
 _desired_xr: {str:any} = {
   **option("params").dxr
   status.address = observed_service?.spec?.clusterIP or ""

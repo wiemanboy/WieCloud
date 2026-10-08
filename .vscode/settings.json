@@ -1,7 +1,7 @@
 {
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "files.exclude": {
     "**/.git": true
   },
@@ -9,5 +9,9 @@
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
   "files.eol": "\n",
-  "git.autofetch": true
+  "git.autofetch": true,
+  "[helm]": {
+    "editor.defaultFormatter": "kennylong.kubernetes-yaml-formatter",
+    "editor.formatOnSave": true
+  },
 }
