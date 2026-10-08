@@ -50,6 +50,41 @@ observed_service = option("params").ocds["service"]?.Resource
 if observed_service?.spec?.clusterIP:
   _desired_service.metadata.annotations["krm.kcl.dev/ready"] = "True"
 
+# HTTPRoute
+_desired_route: {str:any} = {
+  apiVersion = "gateway.networking.k8s.io/v1"
+  kind = "HTTPRoute"
+  metadata = {
+    name = observed_xr.metadata.name
+    annotations = {
+      "krm.kcl.dev/composition-resource-name" = "httproute"
+    }
+    labels = {"wieman.cloud/app" = observed_xr.metadata.name}
+  }
+  spec = {
+    parentRefs = [{
+      name = "default-envoy-gateway"
+      sectionName = "https"
+      namespace = "envoy-gateway"
+    }]
+    hostnames = ["${observed_xr.metadata.name}.wieman.cloud"]
+    rules = [{
+      matches = [{
+        path = {
+          type = "PathPrefix"
+          value = "/"
+        }
+      }]
+      backednRefs = [{
+        name = _desired_service.metadata.name
+        namespace = "default"
+        port = 8080
+      }]
+    }]
+  }
+}
+
+
 # Update status
 _desired_xr: {str:any} = {
   **option("params").dxr
