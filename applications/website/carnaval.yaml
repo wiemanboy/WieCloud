@@ -1,65 +1,18 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: carnaval
-  labels:
-    app: carnaval
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: carnaval
-  template:
-    metadata:
-      labels:
-        app: carnaval
-    spec:
-      containers:
-        - name: carnaval
-          image: wiemanboy/carnaval:0.0.5
-          ports:
-            - containerPort: 80
-          resources:
-            limits:
-              memory: 256Mi
-            requests:
-              cpu: 2m
-              memory: 128Mi
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: carnaval-svc
-spec:
-  selector:
-    app: carnaval
-  ports:
-    - port: 80
-      targetPort: 80
-  type: ClusterIP
----
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
+apiVersion: wieman.cloud/v1
+kind: App
 metadata:
   name: carnaval
 spec:
-  parentRefs:
-    - name: default-envoy-gateway
-      sectionName: https
-      namespace: envoy-gateway
+  image: docker.io/wiemanboy/carnaval:0.0.5
 
-  hostnames:
-    - carnaval.wieman.cloud
-    - carnaval.lol
-    - www.carnaval.lol
+  route:
+    hostnames:
+      - carnaval.lol
+      - www.carnaval.lol
 
-  rules:
-    - matches:
-        - path:
-            type: PathPrefix
-            value: /
-
-      backendRefs:
-        - name: carnaval-svc
-          namespace: website
-          port: 80
+  resources:
+    limits:
+      memory: 256Mi
+    requests:
+      cpu: 2m
+      memory: 128Mi
