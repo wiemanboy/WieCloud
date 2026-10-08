@@ -1,5 +1,4 @@
 compose = lambda params: any {
-
   ctx: any = params.ctx
   network: any = ctx["apiextensions.crossplane.io/environment"]["network"]
 
@@ -17,8 +16,8 @@ compose = lambda params: any {
 
   default_hostname: str = "${observed_xr.spec.route.subdomain or observed_xr.metadata.name}.${network.hostname}"
   hostnames: [str] = [
-      default_hostname,
-      *observed_xr.spec.route.hostnames
+    default_hostname
+    *observed_xr.spec.route.hostnames
   ]
 
   # Deployment
@@ -101,4 +100,3 @@ compose = lambda params: any {
 
   items: [{str:any}] = [_desired_deployment, _desired_service, _desired_route, _desired_xr]
 }
-
