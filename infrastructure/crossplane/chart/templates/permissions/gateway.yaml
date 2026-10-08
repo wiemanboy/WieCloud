@@ -1,0 +1,10 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: gateway-permissions
+  labels:
+    rbac.crossplane.io/aggregate-to-crossplane: "true"
+rules:
+  - apiGroups: [ gateway.networking.k8s.io ]
+    resources: [ httproutes ]
+    verbs: [ get, list, create, patch, update, delete ]

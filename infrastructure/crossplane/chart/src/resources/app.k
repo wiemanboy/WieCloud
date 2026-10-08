@@ -84,7 +84,6 @@ _desired_route: {str:any} = {
   }
 }
 
-
 # Update status
 _desired_xr: {str:any} = {
   **option("params").dxr
@@ -92,4 +91,4 @@ _desired_xr: {str:any} = {
   status.replicas = observed_deployment?.status?.availableReplicas or 0
 }
 
-items = [_desired_deployment, _desired_service, _desired_xr]
+items = [_desired_deployment, _desired_service, _desired_route _desired_xr]
