@@ -13,6 +13,12 @@ metadata: (str) -> {str:any} = lambda resource_name: str {
   }
 }
 
+default_hostname: str = "${observed_xr.spec.route.subdomain or observed_xr.metadata.name}.${network.hostname}"
+hostnames: [str] = [
+    default_hostname,
+    *observed_xr.spec.route.hostnames
+]
+
 # Deployment
 _desired_deployment: {str:any} = {
   apiVersion = "apps/v1"
@@ -26,7 +32,8 @@ _desired_deployment: {str:any} = {
       spec.containers = [{
         name = "app"
         image = observed_xr.spec.image
-        ports = [{containerPort = 80}]
+        ports = [{containerPort = observed_xr.spec.route.targetPort}]
+        resources = observed_xr.spec.resources
       }]
     }
   }
@@ -43,7 +50,7 @@ _desired_service: {str:any} = {
   metadata = metadata("service")
   spec = {
     selector = {"wieman.cloud/app" = observed_xr.metadata.name}
-    ports = [{protocol = "TCP", port = 8080, targetPort = 80}]
+    ports = [{protocol = "TCP", port = 8080, targetPort = observed_xr.spec.route.targetPort}]
   }
 }
 
@@ -57,12 +64,8 @@ _desired_route: {str:any} = {
   kind = "HTTPRoute"
   metadata = metadata("httproute")
   spec = {
-    parentRefs = [{
-      name = "default-envoy-gateway"
-      sectionName = "https"
-      namespace = "envoy-gateway"
-    }]
-    hostnames = ["${observed_xr.metadata.name}.${network.hostname}"]
+    parentRefs = [network.gateway]
+    hostnames = hostnames
     rules = [{
       matches = [{
         path = {
@@ -72,7 +75,7 @@ _desired_route: {str:any} = {
       }]
       backendRefs = [{
         name = _desired_service.metadata.name
-        namespace = "default"
+        namespace = observed_service.metadata.namespace
         port = 8080
       }]
     }]

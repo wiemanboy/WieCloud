@@ -32,6 +32,7 @@ spec:
                 hostnames:
                   description: Additional hostnames
                   type: array
+                  default: []
                   items:
                     type: string
                 targetPort:
