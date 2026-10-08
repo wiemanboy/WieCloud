@@ -22,6 +22,39 @@ spec:
             image:
               description: The app's OCI container image.
               type: string
+
+            route:
+              type: object
+              properties:
+                subdomain:
+                  description: The app's default subdomain. If empty defaults to name
+                  type: string
+                hostnames:
+                  description: Additional hostnames
+                  type: array
+                  items:
+                    type: string
+                targetPort:
+                  description: The app's exposed port
+                  type: integer
+                  default: 80
+
+            resources:
+              type: object
+              properties:
+                limits:
+                  type: object
+                  properties:
+                    memory:
+                      type: string
+                requests:
+                  type: object
+                  properties:
+                    cpu:
+                      type: string
+                    memory:
+                      type: string
+
           required:
           - image
         status:
@@ -30,9 +63,6 @@ spec:
             replicas:
               description: The number of available app replicas.
               type: integer
-            address:
-              description: The app's IP address.
-              type: string
             hostname:
-              description: The app's hostname.
+              description: The app's default hostname.
               type: string

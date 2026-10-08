@@ -5,3 +5,16 @@ metadata:
   name: my-app
 spec:
   image: nginx
+
+  route:
+    subdomain: my-app-domain
+    hostnames:
+      - also-my-app.wieman.cloud
+    targetPort: 80
+
+  resources:
+    limits:
+      memory: 126Mi
+    requests:
+      cpu: 1m
+      memory: 252Mi

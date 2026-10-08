@@ -7,5 +7,5 @@ data:
     hostname: wieman.cloud
     gateway:
       name: default-envoy-gateway
-      listener: https
+      sectionName: https
       namespace: envoy-gateway
