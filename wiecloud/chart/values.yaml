@@ -220,7 +220,7 @@ infrastructure:
 
   harbor:
     deploy: true
-    version: 1.3.4-add-harbor-chart-to-applications-5c5d38c
+    version: 1.3.4-add-harbor-chart-to-applications-0654155
     restores:
       - name: harbor-registry-restore
         enabled: false
