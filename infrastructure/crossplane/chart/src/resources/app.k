@@ -64,7 +64,11 @@ _desired_route: {str:any} = {
   kind = "HTTPRoute"
   metadata = metadata("httproute")
   spec = {
-    parentRefs = [network.gateway]
+    parentRefs = [{
+      name = network.gateway.name
+      sectionName = network.gateway.sectionName
+      namespace = network.gateway.namespace
+    }]
     hostnames = hostnames
     rules = [{
       matches = [{
@@ -75,7 +79,7 @@ _desired_route: {str:any} = {
       }]
       backendRefs = [{
         name = _desired_service.metadata.name
-        namespace = observed_service.metadata.namespace
+        namespace = observed_xr.metadata.namespace
         port = 8080
       }]
     }]
@@ -89,7 +93,6 @@ if observed_route?.spec?.hostnames?[0]:
 # Update status
 _desired_xr: {str:any} = {
   **option("params").dxr
-  status.address = observed_service?.spec?.clusterIP or ""
   status.hostname = observed_route?.spec?.hostnames?[0] or ""
   status.replicas = observed_deployment?.status?.availableReplicas or 0
 }
