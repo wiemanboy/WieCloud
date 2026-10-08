@@ -5,6 +5,9 @@ metadata:
   labels:
     rbac.crossplane.io/aggregate-to-crossplane: "true"
 rules:
-  - apiGroups: [ gateway.networking.k8s.io ]
-    resources: [ httproutes ]
+  - apiGroups:
+      - gateway.networking.k8s.io
+    resources:
+      - httproutes
+      - httproutes/status
     verbs: [ get, list, create, patch, update, delete ]
