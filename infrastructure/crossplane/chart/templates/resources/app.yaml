@@ -8,13 +8,23 @@ spec:
     kind: App
   mode: Pipeline
   pipeline:
-  - step: create-deployment-and-service
-    functionRef:
-      name: crossplane-contrib-function-kcl
-    input:
-      apiVersion: krm.kcl.dev/v1alpha1
-      kind: KCLInput
-      spec:
-        source: |
-          {{- .Files.Get "src/resources/app.k" | nindent 10 }}
-
+    - step: config
+      functionRef:
+        name: function-environment-configs
+      input:
+        apiVersion: environmentconfigs.fn.crossplane.io/v1beta1
+        kind: Input
+        spec:
+          environmentConfigs:
+            - type: Reference
+              ref:
+                name: network
+    - step: deploy-resources
+      functionRef:
+        name: crossplane-contrib-function-kcl
+      input:
+        apiVersion: krm.kcl.dev/v1alpha1
+        kind: KCLInput
+        spec:
+          source: |
+            {{- .Files.Get "src/resources/app.k" | nindent 10 }}

@@ -1,3 +1,6 @@
+ctx = option("params").ctx
+network = ctx["apiextensions.crossplane.io/environment"]["network"]
+
 observed_xr = option("params").oxr
 
 # Deployment
@@ -67,7 +70,7 @@ _desired_route: {str:any} = {
       sectionName = "https"
       namespace = "envoy-gateway"
     }]
-    hostnames = ["${observed_xr.metadata.name}.wieman.cloud"]
+    hostnames = ["${observed_xr.metadata.name}.${network.hostname}"]
     rules = [{
       matches = [{
         path = {

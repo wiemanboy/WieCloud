@@ -33,3 +33,6 @@ spec:
             address:
               description: The app's IP address.
               type: string
+            hostname:
+              description: The app's hostname.
+              type: string

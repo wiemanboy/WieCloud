@@ -1,0 +1,10 @@
+apiVersion: apiextensions.crossplane.io/v1beta1
+kind: EnvironmentConfig
+metadata:
+  name: network
+data:
+  hostname: wieman.cloud
+  gateway:
+    name: default-envoy-gateway
+    listener: https
+    namespace: envoy-gateway
