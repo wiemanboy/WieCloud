@@ -3,8 +3,9 @@ kind: EnvironmentConfig
 metadata:
   name: network
 data:
-  hostname: wieman.cloud
-  gateway:
-    name: default-envoy-gateway
-    listener: https
-    namespace: envoy-gateway
+  network:
+    hostname: wieman.cloud
+    gateway:
+      name: default-envoy-gateway
+      listener: https
+      namespace: envoy-gateway

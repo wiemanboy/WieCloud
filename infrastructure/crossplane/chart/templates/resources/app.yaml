@@ -10,7 +10,7 @@ spec:
   pipeline:
     - step: config
       functionRef:
-        name: function-environment-configs
+        name: crossplane-contrib-function-environment-configs
       input:
         apiVersion: environmentconfigs.fn.crossplane.io/v1beta1
         kind: Input
