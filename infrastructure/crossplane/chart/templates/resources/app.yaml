@@ -1,0 +1,31 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: app
+spec:
+  compositeTypeRef:
+    apiVersion: wieman.cloud/v1
+    kind: App
+  mode: Pipeline
+  pipeline:
+    - step: config
+      functionRef:
+        name: crossplane-contrib-function-environment-configs
+      input:
+        apiVersion: environmentconfigs.fn.crossplane.io/v1beta1
+        kind: Input
+        spec:
+          environmentConfigs:
+            - type: Reference
+              ref:
+                name: network
+    - step: deploy-resources
+      functionRef:
+        name: crossplane-contrib-function-kcl
+      input:
+        apiVersion: krm.kcl.dev/v1alpha1
+        kind: KCLInput
+        spec:
+          source: |
+            {{- .Files.Get "src/resources/app.k" | nindent 12 }}
+            items = compose(option("params"))

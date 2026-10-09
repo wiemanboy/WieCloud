@@ -9,5 +9,11 @@
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
   "files.eol": "\n",
-  "git.autofetch": true
+  "git.autofetch": true,
+  "[helm]": {
+    "editor.defaultFormatter": "kennylong.kubernetes-yaml-formatter",
+  },
+  "[KCL]": {
+    "editor.formatOnSave": false
+  }
 }
