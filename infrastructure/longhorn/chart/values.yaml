@@ -7,6 +7,9 @@ longhorn:
         cpu: 50m
         memory: 384Mi
 
+routes:
+  deploy: false
+
 network:
   hostname: example.com
   gateway:

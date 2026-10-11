@@ -282,6 +282,8 @@ infrastructure:
   metallb:
     deploy: false
     version: 0.0.11
+    routes:
+      deploy: false
 
   metricsserver:
     deploy: true
