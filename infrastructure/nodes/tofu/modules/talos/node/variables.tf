@@ -3,13 +3,13 @@ variable "name" {
   type        = string
 }
 
-variable "region" {
-  description = "Name of the region the node is located in"
+variable "zone" {
+  description = "Name of the zone the node is located in"
   type        = string
 }
 
-variable "zone" {
-  description = "Name of the zone the node is located in"
+variable "region" {
+  description = "Name of the region the node is located in"
   type        = string
 }
 
