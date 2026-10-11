@@ -10,7 +10,7 @@ module "wiecloud_vlan" {
   vlan_name     = "wiecloud"
   vlan_id       = 10
   subnet        = "10.0.0.1/24"
-  ip_range      = "10.0.0.100-10.0.0.200"
+  ip_range      = "10.0.0.100-10.0.0.149"
   gateway_ports = ["ether2", "ether3"]
 }
 
