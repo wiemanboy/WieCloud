@@ -58,6 +58,36 @@ resource "keycloak_user" "jarno_vienna_shared" {
   }
 }
 
+resource "random_password" "vienna_babetti_password" {
+  length = 20
+}
+
+resource "keycloak_user" "vienna_babetti" {
+  realm_id       = keycloak_realm.wiecloud.id
+  username       = "vienna_babetti"
+  first_name     = "Vienna"
+  last_name      = "Babetti"
+  email          = "vienna.babetti@wieman.cloud"
+  email_verified = true
+  enabled        = true
+
+  initial_password {
+    value     = random_password.vienna_babetti_password.result
+    temporary = true
+  }
+
+  required_actions = [
+    "UPDATE_PASSWORD",
+    "CONFIGURE_TOTP",
+  ]
+
+  lifecycle {
+    ignore_changes = [
+      required_actions
+    ]
+  }
+}
+
 module "super_admin_memberships" {
   source = "./modules/keycloak/groups_memberships"
 
@@ -76,7 +106,7 @@ module "super_admin_memberships" {
     module.infra_kubernetes_group.child_groups.admin.id,
   ]
 
-  members = [keycloak_user.jarno_wieman.username]
+  members = [keycloak_user.jarno_wieman.id]
 }
 
 module "super_user_memberships" {
@@ -97,7 +127,7 @@ module "super_user_memberships" {
     module.infra_kubernetes_group.child_groups.user.id,
   ]
 
-  members = [keycloak_user.jarno_wieman.username]
+  members = [keycloak_user.jarno_wieman.id]
 }
 
 module "nextcloud_memberships" {
@@ -108,5 +138,8 @@ module "nextcloud_memberships" {
     module.app_nextcloud_group.child_groups.user.id,
   ]
 
-  members = [keycloak_user.jarno_vienna_shared.username]
+  members = [
+    keycloak_user.jarno_vienna_shared.id,
+    keycloak_user.vienna_babetti.id,
+  ]
 }

@@ -1,69 +1,23 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: wiemansite
-  labels:
-    app: wiemansite
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: wiemansite
-  template:
-    metadata:
-      labels:
-        app: wiemansite
-    spec:
-      containers:
-        - name: wiemansite
-          image: wiemanboy/wiemansite
-          ports:
-            - containerPort: 3000
-          resources:
-            limits:
-              memory: 176Mi
-            requests:
-              cpu: 1m
-              memory: 88Mi
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: wiemansite-svc
-spec:
-  selector:
-    app: wiemansite
-  ports:
-    - port: 80
-      targetPort: 3000
-  type: ClusterIP
----
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
+apiVersion: wieman.cloud/v1
+kind: App
 metadata:
   name: wiemansite
 spec:
-  parentRefs:
-    - name: default-envoy-gateway
-      sectionName: https
-      namespace: envoy-gateway
+  image: docker.io/wiemanboy/wiemansite
 
-  hostnames:
-    - site.wieman.cloud
-    - wiemanboy.com
-    - www.wiemanboy.com
-    - jarnowieman.com
-    - www.jarnowieman.com
-    - jarnowieman.nl
-    - www.jarnowieman.nl
+  route:
+    hostnames:
+      - wiemanboy.com
+      - www.wiemanboy.com
+      - jarnowieman.com
+      - www.jarnowieman.com
+      - jarnowieman.nl
+      - www.jarnowieman.nl
+    targetPort: 3000
 
-  rules:
-    - matches:
-        - path:
-            type: PathPrefix
-            value: /
-
-      backendRefs:
-        - name: wiemansite-svc
-          namespace: website
-          port: 80
+  resources:
+    limits:
+      memory: 256Mi
+    requests:
+      cpu: 1m
+      memory: 128Mi

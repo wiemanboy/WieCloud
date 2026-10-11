@@ -9,6 +9,6 @@ variable "groups" {
 }
 
 variable "members" {
-  description = "Usernames of the user to assign to groups"
+  description = "Ids of the users to assign to groups"
   type        = list(string)
 }

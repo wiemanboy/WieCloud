@@ -1,0 +1,15 @@
+apiVersion: apiextensions.crossplane.io/v1beta1
+kind: EnvironmentConfig
+metadata:
+  name: network
+data:
+  {{- with .Values.network }}
+  network:
+    hostname: {{ .hostname }}
+    {{- with .gateway }}
+    gateway:
+      name: {{ .name }}
+      sectionName: {{ .listener }}
+      namespace: {{ .namespace }}
+    {{ end }}
+  {{ end }}

@@ -40,8 +40,10 @@ spec:
         app: seaweed-backup
     spec:
       containers:
-        - image: chrislusf/seaweedfs:latest
-          name: seaweedfs
+        - name: seaweedfs
+          {{ with .Values.images.seaweedfs.image -}}
+          image: {{ .registry }}/{{ .repository }}:{{ .version }}
+          {{ end -}}
           command:
             - weed
             - filer.backup
