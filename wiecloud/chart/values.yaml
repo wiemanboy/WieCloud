@@ -278,10 +278,6 @@ infrastructure:
   longhorn:
     deploy: true
     version: 0.3.0-rack-migration-f2134c7
-
-  metallb:
-    deploy: false
-    version: 0.0.11
     routes:
       deploy: false
 
