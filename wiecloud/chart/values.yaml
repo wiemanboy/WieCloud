@@ -277,7 +277,7 @@ infrastructure:
 
   longhorn:
     deploy: true
-    version: 0.3.0-rack-migration-6a0ff9d
+    version: 0.3.0-rack-migration-e0a4556
     routes:
       deploy: false
 
@@ -311,7 +311,7 @@ infrastructure:
 
   wireguard:
     deploy: true
-    version: 0.0.2
+    version: 0.1.0-rack-migration-e0a4556
     vpn:
       peers:
         - pc
