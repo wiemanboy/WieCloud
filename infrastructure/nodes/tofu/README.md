@@ -3,7 +3,7 @@
 ## Network allocation
 
 - Hypervisor: *.0.0.50 - *.0.0.99
-- Nodes: *.0.0.100 - *.0.0.200
+- Nodes: *.0.0.100 - *.0.0.149
 
 ## Initial network setup
 
