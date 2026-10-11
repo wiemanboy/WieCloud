@@ -277,7 +277,7 @@ infrastructure:
 
   longhorn:
     deploy: true
-    version: 0.2.1
+    version: 0.3.0-rack-migration-f2134c7
 
   metallb:
     deploy: false
