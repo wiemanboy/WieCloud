@@ -2,7 +2,7 @@ resource "proxmox_vm_qemu" "vm" {
   name        = var.name
   target_node = var.node
   scsihw      = "virtio-scsi-pci"
-  tags        = [var.name]
+  tags        = var.name
 
   cpu {
     cores = var.spec.cpu_cores
