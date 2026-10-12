@@ -305,7 +305,7 @@ infrastructure:
 
   prometheus:
     deploy: true
-    version: 0.0.5-fix-frequent-logins-1885a54
+    version: 0.0.5-fix-frequent-logins-5cb92ce
 
   seaweedfs:
     deploy: true
