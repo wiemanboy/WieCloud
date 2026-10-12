@@ -2,6 +2,7 @@ resource "proxmox_vm_qemu" "vm" {
   name        = var.name
   target_node = var.node
   scsihw      = "virtio-scsi-pci"
+  tags        = var.name
 
   cpu {
     cores = var.spec.cpu_cores
@@ -37,7 +38,6 @@ resource "proxmox_vm_qemu" "vm" {
   lifecycle {
     ignore_changes = [
       network,
-      tags, # Prevents tofu from planning unnecessary changes, remove when updating nodes
       startup_shutdown
     ]
   }
