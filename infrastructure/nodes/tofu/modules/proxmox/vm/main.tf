@@ -38,7 +38,6 @@ resource "proxmox_vm_qemu" "vm" {
   lifecycle {
     ignore_changes = [
       network,
-      # tags, # Prevents tofu from planning unnecessary changes, remove when updating nodes
       startup_shutdown
     ]
   }
