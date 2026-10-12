@@ -53,7 +53,7 @@ module "talos-controlplane-0" {
   spec = {
     cpu_cores = 4
     disk_size = 100
-    memory    = 6144
+    memory    = 16384
   }
 
   oidc = {
