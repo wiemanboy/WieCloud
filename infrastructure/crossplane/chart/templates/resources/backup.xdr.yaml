@@ -24,7 +24,7 @@ spec:
               type: boolean
               default: true
 
-            backup:
+            target:
               description: The configuration for the backup target
               type: object
               properties:

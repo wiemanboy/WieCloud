@@ -8,6 +8,6 @@ rules:
   - apiGroups:
       - k8up.io/v1
     resources:
-      - httproutes
-      - httproutes/status
+      - Schedules
+      - Restores
     verbs: [ get, list, watch, create, patch, update, delete ]
