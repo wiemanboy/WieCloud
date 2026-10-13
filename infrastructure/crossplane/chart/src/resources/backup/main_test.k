@@ -1,0 +1,135 @@
+test_create_schedule = lambda {
+  resources = compose(create_test_params(None, None, [create_test_backup()], []))
+
+  schedules = get_resources(resources, "Schedule")
+
+  assert len(schedules) == 1
+}
+
+test_create_2_schedules = lambda {
+  resources = compose(create_test_params(None, None, [create_test_backup(), create_test_backup()], []))
+
+  schedules = get_resources(resources, "Schedule")
+
+  assert len(schedules) == 2
+}
+
+test_create_external_secrets = lambda {
+  resources = compose(create_test_params(None, None, [], []))
+
+  secrets = get_resources(resources, "ExternalSecret")
+
+  assert len(secrets) == 2
+}
+
+test_create_1_restore_with_1_backup = lambda {
+  resources = compose(create_test_params(None, None, [create_test_backup()], [create_test_restore()]))
+
+  restores = get_resources(resources, "Restore")
+
+  assert len(restores) == 1
+}
+
+test_create_2_restores_with_1_backup = lambda {
+  resources = compose(create_test_params(None, None, [create_test_backup()], [create_test_restore(), create_test_restore()]))
+
+  restores = get_resources(resources, "Restore")
+
+  assert len(restores) == 2
+}
+
+test_create_1_restore_with_2_backups = lambda {
+  resources = compose(create_test_params(None, None, [create_test_backup(), create_test_backup()], [create_test_restore()]))
+
+  restores = get_resources(resources, "Restore")
+
+  assert len(restores) == 2
+}
+
+test_create_2_restores_with_2_backups = lambda {
+  resources = compose(create_test_params(None, None, [create_test_backup(), create_test_backup()], [create_test_restore(), create_test_restore()]))
+
+  restores = get_resources(resources, "Restore")
+
+  assert len(restores) == 4
+}
+
+create_test_params = lambda name: str, bucket: str, backups: [{str:any}], restores: [{str:any}] {
+  {
+    ctx = {
+      "apiextensions.crossplane.io/environment" = {
+        backups = backups
+      }
+    }
+    oxr = {
+      apiVersion = "wieman.cloud/v1"
+      kind = "Backup"
+      metadata = {
+        name = name
+        namespace = "default"
+      }
+      spec = {
+        target = {
+          bucket = bucket
+        }
+
+        restores = restores
+      }
+    }
+    ocds = {}
+    dxr = {}
+  }
+}
+
+create_test_backup = lambda {
+  {
+    name = "example"
+    s3 = {
+      endpoint = "https://s3.example.com"
+      secret = {
+        name = "credentials"
+        accessKey = "access_key"
+        secretKey = "secret_key"
+        storeRef = {
+          kind = "ClusterSecretStore"
+          name = "credentials-store"
+        }
+      }
+    }
+    repo = {
+      secret = {
+        name = "password"
+        key = "password"
+        storeRef = {
+          kind = "ClusterSecretStore"
+          name = "password-store"
+        }
+      }
+    }
+    schedule = {
+      backup = "0 12 * * *"
+      check = "30 12 * * *"
+      prune = "0 13 * * *"
+    }
+    retention = {
+      keepLast = 5
+      keepDaily = 14
+    }
+  }
+}
+
+create_test_restore = lambda {
+  {
+    name = "restore"
+    enabled = True
+    fromBackup = "example"
+    snapshot = ""
+    claim = {
+      name = "pvc"
+    }
+  }
+}
+
+get_resources = lambda resources: [{str:any}], kind: str {
+  [resource for resource in resources if resource.kind == kind]
+}
