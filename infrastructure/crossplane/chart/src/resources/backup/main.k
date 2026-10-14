@@ -184,7 +184,7 @@ create_schedule: (str, str, SecretRef, S3SecretRef, Backup) -> {str:any} = lambd
       backup = {
         schedule = _backup.schedule.backup
         failedJobsHistoryLimit = 2
-        successfulJobHistoryLimit = 1
+        successfulJobsHistoryLimit = 1
         podSecurityContext = {
           runAsUser = 0
           fsGroup = 999
@@ -195,13 +195,13 @@ create_schedule: (str, str, SecretRef, S3SecretRef, Backup) -> {str:any} = lambd
       check = {
         schedule = _backup.schedule.backup
         failedJobsHistoryLimit = 2
-        successfulJobHistoryLimit = 0
+        successfulJobsHistoryLimit = 0
       }
 
       prune = {
         schedule = _backup.schedule.prune
         failedJobsHistoryLimit = 2
-        successfulJobHistoryLimit = 0
+        successfulJobsHistoryLimit = 0
         retention = _backup.retention
       }
     }
