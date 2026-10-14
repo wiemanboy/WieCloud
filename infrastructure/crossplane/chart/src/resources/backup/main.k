@@ -1,4 +1,4 @@
-import regex
+# import regex
 
 schema StoreRef:
   kind: str
@@ -82,7 +82,7 @@ compose: (any) -> [{str:any}] = lambda params: any {
 }
 
 create_external_secret = lambda name: str, xr_name: str, store_ref: StoreRef, secrets: [any] {
-  name = regex.replace(name, "/", "-")
+  # name = regex.replace(name, "/", "-")
 
   {
     apiVersion = "external-secrets.io/v1"
