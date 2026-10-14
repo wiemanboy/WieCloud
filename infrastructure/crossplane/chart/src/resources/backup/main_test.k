@@ -60,6 +60,18 @@ test_create_external_secret_naming = lambda {
   assert secret.metadata.name == "name-to-dash"
 }
 
+test_create_secret_1_secret = lambda {
+  secret = create_external_secret("name", "xr_name", {kind = "kind", name = ""}, ["test"])
+
+  assert len(secret.spec.data) == 1
+}
+
+test_create_secret_2_secrets = lambda {
+  secret = create_external_secret("name", "xr_name", {kind = "kind", name = ""}, ["test0", "test1"])
+
+  assert len(secret.spec.data) == 2
+}
+
 create_test_params = lambda backups: [{str:any}], restores: [{str:any}], name: str = "backup", bucket: str = "backup-bucket" {
   {
     ctx = {

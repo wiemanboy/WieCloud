@@ -21,14 +21,17 @@ compose: (any) -> [{str:any}] = lambda params: any {
     [backup.repo.secret.password]) for backup in backups]
 
   # S3 credentials secret
-  _desired_s3_credentials_secret = create_external_secret(
-    "",
+  _desired_s3_credentials_secret = [create_external_secret(
+    backup.s3.secret.name,
     observed_xr.metadata.name,
     {
-      kind = ""
-      name = ""
+      kind = backup.s3.secret.storeRef.kind
+      name = backup.s3.secret.storeRef.name
     },
-    [])
+    [
+      backup.s3.secret.accessKey,
+      backup.s3.secret.secretKey
+    ]) for backup in backups]
 
   # Schedules
   _desired_schedules = [
@@ -46,18 +49,18 @@ compose: (any) -> [{str:any}] = lambda params: any {
     **params.dxr
   }
 
-  items: [{str:any}] = [_desired_xr, *_desired_repo_secret, _desired_s3_credentials_secret, *_desired_schedules, *_desired_restores]
+  items: [{str:any}] = [_desired_xr, *_desired_repo_secret, *_desired_s3_credentials_secret, *_desired_schedules, *_desired_restores]
 }
 
-create_external_secret = lambda name: str, xr_name: str, storeRef: StoreRef, secrets: [any] {
+create_external_secret = lambda name: str, xr_name: str, store_ref: StoreRef, secrets: [any] {
   {
     apiVersion = "external-secrets.io/v1"
     kind = "ExternalSecret"
     metadata = metadata(regex.replace(name, "/", "-"), xr_name, "externalsecret" )
     spec = {
       secretStoreRef = {
-        kind = storeRef.kind
-        name = storeRef.name
+        kind = store_ref.kind
+        name = store_ref.name
       }
 
       target = {
