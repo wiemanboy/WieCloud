@@ -18,7 +18,7 @@ data:
     repo:
       secret:
         name: local-backup-repo-password
-        key: password
+        password: password
         storeRef:
           kind: ClusterSecretStore
           name: local-backup-repo-password-store

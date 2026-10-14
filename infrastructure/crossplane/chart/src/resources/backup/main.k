@@ -5,33 +5,24 @@ compose: (any) -> [{str:any}] = lambda params: any {
   observed_xr: any = params.oxr
 
   # Repo secret
-  _desired_repo_secret = create_external_secret(observed_xr.metadata.name, [
+  _desired_repo_secret = [create_external_secret(
+    backup.repo.secret.name,
+    observed_xr.metadata.name,
     {
-      secretKey = ""
-      remoteRef = {
-        key = ""
-        property = ""
-      }
+      kind = backup.repo.secret.storeRef.kind
+      name = backup.repo.secret.storeRef.name
     }
-  ])
+    [backup.repo.secret.password]) for backup in backups]
 
   # S3 credentials secret
-  _desired_s3_credentials_secret = create_external_secret(observed_xr.metadata.name, [
+  _desired_s3_credentials_secret = create_external_secret(
+    "",
+    observed_xr.metadata.name,
     {
-      secretKey = ""
-      remoteRef = {
-        key = ""
-        property = ""
-      }
-    }
-    {
-      secretKey = ""
-      remoteRef = {
-        key = ""
-        property = ""
-      }
-    }
-  ])
+      kind = ""
+      name = ""
+    },
+    [])
 
   # Schedules
   _desired_schedules = [
@@ -40,7 +31,6 @@ compose: (any) -> [{str:any}] = lambda params: any {
 
   # Restores
   restores = observed_xr.spec.restores
-  print(restores)
   _desired_restores = [
     create_restore(restore.name, observed_xr.metadata.name) for restore in restores for backup in backups
   ]
@@ -50,25 +40,33 @@ compose: (any) -> [{str:any}] = lambda params: any {
     **params.dxr
   }
 
-  items: [{str:any}] = [_desired_xr, _desired_repo_secret, _desired_s3_credentials_secret, *_desired_schedules, *_desired_restores]
+  items: [{str:any}] = [_desired_xr, *_desired_repo_secret, _desired_s3_credentials_secret, *_desired_schedules, *_desired_restores]
 }
 
-create_external_secret = lambda xr_name: str, keys: [{str:any}] {
+create_external_secret = lambda name: str, xr_name: str, storeRef: {str:any}, secrets: [any] {
   {
     apiVersion = "external-secrets.io/v1"
     kind = "ExternalSecret"
     metadata = metadata("name", xr_name, "externalsecret" )
     spec = {
       secretStoreRef = {
-        kind = ""
-        name = ""
+        kind = storeRef.kind
+        name = storeRef.name
       }
 
       target = {
-        name = ""
+        name = name
       }
 
-      data = keys
+      data = [
+        {
+          secretKey = secret
+          remoteRef = {
+            key = name
+            property = secret
+          }
+        } for secret in secrets
+      ]
     }
   }
 }
