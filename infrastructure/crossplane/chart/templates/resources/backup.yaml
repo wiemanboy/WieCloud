@@ -27,5 +27,5 @@ spec:
         kind: KCLInput
         spec:
           source: |
-            {{- .Files.Get "src/resources/backup.k" | nindent 12 }}
+            {{- .Files.Get "src/resources/backup/main.k" | nindent 12 }}
             items = compose(option("params"))
