@@ -9,5 +9,6 @@ rules:
       - k8up.io
     resources:
       - schedules
+      - schedules/status
       - restores
     verbs: [ get, list, watch, create, patch, update, delete ]
