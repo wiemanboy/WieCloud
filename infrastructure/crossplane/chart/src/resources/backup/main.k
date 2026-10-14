@@ -1,8 +1,50 @@
 import regex
 
+schema SecretRef:
+  name: str
+  key: str
+
+schema S3SecretRef:
+  accessKey: SecretRef
+  secretKey: SecretRef
+
 schema StoreRef:
   kind: str
   name: str
+
+schema Secret:
+  name: str
+  storeRef: StoreRef
+
+schema S3Secret(Secret):
+  accessKey: str
+  secretKey: str
+
+schema RepoSecret(Secret):
+  password: str
+
+schema S3:
+  endpoint: str
+  secret: S3Secret
+
+schema Repo:
+  secret: RepoSecret
+
+schema Schedule:
+  backup: str
+  prune: str
+  "check": str
+
+schema Retention:
+  keepLast: int
+  keepDaily: int
+
+schema Backup:
+  name: str
+  s3: S3
+  repo: Repo
+  schedule: Schedule
+  retention: Retention
 
 compose: (any) -> [{str:any}] = lambda params: any {
   ctx = params.ctx
@@ -35,7 +77,19 @@ compose: (any) -> [{str:any}] = lambda params: any {
 
   # Schedules
   _desired_schedules = [
-    create_schedule(observed_xr.metadata.name, backup.name) for backup in backups
+    create_schedule(observed_xr.metadata.name, observed_xr.spec.target.bucket, {
+      name = dash_name(backup.repo.secret.name)
+      key: backup.repo.secret.password
+    }, {
+      accessKey = {
+        key = dash_name(backup.s3.secret.name)
+        name = backup.s3.secret.accessKey
+      }
+      secretKey = {
+        key = dash_name(backup.s3.secret.name)
+        name = backup.s3.secret.secretKey
+      }
+    }, backup) for backup in backups
   ]
 
   # Restores
@@ -82,12 +136,12 @@ compose: (any) -> [{str:any}] = lambda params: any {
 }
 
 create_external_secret = lambda name: str, xr_name: str, store_ref: StoreRef, secrets: [any] {
-  stripped_name = regex.replace(name, "/", "-")
+  dashed_name = dash_name(name)
 
   {
     apiVersion = "external-secrets.io/v1"
     kind = "ExternalSecret"
-    metadata = metadata(stripped_name, xr_name, "externalsecret.${stripped_name}" )
+    metadata = metadata(dashed_name, xr_name, "externalsecret.${dashed_name}" )
     spec = {
       secretStoreRef = {
         kind = store_ref.kind
@@ -111,33 +165,24 @@ create_external_secret = lambda name: str, xr_name: str, store_ref: StoreRef, se
   }
 }
 
-create_schedule = lambda xr_name: str, backup_name {
+create_schedule: (str, str, SecretRef, S3SecretRef, Backup) -> {str:any} = lambda xr_name: str, bucket: str, repo_secret_ref: SecretRef, s3_secret_ref: S3SecretRef, _backup: Backup {
   {
     apiVersion = "k8up.io/v1"
     kind = "Schedule"
-    metadata = metadata(backup_name, xr_name, "schedule.${backup_name}")
+    metadata = metadata(_backup.name, xr_name, "schedule.${_backup.name}")
     spec = {
       backend = {
-        repoPasswordSecretRef = {
-          name = ""
-          key = ""
-        }
+        repoPasswordSecretRef = repo_secret_ref
         s3 = {
-          endpoint = ""
-          bucket = ""
-          accessKeyIDSecretRef = {
-            name = ""
-            key = ""
-          }
-          secretAccessKeySecretRef = {
-            name = ""
-            key = ""
-          }
+          endpoint = _backup.s3.endpoint
+          bucket = bucket
+          accessKeyIDSecretRef = s3_secret_ref.accessKey
+          secretAccessKeySecretRef = s3_secret_ref.secretKey
         }
       }
 
       backup = {
-        schedule = ""
+        schedule = _backup.schedule.backup
         failedJobsHistoryLimit = 2
         successfulJobHistoryLimit = 1
         podSecurityContext = {
@@ -148,25 +193,22 @@ create_schedule = lambda xr_name: str, backup_name {
       }
 
       check = {
-        schedule = ""
+        schedule = _backup.schedule.backup
         failedJobsHistoryLimit = 2
         successfulJobHistoryLimit = 0
       }
 
       prune = {
-        schedule = ""
+        schedule = _backup.schedule.prune
         failedJobsHistoryLimit = 2
         successfulJobHistoryLimit = 0
-        retention = {
-          keepLast = 0
-          keepDaily = 0
-        }
+        retention = _backup.retention
       }
     }
   }
 }
 
-create_restore = lambda name: str, xr_name: str {
+create_restore: (str, str) -> {str:any} = lambda name: str, xr_name: str {
   {
     apiVersion = "k8up.io/v1"
     kind = "Restore"
@@ -205,6 +247,10 @@ create_restore = lambda name: str, xr_name: str {
       }
     }
   }
+}
+
+dash_name: (str) -> str = lambda name: str {
+  dashed_name = regex.replace(name, "/", "-")
 }
 
 get_observed_resources_by_resource_type = lambda params: any, resource_type: str {
