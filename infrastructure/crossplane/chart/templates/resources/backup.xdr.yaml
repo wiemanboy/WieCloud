@@ -31,7 +31,9 @@ spec:
                 bucket:
                   description: Target bucket where the backups will be stored
                   type: string
-
+                required:
+                - bucket
+                
             restores:
               description: The configuration for restore targets
               type: array
@@ -59,8 +61,6 @@ spec:
                         description: The name of the PVC that should be restored to
                         type: string
 
-          required:
-          - bucket
         status:
           type: object
           properties:
