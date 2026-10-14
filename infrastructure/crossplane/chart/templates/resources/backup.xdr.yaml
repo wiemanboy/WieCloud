@@ -31,9 +31,9 @@ spec:
                 bucket:
                   description: Target bucket where the backups will be stored
                   type: string
-                required:
-                - bucket
-                
+              required:
+              - bucket
+
             restores:
               description: The configuration for restore targets
               type: array
