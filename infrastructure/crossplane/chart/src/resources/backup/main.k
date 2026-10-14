@@ -10,7 +10,7 @@ compose: (any) -> [{str:any}] = lambda params: any {
 
   observed_xr: any = params.oxr
 
-  # Repo secret
+  # Repo secrets
   _desired_repo_secret = [create_external_secret(
     backup.repo.secret.name,
     observed_xr.metadata.name,
@@ -20,7 +20,7 @@ compose: (any) -> [{str:any}] = lambda params: any {
     }
     [backup.repo.secret.password]) for backup in backups]
 
-  # S3 credentials secret
+  # S3 credentials secrets
   _desired_s3_credentials_secret = [create_external_secret(
     backup.s3.secret.name,
     observed_xr.metadata.name,
@@ -44,19 +44,50 @@ compose: (any) -> [{str:any}] = lambda params: any {
     create_restore(restore.name, observed_xr.metadata.name) for restore in restores for backup in backups
   ]
 
+  # Set ready
+  _desired_external_secrets = [*_desired_repo_secret, *_desired_s3_credentials_secret]
+  observed_external_secrets = get_observed_resources_by_resource_type(params, "externalsecret")
+  _external_secrets_readiness = {
+    name: any_true([
+        c.type == "Ready" and c.status == "True"
+        for c in observed_external_secrets[name]?.Resource?.status?.conditions or []
+    ])
+    for name in _desired_external_secrets
+  }
+
+  observed_schedules = get_observed_resources_by_resource_type(params, "schedule")
+  _schedules_readiness = {
+      name: any_true([
+          c.type == "Ready" and c.status == "True"
+          for c in observed_schedules[name]?.Resource?.status?.conditions or []
+      ])
+      for name in observed_schedules
+  }
+
+  observed_restores = get_observed_resources_by_resource_type(params, "restore")
+  _restores_readiness = {
+      name: any_true([
+          c.type == "Ready" and c.status == "True"
+          for c in observed_restores[name]?.Resource?.status?.conditions or []
+      ])
+      for name in observed_restores
+  }
+
   # Update status
   _desired_xr: {str:any} = {
     **params.dxr
   }
 
-  items: [{str:any}] = [_desired_xr, *_desired_repo_secret, *_desired_s3_credentials_secret, *_desired_schedules, *_desired_restores]
+  items: [{str:any}] = [_desired_xr, *_desired_external_secrets, *_desired_schedules, *_desired_restores]
 }
 
 create_external_secret = lambda name: str, xr_name: str, store_ref: StoreRef, secrets: [any] {
+  name = regex.replace(name, "/", "-")
+
   {
     apiVersion = "external-secrets.io/v1"
     kind = "ExternalSecret"
-    metadata = metadata(regex.replace(name, "/", "-"), xr_name, "externalsecret" )
+    metadata = metadata(name, xr_name, "externalsecret.${name}" )
     spec = {
       secretStoreRef = {
         kind = store_ref.kind
@@ -84,7 +115,7 @@ create_schedule = lambda xr_name: str, backup_name {
   {
     apiVersion = "k8up.io/v1"
     kind = "Schedule"
-    metadata = metadata(backup_name, xr_name, "schedule")
+    metadata = metadata(backup_name, xr_name, "schedule.${backup_name}")
     spec = {
       backend = {
         repoPasswordSecretRef = {
@@ -139,7 +170,7 @@ create_restore = lambda name: str, xr_name: str {
   {
     apiVersion = "k8up.io/v1"
     kind = "Restore"
-    metadata = metadata(name, xr_name, "restore")
+    metadata = metadata(name, xr_name, "restore.${name}")
     spec = {
       restoreMethod = {
         folder = {
@@ -174,6 +205,20 @@ create_restore = lambda name: str, xr_name: str {
       }
     }
   }
+}
+
+get_observed_resources_by_resource_type = lambda params: any, resource_type: str {
+  ocds = params.ocds
+
+  resources = {
+    name: params.ocds[name]?.Resource
+    for name in params.ocds
+    if name.startswith(resource_type)
+  }
+}
+
+set_ready = lambda resource: any {
+  resource.metadata.annotations["krm.kcl.dev/ready"] = "True"
 }
 
 metadata: (str, str, str) -> {str:any} = lambda name: str, xr_name: str, resource_name: str {
