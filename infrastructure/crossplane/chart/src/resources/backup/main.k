@@ -1,3 +1,9 @@
+import regex
+
+schema StoreRef:
+  kind: str
+  name: str
+
 compose: (any) -> [{str:any}] = lambda params: any {
   ctx = params.ctx
   backups: any = ctx["apiextensions.crossplane.io/environment"]["backups"]
@@ -43,11 +49,11 @@ compose: (any) -> [{str:any}] = lambda params: any {
   items: [{str:any}] = [_desired_xr, *_desired_repo_secret, _desired_s3_credentials_secret, *_desired_schedules, *_desired_restores]
 }
 
-create_external_secret = lambda name: str, xr_name: str, storeRef: {str:any}, secrets: [any] {
+create_external_secret = lambda name: str, xr_name: str, storeRef: StoreRef, secrets: [any] {
   {
     apiVersion = "external-secrets.io/v1"
     kind = "ExternalSecret"
-    metadata = metadata("name", xr_name, "externalsecret" )
+    metadata = metadata(regex.replace(name, "/", "-"), xr_name, "externalsecret" )
     spec = {
       secretStoreRef = {
         kind = storeRef.kind
@@ -169,7 +175,7 @@ create_restore = lambda name: str, xr_name: str {
 
 metadata: (str, str, str) -> {str:any} = lambda name: str, xr_name: str, resource_name: str {
   {
-    name = xr_name
+    name = name
     annotations = {
       "krm.kcl.dev/composition-resource-name" = resource_name
     }

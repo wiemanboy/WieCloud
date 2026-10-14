@@ -1,5 +1,5 @@
 test_create_schedule = lambda {
-  resources = compose(create_test_params(None, None, [create_test_backup()], []))
+  resources = compose(create_test_params([create_test_backup()], []))
 
   schedules = get_resources(resources, "Schedule")
 
@@ -7,7 +7,7 @@ test_create_schedule = lambda {
 }
 
 test_create_2_schedules = lambda {
-  resources = compose(create_test_params(None, None, [create_test_backup(), create_test_backup()], []))
+  resources = compose(create_test_params([create_test_backup(), create_test_backup()], []))
 
   schedules = get_resources(resources, "Schedule")
 
@@ -15,7 +15,7 @@ test_create_2_schedules = lambda {
 }
 
 test_create_external_secrets = lambda {
-  resources = compose(create_test_params(None, None, [], []))
+  resources = compose(create_test_params([create_test_backup()], []))
 
   secrets = get_resources(resources, "ExternalSecret")
 
@@ -23,7 +23,7 @@ test_create_external_secrets = lambda {
 }
 
 test_create_1_restore_with_1_backup = lambda {
-  resources = compose(create_test_params(None, None, [create_test_backup()], [create_test_restore()]))
+  resources = compose(create_test_params([create_test_backup()], [create_test_restore()]))
 
   restores = get_resources(resources, "Restore")
 
@@ -31,7 +31,7 @@ test_create_1_restore_with_1_backup = lambda {
 }
 
 test_create_2_restores_with_1_backup = lambda {
-  resources = compose(create_test_params(None, None, [create_test_backup()], [create_test_restore(), create_test_restore()]))
+  resources = compose(create_test_params([create_test_backup()], [create_test_restore(), create_test_restore()]))
 
   restores = get_resources(resources, "Restore")
 
@@ -39,7 +39,7 @@ test_create_2_restores_with_1_backup = lambda {
 }
 
 test_create_1_restore_with_2_backups = lambda {
-  resources = compose(create_test_params(None, None, [create_test_backup(), create_test_backup()], [create_test_restore()]))
+  resources = compose(create_test_params([create_test_backup(), create_test_backup()], [create_test_restore()]))
 
   restores = get_resources(resources, "Restore")
 
@@ -47,14 +47,20 @@ test_create_1_restore_with_2_backups = lambda {
 }
 
 test_create_2_restores_with_2_backups = lambda {
-  resources = compose(create_test_params(None, None, [create_test_backup(), create_test_backup()], [create_test_restore(), create_test_restore()]))
+  resources = compose(create_test_params([create_test_backup(), create_test_backup()], [create_test_restore(), create_test_restore()]))
 
   restores = get_resources(resources, "Restore")
 
   assert len(restores) == 4
 }
 
-create_test_params = lambda name: str, bucket: str, backups: [{str:any}], restores: [{str:any}] {
+test_create_external_secret_naming = lambda {
+  secret = create_external_secret("name/to/dash", "xr_name", {kind = "kind", name = ""}, [])
+
+  assert secret.metadata.name == "name-to-dash"
+}
+
+create_test_params = lambda backups: [{str:any}], restores: [{str:any}], name: str = "backup", bucket: str = "backup-bucket" {
   {
     ctx = {
       "apiextensions.crossplane.io/environment" = {
