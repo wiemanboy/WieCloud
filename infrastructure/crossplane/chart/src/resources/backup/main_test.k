@@ -72,7 +72,15 @@ test_create_secret_2_secrets = lambda {
   assert len(secret.spec.data) == 2
 }
 
-create_test_params = lambda backups: [{str:any}], restores: [{str:any}], name: str = "backup", bucket: str = "backup-bucket" {
+test_disable_backups = lambda {
+  resources = compose(create_test_params([create_test_backup()], [], enabled=False))
+
+  schedules = get_resources(resources, "Schedule")
+
+  assert len(schedules) == 0
+}
+
+create_test_params = lambda backups: [{str:any}], restores: [{str:any}], enabled: bool = True, name: str = "backup", bucket: str = "backup-bucket" {
   {
     ctx = {
       "apiextensions.crossplane.io/environment" = {
@@ -87,6 +95,8 @@ create_test_params = lambda backups: [{str:any}], restores: [{str:any}], name: s
         namespace = "default"
       }
       spec = {
+        enabled = enabled
+
         target = {
           bucket = bucket
         }
