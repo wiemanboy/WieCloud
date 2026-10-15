@@ -104,31 +104,22 @@ compose: (any) -> [{str:any}] = lambda params: any {
   # Set ready
   _desired_external_secrets = [*_desired_repo_secret, *_desired_s3_credentials_secret]
   observed_external_secrets = get_observed_resources_by_resource_type(params, "externalsecret")
-  _external_secrets_readiness = {
-    name: any_true([
-        c.type == "Ready" and c.status == "True"
-        for c in observed_external_secrets[name]?.Resource?.status?.conditions or []
-    ])
-    for name in _desired_external_secrets
-  }
+  [ set_ready(get_resource_by_name(_desired_external_secrets, secret.metadata.name )) for secret in observed_external_secrets if any_true([
+      condition.type == "Ready" and condition.status == "True"
+      for condition in secret[name]?.Resource?.status?.conditions or []
+  ]) ]
 
   observed_schedules = get_observed_resources_by_resource_type(params, "schedule")
-  _schedules_readiness = {
-      name: any_true([
-          c.type == "Ready" and c.status == "True"
-          for c in observed_schedules[name]?.Resource?.status?.conditions or []
-      ])
-      for name in observed_schedules
-  }
+  [ set_ready(get_resource_by_name(_desired_schedules, schedule.metadata.name )) for schedule in observed_schedules if any_true([
+      condition.type == "Ready" and condition.status == "True"
+      for condition in schedule[name]?.Resource?.status?.conditions or []
+  ]) ]
 
   observed_restores = get_observed_resources_by_resource_type(params, "restore")
-  _restores_readiness = {
-      name: any_true([
-          c.type == "Ready" and c.status == "True"
-          for c in observed_restores[name]?.Resource?.status?.conditions or []
-      ])
-      for name in observed_restores
-  }
+  [ set_ready(get_resource_by_name(_desired_restores, restore.metadata.name )) for restore in observed_restores if any_true([
+      condition.type == "Ready" and condition.status == "True"
+      for condition in restore[name]?.Resource?.status?.conditions or []
+  ]) ]
 
   # Update status
   _desired_xr: {str:any} = {
@@ -264,6 +255,10 @@ get_observed_resources_by_resource_type = lambda params: any, resource_type: str
     for name in params.ocds
     if name.startswith(resource_type)
   }
+}
+
+get_resource_by_name = lambda resources: [], name: str {
+  [ resource for resource in resources if resource.metadata.name == name][0]
 }
 
 set_ready = lambda resource: any {
