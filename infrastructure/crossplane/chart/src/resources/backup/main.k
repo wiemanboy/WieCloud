@@ -107,6 +107,10 @@ compose: (any) -> [{str:any}] = lambda params: any {
   [ set_ready(secret) for secret in _desired_external_secrets]
 
   observed_schedules = get_observed_resources_by_resource_type(params, "schedule")
+
+  if any_true([condition.type == "Ready" and condition.status == "True" for condition in observed_schedules[0]?.status?.conditions or []]):
+    set_ready(_desired_schedules[0])
+
   observed_restores = get_observed_resources_by_resource_type(params, "restore")
 
   # Update status
