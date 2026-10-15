@@ -106,19 +106,19 @@ compose: (any) -> [{str:any}] = lambda params: any {
   observed_external_secrets = get_observed_resources_by_resource_type(params, "externalsecret")
   [ set_ready(get_resource_by_name(_desired_external_secrets, secret.metadata.name )) for secret in observed_external_secrets if any_true([
       condition.type == "Ready" and condition.status == "True"
-      for condition in secret[name]?.Resource?.status?.conditions or []
+      for condition in secret.status?.conditions or []
   ]) ]
 
   observed_schedules = get_observed_resources_by_resource_type(params, "schedule")
   [ set_ready(get_resource_by_name(_desired_schedules, schedule.metadata.name )) for schedule in observed_schedules if any_true([
       condition.type == "Ready" and condition.status == "True"
-      for condition in schedule[name]?.Resource?.status?.conditions or []
+      for condition in schedule.status?.conditions or []
   ]) ]
 
   observed_restores = get_observed_resources_by_resource_type(params, "restore")
   [ set_ready(get_resource_by_name(_desired_restores, restore.metadata.name )) for restore in observed_restores if any_true([
       condition.type == "Ready" and condition.status == "True"
-      for condition in restore[name]?.Resource?.status?.conditions or []
+      for condition in restore.status?.conditions or []
   ]) ]
 
   # Update status
