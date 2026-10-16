@@ -13,7 +13,6 @@ spec:
     helm:
       valuesObject:
         images: {{ toYaml $.Values.images | nindent 10 }}
-        backups: {{ toYaml $.Values.backups | nindent 10 }}
         restores: {{ toYaml .restores | nindent 10 }}
 
         forgejo:
