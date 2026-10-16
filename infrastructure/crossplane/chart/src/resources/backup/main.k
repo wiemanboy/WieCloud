@@ -201,10 +201,9 @@ create_schedule: (str, str, SecretRef, S3SecretRef, SecurityContext, Backup) -> 
         failedJobsHistoryLimit = 2
         successfulJobsHistoryLimit = 1
         podSecurityContext = SecurityContext {
-          runAsUser = 0
-          fsGroup = 999
-          fsGroupChangePolicy = "OnRootMismatch"
-          **backup_pod_security_context
+            runAsUser = backup_pod_security_context.runAsUser or 0
+            fsGroup = backup_pod_security_context.fsGroup or 999
+            fsGroupChangePolicy = backup_pod_security_context.fsGroupChangePolicy or "OnRootMismatch"
         }
       }
 
