@@ -105,7 +105,7 @@ targetRepository:
 applications:
   forgejo:
     deploy: true
-    version: 0.0.0-create-wiecloud-backup-resource-92fbda8
+    version: 0.0.1-create-wiecloud-backup-resource-d88b59d
     cnpg:
       restore: false
     restores:
@@ -220,7 +220,7 @@ infrastructure:
 
   crossplane:
     deploy: true
-    version: 0.1.0-create-wiecloud-backup-resource-92fbda8
+    version: 0.1.0-create-wiecloud-backup-resource-d88b59d
 
   dragonflydb:
     deploy: true
