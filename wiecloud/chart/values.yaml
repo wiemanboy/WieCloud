@@ -56,6 +56,13 @@ backups:
       retention:
         keepLast: 5
         keepDaily: 14
+    schedule:
+      backup: "0 12 * * *"
+      check: "30 12 * * *"
+      prune: "0 13 * * *"
+    retention:
+      keepLast: 5
+      keepDaily: 14
   - name: aws
     s3:
       endpoint: https://s3.eu-central-1.amazonaws.com
@@ -81,6 +88,13 @@ backups:
       retention:
         keepLast: 5
         keepDaily: 14
+    schedule:
+      backup: "0 12 * * *"
+      check: "30 12 * * *"
+      prune: "0 13 * * *"
+    retention:
+      keepLast: 5
+      keepDaily: 14
 
 targetRepository:
   url: https://github.com/wiemanboy/WieCloud.git
