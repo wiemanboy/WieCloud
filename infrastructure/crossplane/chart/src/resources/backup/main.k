@@ -112,7 +112,7 @@ compose: (any) -> [{str:any}] = lambda params: any {
       observed_xr.metadata.name,
       restore.claim.name,
       restore.snapshot,
-      get_resource_by_name(_desired_schedules, restore.fromBackup).spec.backend
+      get_resource_by_name(_desired_schedules, restore.fromBackup).spec.backend or {}
       ) for restore in restores if restore.enabled == True
   ]
 
@@ -255,7 +255,7 @@ get_observed_resources_by_resource_type = lambda params: any, resource_type: str
 }
 
 get_resource_by_name = lambda resources: [], name: str {
-  [ resource for resource in resources if resource.metadata.name == name][0]
+  [ resource for resource in resources if resource.metadata.name == name][0] or None
 }
 
 set_ready = lambda resource: any {
