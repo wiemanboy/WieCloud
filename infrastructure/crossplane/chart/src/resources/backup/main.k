@@ -76,21 +76,24 @@ compose: (any) -> [{str:any}] = lambda params: any {
     ]) for backup in backups]
 
   # Schedules
-  _desired_schedules = [
-    create_schedule(observed_xr.metadata.name, observed_xr.spec.target.bucket, {
-      name = dash_name(backup.repo.secret.name)
-      key: backup.repo.secret.password
-    }, {
-      accessKey = {
-        key = dash_name(backup.s3.secret.name)
-        name = backup.s3.secret.accessKey
-      }
-      secretKey = {
-        key = dash_name(backup.s3.secret.name)
-        name = backup.s3.secret.secretKey
-      }
-    }, backup) for backup in backups
-  ]
+  if observed_xr.spec.enabled == False:
+    _desired_schedules = []
+  else:
+    _desired_schedules = [
+      create_schedule(observed_xr.metadata.name, observed_xr.spec.target.bucket, {
+        name = dash_name(backup.repo.secret.name)
+        key: backup.repo.secret.password
+      }, {
+        accessKey = {
+          key = dash_name(backup.s3.secret.name)
+          name = backup.s3.secret.accessKey
+        }
+        secretKey = {
+          key = dash_name(backup.s3.secret.name)
+          name = backup.s3.secret.secretKey
+        }
+      }, backup) for backup in backups
+    ]
 
   if observed_xr.spec.enabled is False:
     _desired_schedules = []
@@ -98,7 +101,7 @@ compose: (any) -> [{str:any}] = lambda params: any {
   # Restores
   restores = observed_xr.spec.restores
   _desired_restores = [
-    create_restore(restore.name, observed_xr.metadata.name) for restore in restores for backup in backups
+    create_restore(restore.name, observed_xr.metadata.name) for restore in restores if restore.enabled == True
   ]
 
   # Set ready

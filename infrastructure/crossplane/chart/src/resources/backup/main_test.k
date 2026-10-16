@@ -43,7 +43,7 @@ test_create_1_restore_with_2_backups = lambda {
 
   restores = get_resources(resources, "Restore")
 
-  assert len(restores) == 2
+  assert len(restores) == 1
 }
 
 test_create_2_restores_with_2_backups = lambda {
@@ -51,7 +51,7 @@ test_create_2_restores_with_2_backups = lambda {
 
   restores = get_resources(resources, "Restore")
 
-  assert len(restores) == 4
+  assert len(restores) == 2
 }
 
 test_create_external_secret_naming = lambda {
