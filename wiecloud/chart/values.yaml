@@ -44,19 +44,10 @@ backups:
     repo:
       secret:
         name: local-backup-repo-password
-        key: password
         password: password
         storeRef:
           kind: ClusterSecretStore
           name: local-backup-repo-password-store
-    default:
-      schedule:
-        backup: "0 12 * * *"
-        check: "30 12 * * *"
-        prune: "0 13 * * *"
-      retention:
-        keepLast: 5
-        keepDaily: 14
     schedule:
       backup: "0 12 * * *"
       check: "30 12 * * *"
@@ -77,19 +68,10 @@ backups:
     repo:
       secret:
         name: aws-backup-repo-password
-        key: password
         password: password
         storeRef:
           kind: ClusterSecretStore
           name: aws
-    default:
-      schedule:
-        backup: "0 0 * * *"
-        check: "30 0 * * *"
-        prune: "0 1 * * *"
-      retention:
-        keepLast: 5
-        keepDaily: 14
     schedule:
       backup: "0 12 * * *"
       check: "30 12 * * *"

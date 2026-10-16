@@ -12,7 +12,6 @@ spec:
     targetRevision: {{ .version }}
     helm:
       valuesObject:
-        backups: {{ toYaml $.Values.backups | nindent 10 }}
         restores: {{ toYaml .restores | nindent 10 }}
 
         harbor:
