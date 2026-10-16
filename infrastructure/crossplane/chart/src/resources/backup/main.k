@@ -144,7 +144,7 @@ compose: (any) -> [{str:any}] = lambda params: any {
   # Update status
   _desired_xr: {str:any} = {
     **params.dxr
-    targets = [
+    status.targets = [
       {
         name = backup.name
         endpoint = backup.s3.endpoint
