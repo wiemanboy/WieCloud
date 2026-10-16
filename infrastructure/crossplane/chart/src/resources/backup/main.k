@@ -101,7 +101,7 @@ compose: (any) -> [{str:any}] = lambda params: any {
           key = backup.s3.secret.secretKey
         }
       },
-      observed_xr.spec.backup.podSpec.securityContext,
+      observed_xr.spec.backup.podSpec?.securityContext or {},
       backup
     ) for backup in backups
   ]
