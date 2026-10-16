@@ -127,7 +127,7 @@ create_test_params = lambda backups: [{str:any}], restores: [{str:any}], enabled
   }
 }
 
-create_test_backup = lambda {
+create_test_backup: () -> {str:any} = lambda {
   {
     name = "example"
     s3 = {
@@ -164,7 +164,7 @@ create_test_backup = lambda {
   }
 }
 
-create_test_restore = lambda {
+create_test_restore:  () -> {str:any}= lambda {
   {
     name = "restore"
     enabled = True
@@ -176,6 +176,6 @@ create_test_restore = lambda {
   }
 }
 
-get_resources = lambda resources: [{str:any}], kind: str {
+get_resources: ([{str:any}], str) -> [{str:any}] = lambda resources: [{str:any}], kind: str {
   [resource for resource in resources if resource.kind == kind]
 }

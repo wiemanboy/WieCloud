@@ -155,7 +155,7 @@ compose: (any) -> [{str:any}] = lambda params: any {
   items: [{str:any}] = [_desired_xr, *_desired_external_secrets, *_desired_schedules, *_desired_restores]
 }
 
-create_external_secret = lambda name: str, xr_name: str, store_ref: StoreRef, secrets: [any] {
+create_external_secret: (str, str, StoreRef, [str]) -> {str:any} = lambda name: str, xr_name: str, store_ref: StoreRef, secrets: [str] {
   dashed_name = dash_name(name)
 
   {
@@ -228,7 +228,7 @@ create_schedule: (str, str, SecretRef, S3SecretRef, SecurityContext, Backup) -> 
   }
 }
 
-create_restore = lambda name: str, xr_name: str, claim_name: str, snapshot: str, backend: {str:any} {
+create_restore: (str, str, str, str, {str:any}) -> {str:any} = lambda name: str, xr_name: str, claim_name: str, snapshot: str, backend: {str:any} {
   {
     apiVersion = "k8up.io/v1"
     kind = "Restore"
@@ -256,17 +256,17 @@ dash_name: (str) -> str = lambda name: str {
   dashed_name = regex.replace(name, "/", "-")
 }
 
-get_observed_resources_by_resource_type = lambda params: any, resource_type: str {
+get_observed_resources_by_resource_type: (any, str) -> [any] = lambda params: any, resource_type: str {
   ocds = params.ocds
 
   [params.ocds[name]?.Resource for name in params.ocds if name.startswith(resource_type)]
 }
 
-get_resource_by_name = lambda resources: [], name: str {
+get_resource_by_name: ([any], str) -> any = lambda resources: [], name: str {
   [ resource for resource in resources if resource.metadata.name == name][0] or None
 }
 
-set_ready = lambda resource: any {
+set_ready: (any) = lambda resource: any {
   resource.metadata.annotations["krm.kcl.dev/ready"] = "True"
 }
 
