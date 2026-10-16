@@ -22,7 +22,6 @@ schema S3Secret(Secret):
 
 schema RepoSecret(Secret):
   password: str
-  key?: str # Temp
 
 schema S3:
   endpoint: str
@@ -46,7 +45,6 @@ schema Backup:
   repo: Repo
   schedule: Schedule
   retention: Retention
-  default?: any # Temp
 
 schema SecurityContext:
   runAsUser?: int
@@ -101,7 +99,7 @@ compose: (any) -> [{str:any}] = lambda params: any {
           key = backup.s3.secret.secretKey
         }
       },
-      observed_xr.spec.backup.podSpec?.securityContext or {},
+      observed_xr.spec.backup?.podSpec?.securityContext or {},
       backup
     ) for backup in backups
   ]
