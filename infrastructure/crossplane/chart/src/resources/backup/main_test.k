@@ -80,7 +80,19 @@ test_disable_backups = lambda {
   assert len(schedules) == 0
 }
 
-create_test_params = lambda backups: [{str:any}], restores: [{str:any}], enabled: bool = True, name: str = "backup", bucket: str = "backup-bucket" {
+test_overwrite_backup_pod_security_context = lambda {
+  resources = compose(create_test_params([create_test_backup()], [], backup_pod_security_context={
+    runAsUser = 33
+    fsGroup = 33
+  }))
+
+  schedules = get_resources(resources, "Schedule")
+
+  assert schedules[0].spec.backup.podSecurityContext.runAsUser == 33
+  assert schedules[0].spec.backup.podSecurityContext.fsGroup == 33
+}
+
+create_test_params = lambda backups: [{str:any}], restores: [{str:any}], enabled: bool = True, name: str = "backup", bucket: str = "backup-bucket", backup_pod_security_context: {str:any} = {} {
   {
     ctx = {
       "apiextensions.crossplane.io/environment" = {
@@ -102,6 +114,12 @@ create_test_params = lambda backups: [{str:any}], restores: [{str:any}], enabled
         }
 
         restores = restores
+
+        backup = {
+          podSpec = {
+            securityContext = backup_pod_security_context
+          }
+        }
       }
     }
     ocds = {}

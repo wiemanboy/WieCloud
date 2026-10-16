@@ -46,6 +46,11 @@ schema Backup:
   schedule: Schedule
   retention: Retention
 
+schema SecurityContext:
+  runAsUser?: int
+  fsGroup?: int
+  fsGroupChangePolicy?: str
+
 compose: (any) -> [{str:any}] = lambda params: any {
   ctx = params.ctx
   backups: any = ctx["apiextensions.crossplane.io/environment"]["backups"]
@@ -77,19 +82,26 @@ compose: (any) -> [{str:any}] = lambda params: any {
 
   # Schedules
   _desired_schedules = [
-    create_schedule(observed_xr.metadata.name, observed_xr.spec.target.bucket, {
-      name = dash_name(backup.repo.secret.name)
-      key: backup.repo.secret.password
-    }, {
-      accessKey = {
-        name = dash_name(backup.s3.secret.name)
-        key = backup.s3.secret.accessKey
-      }
-      secretKey = {
-        name = dash_name(backup.s3.secret.name)
-        key = backup.s3.secret.secretKey
-      }
-    }, backup) for backup in backups
+    create_schedule(
+      observed_xr.metadata.name,
+      observed_xr.spec.target.bucket,
+      {
+        name = dash_name(backup.repo.secret.name)
+        key: backup.repo.secret.password
+      },
+      {
+        accessKey = {
+          name = dash_name(backup.s3.secret.name)
+          key = backup.s3.secret.accessKey
+        }
+        secretKey = {
+          name = dash_name(backup.s3.secret.name)
+          key = backup.s3.secret.secretKey
+        }
+      },
+      observed_xr.spec.backup.podSpec.securityContext,
+      backup
+    ) for backup in backups
   ]
 
   if observed_xr.spec.enabled is False:
@@ -168,7 +180,7 @@ create_external_secret = lambda name: str, xr_name: str, store_ref: StoreRef, se
   }
 }
 
-create_schedule: (str, str, SecretRef, S3SecretRef, Backup) -> {str:any} = lambda xr_name: str, bucket: str, repo_secret_ref: SecretRef, s3_secret_ref: S3SecretRef, _backup: Backup {
+create_schedule: (str, str, SecretRef, S3SecretRef, SecurityContext, Backup) -> {str:any} = lambda xr_name: str, bucket: str, repo_secret_ref: SecretRef, s3_secret_ref: S3SecretRef, backup_pod_security_context: SecurityContext, _backup: Backup {
   {
     apiVersion = "k8up.io/v1"
     kind = "Schedule"
@@ -188,11 +200,11 @@ create_schedule: (str, str, SecretRef, S3SecretRef, Backup) -> {str:any} = lambd
         schedule = _backup.schedule.backup
         failedJobsHistoryLimit = 2
         successfulJobsHistoryLimit = 1
-        podSecurityContext = {
+        podSecurityContext = SecurityContext {
           runAsUser = 0
           fsGroup = 999
           fsGroupChangePolicy = "OnRootMismatch"
-        }
+        } | backup_pod_security_context
       }
 
       check = {

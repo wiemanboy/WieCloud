@@ -7,11 +7,6 @@ spec:
 
   target:
     bucket: wiemancloud-test-bucket
-    # podSpec:
-    #   podSecurityContext:
-    #     runAsUser: 33
-    #     fsGroup: 33
-    #     fsGroupChangePolicy: OnRootMismatch
 
   restores:
     - name: test-restore
@@ -20,6 +15,12 @@ spec:
       snapshot: ""
       claim:
         name: test
+
+  backup:
+    podSpec:
+      securityContext:
+        runAsUser: 33
+        fsGroup: 33
 
 status:
   targets:

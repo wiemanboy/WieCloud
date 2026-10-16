@@ -60,6 +60,21 @@ spec:
                       name:
                         description: The name of the PVC that should be restored to
                         type: string
+            backup:
+              description: Backup config specific to this resource
+              type: object
+              properties:
+                podSpec:
+                  description: Spec overwrite for the backup pod
+                  type: object
+                  properties:
+                    securityContext:
+                      type: object
+                      properties:
+                        runAsUser:
+                          type: integer
+                        fsGroup:
+                          type: integer
 
         status:
           type: object
