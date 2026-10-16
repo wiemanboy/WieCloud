@@ -45,6 +45,7 @@ backups:
       secret:
         name: local-backup-repo-password
         key: password
+        password: password
         storeRef:
           kind: ClusterSecretStore
           name: local-backup-repo-password-store
@@ -77,6 +78,7 @@ backups:
       secret:
         name: aws-backup-repo-password
         key: password
+        password: password
         storeRef:
           kind: ClusterSecretStore
           name: aws
