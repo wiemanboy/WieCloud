@@ -82,12 +82,12 @@ compose: (any) -> [{str:any}] = lambda params: any {
       key: backup.repo.secret.password
     }, {
       accessKey = {
-        key = dash_name(backup.s3.secret.name)
-        name = backup.s3.secret.accessKey
+        name = dash_name(backup.s3.secret.name)
+        key = backup.s3.secret.accessKey
       }
       secretKey = {
-        key = dash_name(backup.s3.secret.name)
-        name = backup.s3.secret.secretKey
+        name = dash_name(backup.s3.secret.name)
+        key = backup.s3.secret.secretKey
       }
     }, backup) for backup in backups
   ]
