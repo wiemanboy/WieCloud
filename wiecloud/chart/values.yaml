@@ -218,7 +218,7 @@ infrastructure:
 
   crossplane:
     deploy: true
-    version: 0.1.0-create-wiecloud-backup-resource-c4183f0
+    version: 0.1.0-create-wiecloud-backup-resource-1857e98
 
   dragonflydb:
     deploy: true
