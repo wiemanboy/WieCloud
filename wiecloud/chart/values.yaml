@@ -87,7 +87,7 @@ targetRepository:
 applications:
   forgejo:
     deploy: true
-    version: 0.0.1-create-wiecloud-backup-resource-2a13641
+    version: 0.0.1-create-wiecloud-backup-resource-4afb604
     cnpg:
       restore: false
     restores:
@@ -100,7 +100,7 @@ applications:
 
   minecraft:
     deploy: true
-    version: 1.2.1
+    version: 1.2.2-create-wiecloud-backup-resource-4afb604
     restores:
       - name: minecraft-restore
         enabled: false
@@ -132,7 +132,7 @@ applications:
 
   nextcloud:
     deploy: true
-    version: 1.1.1
+    version: 1.1.2-create-wiecloud-backup-resource-4afb604
     cnpg:
       restore: false
     seaweedfs:
@@ -150,7 +150,7 @@ applications:
 
   satisfactory:
     deploy: true
-    version: 0.0.1
+    version: 0.0.2-create-wiecloud-backup-resource-4afb604
     restores:
       - name: server-files-restore
         enabled: false
@@ -186,7 +186,7 @@ infrastructure:
 
   cnpg:
     deploy: true
-    version: 0.1.1
+    version: 0.1.2-create-wiecloud-backup-resource-4afb604
     seaweedfs:
       backup:
         enabled: true
@@ -202,7 +202,7 @@ infrastructure:
 
   crossplane:
     deploy: true
-    version: 0.1.0-create-wiecloud-backup-resource-2a13641
+    version: 0.1.0-create-wiecloud-backup-resource-4afb604
 
   dragonflydb:
     deploy: true
@@ -222,7 +222,7 @@ infrastructure:
 
   harbor:
     deploy: true
-    version: 1.3.4
+    version: 1.3.5-create-wiecloud-backup-resource-4afb604
     restores:
       - name: harbor-registry-restore
         enabled: false
@@ -243,7 +243,7 @@ infrastructure:
 
   keycloak:
     deploy: true
-    version: 3.0.4
+    version: 3.0.5-create-wiecloud-backup-resource-4afb604
     clientCreationPermissions:
       - name: argocd
         namespace: argocd
@@ -287,7 +287,7 @@ infrastructure:
 
   nodes:
     deploy: true
-    version: 0.2.0
+    version: 0.2.1-create-wiecloud-backup-resource-4afb604
     proxmox:
       api:
         url: https://192.168.178.166:8006/api2/json
@@ -326,7 +326,7 @@ infrastructure:
 # Placeholders so the pipelines will run
 products:
   shared:
-    version: 0.0.0
+    version: 0.0.0-create-wiecloud-backup-resource-4afb604
 
 images:
   alpine:
