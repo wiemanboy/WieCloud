@@ -22,6 +22,7 @@ schema S3Secret(Secret):
 
 schema RepoSecret(Secret):
   password: str
+  key?: str # Temp
 
 schema S3:
   endpoint: str
@@ -45,6 +46,7 @@ schema Backup:
   repo: Repo
   schedule: Schedule
   retention: Retention
+  default?: any # Temp
 
 schema SecurityContext:
   runAsUser?: int
