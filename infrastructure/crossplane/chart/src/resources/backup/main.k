@@ -76,24 +76,21 @@ compose: (any) -> [{str:any}] = lambda params: any {
     ]) for backup in backups]
 
   # Schedules
-  if observed_xr.spec.enabled == False:
-    _desired_schedules = []
-  else:
-    _desired_schedules = [
-      create_schedule(observed_xr.metadata.name, observed_xr.spec.target.bucket, {
-        name = dash_name(backup.repo.secret.name)
-        key: backup.repo.secret.password
-      }, {
-        accessKey = {
-          key = dash_name(backup.s3.secret.name)
-          name = backup.s3.secret.accessKey
-        }
-        secretKey = {
-          key = dash_name(backup.s3.secret.name)
-          name = backup.s3.secret.secretKey
-        }
-      }, backup) for backup in backups
-    ]
+  _desired_schedules = [
+    create_schedule(observed_xr.metadata.name, observed_xr.spec.target.bucket, {
+      name = dash_name(backup.repo.secret.name)
+      key: backup.repo.secret.password
+    }, {
+      accessKey = {
+        key = dash_name(backup.s3.secret.name)
+        name = backup.s3.secret.accessKey
+      }
+      secretKey = {
+        key = dash_name(backup.s3.secret.name)
+        name = backup.s3.secret.secretKey
+      }
+    }, backup) for backup in backups
+  ]
 
   if observed_xr.spec.enabled is False:
     _desired_schedules = []
@@ -101,8 +98,17 @@ compose: (any) -> [{str:any}] = lambda params: any {
   # Restores
   restores = observed_xr.spec.restores
   _desired_restores = [
-    create_restore(restore.name, observed_xr.metadata.name) for restore in restores if restore.enabled == True
+    create_restore(
+      restore.name,
+      observed_xr.metadata.name,
+      restore.claim.name,
+      restore.snapshot,
+      get_resource_by_name(_desired_schedules, restore.fromBackup).spec.backend
+      ) for restore in restores if restore.enabled == True
   ]
+
+  if observed_xr.spec.enabled == False:
+    _desired_schedules = []
 
   # Set ready
   _desired_external_secrets = [*_desired_repo_secret, *_desired_s3_credentials_secret]
@@ -205,7 +211,7 @@ create_schedule: (str, str, SecretRef, S3SecretRef, Backup) -> {str:any} = lambd
   }
 }
 
-create_restore: (str, str) -> {str:any} = lambda name: str, xr_name: str {
+create_restore = lambda name: str, xr_name: str, claim_name: str, snapshot: str, backend: {str:any} {
   {
     apiVersion = "k8up.io/v1"
     kind = "Restore"
@@ -213,30 +219,13 @@ create_restore: (str, str) -> {str:any} = lambda name: str, xr_name: str {
     spec = {
       restoreMethod = {
         folder = {
-          claimName = ""
+          claimName = claim_name
         }
       }
 
-      snapshot = ""
+      snapshot = snapshot
 
-      backend = {
-        repoPasswordSecretRef = {
-          name = ""
-          key = ""
-        }
-        s3 = {
-          endpoint = ""
-          bucket = ""
-          accessKeyIDSecretRef = {
-            name = ""
-            key = ""
-          }
-          secretAccessKeySecretRef = {
-            name = ""
-            key = ""
-          }
-        }
-      }
+      backend = backend
 
       podSecurityContext = {
         fsGroup = 65532
