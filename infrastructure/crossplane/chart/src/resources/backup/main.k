@@ -104,9 +104,6 @@ compose: (any) -> [{str:any}] = lambda params: any {
     ) for backup in backups
   ]
 
-  if observed_xr.spec.enabled is False:
-    _desired_schedules = []
-
   # Restores
   restores = observed_xr.spec.restores
   _desired_restores = [
