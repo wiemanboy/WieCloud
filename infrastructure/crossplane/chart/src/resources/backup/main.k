@@ -204,7 +204,8 @@ create_schedule: (str, str, SecretRef, S3SecretRef, SecurityContext, Backup) -> 
           runAsUser = 0
           fsGroup = 999
           fsGroupChangePolicy = "OnRootMismatch"
-        } | backup_pod_security_context
+          **backup_pod_security_context
+        }
       }
 
       check = {
