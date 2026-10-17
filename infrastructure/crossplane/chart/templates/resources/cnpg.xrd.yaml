@@ -7,7 +7,7 @@ spec:
   group: wieman.cloud
   names:
     kind: CNPG
-    plural: cnpgs
+    plural: cnpg
   versions:
   - name: v1
     served: true
@@ -34,6 +34,7 @@ spec:
               properties:
                 size:
                   description: The amount of storage each instance takes up
+                  type: string
               required:
               - size
 
@@ -51,6 +52,7 @@ spec:
                   properties:
                     bucket:
                       description: The S3 bucket where the CNPG cluster backups are saved
+                      type: string
                   required:
                   - bucket
 
