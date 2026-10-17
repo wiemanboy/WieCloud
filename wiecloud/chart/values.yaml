@@ -202,7 +202,7 @@ infrastructure:
 
   crossplane:
     deploy: true
-    version: 0.2.0-create-wiecloud-cnpg-resource-0554070
+    version: 0.2.0-create-wiecloud-cnpg-resource-ea14885
 
   dragonflydb:
     deploy: true
