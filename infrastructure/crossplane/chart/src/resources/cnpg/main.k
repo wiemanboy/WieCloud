@@ -10,6 +10,11 @@ schema Resource:
   cpu?: str
   memory?: str
 
+schema S3Credentials:
+  secret: str
+  accessKey: str
+  secretKey: str
+
 compose = lambda params: any {
   ctx: any = params.ctx
   cnpg: any = ctx["apiextensions.crossplane.io/environment"]["cnpg"]
@@ -30,7 +35,6 @@ compose = lambda params: any {
   # CNPG
   _desired_cluster = create_cnpg_cluster(
     observed_xr.metadata.name,
-    observed_xr.metadata.name,
     observed_xr.spec.instances,
     observed_xr.spec.database,
     observed_xr.spec.storage.size,
@@ -39,7 +43,18 @@ compose = lambda params: any {
   )
 
   # Object store
-  _desired_object_store = create_object_store()
+  _desired_object_store = create_object_store(
+    observed_xr.metadata.name,
+    observed_xr.spec.backup.target.bucket,
+    cnpg.backup.s3.endpoint,
+    {
+      secret = cnpg.backup.s3.secret.name
+      accessKey = cnpg.backup.s3.secret.accessKey
+      secretKey = cnpg.backup.s3.secret.secretKey
+    },
+    cnpg.backup.retention,
+    observed_xr.spec?.resources?.barman
+  )
 
   # Scheduled backup
   _desired_scheduled_backup = create_scheduled_backup() if not observed_xr.spec.backup.restore else {}
@@ -83,11 +98,11 @@ create_external_secret: (str, str, StoreRef, [str]) -> {str:any} = lambda name: 
   }
 }
 
-create_cnpg_cluster = lambda name: str, xr_name, instances: int, database: str, storage_size: str, restore_enabled: bool, resources: Resources {
+create_cnpg_cluster = lambda xr_name, instances: int, database: str, storage_size: str, restore_enabled: bool, resources: Resources {
   {
     apiVersion = "postgresql.cnpg.io/v1"
     kind = "Cluster"
-    metadata = metadata(name, xr_name, "cluster")
+    metadata = metadata(xr_name, xr_name, "cluster")
     spec = {
       instances = instances
 
@@ -134,23 +149,23 @@ create_cnpg_cluster = lambda name: str, xr_name, instances: int, database: str, 
   }
 }
 
-create_object_store = lambda {
+create_object_store = lambda xr_name: str, bucket: str, endpoint: str, s3_credentials: S3Credentials, retention: str, resources: Resources {
   {
     apiVersion = "barmancloud.cnpg.io/v1"
     kind = "ObjectStore"
-    metadata = metadata("cnpg-backup-s3", "", "objectstore")
+    metadata = metadata("cnpg-backup-s3", xr_name, "objectstore")
     spec = {
       configuration = {
-        destinationPath = "s3://${''}/"
-        endpointURL = ""
+        destinationPath = "s3://${bucket}/"
+        endpointURL = endpoint
         s3Credentials = {
           accessKeyId = {
-            name = ""
-            key = ""
+            name = s3_credentials.secret
+            key = s3_credentials.accessKey
           }
           secretAccessKey = {
-            name = ""
-            key = ""
+            name = s3_credentials.secret
+            key = s3_credentials.accessKey
           }
         }
 
@@ -158,9 +173,9 @@ create_object_store = lambda {
           compression = "gzip"
         }
       }
-      retentionPolicy = ""
+      retentionPolicy = retention
       instanceSideCarConfiguration = {
-        resources = {}
+        resources = resources
       }
     }
   }

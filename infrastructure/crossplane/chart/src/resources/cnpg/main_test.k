@@ -1,8 +1,10 @@
 test_create_resources = lambda {
   resources = compose(create_params())
 
-  external_secret = get_resource(resources, "ExternalSecret")
-  cluster = get_resource(resources, "Cluster")
+  assert get_resource(resources, "ExternalSecret")
+  assert get_resource(resources, "Cluster")
+  assert get_resource(resources, "ObjectStore")
+  assert get_resource(resources, "SCheduledBackup")
 }
 
 test_restore_disabled = lambda {
@@ -21,12 +23,15 @@ test_restore_enabled = lambda {
   resources = compose(create_params(True))
 
   cluster = get_resource(resources, "Cluster")
+  backup = get_resource(resources, "ScheduledBackup")
 
   assert not cluster.spec.bootstrap?.initdb?.database
   assert cluster.spec.bootstrap?.recovery?.database
 
   assert cluster.spec.plugins == []
   assert cluster.spec.externalClusters != []
+
+  assert not backup
 }
 
 test_cnpg_resource_allocation_memory_limits = lambda {
@@ -121,5 +126,5 @@ create_params= lambda enable_restore: bool = False, cnpg_resources: Resources = 
 }
 
 get_resource: ([{str:any}], str) -> {str:any} = lambda resources: [{str:any}], kind: str {
-  [resource for resource in resources if resource.kind == kind][0]
+  [resource for resource in resources if resource.kind == kind]?[0]
 }

@@ -24,4 +24,5 @@ rules:
       - barmancloud.cnpg.io
     resources:
       - objectstores
+      - objectstores/status
     verbs: [ get, list, watch, create, patch, update, delete ]
