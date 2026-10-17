@@ -104,7 +104,7 @@ forgejo:
       configMap:
         name: forgejo-homepage
 
-  extraVolumeMounts:
+  extraContainerVolumeMounts:
     - name: homepage
       readOnly: true
       mountPath: /data/gitea/templates
