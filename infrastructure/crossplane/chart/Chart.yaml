@@ -1,7 +1,7 @@
 apiVersion: v2
 name: crossplane
 type: application
-version: 0.2.0
+version: 0.3.0
 dependencies:
 - name: crossplane
   version: 2.4.2
