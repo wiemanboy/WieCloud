@@ -57,7 +57,10 @@ compose = lambda params: any {
   )
 
   # Scheduled backup
-  _desired_scheduled_backup = create_scheduled_backup() if not observed_xr.spec.backup.restore else {}
+  _desired_scheduled_backup = create_scheduled_backup(
+    observed_xr.metadata.name,
+    cnpg.backup.schedule
+  ) if not observed_xr.spec.backup.restore else {}
 
   # Set ready
   # TODO:
@@ -181,21 +184,21 @@ create_object_store = lambda xr_name: str, bucket: str, endpoint: str, s3_creden
   }
 }
 
-create_scheduled_backup = lambda {
+create_scheduled_backup = lambda xr_name: str, schedule: str{
   {
     apiVersion = "postgresql.cnpg.io/v1"
     kind = "ScheduledBackup"
-    metadata = metadata("backup", "", "scheduledbackup")
+    metadata = metadata("backup", xr_name, "scheduledbackup")
     spec = {
       immediate = True
-      schedule = ""
+      schedule = schedule
       backupOwnerReference = "self"
       cluster = {
-        name = ""
+        name = xr_name
       }
       method = "plugin"
-      pluginCOnfiguration = {
-        name = "name: barman-cloud.cloudnative-pg.io"
+      pluginConfiguration = {
+        name = "barman-cloud.cloudnative-pg.io"
         parameters = {
           barmanObjectName = "cnpg-backup-s3"
         }

@@ -4,7 +4,7 @@ test_create_resources = lambda {
   assert get_resource(resources, "ExternalSecret")
   assert get_resource(resources, "Cluster")
   assert get_resource(resources, "ObjectStore")
-  assert get_resource(resources, "SCheduledBackup")
+  assert get_resource(resources, "ScheduledBackup")
 }
 
 test_restore_disabled = lambda {
