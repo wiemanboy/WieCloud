@@ -87,7 +87,7 @@ targetRepository:
 applications:
   forgejo:
     deploy: true
-    version: 0.0.2-create-wiecloud-cnpg-resource-690332c
+    version: 0.0.2-create-wiecloud-cnpg-resource-a6c799c
     cnpg:
       restore: false
     restores:
@@ -202,7 +202,7 @@ infrastructure:
 
   crossplane:
     deploy: true
-    version: 0.2.0-create-wiecloud-cnpg-resource-690332c
+    version: 0.2.0-create-wiecloud-cnpg-resource-a6c799c
 
   dragonflydb:
     deploy: true
