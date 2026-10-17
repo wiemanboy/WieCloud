@@ -4,7 +4,7 @@ metadata:
   name: test-postgres-cluster
 spec:
   database: test
-  instances: 3
+  instances: 1
   storage:
     size: 1Gi
 
