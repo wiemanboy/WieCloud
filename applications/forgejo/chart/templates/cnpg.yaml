@@ -1,17 +1,19 @@
 apiVersion: wieman.cloud/v1
 kind: CNPG
 metadata:
-  name: test-postgres-cluster
+  name: forgejo-postgres-cluster
 spec:
-  database: test
-  instances: 1
+  database: forgejo
+  instances: 3
   storage:
-    size: 1Gi
+    size: 10Gi
 
   backup:
-    restore: false
+    {{- with .Values.cnpg }}
+    restore: {{ .restore }}
+    {{ end }}
     target:
-      bucket: test-cnpg-postgres-backups
+      bucket: wiecloud-forgejo-postgres-backups
 
   resources:
     cnpg:
@@ -24,5 +26,5 @@ spec:
       limits:
         memory: 256Mi
       requests:
-        cpu: 50m
+        cpu: 20m
         memory: 128Mi
