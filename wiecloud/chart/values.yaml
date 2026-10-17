@@ -87,7 +87,8 @@ targetRepository:
 applications:
   forgejo:
     deploy: true
-    version: 0.0.2-create-wiecloud-cnpg-resource-a6c799c
+    version: 0.0.2-create-wiecloud-cnpg-resource-690332c
+    initialBoot: true
     cnpg:
       restore: false
     restores:
