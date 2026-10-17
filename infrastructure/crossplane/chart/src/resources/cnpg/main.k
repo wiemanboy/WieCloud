@@ -63,7 +63,19 @@ compose = lambda params: any {
   ) if not observed_xr.spec.backup.restore else {}
 
   # Set ready
-  # TODO:
+  observed_secret = get_observed_resources_by_resource_type(params, "externalsecret")?[0]
+  if any_true([condition.type == "Ready" and condition.status == "True" for condition in observed_secret?.status?.conditions or []]):
+    set_ready(_desired_secret)
+
+  observed_cluster = get_observed_resources_by_resource_type(params, "cluster")?[0]
+  if any_true([condition.type == "Ready" and condition.status == "True" for condition in observed_cluster?.status?.conditions or []]):
+    set_ready(_desired_cluster)
+
+  observed_object_store = get_observed_resources_by_resource_type(params, "objectstore")?[0]
+  observed_scheduled_backup = get_observed_resources_by_resource_type(params, "scheduledbackup")?[0]
+  if any_true([condition.type == "LastBackupSucceeded" and condition.status == "True" for condition in observed_cluster?.status?.conditions or []]):
+    set_ready(_desired_object_store)
+    set_ready(_desired_scheduled_backup)
 
   # Update Status
   _desired_xr: {str:any} = {
@@ -205,6 +217,16 @@ create_scheduled_backup = lambda xr_name: str, schedule: str{
       }
     }
   }
+}
+
+get_observed_resources_by_resource_type: (any, str) -> [any] = lambda params: any, resource_type: str {
+  ocds = params.ocds
+
+  [params.ocds[name]?.Resource for name in params.ocds if name.startswith(resource_type)]
+}
+
+set_ready: (any) = lambda resource: any {
+  resource.metadata.annotations["krm.kcl.dev/ready"] = "True"
 }
 
 metadata: (str, str, str) -> {str:any} = lambda name: str, xr_name: str, resource_name: str {
