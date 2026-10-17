@@ -174,7 +174,7 @@ create_object_store = lambda xr_name: str, bucket: str, endpoint: str, s3_creden
         }
       }
       retentionPolicy = retention
-      instanceSideCarConfiguration = {
+      instanceSidecarConfiguration = {
         resources = resources
       }
     }
