@@ -6,7 +6,7 @@ metadata:
     rbac.crossplane.io/aggregate-to-crossplane: "true"
 rules:
   - apiGroups:
-      - postgresql.cnpg.iok8up.io
+      - postgresql.cnpg.io
     resources:
       - clusters
       - scheduledbackups
