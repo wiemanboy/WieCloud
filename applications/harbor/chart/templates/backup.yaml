@@ -1,0 +1,11 @@
+apiVersion: wieman.cloud/v1
+kind: Backup
+metadata:
+  name: harbor-backups
+spec:
+  {{- with .Values.backup }}
+  enabled: {{ .enabled }}
+  {{ end }}
+  target:
+    bucket: wiecloud-harbor-backups
+  restores: {{ .Values.restores | default list | toYaml | nindent 4 }}
