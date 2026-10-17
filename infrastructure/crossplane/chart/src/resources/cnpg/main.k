@@ -168,7 +168,7 @@ create_object_store = lambda xr_name: str, bucket: str, endpoint: str, s3_creden
           }
           secretAccessKey = {
             name = s3_credentials.secret
-            key = s3_credentials.accessKey
+            key = s3_credentials.secretKey
           }
         }
 
