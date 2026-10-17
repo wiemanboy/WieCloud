@@ -1,0 +1,28 @@
+apiVersion: wieman.cloud/v1
+kind: CNPG
+metadata:
+  name: test-postgres-cluster
+spec:
+  database: test
+  instances: 3
+  storage:
+    size: 1Gi
+
+  backup:
+    restore: false
+    target:
+      bucket: test-cnpg-postgres-backups
+
+  resources:
+    cnpg:
+      limits:
+        memory: 256Mi
+      requests:
+        cpu: 20m
+        memory: 128Mi
+    barman:
+      limits:
+        memory: 256Mi
+      requests:
+        cpu: 50m
+        memory: 128Mi
