@@ -1,0 +1,98 @@
+apiVersion: apiextensions.crossplane.io/v2
+kind: CompositeResourceDefinition
+metadata:
+  name: cnpg.wieman.cloud
+spec:
+  scope: Namespaced
+  group: wieman.cloud
+  names:
+    kind: CNPG
+    plural: cnpg
+  versions:
+  - name: v1
+    served: true
+    referenceable: true
+    schema:
+     openAPIV3Schema:
+       type: object
+       properties:
+        spec:
+          type: object
+          properties:
+            database:
+              description: The database created in the CNPG cluster
+              type: string
+
+            instances:
+              description: The amount of postgres instances added to the CNPG cluster
+              type: integer
+              default: 1
+
+            storage:
+              description: The storage configuration for the CNPG cluster
+              type: object
+              properties:
+                size:
+                  description: The amount of storage each instance takes up
+                  type: string
+              required:
+              - size
+
+            backup:
+              description: The backup configuration for the CNPG cluster
+              type: object
+              properties:
+                restore:
+                  description: If the CNPG cluster should be started in restore mode
+                  type: boolean
+                  default: false
+                target:
+                  description: The target of the CNPG cluster backups
+                  type: object
+                  properties:
+                    bucket:
+                      description: The S3 bucket where the CNPG cluster backups are saved
+                      type: string
+                  required:
+                  - bucket
+
+            resources:
+              description: The resources to give each instance
+              type: object
+              properties:
+                cnpg:
+                  description: The resources for each cnpg instance
+                  type: object
+                  properties:
+                    limits:
+                      type: object
+                      properties:
+                        memory:
+                          type: string
+                    requests:
+                      type: object
+                      properties:
+                        cpu:
+                          type: string
+                        memory:
+                          type: string
+
+                barman:
+                  description: The resources for each barman instance
+                  type: object
+                  properties:
+                    limits:
+                      type: object
+                      properties:
+                        memory:
+                          type: string
+                    requests:
+                      type: object
+                      properties:
+                        cpu:
+                          type: string
+                        memory:
+                          type: string
+
+          required:
+          - database

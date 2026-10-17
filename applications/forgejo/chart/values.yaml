@@ -104,13 +104,10 @@ forgejo:
       configMap:
         name: forgejo-homepage
 
-  extraVolumeMounts:
+  extraContainerVolumeMounts:
     - name: homepage
       readOnly: true
       mountPath: /data/gitea/templates
-
-cnpg:
-  restore: false
 
 runner:
   config:

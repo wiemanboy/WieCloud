@@ -87,7 +87,8 @@ targetRepository:
 applications:
   forgejo:
     deploy: true
-    version: 0.0.1
+    version: 0.0.2
+    initialBoot: true
     cnpg:
       restore: false
     restores:
@@ -202,7 +203,7 @@ infrastructure:
 
   crossplane:
     deploy: true
-    version: 0.1.0
+    version: 0.2.0
 
   dragonflydb:
     deploy: true
