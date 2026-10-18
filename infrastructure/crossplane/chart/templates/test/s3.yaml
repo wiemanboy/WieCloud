@@ -8,7 +8,6 @@ spec:
   secret:
     name: test-s3-credentials
     store:
-      kind: ClusterSecretStore
       name: test-s3-credentials-store
 
   master:

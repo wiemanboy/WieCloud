@@ -57,13 +57,13 @@ compose = lambda params: any {
   )
 
   # S3 credentials secret store
-  _desired_secret_store_resources = create_secret_store(
-    observed_xr.spec.secret.store.name,
-    observed_xr.spec.secret.store.kind,
-    observed_xr.metadata.name,
-    observed_xr.metadata.namespace,
-    observed_xr.spec.secret.name,
-  )
+  # _desired_secret_store_resources = create_secret_store(
+  #   observed_xr.spec.secret.store.name,
+  #   observed_xr.spec.secret.store.kind,
+  #   observed_xr.metadata.name,
+  #   observed_xr.metadata.namespace,
+  #   observed_xr.spec.secret.name,
+  # )
 
   # S3 credentials config
   _desired_s3_credentials_config = create_s3_config_external_secret(
@@ -110,7 +110,7 @@ compose = lambda params: any {
     **params.dxr
   }
 
-  items: [{str:any}] = [ _desired_xr, _desired_password_generator, _desired_s3_credentials, *_desired_secret_store_resources, _desired_s3_credentials_config, _desired_seaweed, _desired_httproute, *_desired_replicator_resources ]
+  items: [{str:any}] = [ _desired_xr, _desired_password_generator, _desired_s3_credentials, _desired_s3_credentials_config, _desired_seaweed, _desired_httproute, *_desired_replicator_resources ]
 }
 
 create_password_generator = lambda name: str, xr_name: str {
@@ -161,8 +161,8 @@ create_secret_store = lambda name: str, kind: str, xr_name: str, namespace: str,
   [
     {
       apiVersion = "external-secrets.io/v1"
-      kind = kind
-      metadata = metadata(name, xr_name, "clustersecretstore")
+      kind = "SecretStore"
+      metadata = metadata(name, xr_name, "secretstore")
       spec = {
         provider = {
           kubernetes = {
@@ -187,14 +187,14 @@ create_secret_store = lambda name: str, kind: str, xr_name: str, namespace: str,
       }
     },
     {
-      apiVersion = "rbac.authorization.k8s.io/v1"
+      apiVersion = "v1"
       kind = "ServiceAccount"
       metadata = metadata(name, xr_name, "serviceaccount")
     },
     {
       apiVersion = "rbac.authorization.k8s.io/v1"
-      kind = "ClusterRole"
-      metadata = metadata(name, xr_name, "clusterrole")
+      kind = "Role"
+      metadata = metadata(name, xr_name, "role")
       rules = [{
         apiGroups = [""]
         resources = ["secrets"]
@@ -213,7 +213,7 @@ create_secret_store = lambda name: str, kind: str, xr_name: str, namespace: str,
       }]
       roleRef = {
         apiGroup = "rbac.authorization.k8s.io"
-        kind = "ClusterRole"
+        kind = "Role"
         name = name
       }
     },

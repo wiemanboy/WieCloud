@@ -34,12 +34,6 @@ spec:
                   description: The SecretStore that will be created, allowing other applications to use the secret
                   type: object
                   properties:
-                    kind:
-                      description: The type of SecretStore, can be SecretStore or ClusterSecretStore
-                      type: string
-                      enum:
-                      - SecretStore
-                      - ClusterSecretStore
                     name:
                       description: The name of the SecretStore
                       type: string

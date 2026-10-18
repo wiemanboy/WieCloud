@@ -3,7 +3,7 @@ test_create_resources = lambda {
 
   assert get_resources(resources, "Password")
   assert len(get_resources(resources, "ExternalSecret")) == 2
-  assert get_resources(resources, "ClusterSecretStore")
+  assert get_resources(resources, "SecretStore")
   assert get_resources(resources, "Seaweed")
   assert get_resources(resources, "HTTPRoute")
   assert get_resources(resources, "Deployment")
@@ -38,7 +38,7 @@ create_test_params = lambda  {
         secret = {
           name = "test-s3-credentials"
           store = {
-            kind = "ClusterSecretStore"
+            kind = "SecretStore"
             name = "test-s3-credentials-store"
           }
         }
