@@ -38,7 +38,6 @@ spec:
                       description: The name of the SecretStore
                       type: string
                   required:
-                  - kind
                   - name
               required:
               - name

@@ -38,7 +38,6 @@ create_test_params = lambda  {
         secret = {
           name = "test-s3-credentials"
           store = {
-            kind = "SecretStore"
             name = "test-s3-credentials-store"
           }
         }

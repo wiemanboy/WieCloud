@@ -1,9 +1,5 @@
 import json
 
-schema StoreRef:
-  kind: str
-  name: str
-
 schema ParentRef:
   name: str
   sectionName: str
@@ -57,22 +53,19 @@ compose = lambda params: any {
   )
 
   # S3 credentials secret store
-  # _desired_secret_store_resources = create_secret_store(
-  #   observed_xr.spec.secret.store.name,
-  #   observed_xr.spec.secret.store.kind,
-  #   observed_xr.metadata.name,
-  #   observed_xr.metadata.namespace,
-  #   observed_xr.spec.secret.name,
-  # )
+  _desired_secret_store_resources = create_secret_store(
+    observed_xr.spec.secret.store.name,
+    observed_xr.spec.secret.store.kind,
+    observed_xr.metadata.name,
+    observed_xr.metadata.namespace,
+    observed_xr.spec.secret.name,
+  )
 
   # S3 credentials config
   _desired_s3_credentials_config = create_s3_config_external_secret(
     "${observed_xr.spec.secret.name}-config",
     observed_xr.metadata.name,
-    {
-      kind = observed_xr.spec.secret.store.kind
-      name = observed_xr.spec.secret.store.name
-    },
+    observed_xr.spec.secret.store.name,
     observed_xr.spec.secret.name,
   )
 
@@ -110,7 +103,7 @@ compose = lambda params: any {
     **params.dxr
   }
 
-  items: [{str:any}] = [ _desired_xr, _desired_password_generator, _desired_s3_credentials, _desired_s3_credentials_config, _desired_seaweed, _desired_httproute, *_desired_replicator_resources ]
+  items: [{str:any}] = [ _desired_xr, _desired_password_generator, _desired_s3_credentials, *_desired_secret_store_resources, _desired_s3_credentials_config, _desired_seaweed, _desired_httproute, *_desired_replicator_resources ]
 }
 
 create_password_generator = lambda name: str, xr_name: str {
@@ -220,15 +213,15 @@ create_secret_store = lambda name: str, kind: str, xr_name: str, namespace: str,
   ]
 }
 
-create_s3_config_external_secret = lambda name: str, xr_name: str, store_ref: StoreRef, secret_name: str {
+create_s3_config_external_secret = lambda name: str, xr_name: str, store_name, secret_name: str {
   {
     apiVersion = "external-secrets.io/v1"
     kind = "ExternalSecret"
     metadata = metadata(name, xr_name, "externalsecret" )
     spec = {
       secretStoreRef = {
-        kind = store_ref.kind
-        name = store_ref.name
+        kind = "SecretStore"
+        name = store_name
       }
 
       target = {
