@@ -194,7 +194,7 @@ create_secret_store = lambda name: str, kind: str, xr_name: str, namespace: str,
     {
       apiVersion = "rbac.authorization.k8s.io/v1"
       kind = "ClusterRole"
-      metadata = metadata(name, xr_name, "serviceaccount")
+      metadata = metadata(name, xr_name, "clusterrole")
       rules = [{
         apiGroups = [""]
         resources = ["secrets"]
@@ -205,7 +205,7 @@ create_secret_store = lambda name: str, kind: str, xr_name: str, namespace: str,
     {
       apiVersion = "rbac.authorization.k8s.io/v1"
       kind = "RoleBinding"
-      metadata = metadata(name, xr_name, "serviceaccount")
+      metadata = metadata(name, xr_name, "rolebinding")
       subjects = [{
         kind = "ServiceAccount"
         name = name
