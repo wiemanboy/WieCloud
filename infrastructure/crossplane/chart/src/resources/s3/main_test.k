@@ -4,16 +4,24 @@ test_create_resources = lambda {
   assert get_resources(resources, "Password")
   assert len(get_resources(resources, "ExternalSecret")) == 2
   assert get_resources(resources, "ClusterSecretStore")
-  # assert get_resources(resources, "Seaweed")
+  assert get_resources(resources, "Seaweed")
+  assert get_resources(resources, "HTTPRoute")
   # assert get_resources(resources, "Deploy")
 }
 
-create_test_params = lambda {
+create_test_params = lambda  {
   {
     ctx = {
       "apiextensions.crossplane.io/environment" = {
         seaweedfs = {
           image = "registry.io/image:tag"
+        }
+        network = {
+          gateway = {
+            name = "test"
+            sectionName = "test"
+            namespace = "test"
+          }
         }
       }
     }
@@ -24,7 +32,36 @@ create_test_params = lambda {
         name = "test-s3"
         namespace = "default"
       }
-      spec = {}
+      spec = {
+        endpoint = "s3.example.com"
+
+        secret = {
+          name = "test-s3-credentials"
+          store = {
+            kind = "ClusterSecretStore"
+            name = "test-s3-credentials-store"
+          }
+        }
+
+        master = {
+          replicas = 1
+        }
+
+        volume = {
+          replicas = 1
+          storage = "1Gi"
+        }
+
+        filer = {
+          replicas = 1
+          storage = "1Gi"
+        }
+
+        replicator = {
+          enabled = False
+          storage = "1Gi"
+        }
+      }
     }
     ocds = {}
     dxr = {}

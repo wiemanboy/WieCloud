@@ -4,6 +4,11 @@ schema StoreRef:
   kind: str
   name: str
 
+schema ParentRef:
+  name: str
+  sectionName: str
+  namespace: str
+
 schema Resources:
   limits?: Resource
   requests?: Resource
@@ -33,48 +38,61 @@ schema Filer:
 
 compose = lambda params: any {
   ctx: any = params.ctx
-  cnpg: any = ctx["apiextensions.crossplane.io/environment"]["cnpg"]
+  seaweedfs: any = ctx["apiextensions.crossplane.io/environment"]["seaweedfs"]
+  network: any = ctx["apiextensions.crossplane.io/environment"]["network"]
 
   observed_xr: any = params.oxr
 
   # Password generator
   _desired_password_generator = create_password_generator(
-    "${observed_xr.metadata.name}-s3-credentials-generator",
+    "${observed_xr.spec.secret.name}-generator",
     observed_xr.metadata.name
   )
 
   # S3 credentials external secrets
   _desired_s3_credentials = create_s3_credentials_external_Secret(
-    "${observed_xr.metadata.name}-s3-credentials",
+    observed_xr.spec.secret.name,
     observed_xr.metadata.name,
-    "${observed_xr.metadata.name}-s3-credentials-generator",
+    "${observed_xr.spec.secret.name}-generator",
   )
 
   # S3 credentials secret store
   _desired_secret_store_resources = create_secret_store(
-    "${observed_xr.metadata.name}-s3-credentials-store",
+    observed_xr.spec.secret.store.name,
+    observed_xr.spec.secret.store.kind,
     observed_xr.metadata.name,
     observed_xr.metadata.namespace,
-    "${observed_xr.metadata.name}-s3-credentials",
+    observed_xr.spec.secret.name,
   )
 
   # S3 credentials config
   _desired_s3_credentials_config = create_s3_config_external_secret(
-    "${observed_xr.metadata.name}-s3-credentials-config",
+    "${observed_xr.spec.secret.name}-config",
     observed_xr.metadata.name,
     {
-      kind = "ClusterSecretStore"
-      name = "${observed_xr.metadata.name}-s3-credentials-store"
+      kind = observed_xr.spec.secret.store.kind
+      name = observed_xr.spec.secret.store.name
     },
-    "${observed_xr.metadata.name}-s3-credentials",
+    observed_xr.spec.secret.name,
   )
 
   # Seaweedfs
   _desired_seaweed = create_seaweedfs(
-    
+    observed_xr.metadata.name,
+    seaweedfs.image,
+    observed_xr.spec.master,
+    observed_xr.spec.volume,
+    observed_xr.spec.filer,
+    "${observed_xr.spec.secret.name}-config"
   )
 
   # HTTPRoute
+  _desired_httproute = create_httproute(
+    observed_xr.metadata.name
+    observed_xr.spec.endpoint
+    network.gateway
+    observed_xr.metadata.namespace
+  )
 
   # Replicator
 
@@ -85,7 +103,7 @@ compose = lambda params: any {
     **params.dxr
   }
 
-  items: [{str:any}] = [ _desired_xr, _desired_password_generator, _desired_s3_credentials, *_desired_secret_store_resources, _desired_s3_credentials_config ]
+  items: [{str:any}] = [ _desired_xr, _desired_password_generator, _desired_s3_credentials, *_desired_secret_store_resources, _desired_s3_credentials_config, _desired_seaweed, _desired_httproute ]
 }
 
 create_password_generator = lambda name: str, xr_name: str {
@@ -132,11 +150,11 @@ create_s3_credentials_external_Secret = lambda name: str, xr_name: str, generato
   }
 }
 
-create_secret_store = lambda name: str, xr_name: str, namespace: str, secret_name: str {
+create_secret_store = lambda name: str, kind: str, xr_name: str, namespace: str, secret_name: str {
   [
     {
       apiVersion = "external-secrets.io/v1"
-      kind = "ClusterSecretStore"
+      kind = kind
       metadata = metadata(name, xr_name, "clustersecretstore")
       spec = {
         provider = {
@@ -289,6 +307,31 @@ create_seaweedfs = lambda xr_name: str, image: str, master: Master, volume: Volu
 
         **filer.resources
       }
+    }
+  }
+}
+
+create_httproute = lambda xr_name: str, hostname: str, parent_ref: ParentRef, namespace: str {
+  {
+    apiVersion = "gateway.networking.k8s.io/v1"
+    kind = "HTTPRoute"
+    metadata = metadata(xr_name, xr_name,"httproute")
+    spec = {
+      parentRefs = [parent_ref]
+      hostnames = [hostname]
+      rules = [{
+        matches = [{
+          path = {
+            type = "PathPrefix"
+            value = "/"
+          }
+        }]
+        backendRefs = [{
+          name = "${xr_name}-filer"
+          namespace = namespace
+          port = 8333
+        }]
+      }]
     }
   }
 }
