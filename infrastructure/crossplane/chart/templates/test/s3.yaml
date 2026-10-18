@@ -1,7 +1,7 @@
 apiVersion: wieman.cloud/v1
 kind: S3
 metadata:
-  name: test-s3
+  name: test
 spec:
   endpoint: test.s3.wieman.cloud
 
