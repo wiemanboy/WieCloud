@@ -6,7 +6,7 @@ test_create_resources = lambda {
   assert get_resources(resources, "ClusterSecretStore")
   assert get_resources(resources, "Seaweed")
   assert get_resources(resources, "HTTPRoute")
-  # assert get_resources(resources, "Deploy")
+  assert get_resources(resources, "Deployment")
 }
 
 create_test_params = lambda  {

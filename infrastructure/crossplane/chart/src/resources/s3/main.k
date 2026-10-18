@@ -95,6 +95,13 @@ compose = lambda params: any {
   )
 
   # Replicator
+  _desired_replicator_resources = create_replicator(
+    "${observed_xr.metadata.name}-replicator",
+    observed_xr.metadata.name,
+    seaweedfs.image,
+    observed_xr.spec.replicator.storage,
+    observed_xr.spec.replicator.resources
+  )
 
   # Set ready
 
@@ -103,7 +110,7 @@ compose = lambda params: any {
     **params.dxr
   }
 
-  items: [{str:any}] = [ _desired_xr, _desired_password_generator, _desired_s3_credentials, *_desired_secret_store_resources, _desired_s3_credentials_config, _desired_seaweed, _desired_httproute ]
+  items: [{str:any}] = [ _desired_xr, _desired_password_generator, _desired_s3_credentials, *_desired_secret_store_resources, _desired_s3_credentials_config, _desired_seaweed, _desired_httproute, *_desired_replicator_resources ]
 }
 
 create_password_generator = lambda name: str, xr_name: str {
@@ -336,6 +343,80 @@ create_httproute = lambda xr_name: str, hostname: str, parent_ref: ParentRef, na
   }
 }
 
+create_replicator = lambda name: str, xr_name: str, image: str, storage: str, resources: Resources {
+  [
+    {
+      apiVersion = "apps/v1"
+      kind = "Deployment"
+      metadata = metadata(name, xr_name, "deployment")
+      spec = {
+        replicas = 1
+        template = {
+          spec = {
+            containers = [{
+              name = "seaweedfs-replicator"
+              image = image
+              command = ["weed", "filer.backup", "-filer=${xr_name}-filer:8888"]
+              volumeMounts = [
+                {
+                  name = "backup"
+                  mountPath = "/backup"
+                },
+                {
+                  name = "config"
+                  mountPath = "/etc/seaweedfs"
+                }
+              ]
+              resources = resources
+            }]
+            volumes = [
+              {
+                name = "backup"
+                persistentVolumeClaim = {
+                  claimName = name
+                }
+              }
+              {
+                name = "config"
+                configMap = {
+                  name = "${name}-config"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      apiVersion = "v1"
+      kind = "PersistentVolumeClaim"
+      metadata = metadata(name, xr_name, "persistentvolumeclaim", {
+        "k8up.io/backup" = "true"
+      })
+      spec = {
+        accessModes = ["ReadWriteOnce"]
+      }
+      resources = {
+        requests = {
+          storage = storage
+        }
+      }
+    },
+    {
+      apiVersion = "v1"
+      kind = "ConfigMap"
+      metadata = metadata("${name}-config", xr_name, "configmap")
+      data = {
+        "replication.toml" = """
+        enabled = true
+        directory = "/backup"
+        is_incremental = false
+        """
+      }
+    }
+  ]
+}
+
 get_observed_resources_by_resource_type: (any, str) -> [any] = lambda params: any, resource_type: str {
   ocds = params.ocds
 
@@ -346,11 +427,12 @@ set_ready: (any) = lambda resource: any {
   resource.metadata.annotations["krm.kcl.dev/ready"] = "True"
 }
 
-metadata: (str, str, str) -> {str:any} = lambda name: str, xr_name: str, resource_name: str {
+metadata = lambda name: str, xr_name: str, resource_name: str, _annotations = {} {
   {
     name = name
     annotations = {
-      "krm.kcl.dev/composition-resource-name" = "${resource_name}.${name}"
+      "krm.kcl.dev/composition-resource-name" = "${resource_name}.${name}",
+      **_annotations
     }
     labels = {"wieman.cloud/backup" = xr_name}
   }
