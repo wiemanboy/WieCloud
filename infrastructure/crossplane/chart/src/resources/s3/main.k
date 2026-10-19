@@ -142,9 +142,9 @@ create_s3_credentials_external_Secret = lambda name: str, xr_name: str, generato
         rewrite = [{
           regexp = {
             source = "(.*)"
-            target = target
+            target = key
           }
-        } for target in ["accessKey", "secretKey"]]
+        } for key in ["accessKey", "secretKey"]]
       }]
     }
   }
@@ -166,7 +166,6 @@ create_secret_store = lambda name: str, kind: str, xr_name: str, namespace: str,
                 type = "ConfigMap"
                 name = "kube-root-ca.crt"
                 key = "ca.crt"
-                namespace = namespace
               }
             }
             auth = {
