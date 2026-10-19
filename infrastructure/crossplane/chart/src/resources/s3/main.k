@@ -244,12 +244,12 @@ create_s3_config_external_secret = lambda name: str, xr_name: str, store_name, s
 
       data = [
         {
-          secretKey = key
+          secretKey = target
           remoteRef = {
             key = secret_name
-            property = key
+            property = target
           }
-        } for key in ["accessKey", "secretKey"]
+        } for target in ["accessKey", "secretKey"]
       ]
     }
   }
