@@ -203,7 +203,7 @@ infrastructure:
 
   crossplane:
     deploy: true
-    version: 0.3.0-create-wiecloud-s3-resource-3761d08
+    version: 0.3.0-create-wiecloud-s3-resource-25ab6c2
 
   dragonflydb:
     deploy: true
