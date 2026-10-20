@@ -8,6 +8,6 @@ rules:
   - apiGroups:
       - seaweed.seaweedfs.com
     resources:
-      - seaweed
-      - seaweed/status
+      - seaweeds
+      - seaweeds/status
     verbs: [ get, list, watch, create, patch, update, delete ]
