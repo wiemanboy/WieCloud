@@ -343,7 +343,9 @@ create_replicator = lambda name: str, xr_name: str, image: str, storage: str, re
       metadata = metadata(name, xr_name, "deployment")
       spec = {
         replicas = 1
+        selector.matchLabels = {"wieman.cloud/s3.replicator" = name}
         template = {
+          metadata.labels = {"wieman.cloud/s3.replicator" = name}
           spec = {
             containers = [{
               name = "seaweedfs-replicator"
