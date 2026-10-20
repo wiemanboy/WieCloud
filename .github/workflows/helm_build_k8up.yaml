@@ -17,7 +17,7 @@ jobs:
     with:
       chart_name: k8up
       chart_path: infrastructure/k8up/chart
-      registry: oci://harbor.wieman.cloud
+      registry: harbor.wieman.cloud
       repository: infrastructure
     secrets:
       registry_username: ${{ secrets.OCI_REGISTRY_USERNAME }}
