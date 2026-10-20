@@ -144,8 +144,8 @@ create_s3_credentials_external_Secret = lambda name: str, xr_name: str, generato
             source = "(.*)"
             target = key
           }
-        } for key in ["accessKey", "secretKey"]]
-      }]
+        }]
+      } for key in ["accessKey", "secretKey"] ]
     }
   }
 }
