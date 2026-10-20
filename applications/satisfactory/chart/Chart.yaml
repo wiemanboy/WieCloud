@@ -1,4 +1,4 @@
 apiVersion: v2
 name: satisfactory
 type: application
-version: 0.0.2
+version: 0.0.3
