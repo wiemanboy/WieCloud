@@ -335,17 +335,17 @@ create_httproute = lambda xr_name: str, hostname: str, parent_ref: ParentRef, na
   }
 }
 
-create_replicator = lambda name: str, xr_name: str, image: str, storage: str, resources: Resources {
+create_replicator = lambda replicator_name: str, xr_name: str, image: str, storage: str, resources: Resources {
   [
     {
       apiVersion = "apps/v1"
       kind = "Deployment"
-      metadata = metadata(name, xr_name, "deployment")
+      metadata = metadata(replicator_name, xr_name, "deployment")
       spec = {
         replicas = 1
-        selector.matchLabels = {"wieman.cloud/s3.replicator" = name}
+        selector.matchLabels = {"wieman.cloud/s3.replicator" = replicator_name}
         template = {
-          metadata.labels = {"wieman.cloud/s3.replicator" = name}
+          metadata.labels = {"wieman.cloud/s3.replicator" = replicator_name}
           spec = {
             containers = [{
               name = "seaweedfs-replicator"
@@ -367,13 +367,13 @@ create_replicator = lambda name: str, xr_name: str, image: str, storage: str, re
               {
                 name = "backup"
                 persistentVolumeClaim = {
-                  claimName = name
+                  claimName = replicator_name
                 }
               }
               {
                 name = "config"
                 configMap = {
-                  name = "${name}-config"
+                  name = "${replicator_name}-config"
                 }
               }
             ]
@@ -384,7 +384,7 @@ create_replicator = lambda name: str, xr_name: str, image: str, storage: str, re
     {
       apiVersion = "v1"
       kind = "PersistentVolumeClaim"
-      metadata = metadata(name, xr_name, "persistentvolumeclaim", {
+      metadata = metadata(replicator_name, xr_name, "persistentvolumeclaim", {
         "k8up.io/backup" = "true"
       })
       spec = {
@@ -399,7 +399,7 @@ create_replicator = lambda name: str, xr_name: str, image: str, storage: str, re
     {
       apiVersion = "v1"
       kind = "ConfigMap"
-      metadata = metadata("${name}-config", xr_name, "configmap")
+      metadata = metadata("${replicator_name}-config", xr_name, "configmap")
       data = {
         "replication.toml" = """
         enabled = true
