@@ -17,7 +17,7 @@ jobs:
     with:
       chart_name: forgejo
       chart_path: applications/forgejo/chart
-      registry: oci://harbor.wieman.cloud
+      registry: harbor.wieman.cloud
       repository: applications
     secrets:
       registry_username: ${{ secrets.OCI_REGISTRY_USERNAME }}
