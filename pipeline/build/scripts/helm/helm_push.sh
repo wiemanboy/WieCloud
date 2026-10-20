@@ -36,4 +36,4 @@ if [ ${#missing[@]} -ne 0 ]; then
 fi
 
 echo "Pushing Helm chart package: oci://${registry}/${repository}/${package}"
-helm push $package oc://$registry/$repository
+helm push $package oci://$registry/$repository
