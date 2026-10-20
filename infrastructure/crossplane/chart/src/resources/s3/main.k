@@ -387,10 +387,10 @@ create_replicator = lambda name: str, xr_name: str, image: str, storage: str, re
       })
       spec = {
         accessModes = ["ReadWriteOnce"]
-      }
-      resources = {
-        requests = {
-          storage = storage
+        resources = {
+          requests = {
+            storage = storage
+          }
         }
       }
     },
