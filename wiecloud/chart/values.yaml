@@ -87,7 +87,7 @@ targetRepository:
 applications:
   forgejo:
     deploy: true
-    version: 0.0.2
+    version: 0.0.3-fix-helm-push-9a199f5
     initialBoot: true
     cnpg:
       restore: false
@@ -101,7 +101,7 @@ applications:
 
   minecraft:
     deploy: true
-    version: 1.2.2
+    version: 1.2.3-fix-helm-push-9a199f5
     restores:
       - name: minecraft-restore
         enabled: false
@@ -133,7 +133,7 @@ applications:
 
   nextcloud:
     deploy: true
-    version: 1.1.2
+    version: 1.1.3-fix-helm-push-9a199f5
     cnpg:
       restore: false
     seaweedfs:
@@ -151,7 +151,7 @@ applications:
 
   satisfactory:
     deploy: true
-    version: 0.0.2
+    version: 0.0.3-fix-helm-push-9a199f5
     restores:
       - name: server-files-restore
         enabled: false
@@ -175,19 +175,19 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.4.1
+    version: 0.4.2-fix-helm-push-9a199f5
 
   certmanager:
     deploy: true
-    version: 0.2.7
+    version: 0.2.8-fix-helm-push-9a199f5
 
   cilium:
     deploy: false
-    version: 0.0.0
+    version: 0.0.1-fix-helm-push-9a199f5
 
   cnpg:
     deploy: true
-    version: 0.1.2
+    version: 0.1.3-fix-helm-push-9a199f5
     seaweedfs:
       backup:
         enabled: true
@@ -203,27 +203,27 @@ infrastructure:
 
   crossplane:
     deploy: true
-    version: 0.2.0
+    version: 0.2.1-fix-helm-push-9a199f5
 
   dragonflydb:
     deploy: true
-    version: 0.0.0
+    version: 0.0.1-fix-helm-push-9a199f5
 
   envoygateway:
     deploy: true
-    version: 0.4.0
+    version: 0.4.1-fix-helm-push-9a199f5
 
   externaldns:
     deploy: true
-    version: 0.1.3
+    version: 0.1.4-fix-helm-push-9a199f5
 
   externalsecrets:
     deploy: true
-    version: 0.0.2
+    version: 0.0.3-fix-helm-push-9a199f5
 
   harbor:
     deploy: true
-    version: 1.3.5
+    version: 1.3.5-fix-helm-push-9a199f5
     restores:
       - name: harbor-registry-restore
         enabled: false
@@ -240,11 +240,11 @@ infrastructure:
 
   k8up:
     deploy: true
-    version: 1.0.6
+    version: 1.0.7-fix-helm-push-9a199f5
 
   keycloak:
     deploy: true
-    version: 3.0.5
+    version: 3.0.6-fix-helm-push-9a199f5
     clientCreationPermissions:
       - name: argocd
         namespace: argocd
@@ -272,23 +272,23 @@ infrastructure:
 
   kyverno:
     deploy: true
-    version: 0.1.0
+    version: 0.1.1-fix-helm-push-9a199f5
 
   longhorn:
     deploy: true
-    version: 0.2.1
+    version: 0.2.2-fix-helm-push-9a199f5
 
   metallb:
     deploy: true
-    version: 0.0.11
+    version: 0.0.12-fix-helm-push-9a199f5
 
   metricsserver:
     deploy: true
-    version: 0.0.0
+    version: 0.0.1-fix-helm-push-9a199f5
 
   nodes:
     deploy: true
-    version: 0.2.1
+    version: 0.2.2-fix-helm-push-9a199f5
     proxmox:
       api:
         url: https://192.168.178.166:8006/api2/json
@@ -304,15 +304,15 @@ infrastructure:
 
   prometheus:
     deploy: true
-    version: 0.0.5
+    version: 0.0.6-fix-helm-push-9a199f5
 
   seaweedfs:
     deploy: true
-    version: 0.1.2
+    version: 0.1.3-fix-helm-push-9a199f5
 
   wireguard:
     deploy: true
-    version: 0.0.2
+    version: 0.0.3-fix-helm-push-9a199f5
     vpn:
       peers:
         - pc
