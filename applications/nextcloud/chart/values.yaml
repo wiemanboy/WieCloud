@@ -1,7 +1,4 @@
 nextcloud:
-  # image:
-  #   tag: 35.0.2-apache
-
   nodeSelector:
     topology.kubernetes.io/zone: gigabyte-pve-0
 
