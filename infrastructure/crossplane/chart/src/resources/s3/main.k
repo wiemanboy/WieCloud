@@ -97,13 +97,46 @@ compose = lambda params: any {
   )
 
   # Set ready
+  set_ready(_desired_password_generator)
+
+  set_ready(get_resources_by_resource_kind( _desired_replicator_resources, "ConfigMap")[0])
+  set_ready(get_resources_by_resource_kind( _desired_secret_store_resources, "ServiceAccount")[0])
+  set_ready(get_resources_by_resource_kind( _desired_secret_store_resources, "Role")[0])
+  set_ready(get_resources_by_resource_kind( _desired_secret_store_resources, "RoleBinding")[0])
+
+  _desired_external_secrets = [_desired_s3_credentials, _desired_s3_credentials_config]
+  observed_external_secrets = get_observed_resources_by_resource_type(params, "externalsecret")
+  [ set_ready(get_resource_by_name(_desired_external_secrets, secret.metadata.name )) for secret in observed_external_secrets if any_true([
+      condition.type == "Ready" and condition.status == "True"
+      for condition in secret.status?.conditions or []
+  ]) ]
+
+  observed_secret_store = get_observed_resources_by_resource_type(params, "secretstore")?[0]
+   if any_true([condition.type == "Ready" and condition.status == "True" for condition in observed_secret_store?.status?.conditions or []]):
+    set_ready(get_resources_by_resource_kind(_desired_secret_store_resources, "SecretStore"))
+
+  observed_pvc = get_observed_resources_by_resource_type(params, "persistentvolumeclaim")?[0]
+  if observed_pvc?.status?.phase == "Bound":
+    set_ready(get_resources_by_resource_kind(_desired_replicator_resources, "PersistentVolumeClaim"))
+
+  observed_deployment = get_observed_resources_by_resource_type(params, "deploy")?[0]
+  if any_true([condition.type == "Available" and condition.status == "True" for condition in observed_deployment?.status?.conditions or []]):
+    set_ready(get_resources_by_resource_kind(_desired_replicator_resources, "Deploy"))
+
+  observed_httproute = get_observed_resources_by_resource_type(params, "httproute")?[0]
+  if any_true([condition.type == "Accepted" and condition.status == "True" for condition in observed_httproute?.status?.conditions or []]):
+    set_ready(_desired_httproute)
+
+  observed_seaweed = get_observed_resources_by_resource_type(params, "seaweed")?[0]
+  if any_true([condition.type == "Ready" and condition.status == "True" for condition in observed_seaweed?.status?.conditions or []]):
+    set_ready(_desired_seaweed)
 
   # Update Status
   _desired_xr: {str:any} = {
     **params.dxr
   }
 
-  items: [{str:any}] = [ _desired_xr, _desired_password_generator, _desired_s3_credentials, *_desired_secret_store_resources, _desired_s3_credentials_config, _desired_seaweed, _desired_httproute, *_desired_replicator_resources ]
+  items: [{str:any}] = [ _desired_xr, _desired_password_generator, *_desired_external_secrets, *_desired_secret_store_resources, _desired_seaweed, _desired_httproute, *_desired_replicator_resources ]
 }
 
 create_password_generator = lambda name: str, xr_name: str {
@@ -409,6 +442,14 @@ create_replicator = lambda replicator_name: str, xr_name: str, image: str, stora
       }
     }
   ]
+}
+
+get_resource_by_name: ([any], str) -> any = lambda resources: [], name: str {
+  [ resource for resource in resources if resource.metadata.name == name] or None
+}
+
+get_resources_by_resource_kind = lambda resources: [any], resource_type: str {
+  [resource for resource in resources if resource.kind == resource_type]
 }
 
 get_observed_resources_by_resource_type: (any, str) -> [any] = lambda params: any, resource_type: str {
