@@ -133,7 +133,7 @@ applications:
 
   nextcloud:
     deploy: true
-    version: 1.2.0-fix-php-cves-30ac282
+    version: 1.2.0-fix-php-cves-62976e1
     cnpg:
       restore: false
     seaweedfs:
