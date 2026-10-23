@@ -94,15 +94,17 @@ compose = lambda params: any {
     seaweedfs.image,
     observed_xr.spec.replicator.storage,
     observed_xr.spec.replicator.resources
-  )
+  ) if observed_xr.spec.replicator.enabled else []
 
   # Set ready
   set_ready(_desired_password_generator)
 
-  set_ready(get_resources_by_resource_kind( _desired_replicator_resources, "ConfigMap")[0])
-  set_ready(get_resources_by_resource_kind( _desired_secret_store_resources, "ServiceAccount")[0])
-  set_ready(get_resources_by_resource_kind( _desired_secret_store_resources, "Role")[0])
-  set_ready(get_resources_by_resource_kind( _desired_secret_store_resources, "RoleBinding")[0])
+  if observed_xr.spec.replicator.enabled:
+    set_ready(get_resources_by_resource_kind( _desired_replicator_resources, "ConfigMap")[0])
+
+  set_ready(get_resources_by_resource_kind( _desired_secret_store_resources, "ServiceAccount")?[0])
+  set_ready(get_resources_by_resource_kind( _desired_secret_store_resources, "Role")?[0])
+  set_ready(get_resources_by_resource_kind( _desired_secret_store_resources, "RoleBinding")?[0])
 
   _desired_external_secrets = [_desired_s3_credentials, _desired_s3_credentials_config]
   observed_external_secrets = get_observed_resources_by_resource_type(params, "externalsecret")

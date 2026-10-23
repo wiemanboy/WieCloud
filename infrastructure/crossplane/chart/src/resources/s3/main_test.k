@@ -9,6 +9,15 @@ test_create_resources = lambda {
   assert get_resources(resources, "Deployment")
 }
 
+test_disable_replicator = lambda {
+  params = create_test_params()
+  params.oxr.spec.replicator.enabled = False
+  resources = compose(params)
+
+  assert len(get_resources(resources, "PersistentVolumeClaim")) == 0
+  assert len(get_resources(resources, "Deployment")) == 0
+}
+
 create_test_params = lambda  {
   {
     ctx = {
@@ -57,7 +66,7 @@ create_test_params = lambda  {
         }
 
         replicator = {
-          enabled = False
+          enabled = True
           storage = "1Gi"
         }
       }
