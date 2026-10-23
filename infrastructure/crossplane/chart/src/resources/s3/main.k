@@ -126,7 +126,7 @@ compose = lambda params: any {
     set_ready(get_resources_by_resource_kind(_desired_replicator_resources, "Deploy")[0])
 
   observed_httproute = get_observed_resources_by_resource_type(params, "httproute")?[0]
-  if any_true([condition.type == "Accepted" and condition.status == "True" for condition in observed_httproute?.status?.conditions or []]):
+  if any_true([condition.type == "Accepted" and condition.status == "True" for condition in observed_httproute?.status?.parents?.conditions or []]):
     set_ready(_desired_httproute)
 
   observed_seaweed = get_observed_resources_by_resource_type(params, "seaweed")?[0]
