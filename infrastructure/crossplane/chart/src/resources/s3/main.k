@@ -102,9 +102,9 @@ compose = lambda params: any {
   if observed_xr.spec.replicator.enabled:
     set_ready(get_resources_by_resource_kind( _desired_replicator_resources, "ConfigMap")[0])
 
-  set_ready(get_resources_by_resource_kind( _desired_secret_store_resources, "ServiceAccount")?[0])
-  set_ready(get_resources_by_resource_kind( _desired_secret_store_resources, "Role")?[0])
-  set_ready(get_resources_by_resource_kind( _desired_secret_store_resources, "RoleBinding")?[0])
+  set_ready(get_resources_by_resource_kind( _desired_secret_store_resources, "ServiceAccount")[0])
+  set_ready(get_resources_by_resource_kind( _desired_secret_store_resources, "Role")[0])
+  set_ready(get_resources_by_resource_kind( _desired_secret_store_resources, "RoleBinding")[0])
 
   _desired_external_secrets = [_desired_s3_credentials, _desired_s3_credentials_config]
   observed_external_secrets = get_observed_resources_by_resource_type(params, "externalsecret")
@@ -115,15 +115,15 @@ compose = lambda params: any {
 
   observed_secret_store = get_observed_resources_by_resource_type(params, "secretstore")?[0]
    if any_true([condition.type == "Ready" and condition.status == "True" for condition in observed_secret_store?.status?.conditions or []]):
-    set_ready(get_resources_by_resource_kind(_desired_secret_store_resources, "SecretStore"))
+    set_ready(get_resources_by_resource_kind(_desired_secret_store_resources, "SecretStore")[0])
 
   observed_pvc = get_observed_resources_by_resource_type(params, "persistentvolumeclaim")?[0]
   if observed_pvc?.status?.phase == "Bound":
-    set_ready(get_resources_by_resource_kind(_desired_replicator_resources, "PersistentVolumeClaim"))
+    set_ready(get_resources_by_resource_kind(_desired_replicator_resources, "PersistentVolumeClaim")[0])
 
   observed_deployment = get_observed_resources_by_resource_type(params, "deploy")?[0]
   if any_true([condition.type == "Available" and condition.status == "True" for condition in observed_deployment?.status?.conditions or []]):
-    set_ready(get_resources_by_resource_kind(_desired_replicator_resources, "Deploy"))
+    set_ready(get_resources_by_resource_kind(_desired_replicator_resources, "Deploy")[0])
 
   observed_httproute = get_observed_resources_by_resource_type(params, "httproute")?[0]
   if any_true([condition.type == "Accepted" and condition.status == "True" for condition in observed_httproute?.status?.conditions or []]):
