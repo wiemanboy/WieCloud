@@ -52,7 +52,7 @@ module "talos_controlplane_000" {
   spec = {
     cpu_cores = 4
     disk_size = 20
-    memory    = 6144
+    memory    = 16384
   }
 
   oidc = {
@@ -80,7 +80,7 @@ module "talos_worker_000" {
   spec = {
     cpu_cores = 8
     disk_size = 200
-    memory    = 12288
+    memory    = 16384
   }
 }
 
