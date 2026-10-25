@@ -174,15 +174,15 @@ applications:
 
 infrastructure:
   argocd:
-    deploy: true
+    deploy: false
     version: 0.4.2
 
   certmanager:
-    deploy: true
+    deploy: false
     version: 0.2.8
 
   cilium:
-    deploy: false
+    deploy: true
     version: 0.0.1
 
   cnpg:
@@ -210,11 +210,11 @@ infrastructure:
     version: 0.0.1
 
   envoygateway:
-    deploy: true
+    deploy: false
     version: 0.4.1
 
   externaldns:
-    deploy: true
+    deploy: false
     version: 0.2.1
 
   externalsecrets:

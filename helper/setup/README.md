@@ -5,7 +5,7 @@
 1. Check if argo and cilium versions are up-to-date
 2. Run `./setup.sh`
 3. Switch to the mirrored DockerHub registry `docker.io/wiemanboy`, disable backups and set `tofudeployer` to `dryRun`
-4. Deploy `longhorn` `cilium`, `externalsecrets`, `kyverno`, `crossplane`, `wireguard` and `metricsserver`
+4. Deploy `cilium`, `crossplane`, `externalsecrets`, `kyverno`, `longhorn`, `metricsserver` and `wireguard`
 5. Deploy aws secret for the secret store `aws-secret`; `kubectl create secret generic aws-secret --from-literal=accessKey=$access_key --from-literal=secretKey=$secret_key -n external-secrets`
 6. Deploy `envoygateway`, `certmanager`, `externaldns`, `seaweedfs`, `k8up` and `cnpg`
 7. (Optional) follow backup procedures
