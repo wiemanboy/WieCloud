@@ -9,10 +9,9 @@ spec:
   source:
     chart: harbor
     repoURL: {{ $.Values.infrastructure.repository }}
-    targetRevision: {{ .version }}
+    targetRevision: "1.3.4"
     helm:
       valuesObject:
-        backups: {{ toYaml $.Values.backups | nindent 10 }}
         restores: {{ toYaml .restores | nindent 10 }}
 
         harbor:
@@ -42,7 +41,7 @@ spec:
                   "oidc_client_id": "harbor",
                   "oidc_endpoint": "{{ $.Values.auth.oidc.endpoint }}",
                   "oidc_client_secret": "$(OIDC_CLIENT_SECRET)",
-                  "oidc_scope": "openid,email,profile,offline_access",
+                  "oidc_scope": "openid,email,profile",
                   "oidc_verify_cert": "true",
                   "oidc_auto_onboard": "true",
                   "oidc_user_claim": "preferred_username",

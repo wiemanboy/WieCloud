@@ -17,7 +17,7 @@ jobs:
     with:
       chart_name: minecraft
       chart_path: applications/minecraft/chart
-      registry: oci://harbor.wieman.cloud
+      registry: harbor.wieman.cloud
       repository: applications
     secrets:
       registry_username: ${{ secrets.OCI_REGISTRY_USERNAME }}

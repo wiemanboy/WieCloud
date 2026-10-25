@@ -1,53 +1,16 @@
-{{ include "shared.backups.tpl" (dict
-    "backups" .Values.backups
-    "restores" .Values.restores
-    "bucket" (dict "name" "wiecloud-nextcloud-backups")
-    "disable" (dict "schedule" true)
-) }}
-
-{{ range $index, $backup := .Values.backups }}
-{{- include "shared.schedule.tpl" (dict
-    "backup" $backup
-    "bucket" (dict "name" "wiecloud-nextcloud-backups")
-    "namePostfix" "nextcloud"
-    "override" (dict "backup" "nextcloud.schedule.backup.override")
-) }}
----
-{{ end }}
-
-{{ define "nextcloud.schedule.backup.override" }}
-podSecurityContext:
-  runAsUser: 33
-  fsGroup: 33
-  fsGroupChangePolicy: OnRootMismatch
-labelSelectors:
-  - matchExpressions:
-    - key: next.wieman.cloud/workload
-      operator: In
-      values:
-        - nextcloud
-{{ end }}
-
-
-{{ range $index, $backup := .Values.backups }}
-{{- include "shared.schedule.tpl" (dict
-    "backup" $backup
-    "bucket" (dict "name" "wiecloud-nextcloud-backups")
-    "override" (dict "backup" "default.schedule.backup.override")
-) }}
----
-{{ end }}
-
-{{ define "default.schedule.backup.override" }}
-podSecurityContext:
-  runAsUser: 0
-  fsGroup: 999
-  fsGroupChangePolicy: OnRootMismatch
-
-labelSelectors:
-  - matchExpressions:
-    - key: next.wieman.cloud/workload
-      operator: NotIn
-      values:
-        - nextcloud
-{{ end }}
+apiVersion: wieman.cloud/v1
+kind: Backup
+metadata:
+  name: nextcloud-backups
+spec:
+  {{- with .Values.backup }}
+  enabled: {{ .enabled }}
+  {{ end }}
+  target:
+    bucket: wiecloud-nextcloud-backups
+  restores: {{ .Values.restores | default list | toYaml | nindent 4 }}
+  backup:
+    podSpec:
+      securityContext:
+        runAsUser: 33
+        fsGroup: 33

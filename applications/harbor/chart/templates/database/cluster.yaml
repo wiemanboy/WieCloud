@@ -1,18 +1,18 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: forgejo-postgres-cluster
+  name: harbor-postgres-cluster
 spec:
-  instances: 3
+  instances: 1
 
   bootstrap:
     {{ if not .Values.cnpg.restore }}
     initdb:
-      database: forgejo
+      database: harbor
     {{ end }}
     {{ if .Values.cnpg.restore }}
     recovery:
-      database: forgejo
+      database: harbor
       source: source
     {{ end }}
 
@@ -40,5 +40,5 @@ spec:
       name: barman-cloud.cloudnative-pg.io
       parameters:
         barmanObjectName: cnpg-backup-s3
-        serverName: forgejo-postgres-cluster
+        serverName: harbor-postgres-cluster
   {{ end }}

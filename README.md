@@ -62,7 +62,7 @@ The projects includes some helper scripts to be run locally:
 - `./helper/helm/create_helm_build_workflow.sh`: creates a build workflow file for a defined chart using `./helper/helm/helm_build_<chart_name>.yaml`
 
 ```bash
-./helper/helm/create_helm_build_workflow.sh --path <project_name>/<application_name>/chart --registry oci://harbor.wieman.cloud --repository <project_name>
+./helper/helm/create_helm_build_workflow.sh --path <project_name>/<application_name>/chart --registry harbor.wieman.cloud --repository <project_name>
 ```
 
 - `./helper/image/create_image_build_workflow.sh`: creates a build workflow file for a defined chart using `./helper/image/image_build_<image_name>.yaml`

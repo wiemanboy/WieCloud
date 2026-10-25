@@ -4,7 +4,7 @@ metadata:
   name: cnpg-backup-s3
 spec:
   configuration:
-    destinationPath: s3://wiecloud-forgejo-postgres-backups/
+    destinationPath: s3://wiecloud-harbor-postgres-backups/
     endpointURL: https://cnpg.s3.wieman.cloud
 
     s3Credentials:
@@ -38,7 +38,7 @@ spec:
   schedule: "0 0 0 * * *"
   backupOwnerReference: self
   cluster:
-    name: forgejo-postgres-cluster
+    name: harbor-postgres-cluster
 
   method: plugin
   pluginConfiguration:

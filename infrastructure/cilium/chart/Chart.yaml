@@ -1,7 +1,7 @@
 apiVersion: v2
 name: cilium
 type: application
-version: 0.0.0
+version: 0.0.1
 dependencies:
 - name: cilium
   version: 1.19.5

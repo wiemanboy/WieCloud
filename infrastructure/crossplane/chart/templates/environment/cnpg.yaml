@@ -1,0 +1,18 @@
+apiVersion: apiextensions.crossplane.io/v1beta1
+kind: EnvironmentConfig
+metadata:
+  name: cnpg
+data:
+  cnpg:
+    backup:
+      s3:
+        endpoint: https://cnpg.s3.wieman.cloud
+        secret:
+          name: cnpg-backup-s3-credentials
+          accessKey: accessKey
+          secretKey: secretKey
+          storeRef:
+            kind: ClusterSecretStore
+            name: cnpg-backup-s3-credentials-store
+      schedule: "0 0 0 * *"
+      retention: "14d"

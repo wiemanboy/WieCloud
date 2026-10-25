@@ -42,7 +42,6 @@ spec:
     cookieNames:
       accessToken: access-token
       idToken: id-token
-      refreshToken: refresh-token
 
   authorization:
     defaultAction: Deny
