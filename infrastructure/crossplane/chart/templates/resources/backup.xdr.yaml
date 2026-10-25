@@ -1,0 +1,117 @@
+apiVersion: apiextensions.crossplane.io/v2
+kind: CompositeResourceDefinition
+metadata:
+  name: backups.wieman.cloud
+spec:
+  scope: Namespaced
+  group: wieman.cloud
+  names:
+    kind: Backup
+    plural: backups
+  versions:
+  - name: v1
+    served: true
+    referenceable: true
+    schema:
+     openAPIV3Schema:
+       type: object
+       properties:
+        spec:
+          type: object
+          properties:
+            enabled:
+              description: Defines if the backups should be enabled
+              type: boolean
+              default: true
+
+            target:
+              description: The configuration for the backup target
+              type: object
+              properties:
+                bucket:
+                  description: Target bucket where the backups will be stored
+                  type: string
+              required:
+              - bucket
+
+            restores:
+              description: The configuration for restore targets
+              type: array
+              default: []
+              items:
+                type: object
+                properties:
+                  name:
+                    description: The name of the restore
+                    type: string
+                  enabled:
+                    description: Defines if the restore should be enabled
+                    type: boolean
+                  fromBackup:
+                    description: The name of the backup target to be used for the restore
+                    type: string
+                  snapshot:
+                    description: The snapshot that should be restored
+                    type: string
+                  claim:
+                    description: The configuration for the target claim that is restored to
+                    type: object
+                    properties:
+                      name:
+                        description: The name of the PVC that should be restored to
+                        type: string
+            backup:
+              description: Backup config specific to this resource
+              type: object
+              properties:
+                podSpec:
+                  description: Spec overwrite for the backup pod
+                  type: object
+                  properties:
+                    securityContext:
+                      type: object
+                      properties:
+                        runAsUser:
+                          type: integer
+                        fsGroup:
+                          type: integer
+
+        status:
+          type: object
+          properties:
+            targets:
+              description: The targets that are used
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    description: The name of the backup target
+                    type: string
+                  endpoint:
+                    description: The s3 endpoint used by this target
+                    type: string
+                  schedule:
+                    descrption: The schedules used for different tasks
+                    type: object
+                    properties:
+                      backup:
+                        description: The schedule for the backup task in cron format
+                        type: string
+                      check:
+                        description: The schedule for the check task in cron format
+                        type: string
+                      prune:
+                        description: The schedule for the prune task in cron format
+                        type: string
+                  retention:
+                    description: The retention policy used
+                    type: object
+                    properties:
+                      keepLast:
+                        description: The amount of snapshots that are kept
+                        type: integer
+                      keepDaily:
+                        description: The amount of days snapshots are kept for
+                        type: integer
+

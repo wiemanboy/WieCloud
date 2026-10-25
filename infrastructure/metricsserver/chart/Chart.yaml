@@ -1,7 +1,7 @@
 apiVersion: v2
 name: metricsserver
 type: application
-version: 0.0.0
+version: 0.0.1
 dependencies:
   - name: metrics-server
     version: 3.13.1

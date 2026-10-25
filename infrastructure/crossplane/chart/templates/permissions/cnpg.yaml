@@ -1,0 +1,21 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cnpg-permissions
+  labels:
+    rbac.crossplane.io/aggregate-to-crossplane: "true"
+rules:
+  - apiGroups:
+      - postgresql.cnpg.io
+    resources:
+      - clusters
+      - scheduledbackups
+      - scheduledbackups/status
+    verbs: [ get, list, watch, create, patch, update, delete ]
+
+  - apiGroups:
+      - barmancloud.cnpg.io
+    resources:
+      - objectstores
+      - objectstores/status
+    verbs: [ get, list, watch, create, patch, update, delete ]

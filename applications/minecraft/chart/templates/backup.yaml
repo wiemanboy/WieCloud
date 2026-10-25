@@ -1,5 +1,11 @@
-{{ include "shared.backups.tpl" (dict
-    "backups" .Values.backups
-    "restores" .Values.restores
-    "bucket" (dict "name" "wiecloud-minecraft-backups")
-) }}
+apiVersion: wieman.cloud/v1
+kind: Backup
+metadata:
+  name: minecraft-backups
+spec:
+  {{- with .Values.backup }}
+  enabled: {{ .enabled }}
+  {{ end }}
+  target:
+    bucket: wiecloud-minecraft-backups
+  restores: {{ .Values.restores | default list | toYaml | nindent 4 }}

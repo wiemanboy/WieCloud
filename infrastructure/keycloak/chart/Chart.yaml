@@ -1,8 +1,4 @@
 apiVersion: v2
 name: keycloak
 type: application
-version: 3.0.4
-dependencies:
-  - name: shared
-    version: 0.0.0
-    repository: oci://harbor.wieman.cloud/products
+version: 3.0.6

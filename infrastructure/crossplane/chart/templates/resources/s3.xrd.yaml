@@ -1,0 +1,155 @@
+apiVersion: apiextensions.crossplane.io/v2
+kind: CompositeResourceDefinition
+metadata:
+  name: s3.wieman.cloud
+spec:
+  scope: Namespaced
+  group: wieman.cloud
+  names:
+    kind: S3
+    plural: s3
+  versions:
+  - name: v1
+    served: true
+    referenceable: true
+    schema:
+     openAPIV3Schema:
+       type: object
+       properties:
+        spec:
+          type: object
+          properties:
+            endpoint:
+              description: The endpoint the S3 server will be available on
+              type: string
+
+            secret:
+              description: The configuration for the S3 credentials and the secret / SecretStore that exposes it
+              type: object
+              properties:
+                name:
+                  description: The name of the S3 credentials secret
+                  type: string
+                store:
+                  description: The SecretStore that will be created, allowing other applications to use the secret
+                  type: object
+                  properties:
+                    name:
+                      description: The name of the SecretStore
+                      type: string
+                  required:
+                  - name
+              required:
+              - name
+              - store
+
+            master:
+              description: The configuration for the master server
+              type: object
+              properties:
+                replicas:
+                  type: integer
+                  default: 1
+                resources:
+                  type: object
+                  properties:
+                    limits:
+                      type: object
+                      properties:
+                        memory:
+                          type: string
+                    requests:
+                      type: object
+                      properties:
+                        cpu:
+                          type: string
+                        memory:
+                          type: string
+
+
+            volume:
+              description: The configuration for the volume server
+              type: object
+              properties:
+                replicas:
+                  type: integer
+                  default: 1
+                storage:
+                  type: string
+                resources:
+                  type: object
+                  properties:
+                    limits:
+                      type: object
+                      properties:
+                        memory:
+                          type: string
+                    requests:
+                      type: object
+                      properties:
+                        cpu:
+                          type: string
+                        memory:
+                          type: string
+              required:
+              - storage
+
+            filer:
+              description: The configuration for the filer server
+              type: object
+              properties:
+                replicas:
+                  type: integer
+                  default: 1
+                storage:
+                  type: string
+                resources:
+                  type: object
+                  properties:
+                    limits:
+                      type: object
+                      properties:
+                        memory:
+                          type: string
+                    requests:
+                      type: object
+                      properties:
+                        cpu:
+                          type: string
+                        memory:
+                          type: string
+              required:
+              - storage
+
+            replicator:
+              description: THe configuration for the replicator
+              type: object
+              properties:
+                enabled:
+                  type: boolean
+                  default: false
+                storage:
+                  type: string
+                resources:
+                  type: object
+                  properties:
+                    limits:
+                      type: object
+                      properties:
+                        memory:
+                          type: string
+                    requests:
+                      type: object
+                      properties:
+                        cpu:
+                          type: string
+                        memory:
+                          type: string
+              required:
+              - storage
+
+          required:
+          - secret
+          - endpoint
+          - volume
+          - filer

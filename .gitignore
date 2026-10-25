@@ -21,3 +21,6 @@ kubeconfig
 
 # build files
 .build/
+
+# KCL files
+_kcl_test_**

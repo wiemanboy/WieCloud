@@ -13,7 +13,6 @@ spec:
     helm:
       valuesObject:
         images: {{ toYaml $.Values.images | nindent 10 }}
-        backups: {{ toYaml $.Values.backups | nindent 10 }}
         restores: {{ toYaml .restores | nindent 10 }}
 
         forgejo:
@@ -23,7 +22,7 @@ spec:
               - name: {{ .provider }}
                 provider: openidConnect
                 autoDiscoverUrl: {{.endpoint }}/.well-known/openid-configuration
-                scopes: openid,email,profile,offline_access
+                scopes: openid,email,profile
                 existingSecret: forgejo-oidc-client
                 groupClaimName: groups
                 adminGroup: /app/forgejo/admin

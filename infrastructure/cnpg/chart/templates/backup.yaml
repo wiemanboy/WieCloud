@@ -1,5 +1,11 @@
-{{ include "shared.backups.tpl" (dict
-    "backups" .Values.backups
-    "restores" .Values.restores
-    "bucket" (dict "name" "wiecloud-cnpg-backups")
-) }}
+apiVersion: wieman.cloud/v1
+kind: Backup
+metadata:
+  name: cnpg-backups
+spec:
+  {{- with .Values.backup }}
+  enabled: {{ .enabled }}
+  {{ end }}
+  target:
+    bucket: wiecloud-cnpg-backups
+  restores: {{ .Values.restores | default list | toYaml | nindent 4 }}

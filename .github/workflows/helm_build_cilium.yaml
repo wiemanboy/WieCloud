@@ -17,7 +17,7 @@ jobs:
     with:
       chart_name: cilium
       chart_path: infrastructure/cilium/chart
-      registry: oci://harbor.wieman.cloud
+      registry: harbor.wieman.cloud
       repository: infrastructure
     secrets:
       registry_username: ${{ secrets.OCI_REGISTRY_USERNAME }}
