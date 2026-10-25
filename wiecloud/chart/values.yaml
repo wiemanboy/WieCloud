@@ -215,11 +215,11 @@ infrastructure:
 
   externaldns:
     deploy: true
-    version: 0.2.1-rebuild-charts-299b7f2
+    version: 0.2.1
 
   externalsecrets:
     deploy: true
-    version: 0.1.1-rebuild-charts-299b7f2
+    version: 0.1.1
 
   harbor:
     deploy: true
