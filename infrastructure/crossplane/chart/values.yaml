@@ -47,3 +47,10 @@ backups:
   retention:
     keepLast: 5
     keepDaily: 14
+
+images:
+  seaweedfs:
+    image:
+      registry: docker.io
+      repository: chrislusf/seaweedfs
+      version: 4.47

@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: seaweedfs-permissions
+  labels:
+    rbac.crossplane.io/aggregate-to-crossplane: "true"
+rules:
+  - apiGroups:
+      - seaweed.seaweedfs.com
+    resources:
+      - seaweeds
+      - seaweeds/status
+    verbs: [ get, list, watch, create, patch, update, delete ]

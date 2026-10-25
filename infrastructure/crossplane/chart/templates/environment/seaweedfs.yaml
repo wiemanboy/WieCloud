@@ -1,0 +1,9 @@
+apiVersion: apiextensions.crossplane.io/v1beta1
+kind: EnvironmentConfig
+metadata:
+  name: seaweedfs
+data:
+  seaweedfs:
+    {{ with .Values.images.seaweedfs.image -}}
+    image: {{ .registry }}/{{ .repository }}:{{ .version }}
+    {{ end -}}
