@@ -277,6 +277,8 @@ infrastructure:
   longhorn:
     deploy: true
     version: 0.3.0-rack-migration-f124def
+    routes:
+      deploy: true
 
   metallb:
     deploy: true
