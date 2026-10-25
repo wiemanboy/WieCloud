@@ -106,11 +106,11 @@ compose = lambda params: any {
   set_ready(get_resources_by_resource_kind( _desired_secret_store_resources, "Role")[0])
   set_ready(get_resources_by_resource_kind( _desired_secret_store_resources, "RoleBinding")[0])
 
-  observed_s3_credentials = get_resource_by_name(get_observed_resources_by_resource_type(params, "externalsecret"), _desired_s3_credentials.metadata.name)
+  observed_s3_credentials = get_resource_by_name(get_observed_resources_by_resource_type(params, "externalsecret"), _desired_s3_credentials.metadata.name)?[0]
   if any_true([condition.type == "Ready" and condition.status == "True" for condition in observed_s3_credentials?.status?.conditions or []]):
     set_ready(_desired_s3_credentials)
 
-  observed_s3_credentials_config = get_resource_by_name(get_observed_resources_by_resource_type(params, "externalsecret"), _desired_s3_credentials_config.metadata.name)
+  observed_s3_credentials_config = get_resource_by_name(get_observed_resources_by_resource_type(params, "externalsecret"), _desired_s3_credentials_config.metadata.name)?[0]
   if any_true([condition.type == "Ready" and condition.status == "True" for condition in observed_s3_credentials_config?.status?.conditions or []]):
     set_ready(_desired_s3_credentials_config)
 
