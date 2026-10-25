@@ -215,11 +215,11 @@ infrastructure:
 
   externaldns:
     deploy: true
-    version: 0.2.0-switch-external-services-to-ovhcloud-797d9ef
+    version: 0.2.1
 
   externalsecrets:
     deploy: true
-    version: 0.1.0-switch-external-services-to-ovhcloud-797d9ef
+    version: 0.1.1
 
   harbor:
     deploy: true
