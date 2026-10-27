@@ -7,7 +7,7 @@
 3. Switch to the mirrored DockerHub registry `docker.io/wiemanboy`, disable backups and set `tofudeployer` to `dryRun`
 4. Deploy `cilium`, `crossplane`, `externalsecrets`, `kyverno`, `longhorn`, `metricsserver` and `wireguard`
 5. Deploy aws secret for the secret store `aws-secret`; `kubectl create secret generic aws-secret --from-literal=accessKey=$access_key --from-literal=secretKey=$secret_key -n external-secrets`
-6. Deploy `envoygateway`, `certmanager`, `externaldns`, `seaweedfs`, `k8up` and `cnpg`
+6. Deploy `certmanager`, `cnpg`, `dragonflydb`, `envoygateway`, `externaldns`, `k8up` and`seaweedfs`
 7. (Optional) follow backup procedures
 8. Deploy `keycloak`
 9. Deploy remaining infrastructure: `argocd`, `prometheus`, `harbor`
