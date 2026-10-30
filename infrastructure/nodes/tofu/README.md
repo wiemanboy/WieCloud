@@ -38,7 +38,6 @@ tofu apply -target='module.wiecloud_vlan'
 1. Run the below Tofu commands
 2. If this is the bootstrap node:
   a. Run `tofu output -json | jq ".kubeconfig.value" | yq > kubeconfig` to get the kubeconfig
-  b. Get and approve the CSR with `kubectl --kubeconfig kubeconfig get csr` `kubectl --kubeconfig kubeconfig certificate approve <csr_name>`
   c. The node will not become ready until Cilium is installed
 3. Done
 

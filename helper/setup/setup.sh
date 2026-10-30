@@ -26,7 +26,5 @@ kubectl apply -f argo/infrastructure.project.yaml --kubeconfig=$kubeconfig
 
 kubectl apply -f argo/wiecloud.application.yaml --kubeconfig=$kubeconfig
 
-kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml --kubeconfig=$kubeconfig
-
-DEFAULT_PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" --kubeconfig=$kubeconfig | base64 -d
+DEFAULT_PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" --kubeconfig=$kubeconfig | base64 -d)
 echo "default password: $DEFAULT_PASSWORD"
