@@ -240,7 +240,7 @@ infrastructure:
 
   k8up:
     deploy: true
-    version: 1.1.0-rack-migration-6684881
+    version: 1.1.0-rack-migration-03467ec
 
   keycloak:
     deploy: false
@@ -276,7 +276,7 @@ infrastructure:
 
   longhorn:
     deploy: true
-    version: 0.3.0-rack-migration-6684881
+    version: 0.3.0-rack-migration-03467ec
     routes:
       deploy: true
 
@@ -314,7 +314,7 @@ infrastructure:
 
   wireguard:
     deploy: true
-    version: 0.1.0-rack-migration-6684881
+    version: 0.1.0-rack-migration-03467ec
     vpn:
       peers:
         - pc
