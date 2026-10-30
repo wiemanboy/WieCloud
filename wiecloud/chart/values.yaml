@@ -186,7 +186,7 @@ infrastructure:
     version: 0.0.1
 
   cnpg:
-    deploy: false
+    deploy: true
     version: 0.2.0-rack-migration-7607486
     seaweedfs:
       backup:
@@ -206,7 +206,7 @@ infrastructure:
     version: 0.3.0
 
   dragonflydb:
-    deploy: false
+    deploy: true
     version: 0.0.1
 
   envoygateway:
