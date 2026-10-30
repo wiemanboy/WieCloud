@@ -31,30 +31,30 @@ auth:
     endpoint: https://keycloak.wieman.cloud/realms/wiecloud
 
 backups: []
-  # - name: local
-  #   s3:
-  #     endpoint: https://k8up.s3.wieman.cloud
-  #     secret:
-  #       name: local-backup-s3-credentials
-  #       accessKey: accessKey
-  #       secretKey: secretKey
-  #       storeRef:
-  #         kind: ClusterSecretStore
-  #         name: local-backup-s3-credentials-store
-  #   repo:
-  #     secret:
-  #       name: local-backup-repo-password
-  #       password: password
-  #       storeRef:
-  #         kind: ClusterSecretStore
-  #         name: local-backup-repo-password-store
-  #   schedule:
-  #     backup: "0 12 * * *"
-  #     check: "30 12 * * *"
-  #     prune: "0 13 * * *"
-  #   retention:
-  #     keepLast: 5
-  #     keepDaily: 14
+  - name: local
+    s3:
+      endpoint: https://invalid.s3.wieman.cloud
+      secret:
+        name: local-backup-s3-credentials
+        accessKey: accessKey
+        secretKey: secretKey
+        storeRef:
+          kind: ClusterSecretStore
+          name: local-backup-s3-credentials-store
+    repo:
+      secret:
+        name: local-backup-repo-password
+        password: password
+        storeRef:
+          kind: ClusterSecretStore
+          name: local-backup-repo-password-store
+    schedule:
+      backup: "0 12 * * *"
+      check: "30 12 * * *"
+      prune: "0 13 * * *"
+    retention:
+      keepLast: 5
+      keepDaily: 14
   # - name: aws
   #   s3:
   #     endpoint: https://s3.eu-central-1.amazonaws.com
