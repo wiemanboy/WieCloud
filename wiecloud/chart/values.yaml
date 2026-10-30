@@ -187,7 +187,7 @@ infrastructure:
 
   cnpg:
     deploy: true
-    version: 0.2.0-rack-migration-7607486
+    version: 0.2.0-rack-migration-3124961
     seaweedfs:
       backup:
         enabled: true
@@ -240,7 +240,7 @@ infrastructure:
 
   k8up:
     deploy: true
-    version: 1.1.0-rack-migration-7607486
+    version: 1.1.0-rack-migration-3124961
 
   keycloak:
     deploy: false
@@ -276,7 +276,7 @@ infrastructure:
 
   longhorn:
     deploy: true
-    version: 0.3.0-rack-migration-7607486
+    version: 0.3.0-rack-migration-3124961
     routes:
       deploy: true
 
@@ -314,7 +314,7 @@ infrastructure:
 
   wireguard:
     deploy: true
-    version: 0.1.0-rack-migration-7607486
+    version: 0.1.0-rack-migration-3124961
     vpn:
       peers:
         - pc
