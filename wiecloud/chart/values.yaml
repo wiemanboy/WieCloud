@@ -30,7 +30,7 @@ auth:
     provider: Keycloak
     endpoint: https://keycloak.wieman.cloud/realms/wiecloud
 
-backups: []
+backups:
   - name: local
     s3:
       endpoint: https://invalid.s3.wieman.cloud
