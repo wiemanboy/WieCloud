@@ -99,6 +99,9 @@ applications:
         claim:
           name: gitea-shared-storage
 
+  harbor:
+    deploy: false
+
   minecraft:
     deploy: false
     version: 1.2.3
@@ -220,23 +223,6 @@ infrastructure:
   externalsecrets:
     deploy: true
     version: 0.1.1
-
-  harbor:
-    deploy: false
-    version: 1.3.5
-    restores:
-      - name: harbor-registry-restore
-        enabled: false
-        fromBackup: local
-        snapshot: ""
-        claim:
-          name: harbor-registry
-      - name: harbor-database-restore
-        enabled: false
-        fromBackup: local
-        snapshot: ""
-        claim:
-          name: database-data-harbor-database-0
 
   k8up:
     deploy: true
