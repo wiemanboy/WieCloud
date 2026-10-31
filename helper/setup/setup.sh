@@ -2,6 +2,9 @@ set -e
 
 cilium_version=1.19.5
 argocd_version=9.5.15
+kubeconfig=./kubeconfig
+
+export KUBECONFIG=$kubeconfig
 
 # Setup Cilium
 
@@ -12,18 +15,16 @@ helm install cilium cilium/cilium --version ${cilium_version} --namespace kube-s
 
 # Setup ArgoCD
 
-helm repo add argo https://argoproj.github.io/argo-helm || exit 1
+helm repo add argo https://argoproj.github.io/argo-helm|| exit 1
 helm repo update
 
 echo "installing argocd helm chart"
-helm install argocd argo/argo-cd --version ${argocd_version} -n argocd --create-namespace
+helm install argocd argo/argo-cd --version ${argocd_version} -n argocd --create-namespace --wait
 
 echo "creating root application"
-kubectl apply -f argo/infrastructure.project.yaml
+kubectl apply -f argo/infrastructure.project.yaml --kubeconfig=$kubeconfig
 
-kubectl apply -f argo/wiecloud.application.yaml
+kubectl apply -f argo/wiecloud.application.yaml --kubeconfig=$kubeconfig
 
-kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml
-
-DEFAULT_PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
+DEFAULT_PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" --kubeconfig=$kubeconfig | base64 -d)
 echo "default password: $DEFAULT_PASSWORD"

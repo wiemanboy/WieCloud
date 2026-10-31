@@ -32,7 +32,6 @@ resource "proxmox_vm_qemu" "vm" {
     id      = 0
     model   = "virtio"
     bridge  = "vmbr0"
-    macaddr = var.macaddr
   }
 
   lifecycle {
@@ -41,4 +40,8 @@ resource "proxmox_vm_qemu" "vm" {
       startup_shutdown
     ]
   }
+}
+
+output "macaddr" {
+  value = proxmox_vm_qemu.vm.network[0].macaddr
 }

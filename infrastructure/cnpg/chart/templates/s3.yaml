@@ -1,0 +1,50 @@
+apiVersion: wieman.cloud/v1
+kind: S3
+metadata:
+  name: cnpg-backup
+spec:
+  endpoint: cnpg.s3.{{.Values.network.hostname}}
+
+  secret:
+    name: cnpg-backup-s3-credentials
+    store:
+      name: namespaced-s3-credentials-store
+
+  master:
+    replicas: 1
+    resources:
+      limits:
+        memory: 64Mi
+      requests:
+        cpu: 1m
+        memory: 32Mi
+
+  volume:
+    replicas: 1
+    storage: 20Gi
+    resources:
+      limits:
+        memory: 128Mi
+      requests:
+        cpu: 5m
+        memory: 64Mi
+
+  filer:
+    replicas: 1
+    storage: 1Gi
+    resources:
+      limits:
+        memory: 512Mi
+      requests:
+        cpu: 5m
+        memory: 256Mi
+
+  replicator:
+    enabled: true
+    storage: 20Gi
+    resources:
+      limits:
+        memory: 128Mi
+      requests:
+        cpu: 1m
+        memory: 64Mi
