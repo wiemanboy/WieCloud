@@ -229,7 +229,7 @@ infrastructure:
     version: 1.1.0-rack-migration-7120758
 
   keycloak:
-    deploy: false
+    deploy: true
     version: 3.0.6
     clientCreationPermissions:
       - name: argocd
