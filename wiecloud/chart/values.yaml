@@ -101,6 +101,8 @@ applications:
 
   harbor:
     deploy: false
+    cnpg:
+      restore: false
 
   minecraft:
     deploy: false
@@ -243,9 +245,9 @@ infrastructure:
       - name: nextcloud
         namespace: nextcloud
     cnpg:
-      restore: false
+      restore: true
     tofudeployer:
-      dryRun: false
+      dryRun: true
     restores:
       - name: tfstate-restore
         enabled: false
