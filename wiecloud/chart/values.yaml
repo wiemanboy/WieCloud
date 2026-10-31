@@ -55,30 +55,30 @@ backups:
     retention:
       keepLast: 5
       keepDaily: 14
-  # - name: aws
-  #   s3:
-  #     endpoint: https://s3.eu-central-1.amazonaws.com
-  #     secret:
-  #       name: aws-backup-s3-credentials
-  #       accessKey: accessKey
-  #       secretKey: secretKey
-  #       storeRef:
-  #         kind: ClusterSecretStore
-  #         name: aws
-  #   repo:
-  #     secret:
-  #       name: aws-backup-repo-password
-  #       password: password
-  #       storeRef:
-  #         kind: ClusterSecretStore
-  #         name: aws
-  #   schedule:
-  #     backup: "0 12 * * *"
-  #     check: "30 12 * * *"
-  #     prune: "0 13 * * *"
-  #   retention:
-  #     keepLast: 5
-  #     keepDaily: 14
+  - name: aws
+    s3:
+      endpoint: https://s3.eu-central-1.amazonaws.com
+      secret:
+        name: aws-backup-s3-credentials
+        accessKey: accessKey
+        secretKey: secretKey
+        storeRef:
+          kind: ClusterSecretStore
+          name: aws
+    repo:
+      secret:
+        name: aws-backup-repo-password
+        password: password
+        storeRef:
+          kind: ClusterSecretStore
+          name: aws
+    schedule:
+      backup: "0 12 * * *"
+      check: "30 12 * * *"
+      prune: "0 13 * * *"
+    retention:
+      keepLast: 5
+      keepDaily: 14
 
 targetRepository:
   url: https://github.com/wiemanboy/WieCloud.git
@@ -194,15 +194,13 @@ infrastructure:
     seaweedfs:
       backup:
         enabled: true
-      restore:
-        enabled: false
     restores:
       - name: seaweed-restore
         enabled: false
         fromBackup: local
         snapshot: ""
         claim:
-          name: seaweed-backup
+          name: cnpg-backup-replicator
 
   crossplane:
     deploy: true
