@@ -126,7 +126,7 @@ applications:
 
   harbor:
     deploy: true
-    version: 1.4.0-rack-migration-4e4ff68
+    version: 1.4.0-rack-migration-58424a5
     cnpg:
       restore: false
 
@@ -164,7 +164,7 @@ applications:
 
   nextcloud:
     deploy: false
-    version: 1.3.0-rack-migration-4e4ff68
+    version: 1.3.0-rack-migration-58424a5
     cnpg:
       restore: false
     seaweedfs:
@@ -218,7 +218,7 @@ infrastructure:
 
   cnpg:
     deploy: true
-    version: 0.2.0-rack-migration-4e4ff68
+    version: 0.2.0-rack-migration-58424a5
     seaweedfs:
       backup:
         enabled: true
@@ -232,7 +232,7 @@ infrastructure:
 
   crossplane:
     deploy: true
-    version: 0.3.1-rack-migration-4e4ff68
+    version: 0.3.1-rack-migration-58424a5
 
   dragonflydb:
     deploy: true
@@ -252,11 +252,11 @@ infrastructure:
 
   k8up:
     deploy: true
-    version: 1.1.0-rack-migration-4e4ff68
+    version: 1.1.0-rack-migration-58424a5
 
   keycloak:
     deploy: true
-    version: 3.1.0-rack-migration-4e4ff68
+    version: 3.1.0-rack-migration-58424a5
     clientCreationPermissions:
       - name: argocd
         namespace: argocd
@@ -288,7 +288,7 @@ infrastructure:
 
   longhorn:
     deploy: true
-    version: 0.3.0-rack-migration-4e4ff68
+    version: 0.3.0-rack-migration-58424a5
     routes:
       deploy: true
 
@@ -302,7 +302,7 @@ infrastructure:
 
   nodes:
     deploy: true
-    version: 0.3.0-rack-migration-4e4ff68
+    version: 0.3.0-rack-migration-58424a5
     api:
       proxmox: https://10.0.0.50:8006/api2/json
       routeros: http://10.0.0.1
@@ -326,7 +326,7 @@ infrastructure:
 
   wireguard:
     deploy: true
-    version: 0.1.0-rack-migration-4e4ff68
+    version: 0.1.0-rack-migration-58424a5
     vpn:
       peers:
         - pc
