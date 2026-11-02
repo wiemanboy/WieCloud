@@ -101,7 +101,7 @@ applications:
 
   harbor:
     deploy: true
-    version: 0.0.0
+    version: 1.4.0-rack-migration-98cc463
     cnpg:
       restore: false
 
@@ -139,7 +139,7 @@ applications:
 
   nextcloud:
     deploy: false
-    version: 1.3.0-rack-migration-9e9aa24
+    version: 1.3.0-rack-migration-98cc463
     cnpg:
       restore: false
     seaweedfs:
@@ -193,7 +193,7 @@ infrastructure:
 
   cnpg:
     deploy: true
-    version: 0.2.0-rack-migration-9e9aa24
+    version: 0.2.0-rack-migration-98cc463
     seaweedfs:
       backup:
         enabled: true
@@ -207,7 +207,7 @@ infrastructure:
 
   crossplane:
     deploy: true
-    version: 0.3.1-rack-migration-9e9aa24
+    version: 0.3.1-rack-migration-98cc463
 
   dragonflydb:
     deploy: true
@@ -227,11 +227,11 @@ infrastructure:
 
   k8up:
     deploy: true
-    version: 1.1.0-rack-migration-9e9aa24
+    version: 1.1.0-rack-migration-98cc463
 
   keycloak:
     deploy: true
-    version: 3.1.0-rack-migration-9e9aa24
+    version: 3.1.0-rack-migration-98cc463
     clientCreationPermissions:
       - name: argocd
         namespace: argocd
@@ -263,7 +263,7 @@ infrastructure:
 
   longhorn:
     deploy: true
-    version: 0.3.0-rack-migration-9e9aa24
+    version: 0.3.0-rack-migration-98cc463
     routes:
       deploy: true
 
@@ -301,7 +301,7 @@ infrastructure:
 
   wireguard:
     deploy: true
-    version: 0.1.0-rack-migration-9e9aa24
+    version: 0.1.0-rack-migration-98cc463
     vpn:
       peers:
         - pc
