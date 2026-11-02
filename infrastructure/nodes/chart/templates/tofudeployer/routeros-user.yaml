@@ -9,10 +9,10 @@ spec:
   target:
     name: routeros-user
   data:
-    - secretKey: user
+    - secretKey: name
       remoteRef:
         key: wiecloud/nodes/routeros/user
-        property: user
+        property: name
     - secretKey: password
       remoteRef:
         key: wiecloud/nodes/routeros/user
