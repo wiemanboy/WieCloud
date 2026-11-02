@@ -276,13 +276,13 @@ infrastructure:
     version: 0.0.1
 
   nodes:
-    deploy: false
+    deploy: true
     version: 0.2.2
     proxmox:
       api:
         url: https://192.168.178.166:8006/api2/json
     tofudeployer:
-      dryRun: false
+      dryRun: true
     restores:
       - name: tfstate-restore
         enabled: false
