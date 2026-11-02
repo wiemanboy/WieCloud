@@ -1,7 +1,4 @@
 nextcloud:
-  nodeSelector:
-    topology.kubernetes.io/zone: gigabyte-pve-0
-
   phpClientHttpsFix:
     enabled: true
     protocol: https
@@ -9,10 +6,9 @@ nextcloud:
   persistence:
     enabled: true
     size: 50Gi
+    accessMode: ReadWriteMany
     annotations:
       k8up.io/backup: "true"
-    labels:
-      next.wieman.cloud/workload: "nextcloud"
 
   internalDatabase:
     enabled: false
