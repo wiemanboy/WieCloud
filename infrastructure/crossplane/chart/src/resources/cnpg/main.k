@@ -82,7 +82,12 @@ compose = lambda params: any {
     **params.dxr
   }
 
-  items: [{str:any}] = [ _desired_xr, _desired_secret, _desired_cluster, _desired_object_store, _desired_scheduled_backup ]
+  _backups = [_desired_scheduled_backup]
+
+  if _desired_scheduled_backup == {}:
+    _backups = []
+
+  items: [{str:any}] = [ _desired_xr, _desired_secret, _desired_cluster, _desired_object_store, *_backups ]
 }
 
 create_external_secret: (str, str, StoreRef, [str]) -> {str:any} = lambda name: str, xr_name: str, store_ref: StoreRef, secrets: [str] {
