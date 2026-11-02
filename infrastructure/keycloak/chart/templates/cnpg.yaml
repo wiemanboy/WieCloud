@@ -1,0 +1,30 @@
+apiVersion: wieman.cloud/v1
+kind: CNPG
+metadata:
+  name: keycloak-postgres-cluster
+spec:
+  database: forgejo
+  instances: 1
+  storage:
+    size: 5Gi
+
+  backup:
+    {{- with .Values.cnpg }}
+    restore: {{ .restore }}
+    {{ end }}
+    target:
+      bucket: wiecloud-keycloak-postgres-backups
+
+  resources:
+    cnpg:
+      limits:
+        memory: 256Mi
+      requests:
+        cpu: 20m
+        memory: 128Mi
+    barman:
+      limits:
+        memory: 256Mi
+      requests:
+        cpu: 20m
+        memory: 128Mi
