@@ -81,7 +81,7 @@ backups:
   #     keepDaily: 14
   - name: ovh
     s3:
-      endpoint: https://s3.gra.io.cloud.ovh.net/
+      endpoint: https://s3.gra.io.cloud.ovh.net
       secret:
         name: wiecloud/backup/ovh/s3
         accessKey: access_key
