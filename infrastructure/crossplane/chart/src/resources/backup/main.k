@@ -169,7 +169,7 @@ create_external_secret: (str, str, StoreRef, [str]) -> {str:any} = lambda name: 
       }
 
       target = {
-        name = name
+        name = dashed_name
       }
 
       data = [
