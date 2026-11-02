@@ -100,7 +100,7 @@ applications:
           name: gitea-shared-storage
 
   harbor:
-    deploy: false
+    deploy: true
     cnpg:
       restore: false
 
@@ -245,7 +245,7 @@ infrastructure:
       - name: nextcloud
         namespace: nextcloud
     cnpg:
-      restore: true
+      restore: false
     tofudeployer:
       dryRun: true
     restores:
