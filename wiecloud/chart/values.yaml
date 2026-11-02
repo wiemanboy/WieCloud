@@ -101,6 +101,7 @@ applications:
 
   harbor:
     deploy: true
+    version: 0.0.0
     cnpg:
       restore: false
 
