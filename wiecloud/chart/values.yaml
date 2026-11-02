@@ -278,9 +278,9 @@ infrastructure:
   nodes:
     deploy: true
     version: 0.2.2
-    proxmox:
-      api:
-        url: https://192.168.178.166:8006/api2/json
+    api:
+      proxmox: https://10.0.0.50:8006/api2/json
+      routeros: http://10.0.0.1
     tofudeployer:
       dryRun: true
     restores:

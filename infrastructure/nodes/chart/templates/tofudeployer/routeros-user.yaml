@@ -1,0 +1,19 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: routeros-user
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: ovh
+  target:
+    name: routeros-user
+  data:
+    - secretKey: user
+      remoteRef:
+        key: wiecloud/nodes/routeros/user
+        property: user
+    - secretKey: password
+      remoteRef:
+        key: wiecloud/nodes/routeros/user
+        property: password
