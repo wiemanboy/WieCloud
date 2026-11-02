@@ -158,7 +158,7 @@ create_cnpg_cluster = lambda xr_name, instances: int, database: str, storage_siz
             name = "barman-cloud.cloudnative-pg.io"
             parameters = {
               barmanObjectName = "cnpg-backup-s3"
-              serverName = name
+              serverName = xr_name
             }
           }
         }
