@@ -3,7 +3,7 @@ kind: CNPG
 metadata:
   name: keycloak-postgres-cluster
 spec:
-  database: forgejo
+  database: keycloak
   instances: 1
   storage:
     size: 5Gi
