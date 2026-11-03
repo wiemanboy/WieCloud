@@ -1,6 +1,8 @@
 package runner
 
 import (
+	"log"
+
 	"k8s.io/client-go/kubernetes"
 	"wieman.cloud/forgejorunnercontroller/runner/configmap"
 	"wieman.cloud/forgejorunnercontroller/runner/secret"
@@ -26,13 +28,33 @@ func NewKubernetesRunnerClient(k8s *kubernetes.Clientset, rss secret.RunnerSecre
 	}
 }
 
-func (krs *KubernetesRunnerClient) CreateRunners() {}
+func (rc *KubernetesRunnerClient) CreateRunners(amount int, secretName string, register Register, runner Runner) error {
+	runnerCount, _ := rc.runnerSecretClient.CountSecrets(runner.Label, runner.Namespace)
+	log.Println("Counted", runnerCount, "runners")
+
+	if runnerCount < amount {
+		secretRefs, _ := rc.runnerSecretClient.CreateSecrets(
+			secret.Secret{
+				Name:              secretName,
+				Label:             runner.Label,
+				RegisterNamespace: register.Namespace,
+				RunnerNamespace:   runner.Namespace,
+			},
+		)
+
+		rc.createJob(secretRefs, register, runner)
+		rc.CreateRunners(amount, secretName, register, runner)
+	}
+
+	log.Println("All runners created")
+	return nil
+}
 
 func (krs *KubernetesRunnerClient) CleanupRunners() {}
 
 func (krs *KubernetesRunnerClient) UpdateChecksums() {}
 
-func (krs *KubernetesRunnerClient) createJob() {
+func (krs *KubernetesRunnerClient) createJob(secretRefs secret.SecretsRefs, register Register, runner Runner) {
 }
 
 func (krs *KubernetesRunnerClient) createDeployment() {
