@@ -67,7 +67,7 @@ test_check_readiness_uncreated_resources = lambda {
 _desired_resource = lambda name: str {
     {
         metadata.annotations: {
-            "krm.kcl.dev/composition-resource-name": name
+            "crossplane.io/composition-resource-name": name
         }
     }
 }
@@ -75,7 +75,7 @@ _desired_resource = lambda name: str {
 _observed_resource = lambda name: str, ready: bool {
     {
         metadata.annotations: {
-            "krm.kcl.dev/composition-resource-name": name
+            "crossplane.io/composition-resource-name": name
         }
         status.conditions: [
             {

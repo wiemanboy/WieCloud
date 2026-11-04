@@ -14,7 +14,7 @@ compose = lambda params: any {
     ]
 
     # Create resources
-    _desired_deployment: {str:any} = kubernetes.deployment(observed_xr.metadata.name, observed_xr.metadata.name, observed_xr.spec.image, observed_xr.spec.resources, observed_xr.spec.route.targetPort, 2)
+    _desired_deployment = kubernetes.deployment(observed_xr.metadata.name, observed_xr.metadata.name, observed_xr.spec.image, observed_xr.spec.resources, observed_xr.spec.route.targetPort, 2)
     _desired_service = kubernetes.service(observed_xr.metadata.name, observed_xr.metadata.name, 8080, observed_xr.spec.route.targetPort)
     _desired_route = kubernetes.httproute(observed_xr.metadata.name, observed_xr.metadata.name, hostnames, {
         name = network.gateway.name
@@ -27,7 +27,7 @@ compose = lambda params: any {
     })
 
     # Deployment
-    observed_resources = [value for _, value in params.ocds]
+    observed_resources = [value.Resource for _, value in params.ocds]
 
     _desired_deployments = crossplane.check_readiness([_desired_deployment], observed_resources, crossplane.readiness.deployment)
     _desired_services = crossplane.check_readiness([_desired_service], observed_resources, crossplane.readiness.service)
@@ -36,6 +36,7 @@ compose = lambda params: any {
     # Update status
     _desired_xr: {str:any} = {
         **params.dxr
+        # // TODO: make a function that can fetch values from an object by name
         status.hostname = params.ocds?["httproute.${observed_xr.metadata.name}"]?.spec?.hostnames?[0] or ""
         status.replicas = params.ocds?["deployment.${observed_xr.metadata.name}"]?.status?.availableReplicas or 0
     }
