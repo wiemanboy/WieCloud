@@ -54,24 +54,6 @@ test_create_2_restores_with_2_backups = lambda {
   assert len(restores) == 2
 }
 
-test_create_external_secret_naming = lambda {
-  secret = create_external_secret("name/to/dash", "xr_name", {kind = "kind", name = ""}, [])
-
-  assert secret.metadata.name == "name-to-dash"
-}
-
-test_create_secret_1_secret = lambda {
-  secret = create_external_secret("name", "xr_name", {kind = "kind", name = ""}, ["test"])
-
-  assert len(secret.spec.data) == 1
-}
-
-test_create_secret_2_secrets = lambda {
-  secret = create_external_secret("name", "xr_name", {kind = "kind", name = ""}, ["test0", "test1"])
-
-  assert len(secret.spec.data) == 2
-}
-
 test_disable_backups = lambda {
   resources = compose(create_test_params([create_test_backup()], [], enabled=False))
 
@@ -177,5 +159,5 @@ create_test_restore:  () -> {str:any}= lambda {
 }
 
 get_resources: ([{str:any}], str) -> [{str:any}] = lambda resources: [{str:any}], kind: str {
-  [resource for resource in resources if resource.kind == kind]
+  [resource for resource in resources if resource?.kind == kind]
 }

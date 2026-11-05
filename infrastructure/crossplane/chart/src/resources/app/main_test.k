@@ -81,6 +81,7 @@ create_params: (str, str, str, [str], int) -> {str:any} = lambda name: str, imag
         }
         ocds = {
             "${name}.deployement": {
+                kind: "Deployment"
                 metadata.annotations: {
                     "krm.kcl.dev/composition-resource-name": "${name}.deployment"
                 }

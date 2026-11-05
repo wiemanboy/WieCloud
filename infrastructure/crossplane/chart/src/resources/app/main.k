@@ -26,9 +26,8 @@ compose = lambda params: any {
         port = 8080
     })
 
-    # Deployment
+    # Check readiness
     observed_resources = [value.Resource for _, value in params.ocds]
-
     _desired_deployments = crossplane.check_readiness([_desired_deployment], observed_resources, crossplane.readiness.deployment)
     _desired_services = crossplane.check_readiness([_desired_service], observed_resources, crossplane.readiness.service)
     _desired_httproutes = crossplane.check_readiness([_desired_route], observed_resources, crossplane.readiness.httproute)
