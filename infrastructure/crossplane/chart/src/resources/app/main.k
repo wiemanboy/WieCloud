@@ -36,9 +36,8 @@ compose = lambda params: any {
     # Update status
     _desired_xr: {str:any} = {
         **params.dxr
-        # // TODO: make a function that can fetch values from an object by name
-        status.hostname = params.ocds?["httproute.${observed_xr.metadata.name}"]?.spec?.hostnames?[0] or ""
-        status.replicas = params.ocds?["deployment.${observed_xr.metadata.name}"]?.status?.availableReplicas or 0
+        status.hostname: crossplane.get_resource_by_name_and_kind(observed_xr.metadata.name, "HTTPRoute", observed_resources)?.spec?.hostnames?[0] or ""
+        status.replicas: crossplane.get_resource_by_name_and_kind(observed_xr.metadata.name, "Deployment", observed_resources)?.status?.availableReplicas or 0
     }
 
     items: [{str:any}] = [*_desired_deployments, *_desired_services, *_desired_httproutes, _desired_xr]

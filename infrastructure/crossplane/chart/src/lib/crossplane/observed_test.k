@@ -64,8 +64,19 @@ test_check_readiness_uncreated_resources = lambda {
     assert result[1].metadata.annotations["krm.kcl.dev/ready"] == "True"
 }
 
+test_get_resource_by_name = lambda {
+    desired_resources = [
+        _desired_resource("app1.deployment")
+        _desired_resource("app2.deployment")
+    ]
+
+    result = get_resource_by_name_and_kind("app1", "Deployment", desired_resources)
+    assert result.metadata.annotations["crossplane.io/composition-resource-name"] == "app1.deployment"
+}
+
 _desired_resource = lambda name: str {
     {
+        kind: "Deployment"
         metadata.annotations: {
             "crossplane.io/composition-resource-name": name
         }

@@ -1,3 +1,7 @@
 import resources.app
 
-items = app.compose(option("params"))
+params = option("params")
+
+if params.oxr.kind == "App":
+    items = app.compose(params)
+
