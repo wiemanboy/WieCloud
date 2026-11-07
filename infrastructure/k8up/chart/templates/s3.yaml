@@ -1,0 +1,44 @@
+apiVersion: wieman.cloud/v1
+kind: S3
+metadata:
+  name: local-backup
+spec:
+  endpoint: k8up.s3.{{.Values.network.hostname}}
+
+  secret:
+    name: local-backup-s3-credentials
+    store:
+      name: namespaced-s3-credentials-store
+
+  master:
+    replicas: 1
+    resources:
+      limits:
+        memory: 64Mi
+      requests:
+        cpu: 1m
+        memory: 32Mi
+
+  volume:
+    replicas: 1
+    storage: 100Gi
+    resources:
+      limits:
+        memory: 128Mi
+      requests:
+        cpu: 25m
+        memory: 64Mi
+
+  filer:
+    replicas: 1
+    storage: 1Gi
+    resources:
+      limits:
+        memory: 1024Mi
+      requests:
+        cpu: 100m
+        memory: 512Mi
+
+  replicator:
+    enabled: false
+    storage: 0Gi

@@ -1,6 +1,6 @@
-proxmox:
-  api:
-    url: https://example:8006/api2/json
+api:
+  proxmox: https://example:8006/api2/json
+  routeros: http://10.0.0.1
 
 tofudeployer:
   dryRun: false

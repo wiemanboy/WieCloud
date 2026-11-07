@@ -5,15 +5,15 @@ metadata:
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
-    name: aws
+    name: ovh
   target:
     name: proxmox-user
   data:
     - secretKey: id
       remoteRef:
-        key: proxmox-user
+        key: wiecloud/nodes/proxmox/user
         property: id
     - secretKey: secret
       remoteRef:
-        key: proxmox-user
+        key: wiecloud/nodes/proxmox/user
         property: secret

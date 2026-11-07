@@ -3,19 +3,21 @@ variable "name" {
   type        = string
 }
 
-variable "node" {
-  description = "Name of the node to create the vm on"
+variable "host" {
+  description = "Name of the host to create the vm on"
   type        = string
 }
 
-variable "region" {
-  description = "Name of the region the node is located in"
+variable "rack" {
+  description = "Name of the rack the host is located in"
   type        = string
 }
 
 variable "endpoint" {
   description = "Ip of the controlplane"
   type        = string
+  nullable    = true
+  default     = null
 }
 
 variable "cluster" {
@@ -30,15 +32,6 @@ variable "role" {
     condition     = contains(["worker", "controlplane"], var.role)
     error_message = "Role must be either 'worker' or 'controlplane'."
   }
-}
-
-variable "ip" {
-  description = "Ip of the vm"
-  type        = string
-}
-variable "macaddr" {
-  description = "Mac address of the vm"
-  type        = string
 }
 
 variable "disk" {

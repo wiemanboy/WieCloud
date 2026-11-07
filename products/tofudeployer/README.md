@@ -78,7 +78,7 @@ spec:
             volumeMounts:
             - name: data
               mountPath: /data
-              
+
           volumes:
           - name: data
             persistentVolumeClaim:
@@ -189,6 +189,7 @@ spec:
         claimName: tofudeployer-state
 EOF
 kubectl wait --for=condition=Ready pod/tofustate-migrator --timeout=60s
+kubectl exec tofustate-migrator -- mkdir -p /data/state
 kubectl cp terraform.tfstate tofustate-migrator:/data/state/terraform.tfstate
 kubectl delete pod tofustate-migrator
 ```

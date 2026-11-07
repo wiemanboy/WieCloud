@@ -14,7 +14,6 @@ spec:
       labels:
         app: wireguard
     spec:
-      nodeName: talos-worker-0
       containers:
       - name: wireguard
         {{ with .Values.images.wireguardserver.image -}}
@@ -59,8 +58,9 @@ metadata:
   name: wireguard
   labels:
     app: wireguard
+    expose: l2
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: wireguard
   ports:
@@ -68,7 +68,6 @@ spec:
       port: 51820
       targetPort: 51820
       protocol: UDP
-      nodePort: 30000
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

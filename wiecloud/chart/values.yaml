@@ -2,7 +2,7 @@ network:
   hostname: wieman.cloud
   externalIp: 85.148.81.86
   ipPool:
-    - 192.168.178.201 - 192.168.178.210
+    - 10.0.0.150 - 10.0.0.199
   gateway:
     name: default-envoy-gateway
     listener: https
@@ -31,30 +31,30 @@ auth:
     endpoint: https://keycloak.wieman.cloud/realms/wiecloud
 
 backups:
-  - name: local
-    s3:
-      endpoint: https://k8up.s3.wieman.cloud
-      secret:
-        name: local-backup-s3-credentials
-        accessKey: accessKey
-        secretKey: secretKey
-        storeRef:
-          kind: ClusterSecretStore
-          name: local-backup-s3-credentials-store
-    repo:
-      secret:
-        name: local-backup-repo-password
-        password: password
-        storeRef:
-          kind: ClusterSecretStore
-          name: local-backup-repo-password-store
-    schedule:
-      backup: "0 12 * * *"
-      check: "30 12 * * *"
-      prune: "0 13 * * *"
-    retention:
-      keepLast: 5
-      keepDaily: 14
+  # - name: local
+  #   s3:
+  #     endpoint: https://invalid.s3.wieman.cloud
+  #     secret:
+  #       name: local-backup-s3-credentials
+  #       accessKey: accessKey
+  #       secretKey: secretKey
+  #       storeRef:
+  #         kind: ClusterSecretStore
+  #         name: local-backup-s3-credentials-store
+  #   repo:
+  #     secret:
+  #       name: local-backup-repo-password
+  #       password: password
+  #       storeRef:
+  #         kind: ClusterSecretStore
+  #         name: local-backup-repo-password-store
+  #   schedule:
+  #     backup: "0 12 * * *"
+  #     check: "30 12 * * *"
+  #     prune: "0 13 * * *"
+  #   retention:
+  #     keepLast: 5
+  #     keepDaily: 14
   - name: aws
     s3:
       endpoint: https://s3.eu-central-1.amazonaws.com
@@ -79,14 +79,39 @@ backups:
     retention:
       keepLast: 5
       keepDaily: 14
+  - name: ovh
+    s3:
+      endpoint: https://s3.gra.io.cloud.ovh.net
+      secret:
+        name: wiecloud/backup/ovh/s3
+        accessKey: access_key
+        secretKey: secret_key
+        storeRef:
+          kind: ClusterSecretStore
+          name: ovh
+    repo:
+      secret:
+        name: wiecloud/backup/ovh/password
+        password: password
+        storeRef:
+          kind: ClusterSecretStore
+          name: ovh
+    schedule:
+      backup: "0 12 * * *"
+      check: "30 12 * * *"
+      prune: "0 13 * * *"
+    retention:
+      keepLast: 5
+      keepDaily: 14
+
 
 targetRepository:
   url: https://github.com/wiemanboy/WieCloud.git
-  branch: master
+  branch: rack-migration
 
 applications:
   forgejo:
-    deploy: true
+    deploy: false
     version: 0.0.3
     initialBoot: true
     cnpg:
@@ -99,8 +124,14 @@ applications:
         claim:
           name: gitea-shared-storage
 
-  minecraft:
+  harbor:
     deploy: true
+    version: 1.4.0-rack-migration-d02ce6f
+    cnpg:
+      restore: false
+
+  minecraft:
+    deploy: false
     version: 1.2.3
     restores:
       - name: minecraft-restore
@@ -133,14 +164,9 @@ applications:
 
   nextcloud:
     deploy: true
-    version: 1.2.0
+    version: 1.3.0-rack-migration-d02ce6f
     cnpg:
-      restore: false
-    seaweedfs:
-      backup:
-        enabled: true
-      restore:
-        enabled: false
+      restore: true
     restores:
       - name: nextcloud-restore
         enabled: false
@@ -150,7 +176,7 @@ applications:
           name: nextcloud-nextcloud
 
   satisfactory:
-    deploy: true
+    deploy: false
     version: 0.0.3
     restores:
       - name: server-files-restore
@@ -167,14 +193,14 @@ applications:
           name: satisfactory-config
 
   website:
-    deploy: true
+    deploy: false
     namespace: website
 
   repository: harbor.wieman.cloud/applications
 
 infrastructure:
   argocd:
-    deploy: true
+    deploy: false
     version: 0.4.2
 
   certmanager:
@@ -182,28 +208,26 @@ infrastructure:
     version: 0.2.8
 
   cilium:
-    deploy: false
+    deploy: true
     version: 0.0.1
 
   cnpg:
     deploy: true
-    version: 0.1.3
+    version: 0.2.0-rack-migration-d02ce6f
     seaweedfs:
       backup:
         enabled: true
-      restore:
-        enabled: false
     restores:
       - name: seaweed-restore
         enabled: false
         fromBackup: local
         snapshot: ""
         claim:
-          name: seaweed-backup
+          name: cnpg-backup-replicator
 
   crossplane:
     deploy: true
-    version: 0.3.0
+    version: 0.3.1-rack-migration-d02ce6f
 
   dragonflydb:
     deploy: true
@@ -221,30 +245,13 @@ infrastructure:
     deploy: true
     version: 0.1.1
 
-  harbor:
-    deploy: true
-    version: 1.3.5
-    restores:
-      - name: harbor-registry-restore
-        enabled: false
-        fromBackup: local
-        snapshot: ""
-        claim:
-          name: harbor-registry
-      - name: harbor-database-restore
-        enabled: false
-        fromBackup: local
-        snapshot: ""
-        claim:
-          name: database-data-harbor-database-0
-
   k8up:
     deploy: true
-    version: 1.0.7
+    version: 1.1.0-rack-migration-d02ce6f
 
   keycloak:
     deploy: true
-    version: 3.0.6
+    version: 3.1.0-rack-migration-d02ce6f
     clientCreationPermissions:
       - name: argocd
         namespace: argocd
@@ -261,7 +268,7 @@ infrastructure:
     cnpg:
       restore: false
     tofudeployer:
-      dryRun: false
+      dryRun: true
     restores:
       - name: tfstate-restore
         enabled: false
@@ -276,10 +283,12 @@ infrastructure:
 
   longhorn:
     deploy: true
-    version: 0.2.2
+    version: 0.3.0-rack-migration-d02ce6f
+    routes:
+      deploy: true
 
   metallb:
-    deploy: true
+    deploy: false
     version: 0.0.12
 
   metricsserver:
@@ -288,12 +297,12 @@ infrastructure:
 
   nodes:
     deploy: true
-    version: 0.2.2
-    proxmox:
-      api:
-        url: https://192.168.178.166:8006/api2/json
+    version: 0.3.0-rack-migration-d02ce6f
+    api:
+      proxmox: https://10.0.0.50:8006/api2/json
+      routeros: http://10.0.0.1
     tofudeployer:
-      dryRun: false
+      dryRun: true
     restores:
       - name: tfstate-restore
         enabled: false
@@ -303,7 +312,7 @@ infrastructure:
           name: tofudeployer-state
 
   prometheus:
-    deploy: true
+    deploy: false
     version: 0.0.6
 
   seaweedfs:
@@ -312,7 +321,7 @@ infrastructure:
 
   wireguard:
     deploy: true
-    version: 0.0.3
+    version: 0.1.0-rack-migration-d02ce6f
     vpn:
       peers:
         - pc

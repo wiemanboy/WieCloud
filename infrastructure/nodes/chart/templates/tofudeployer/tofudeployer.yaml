@@ -27,8 +27,9 @@ spec:
               value: {{ .Values.targetRepository.branch }}
             - name: TOFU_PATH
               value: infrastructure/nodes/tofu
+
             - name: TF_VAR_proxmox_api_url
-              value: {{ .Values.proxmox.api.url }}
+              value: {{ .Values.api.proxmox }}
             - name: TF_VAR_proxmox_user_id
               valueFrom:
                 secretKeyRef:
@@ -39,6 +40,21 @@ spec:
                 secretKeyRef:
                   name: proxmox-user
                   key: secret
+
+            - name: TF_VAR_routeros_api_url
+              value: {{ .Values.api.routeros }}
+            - name: TF_VAR_routeros_username
+              valueFrom:
+                secretKeyRef:
+                  name: routeros-user
+                  key: name
+            - name: TF_VAR_routeros_password
+              valueFrom:
+                secretKeyRef:
+                  name: routeros-user
+                  key: password
+
+
             - name: TF_VAR_oidc_issuer_url
               value: {{ .Values.auth.oidc.endpoint }}
 
