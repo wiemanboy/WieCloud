@@ -5,6 +5,6 @@ resource "routeros_ip_firewall_nat" "port_forward" {
   dst_port          = var.src_port
   in_interface_list = "WAN"
   action            = "dst-nat"
-  to_addresses      = "10.0.0.150"
+  to_addresses      = var.address
   to_ports          = var.dst_port
 }
