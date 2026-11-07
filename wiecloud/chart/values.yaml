@@ -55,7 +55,7 @@ backups:
   #   retention:
   #     keepLast: 5
   #     keepDaily: 14
-  # - name: aws
+  - name: aws
     s3:
       endpoint: https://s3.eu-central-1.amazonaws.com
       secret:
