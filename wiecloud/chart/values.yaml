@@ -166,7 +166,7 @@ applications:
     deploy: true
     version: 1.3.0-rack-migration-8a57e51
     cnpg:
-      restore: true
+      restore: false
     restores:
       - name: nextcloud-restore
         enabled: false
