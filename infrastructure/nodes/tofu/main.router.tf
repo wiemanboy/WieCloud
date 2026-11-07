@@ -20,6 +20,28 @@ resource "routeros_ip_firewall_nat" "vlan_nat" {
   action        = "masquerade"
 }
 
+
+module "http" {
+  source = "./modules/routeros/port_forward"
+
+  name    = "http"
+  address = "10.0.0.151"
+
+  src_port = 80
+  dst_port = 80
+  protocol = "tcp"
+}
+
+module "https" {
+  source = "./modules/routeros/port_forward"
+
+  name    = "https"
+  address = "10.0.0.151"
+
+  src_port = 443
+  dst_port = 443
+  protocol = "tcp"
+}
 module "wireguard" {
   source = "./modules/routeros/port_forward"
 
