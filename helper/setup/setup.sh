@@ -22,9 +22,9 @@ echo "installing argocd helm chart"
 helm install argocd argo/argo-cd --version ${argocd_version} -n argocd --create-namespace --wait
 
 echo "creating root application"
-kubectl apply -f argo/infrastructure.project.yaml --kubeconfig=$kubeconfig
+kubectl apply -f argo/infrastructure.project.yaml
 
-kubectl apply -f argo/wiecloud.application.yaml --kubeconfig=$kubeconfig
+kubectl apply -f argo/wiecloud.application.yaml
 
-DEFAULT_PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" --kubeconfig=$kubeconfig | base64 -d)
+DEFAULT_PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
 echo "default password: $DEFAULT_PASSWORD"
