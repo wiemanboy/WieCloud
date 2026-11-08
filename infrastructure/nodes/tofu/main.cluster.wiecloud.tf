@@ -1,8 +1,10 @@
 locals {
-  cluster                    = "wiecloud"
-  talos_version              = "v1.13.5"
-  image                      = "factory.talos.dev/installer/${module.talos_image.id}:${module.talos_image.talos_version}"
-  dell_pve_000_metal_amd64_iso = "${proxmox_storage_iso.dell_pve_000_metal_amd64_iso.storage}:iso/${proxmox_storage_iso.dell_pve_000_metal_amd64_iso.filename}"
+  cluster                          = "wiecloud"
+  talos_version                    = "v1.13.5"
+  image                            = "factory.talos.dev/installer/${module.talos_image.id}:${module.talos_image.talos_version}"
+  dell_pve_000_metal_amd64_iso     = "${proxmox_storage_iso.dell_pve_000_metal_amd64_iso.storage}:iso/${proxmox_storage_iso.dell_pve_000_metal_amd64_iso.filename}"
+  gigabyte_pve_000_metal_amd64_iso = "${proxmox_storage_iso.gigabyte_pve_000_metal_amd64_iso.storage}:iso/${proxmox_storage_iso.gigabyte_pve_000_metal_amd64_iso.filename}"
+  omen_pve_000_metal_amd64_iso     = "${proxmox_storage_iso.omen_pve_000_metal_amd64_iso.storage}:iso/${proxmox_storage_iso.omen_pve_000_metal_amd64_iso.filename}"
 }
 
 module "wiecloud_vlan" {
@@ -26,6 +28,19 @@ resource "proxmox_storage_iso" "dell_pve_000_metal_amd64_iso" {
   url      = "https://factory.talos.dev/image/${module.talos_image.id}/${module.talos_image.talos_version}/metal-amd64.iso"
 }
 
+resource "proxmox_storage_iso" "gigabyte_pve_000_metal_amd64_iso" {
+  pve_node = "gigabyte-pve-000"
+  storage  = "local"
+  filename = "metal-amd64.iso"
+  url      = "https://factory.talos.dev/image/${module.talos_image.id}/${module.talos_image.talos_version}/metal-amd64.iso"
+}
+
+resource "proxmox_storage_iso" "omen_pve_000_metal_amd64_iso" {
+  pve_node = "omen-pve-000"
+  storage  = "local"
+  filename = "metal-amd64.iso"
+  url      = "https://factory.talos.dev/image/${module.talos_image.id}/${module.talos_image.talos_version}/metal-amd64.iso"
+}
 resource "talos_machine_secrets" "wiecloud_machine_secret" {
   talos_version = local.talos_version
   lifecycle {
@@ -84,3 +99,76 @@ module "talos_worker_000" {
   }
 }
 
+module "talos_worker_001" {
+  depends_on = [module.talos_controlplane_000]
+  source     = "./modules/node"
+
+  name = "talos-worker-001"
+  host = "gigabyte-pve-000"
+  rack = "aurora-rack-000"
+
+  endpoint = module.talos_controlplane_000.ip
+  cluster  = local.cluster
+  role     = "worker"
+
+  machine_secret = talos_machine_secrets.wiecloud_machine_secret
+  talos_version  = local.talos_version
+  iso            = local.gigabyte_pve_000_metal_amd64_iso
+  image          = local.image
+
+  spec = {
+    cpu_cores = 6
+    disk_size = 200
+    memory    = 32768
+  }
+}
+
+module "talos_worker_002" {
+  depends_on = [module.talos_controlplane_000]
+  source     = "./modules/node"
+
+  name = "talos-worker-002"
+  host = "gigabyte-pve-000"
+  rack = "aurora-rack-000"
+
+  endpoint = module.talos_controlplane_000.ip
+  cluster  = local.cluster
+  role     = "worker"
+
+  machine_secret = talos_machine_secrets.wiecloud_machine_secret
+  talos_version  = local.talos_version
+  iso            = local.gigabyte_pve_000_metal_amd64_iso
+  image          = local.image
+
+  spec = {
+    cpu_cores = 6
+    disk_size = 200
+    memory    = 32768
+  }
+  disk = "disk-1tb-000"
+}
+
+module "talos_worker_003" {
+  depends_on = [module.talos_controlplane_000]
+  source     = "./modules/node"
+
+  name = "talos-worker-003"
+  host = "omen-pve-000"
+  rack = "aurora-rack-000"
+
+  endpoint = module.talos_controlplane_000.ip
+  cluster  = local.cluster
+  role     = "worker"
+
+  machine_secret = talos_machine_secrets.wiecloud_machine_secret
+  talos_version  = local.talos_version
+  iso            = local.omen_pve_000_metal_amd64_iso
+  image          = local.image
+
+  spec = {
+    cpu_cores = 16
+    disk_size = 200
+    memory    = 16384
+  }
+  disk = "disk-2tb-000"
+}
