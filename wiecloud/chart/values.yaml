@@ -112,7 +112,7 @@ targetRepository:
 applications:
   forgejo:
     deploy: false
-    version: 0.0.4-rack-migration-f6b1e4a
+    version: 0.0.4-rack-migration-d8d4a1d
     initialBoot: true
     cnpg:
       restore: false
@@ -126,13 +126,13 @@ applications:
 
   harbor:
     deploy: true
-    version: 1.4.0-rack-migration-f6b1e4a
+    version: 1.4.0-rack-migration-d8d4a1d
     cnpg:
       restore: false
 
   minecraft:
     deploy: false
-    version: 1.1.6-rack-migration-f6b1e4a
+    version: 1.1.6-rack-migration-d8d4a1d
     restores:
       - name: minecraft-restore
         enabled: false
@@ -164,7 +164,7 @@ applications:
 
   nextcloud:
     deploy: true
-    version: 1.3.0-rack-migration-f6b1e4a
+    version: 1.3.0-rack-migration-d8d4a1d
     cnpg:
       restore: false
     restores:
@@ -177,7 +177,7 @@ applications:
 
   satisfactory:
     deploy: false
-    version: 0.0.4-rack-migration-f6b1e4a
+    version: 0.0.4-rack-migration-d8d4a1d
     restores:
       - name: server-files-restore
         enabled: false
@@ -201,19 +201,19 @@ applications:
 infrastructure:
   argocd:
     deploy: false
-    version: 0.4.3-rack-migration-f6b1e4a
+    version: 0.4.3-rack-migration-d8d4a1d
 
   certmanager:
     deploy: true
-    version: 0.2.9-rack-migration-f6b1e4a
+    version: 0.2.9-rack-migration-d8d4a1d
 
   cilium:
     deploy: true
-    version: 0.0.2-rack-migration-f6b1e4a
+    version: 0.0.2-rack-migration-d8d4a1d
 
   cnpg:
     deploy: true
-    version: 0.2.0-rack-migration-f6b1e4a
+    version: 0.2.0-rack-migration-d8d4a1d
     seaweedfs:
       backup:
         enabled: true
@@ -227,31 +227,31 @@ infrastructure:
 
   crossplane:
     deploy: true
-    version: 0.3.1-rack-migration-f6b1e4a
+    version: 0.3.1-rack-migration-d8d4a1d
 
   dragonflydb:
     deploy: true
-    version: 0.0.2-rack-migration-f6b1e4a
+    version: 0.0.2-rack-migration-d8d4a1d
 
   envoygateway:
     deploy: true
-    version: 0.4.2-rack-migration-f6b1e4a
+    version: 0.4.2-rack-migration-d8d4a1d
 
   externaldns:
     deploy: true
-    version: 0.2.2-rack-migration-f6b1e4a
+    version: 0.2.2-rack-migration-d8d4a1d
 
   externalsecrets:
     deploy: true
-    version: 0.1.2-rack-migration-f6b1e4a
+    version: 0.1.2-rack-migration-d8d4a1d
 
   k8up:
     deploy: true
-    version: 1.1.0-rack-migration-f6b1e4a
+    version: 1.1.0-rack-migration-d8d4a1d
 
   keycloak:
     deploy: true
-    version: 3.1.0-rack-migration-f6b1e4a
+    version: 3.1.0-rack-migration-d8d4a1d
     clientCreationPermissions:
       - name: argocd
         namespace: argocd
@@ -279,11 +279,11 @@ infrastructure:
 
   kyverno:
     deploy: true
-    version: 0.0.2-rack-migration-f6b1e4a
+    version: 0.0.2-rack-migration-d8d4a1d
 
   longhorn:
     deploy: true
-    version: 0.3.1-rack-migration-f6b1e4a
+    version: 0.3.1-rack-migration-d8d4a1d
     routes:
       deploy: true
 
@@ -293,11 +293,11 @@ infrastructure:
 
   metricsserver:
     deploy: true
-    version: 0.0.2-rack-migration-f6b1e4a
+    version: 0.0.2-rack-migration-d8d4a1d
 
   nodes:
     deploy: true
-    version: 0.3.0-rack-migration-f6b1e4a
+    version: 0.3.0-rack-migration-d8d4a1d
     api:
       proxmox: https://10.0.0.50:8006/api2/json
       routeros: http://10.0.0.1
@@ -313,15 +313,15 @@ infrastructure:
 
   prometheus:
     deploy: false
-    version: 0.0.2-rack-migration-f6b1e4a
+    version: 0.0.2-rack-migration-d8d4a1d
 
   seaweedfs:
     deploy: true
-    version: 0.1.4-rack-migration-f6b1e4a
+    version: 0.1.4-rack-migration-d8d4a1d
 
   wireguard:
     deploy: true
-    version: 0.1.0-rack-migration-f6b1e4a
+    version: 0.1.0-rack-migration-d8d4a1d
     vpn:
       peers:
         - pc
@@ -367,7 +367,7 @@ images:
     image:
       registry: harbor.wieman.cloud
       repository: products/forgejorunnercontroller
-      version: 0.0.1-rack-migration-f6b1e4a
+      version: 0.0.1-rack-migration-d8d4a1d
 
   keycloakserver:
     image:
@@ -403,7 +403,7 @@ images:
     image:
       registry: harbor.wieman.cloud
       repository: products/tofudeployer
-      version: 0.0.2-rack-migration-f6b1e4a
+      version: 0.0.2-rack-migration-d8d4a1d
 
   wireguardserver:
     image:
@@ -415,4 +415,4 @@ images:
     image:
       registry: harbor.wieman.cloud
       repository: products/wiecloudactions
-      version: 0.0.1-rack-migration-f6b1e4a
+      version: 0.0.1-rack-migration-d8d4a1d
