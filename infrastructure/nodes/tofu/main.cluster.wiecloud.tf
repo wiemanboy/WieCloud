@@ -11,7 +11,7 @@ module "wiecloud_vlan" {
   vlan_id       = 10
   subnet        = "10.0.0.1/24"
   ip_range      = "10.0.0.100-10.0.0.149"
-  gateway_ports = ["ether2", "ether3"]
+  gateway_ports = ["ether2", "ether3", "ether4"]
 }
 
 module "talos_image" {
@@ -52,7 +52,7 @@ module "talos_controlplane_000" {
   spec = {
     cpu_cores = 4
     disk_size = 20
-    memory    = 16384
+    memory    = 10000
   }
 
   oidc = {
@@ -80,7 +80,7 @@ module "talos_worker_000" {
   spec = {
     cpu_cores = 8
     disk_size = 200
-    memory    = 16384
+    memory    = 20000
   }
 }
 
