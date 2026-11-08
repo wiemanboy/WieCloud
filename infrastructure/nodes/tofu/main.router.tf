@@ -20,7 +20,6 @@ resource "routeros_ip_firewall_nat" "vlan_nat" {
   action        = "masquerade"
 }
 
-
 module "http" {
   source = "./modules/routeros/port_forward"
 
