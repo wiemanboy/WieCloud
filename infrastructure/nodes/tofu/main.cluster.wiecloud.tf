@@ -148,27 +148,27 @@ module "talos_worker_002" {
   disk = "disk-1tb-000"
 }
 
-# module "talos_worker_003" {
-#   depends_on = [module.talos_controlplane_000]
-#   source     = "./modules/node"
+module "talos_worker_003" {
+  depends_on = [module.talos_controlplane_000]
+  source     = "./modules/node"
 
-#   name = "talos-worker-003"
-#   host = "omen-pve-000"
-#   rack = "aurora-rack-000"
+  name = "talos-worker-003"
+  host = "omen-pve-000"
+  rack = "aurora-rack-000"
 
-#   endpoint = module.talos_controlplane_000.ip
-#   cluster  = local.cluster
-#   role     = "worker"
+  endpoint = module.talos_controlplane_000.ip
+  cluster  = local.cluster
+  role     = "worker"
 
-#   machine_secret = talos_machine_secrets.wiecloud_machine_secret
-#   talos_version  = local.talos_version
-#   iso            = local.omen_pve_000_metal_amd64_iso
-#   image          = local.image
+  machine_secret = talos_machine_secrets.wiecloud_machine_secret
+  talos_version  = local.talos_version
+  iso            = local.omen_pve_000_metal_amd64_iso
+  image          = local.image
 
-#   spec = {
-#     cpu_cores = 16
-#     disk_size = 200
-#     memory    = 16384
-#   }
-#   disk = "disk-2tb-000"
-# }
+  spec = {
+    cpu_cores = 16
+    disk_size = 200
+    memory    = 16384
+  }
+  disk = "disk-2tb-000"
+}
