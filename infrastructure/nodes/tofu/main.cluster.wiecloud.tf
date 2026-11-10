@@ -27,7 +27,6 @@ module "wiecloud_vlan" {
           { id = 0, name = "pc" },
           { id = 1, name = "laptop" },
           { id = 2, name = "s24_ultra" },
-          { id = 3, name = "test" }
         ]
       }
     ]
