@@ -22,3 +22,16 @@ variable "gateway_ports" {
   description = "Ethernet ports to use as a gateway to the VLAN"
   type        = list(string)
 }
+
+variable "vpn" {
+  description = "VPN configuration"
+  type = object({
+    endpoint = string
+    address  = string
+    port     = number
+    users = list(object({
+      name  = string
+      peers = list(string)
+    }))
+  })
+}

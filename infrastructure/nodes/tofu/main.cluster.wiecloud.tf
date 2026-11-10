@@ -9,11 +9,24 @@ locals {
 
 module "wiecloud_vlan" {
   source        = "./modules/routeros/vlan"
+
   vlan_name     = "wiecloud"
   vlan_id       = 10
   subnet        = "10.0.0.1/24"
   ip_range      = "10.0.0.100-10.0.0.149"
   gateway_ports = ["ether2", "ether3", "ether4"]
+
+  vpn = {
+    endpoint = "wireguard.wieman.cloud"
+    address  = "10.22.0.1"
+    port     = 51822
+    users = [
+      {
+        name  = "jarno_wieman"
+        peers = ["s24_ultra", "laptop", "pc"]
+      }
+    ]
+  }
 }
 
 module "talos_image" {
