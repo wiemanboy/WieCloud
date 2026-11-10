@@ -36,18 +36,11 @@ resource "routeros_ip_firewall_filter" "wireguard_in" {
   place_before = 2
 }
 
-resource "routeros_ip_firewall_filter" "wireguard_router_access" {
-  comment      = "${local.resource_tag}: allow wireguard router access"
-  chain        = "input"
-  action       = "accept"
-  in_interface = routeros_interface_wireguard.wireguard.name
-  place_before = 3
-}
-
-resource "routeros_ip_firewall_filter" "wireguard_lan_access" {
-  comment      = "${local.resource_tag}: allow wireguard to lan"
-  chain        = "input"
-  action       = "accept"
-  in_interface = routeros_interface_wireguard.wireguard.name
-  place_before = 4
+resource "routeros_ip_firewall_filter" "wireguard_vlan_access" {
+  comment            = "${local.resource_tag}: allow wireguard to VLAN"
+  chain              = "forward"
+  action             = "accept"
+  in_interface       = routeros_interface_wireguard.wireguard.name
+  out_interface_list = routeros_interface_list.vlan.name
+  place_before       = 3
 }
