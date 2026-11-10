@@ -76,7 +76,6 @@ resource "routeros_ip_firewall_filter" "router_access" {
   place_before      = 0
   action            = "accept"
   chain             = "input"
-  // src_address       = "10.0.0.200" // ip of the management pod
 }
 
 resource "routeros_ip_firewall_filter" "ntp_access" {
