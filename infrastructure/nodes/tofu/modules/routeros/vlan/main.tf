@@ -71,7 +71,7 @@ resource "routeros_interface_list_member" "vlan_list_member" {
 }
 
 resource "routeros_ip_firewall_filter" "router_access" {
-  comment           = "${local.resource_tag}: allow router management"
+  comment           = "${local.resource_tag}: allow VLAN router management"
   in_interface_list = routeros_interface_list.vlan.name
   place_before      = 0
   action            = "accept"
@@ -80,7 +80,7 @@ resource "routeros_ip_firewall_filter" "router_access" {
 }
 
 resource "routeros_ip_firewall_filter" "ntp_access" {
-  comment      = "${local.resource_tag}: allow ntp queries"
+  comment      = "${local.resource_tag}: allow VLAN ntp queries"
   place_before = 1
   action       = "accept"
   chain        = "input"

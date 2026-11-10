@@ -29,6 +29,8 @@ resource "routeros_wireguard_peer" "peer" {
   client_address     = "${cidrhost("${var.vpn.address}/24", each.value + 2)}/32"
   client_endpoint    = var.vpn.endpoint
   client_listen_port = var.vpn.port
+  client_dns         = local.gateway
+  client_keepalive   = 25
 }
 
 resource "routeros_ip_address" "wireguard" {
@@ -53,4 +55,12 @@ resource "routeros_ip_firewall_filter" "wireguard_vlan_access" {
   in_interface       = routeros_interface_wireguard.wireguard.name
   out_interface_list = routeros_interface_list.vlan.name
   place_before       = 3
+}
+
+resource "routeros_ip_firewall_filter" "router_access" {
+  comment      = "${local.resource_tag}: allow VPN router management"
+  in_interface = routeros_interface_wireguard.wireguard.name
+  place_before = 4
+  action       = "accept"
+  chain        = "input"
 }
