@@ -30,16 +30,16 @@ resource "routeros_ip_firewall_filter" "wireguard_in" {
   place_before = 2
 }
 
-resource "routeros_ip_firewall_filter" "wireguard_in" {
-  comment      = "${local.resource_tag}: allow wireguard"
+resource "routeros_ip_firewall_filter" "wireguard_router_access" {
+  comment      = "${local.resource_tag}: allow wireguard router access"
   chain        = "input"
   action       = "accept"
   in_interface = routeros_interface_wireguard.wireguard.name
   place_before = 3
 }
 
-resource "routeros_ip_firewall_filter" "wireguard_in" {
-  comment      = "${local.resource_tag}: allow wireguard"
+resource "routeros_ip_firewall_filter" "wireguard_lan_access" {
+  comment      = "${local.resource_tag}: allow wireguard to lan"
   chain        = "input"
   action       = "accept"
   in_interface = routeros_interface_wireguard.wireguard.name
