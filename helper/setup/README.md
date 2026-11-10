@@ -10,7 +10,7 @@
 6. Deploy `certmanager`, `cnpg`, `dragonflydb`, `envoygateway`, `externaldns`, `k8up` and`seaweedfs`
 7. (Optional) follow backup procedures
 8. Deploy `keycloak`
-9. Deploy remaining infrastructure: `argocd`, `prometheus`, `harbor`
+9. Deploy remaining infrastructure: `argocd` and `prometheus`
 10. Deploy the applications, follow the backup procedures if necessary
 11. Enable backups and `tofudeployer`
 12. Done!
@@ -26,11 +26,11 @@
     ```yaml
     restores:
         - name: example-restore
-        enabled: true
-        fromBackup: local # Specify the backup source
-        snapshot: "00000000" # 8 characters long
-        claim:
-            name: example-pvc
+          enabled: true
+          fromBackup: local # Specify the backup source
+          snapshot: "00000000" # 8 characters long
+          claim:
+              name: example-pvc
     ```
 
 4. Wait for the restore to complete and check the logs of the restore pod
@@ -40,18 +40,11 @@
 
 1. Ensure the Seaweed cluster is running and healthy
 2. Ensure the backups are available in the PVC
-3. Deploy the restore job via the values
+3. Run the following command on the replicator
 
-    ```yaml
-    seaweedfs:
-      backup:
-        enabled: true
-      restore:
-        enabled: false
-    ```
-
-4. Wait for the restore to complete and check the logs of the restore pod
-5. Done!
+  ```bash
+  weed filer.copy -c 1 -concurrentChunks 2 -maxMB 4 /backup/buckets http://cnpg-backup-filer:8888/
+  ```
 
 ### CNPG
 
