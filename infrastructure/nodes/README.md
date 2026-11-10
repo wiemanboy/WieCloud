@@ -23,10 +23,10 @@ kubectl config set-credentials "$username" \
   --exec-arg="--oidc-issuer-url=https://keycloak.wieman.cloud/realms/wiecloud" \
   --exec-arg="--oidc-client-id=kubeapi"
 
-kubectl config set-cluster homelab \
-  --server=https://192.168.178.50:6443
+kubectl config set-cluster wiecloud \
+  --server=https://10.0.0.102:6443
 
-kubectl config set-context $username@homelab \
-  --cluster=homelab \
+kubectl config set-context $username@wiecloud \
+  --cluster=wiecloud \
   --user="$username"
 ```
