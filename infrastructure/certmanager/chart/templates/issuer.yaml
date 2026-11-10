@@ -15,5 +15,5 @@ spec:
           email: {{ .email }}
           apiTokenSecretRef:
             name: cloudflare-api-token
-            key: api-token
+            key: token
 {{- end -}}

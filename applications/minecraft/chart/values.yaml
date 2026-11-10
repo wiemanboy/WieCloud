@@ -24,7 +24,7 @@ minecraft:
     autoCurseForge:
       apiKey:
         existingSecret: curseforge-api-token
-        secretKey: api-token
+        secretKey: token
       # Link to modpack in general or a specific file
       pageUrl: ""
       zipUrl: ""

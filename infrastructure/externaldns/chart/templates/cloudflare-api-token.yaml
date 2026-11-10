@@ -8,7 +8,7 @@ metadata:
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
-    name: aws
+    name: ovh
   target:
     name: {{ $name | quote }}
   data:

@@ -5,11 +5,11 @@ metadata:
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
-    name: aws
+    name: ovh
   target:
     name: cloudflare-api-token
   data:
-    - secretKey: api-token
+    - secretKey: token
       remoteRef:
-        key: cloudflare-api-token
-        property: api-token
+        key: wiecloud/cloudflare/api
+        property: token
