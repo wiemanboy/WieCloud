@@ -16,14 +16,14 @@ resource "routeros_wireguard_peer" "peer" {
   public_key      = routeros_wireguard_keys.peer.keys[0].public
   allowed_address = ["0.0.0.0/0", "::/0"]
   # client_dns         = local.gateway
-  client_address     = "10.20.0.1/24"
+  client_address     = "10.22.0.2/32"
   client_endpoint    = "wireguard.wieman.cloud"
   client_listen_port = 51822
 }
 
 resource "routeros_ip_address" "wireguard" {
   comment   = local.resource_tag
-  address   = routeros_wireguard_peer.peer.client_address
+  address   = "10.22.0.1/24"
   interface = routeros_interface_wireguard.wireguard.name
 }
 
