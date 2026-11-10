@@ -1,6 +1,6 @@
 locals {
   peers = flatten([
-    for user in var.vpn.var.vpn.users : [
+    for user in var.vpn.users : [
       for peer in user.peers : "${user.name}_${peer}"
     ]
   ])
