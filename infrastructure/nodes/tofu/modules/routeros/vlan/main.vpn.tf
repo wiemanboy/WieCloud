@@ -4,20 +4,26 @@ resource "routeros_interface_wireguard" "wireguard" {
   listen_port = 51822
 }
 
+resource "routeros_wireguard_keys" "peer" {
+  number = 1
+}
+
 resource "routeros_wireguard_peer" "peer" {
   comment         = "${local.resource_tag}: peer"
   name            = "peer"
   interface       = routeros_interface_wireguard.wireguard.name
-  public_key      = routeros_interface_wireguard.wireguard.public_key
+  private_key     = routeros_wireguard_keys.peer.keys[0].private
+  public_key      = routeros_wireguard_keys.peer.keys[0].public
   allowed_address = ["0.0.0.0/0", "::/0"]
   # client_dns         = local.gateway
+  client_address     = "10.20.0.1/24"
   client_endpoint    = "wireguard.wieman.cloud"
   client_listen_port = 51822
 }
 
 resource "routeros_ip_address" "wireguard" {
   comment   = local.resource_tag
-  address   = "10.20.0.1/24"
+  address   = routeros_wireguard_peer.peer.client_address
   interface = routeros_interface_wireguard.wireguard.name
 }
 
