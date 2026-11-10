@@ -4,8 +4,8 @@
 
 ### Network allocation
 
-- Hypervisor: *.0.0.50 - *.0.0.99
-- Nodes: *.0.0.100 - *.0.0.149
+- Hypervisor: *.0.0.50 -*.0.0.99
+- Nodes: *.0.0.100 -*.0.0.149
 
 ### Initial network setup
 
@@ -89,11 +89,13 @@ kubectl config set-credentials "$username" \
   --exec-arg="--oidc-client-id=kubeapi"
 
 kubectl config set-cluster wiecloud \
-  --server=https://10.0.0.102:6443
+  --server=https://10.0.0.102:6443 \
   --certificate-authority=wiecloud.ca.crt \
   --embed-certs=true
 
 kubectl config set-context $username@wiecloud \
   --cluster=wiecloud \
   --user="$username"
+
+kubectl config use-context $username@wiecloud
 ```
