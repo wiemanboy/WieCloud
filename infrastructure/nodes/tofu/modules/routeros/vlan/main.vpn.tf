@@ -25,7 +25,7 @@ resource "routeros_wireguard_peer" "peer" {
   interface          = routeros_interface_wireguard.wireguard.name
   private_key        = routeros_wireguard_keys.peer[each.key].keys[0].private
   public_key         = routeros_wireguard_keys.peer[each.key].keys[0].public
-  allowed_address    = ["0.0.0.0/0", "::/0"]
+  allowed_address    = ["${cidrhost("${var.vpn.address}/24", each.value + 2)}/32"]
   client_address     = "${cidrhost("${var.vpn.address}/24", each.value + 2)}/32"
   client_endpoint    = var.vpn.endpoint
   client_listen_port = var.vpn.port
