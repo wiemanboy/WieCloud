@@ -17,7 +17,7 @@ module "wiecloud_vlan" {
   gateway_ports = ["ether2", "ether3", "ether4"]
 
   vpn = {
-    endpoint = "wireguard.wieman.cloud"
+    endpoint = "wireguard.${var.hostname}"
     address  = "10.22.0.1"
     port     = 51822
     users = [

@@ -12,6 +12,7 @@ spec:
     targetRevision: {{ .version }}
     helm:
       valuesObject:
+        network: {{ toYaml $.Values.network | nindent 10 }}
         auth: {{ toYaml $.Values.auth | nindent 10 }}
         targetRepository: {{ toYaml $.Values.targetRepository | nindent 10 }}
         images: {{ toYaml $.Values.images | nindent 10 }}

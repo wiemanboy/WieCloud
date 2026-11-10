@@ -1,3 +1,8 @@
+variable "hostname" {
+  description = "Hostname"
+  type        = string
+}
+
 variable "proxmox_api_url" {
   description = "URL of the Proxmox API"
   type        = string
