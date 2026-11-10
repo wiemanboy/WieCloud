@@ -111,8 +111,8 @@ targetRepository:
 
 applications:
   forgejo:
-    deploy: false
-    version: 0.0.4-rack-migration-caf3310
+    deploy: true
+    version: 0.0.4-rack-migration-f390ade
     initialBoot: true
     cnpg:
       restore: false
@@ -131,8 +131,8 @@ applications:
       restore: false
 
   minecraft:
-    deploy: false
-    version: 1.1.6-rack-migration-caf3310
+    deploy: true
+    version: 1.1.6-rack-migration-f390ade
     restores:
       - name: minecraft-restore
         enabled: false
@@ -176,8 +176,8 @@ applications:
           name: nextcloud-nextcloud
 
   satisfactory:
-    deploy: false
-    version: 0.0.4-rack-migration-caf3310
+    deploy: true
+    version: 0.0.4-rack-migration-f390ade
     restores:
       - name: server-files-restore
         enabled: false
