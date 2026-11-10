@@ -193,14 +193,14 @@ applications:
           name: satisfactory-config
 
   website:
-    deploy: false
+    deploy: true
     namespace: website
 
   repository: harbor.wieman.cloud/applications
 
 infrastructure:
   argocd:
-    deploy: false
+    deploy: true
     version: 0.4.3-rack-migration-f390ade
 
   certmanager:
@@ -312,7 +312,7 @@ infrastructure:
           name: tofudeployer-state
 
   prometheus:
-    deploy: false
+    deploy: true
     version: 0.0.2-rack-migration-f390ade
 
   seaweedfs:
