@@ -12,8 +12,9 @@ resource "routeros_interface_wireguard" "wireguard" {
   listen_port = var.vpn.port
 }
 
-resource "routeros_wireguard_keys" "peers" {
-  number = length(local.peers)
+resource "routeros_wireguard_keys" "peer" {
+  for_each = local.peers
+  number   = 1
 }
 
 resource "routeros_wireguard_peer" "peer" {
@@ -22,8 +23,8 @@ resource "routeros_wireguard_peer" "peer" {
   comment            = "${local.resource_tag}: peer ${each.key}"
   name               = each.key
   interface          = routeros_interface_wireguard.wireguard.name
-  private_key        = routeros_wireguard_keys.peers.keys[each.value].private
-  public_key         = routeros_wireguard_keys.peers.keys[each.value].public
+  private_key        = routeros_wireguard_keys.peer[each.key].keys[0].private
+  public_key         = routeros_wireguard_keys.peer[each.key].keys[0].public
   allowed_address    = ["0.0.0.0/0", "::/0"]
   client_address     = "${cidrhost("${var.vpn.address}/24", each.value + 2)}/32"
   client_endpoint    = var.vpn.endpoint
