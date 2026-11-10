@@ -14,5 +14,5 @@ spec:
   data:
     - secretKey: {{ $key | quote }}
       remoteRef:
-        key: {{ $name | quote }}
+        key: wiecloud/cloudflare/api
         property: {{ $key | quote }}
