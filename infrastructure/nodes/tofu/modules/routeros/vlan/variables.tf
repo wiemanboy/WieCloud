@@ -30,8 +30,11 @@ variable "vpn" {
     address  = string
     port     = number
     users = list(object({
-      name  = string
-      peers = list(string)
+      name = string
+      peers = list(object({
+        id   = number
+        name = string
+      }))
     }))
   })
 }

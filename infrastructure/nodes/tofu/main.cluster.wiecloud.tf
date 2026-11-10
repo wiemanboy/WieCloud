@@ -8,7 +8,7 @@ locals {
 }
 
 module "wiecloud_vlan" {
-  source        = "./modules/routeros/vlan"
+  source = "./modules/routeros/vlan"
 
   vlan_name     = "wiecloud"
   vlan_id       = 10
@@ -22,8 +22,12 @@ module "wiecloud_vlan" {
     port     = 51822
     users = [
       {
-        name  = "jarno_wieman"
-        peers = ["s24_ultra", "laptop", "pc"]
+        name = "jarno_wieman"
+        peers = [
+          { id = 0, name = "pc" },
+          { id = 1, name = "laptop" },
+          { id = 2, name = "s24_ultra" },
+        ]
       }
     ]
   }

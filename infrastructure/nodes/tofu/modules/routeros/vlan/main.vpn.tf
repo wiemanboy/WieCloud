@@ -1,7 +1,10 @@
 locals {
   peers = flatten([
     for user in var.vpn.users : [
-      for peer in user.peers : "${user.name}_${peer}"
+      for peer in user.peers : {
+        name = "${user.name}_${peer.name}"
+        id   = peer.id
+      }
     ]
   ])
 }
@@ -19,13 +22,13 @@ resource "routeros_wireguard_keys" "peers" {
 resource "routeros_wireguard_peer" "peer" {
   for_each = toset(local.peers)
 
-  comment            = "${local.resource_tag}: peer ${each.value}"
+  comment            = "${local.resource_tag}: peer ${each.value.name}"
   name               = each.value
   interface          = routeros_interface_wireguard.wireguard.name
-  private_key        = routeros_wireguard_keys.peers.keys[count.index].private
-  public_key         = routeros_wireguard_keys.peers.keys[count.index].public
+  private_key        = routeros_wireguard_keys.peers.keys[each.value.id].private
+  public_key         = routeros_wireguard_keys.peers.keys[each.value.id].public
   allowed_address    = ["0.0.0.0/0", "::/0"]
-  client_address     = "${cidrhost("${var.vpn.address}/24", count.index + 2)}/32"
+  client_address     = "${cidrhost("${var.vpn.address}/24", each.value.id + 2)}/32"
   client_endpoint    = var.vpn.endpoint
   client_listen_port = var.vpn.port
 }
