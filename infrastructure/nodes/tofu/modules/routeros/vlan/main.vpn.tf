@@ -57,8 +57,8 @@ resource "routeros_ip_firewall_filter" "wireguard_vlan_access" {
   place_before       = 3
 }
 
-resource "routeros_ip_firewall_filter" "router_access" {
-  comment      = "${local.resource_tag}: allow VPN router management"
+resource "routeros_ip_firewall_filter" "wireguard_router_access" {
+  comment      = "${local.resource_tag}: allow wireguard router management"
   in_interface = routeros_interface_wireguard.wireguard.name
   place_before = 4
   action       = "accept"
