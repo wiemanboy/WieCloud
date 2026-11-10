@@ -3,7 +3,7 @@ kind: Dragonfly
 metadata:
   name: forgejo-dragonfly
 spec:
-  replicas: 3
+  replicas: 1
 
   args:
     - --proactor_threads=1
@@ -13,4 +13,4 @@ spec:
       memory: 320Mi
     requests:
       cpu: 50m
-      memory: 256Mi
+      memory: 32Mi

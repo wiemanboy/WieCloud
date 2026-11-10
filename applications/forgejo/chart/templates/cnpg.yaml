@@ -4,7 +4,7 @@ metadata:
   name: forgejo-postgres-cluster
 spec:
   database: forgejo
-  instances: 3
+  instances: 1
   storage:
     size: 10Gi
 
