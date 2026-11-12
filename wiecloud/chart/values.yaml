@@ -295,7 +295,7 @@ infrastructure:
     version: 0.1.4-rack-migration-b37161f
 
   wireguard:
-    deploy: true
+    deploy: false
     version: 0.1.0-rack-migration-b37161f
     vpn:
       peers:
