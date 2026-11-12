@@ -22,6 +22,9 @@ nextcloud:
       usernameKey: username
       passwordKey: password
 
+  livenessProbe:
+    initialDelaySeconds: 120
+
   nextcloud:
     host: example.com
 
