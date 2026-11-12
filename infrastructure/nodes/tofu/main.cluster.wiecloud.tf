@@ -92,29 +92,29 @@ module "talos_controlplane_000" {
   }
 }
 
-module "talos_worker_000" {
-  depends_on = [module.talos_controlplane_000]
-  source     = "./modules/node"
+# module "talos_worker_000" {
+#   depends_on = [module.talos_controlplane_000]
+#   source     = "./modules/node"
 
-  name = "talos-worker-000"
-  host = "dell-pve-000"
-  rack = "aurora-rack-000"
+#   name = "talos-worker-000"
+#   host = "dell-pve-000"
+#   rack = "aurora-rack-000"
 
-  endpoint = module.talos_controlplane_000.ip
-  cluster  = local.cluster
-  role     = "worker"
+#   endpoint = module.talos_controlplane_000.ip
+#   cluster  = local.cluster
+#   role     = "worker"
 
-  machine_secret = talos_machine_secrets.wiecloud_machine_secret
-  talos_version  = local.talos_version
-  iso            = local.dell_pve_000_metal_amd64_iso
-  image          = local.image
+#   machine_secret = talos_machine_secrets.wiecloud_machine_secret
+#   talos_version  = local.talos_version
+#   iso            = local.dell_pve_000_metal_amd64_iso
+#   image          = local.image
 
-  spec = {
-    cpu_cores = 8
-    disk_size = 200
-    memory    = 20000
-  }
-}
+#   spec = {
+#     cpu_cores = 8
+#     disk_size = 200
+#     memory    = 20000
+#   }
+# }
 
 module "talos_worker_001" {
   depends_on = [module.talos_controlplane_000]
