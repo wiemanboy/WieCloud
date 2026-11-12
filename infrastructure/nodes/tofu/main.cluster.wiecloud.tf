@@ -184,7 +184,7 @@ module "talos_worker_003" {
 
   spec = {
     cpu_cores = 16
-    disk_size = 200
+    disk_size = 1970
     memory    = 16384
   }
   disk = "disk-2tb-000"
