@@ -84,7 +84,7 @@ module "talos_controlplane_000" {
   spec = {
     cpu_cores = 4
     disk_size = 20
-    memory    = 10000
+    memory    = 16384
   }
 
   oidc = {
@@ -112,7 +112,7 @@ module "talos_controlplane_000" {
 #   spec = {
 #     cpu_cores = 8
 #     disk_size = 200
-#     memory    = 20000
+#     memory    = 16384
 #   }
 # }
 
