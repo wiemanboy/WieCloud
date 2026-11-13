@@ -83,7 +83,7 @@ backups:
 
 targetRepository:
   url: https://github.com/wiemanboy/WieCloud.git
-  branch: rack-migration
+  branch: master
 
 applications:
   forgejo:
