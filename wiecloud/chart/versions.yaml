@@ -1,0 +1,140 @@
+applications:
+  forgejo:
+    version: 0.0.4
+
+  harbor:
+    version: 1.4.0
+
+  minecraft:
+    version: 1.2.4
+
+  nextcloud:
+    version: 1.3.0
+
+  satisfactory:
+    version: 0.0.4
+
+infrastructure:
+  argocd:
+    version: 0.4.3
+
+  certmanager:
+    version: 0.2.9
+
+  cilium:
+    version: 0.0.2
+
+  cnpg:
+    version: 0.2.0
+
+  crossplane:
+    version: 0.3.1
+
+  dragonflydb:
+    version: 0.0.2
+
+  envoygateway:
+    version: 0.4.2
+
+  externaldns:
+    version: 0.2.2
+
+  externalsecrets:
+    version: 0.1.2
+
+  k8up:
+    version: 1.1.0
+
+  keycloak:
+    version: 3.1.0
+
+  kyverno:
+    version: 0.1.2
+
+  longhorn:
+    version: 0.3.1
+
+  metricsserver:
+    version: 0.0.2
+
+  nodes:
+    version: 0.3.0
+
+  prometheus:
+    version: 0.0.7
+
+  seaweedfs:
+    version: 0.1.4
+
+images:
+  alpine:
+    image:
+      registry: docker.io
+      repository: alpine
+      version: 3.18.2
+
+  dind:
+    image:
+      registry: docker.io
+      repository: docker
+      version: 29.7.2-dind
+
+  forgejo:
+    image:
+      registry: data.forgejo.org
+      repository: forgejo/forgejo
+      version: 16.0.2
+
+  forgejorunner:
+    image:
+      registry: data.forgejo.org
+      repository: forgejo/runner
+      version: 13.0.0
+
+  forgejorunnercontroller:
+    image:
+      registry: harbor.wieman.cloud
+      repository: products/forgejorunnercontroller
+      version: 0.0.1
+
+  keycloakserver:
+    image:
+      registry: docker.io
+      repository: keycloak/keycloak
+      version: 26.6.2
+
+  kubectl:
+    image:
+      registry: docker.io
+      repository: alpine/kubectl
+      version: 1.36.3
+
+  rconcli:
+    image:
+      registry: harbor.wieman.cloud
+      repository: tools/rconcli
+      version: 1.1.6
+
+  satisfactory:
+    image:
+      registry: docker.io
+      repository: wolveix/satisfactory-server
+      version: v1.9.10
+
+  seaweedfs:
+    image:
+      registry: docker.io
+      repository: chrislusf/seaweedfs
+      version: 4.47
+
+  tofudeployer:
+    image:
+      registry: harbor.wieman.cloud
+      repository: products/tofudeployer
+      version: 0.0.2
+
+  wiecloudactions:
+    image:
+      registry: harbor.wieman.cloud
+      repository: products/wiecloudactions
+      version: 0.0.1
