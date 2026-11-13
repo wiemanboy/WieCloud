@@ -20,11 +20,12 @@ edited_charts=$(printf '%s\n' "$diff"| sed 's|\(.*\/chart\)/.*|\1|' | sort -u)
 
 if [ -n "$edited_charts" ]; then
   while read -r chart_path; do
-    IFS='/' read -r _ chart_name _ <<< "$chart_path"
+    IFS='/' read -r project chart_name _ <<< "$chart_path"
 
     echo $chart_path
   bash ./pipeline/version/scripts/update_chart_version.sh \
     --path "$chart_path" \
+    --project "$project" \
     --name "$chart_name" \
     --tag "$tag" \
     < /dev/null
@@ -35,7 +36,7 @@ diff=$(git diff origin/master --name-only | grep -E '^(infrastructure|applicatio
 edited_images=$(printf '%s\n' "$diff"| sed 's|\(.*\/image\)/.*|\1|' | sort -u)
 
 while read -r image_path; do
-  IFS='/' read -r _ image_name _  <<< "$image_path"
+  image_name=$(basename "$(dirname "$image_path")")
 
   echo $image_path
 bash ./pipeline/version/scripts/update_image_version.sh \
