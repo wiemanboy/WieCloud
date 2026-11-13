@@ -107,7 +107,7 @@ applications:
 
   minecraft:
     deploy: true
-    version: 1.1.6
+    version: 1.2.4
     restores:
       - name: minecraft-restore
         enabled: false
@@ -254,7 +254,7 @@ infrastructure:
 
   kyverno:
     deploy: true
-    version: 0.0.2
+    version: 0.1.2
 
   longhorn:
     deploy: true
@@ -288,7 +288,7 @@ infrastructure:
 
   prometheus:
     deploy: true
-    version: 0.0.2
+    version: 0.0.7
 
   seaweedfs:
     deploy: true
