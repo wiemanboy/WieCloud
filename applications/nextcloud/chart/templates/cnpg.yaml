@@ -1,0 +1,30 @@
+apiVersion: wieman.cloud/v1
+kind: CNPG
+metadata:
+  name: nextcloud-postgres-cluster
+spec:
+  database: nextcloud
+  instances: 1
+  storage:
+    size: 10Gi
+
+  backup:
+    {{- with .Values.cnpg }}
+    restore: {{ .restore }}
+    {{ end }}
+    target:
+      bucket: wiecloud-nextcloud-postgres-backups
+
+  resources:
+    cnpg:
+      limits:
+        memory: 256Mi
+      requests:
+        cpu: 20m
+        memory: 128Mi
+    barman:
+      limits:
+        memory: 256Mi
+      requests:
+        cpu: 20m
+        memory: 128Mi

@@ -5,13 +5,13 @@
 1. Check if argo and cilium versions are up-to-date
 2. Run `./setup.sh`
 3. Switch to the mirrored DockerHub registry `docker.io/wiemanboy`, disable backups and set `tofudeployer` to `dryRun`
-4. Deploy `longhorn` `cilium`, `externalsecrets` and `kyverno
+4. Deploy `cilium`, `crossplane`, `externalsecrets`, `kyverno`, `longhorn`, `metricsserver` and `wireguard`
 5. Deploy aws secret for the secret store `aws-secret`; `kubectl create secret generic aws-secret --from-literal=accessKey=$access_key --from-literal=secretKey=$secret_key -n external-secrets`
-6. Deploy `envoygateway`, `certmanager`, `externaldns`, `seaweedfs`, `k8up` and `cnpg`
+6. Deploy `certmanager`, `cnpg`, `dragonflydb`, `envoygateway`, `externaldns`, `k8up` and`seaweedfs`
 7. (Optional) follow backup procedures
 8. Deploy `keycloak`
-9. Deploy remaining infrastructure: `argocd`, `prometheus`, `harbor` `wireguard`
-10. Deploy the applications follow the backup procedures if necessary
+9. Deploy remaining infrastructure: `argocd` and `prometheus`
+10. Deploy the applications, follow the backup procedures if necessary
 11. Enable backups and `tofudeployer`
 12. Done!
 
@@ -26,11 +26,11 @@
     ```yaml
     restores:
         - name: example-restore
-        enabled: true
-        fromBackup: local # Specify the backup source
-        snapshot: "00000000" # 8 characters long
-        claim:
-            name: example-pvc
+          enabled: true
+          fromBackup: local # Specify the backup source
+          snapshot: "00000000" # 8 characters long
+          claim:
+              name: example-pvc
     ```
 
 4. Wait for the restore to complete and check the logs of the restore pod
@@ -40,18 +40,11 @@
 
 1. Ensure the Seaweed cluster is running and healthy
 2. Ensure the backups are available in the PVC
-3. Deploy the restore job via the values
+3. Run the following command on the replicator
 
-    ```yaml
-    seaweedfs:
-      backup:
-        enabled: true
-      restore:
-        enabled: false
-    ```
-
-4. Wait for the restore to complete and check the logs of the restore pod
-5. Done!
+  ```bash
+  weed filer.copy -c 1 -concurrentChunks 2 -maxMB 4 /backup/buckets http://cnpg-backup-filer:8888/
+  ```
 
 ### CNPG
 
@@ -70,9 +63,6 @@
 ## Useful commands
 
 ```bash
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d | wl-copy
 kubectl port-forward -n argocd svc/argocd-server 8080:80
-```
-
-```bash
-kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 ```

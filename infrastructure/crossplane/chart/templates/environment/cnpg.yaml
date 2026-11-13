@@ -6,7 +6,7 @@ data:
   cnpg:
     backup:
       s3:
-        endpoint: https://cnpg.s3.wieman.cloud
+        endpoint: http://cnpg-backup-filer.cnpg.svc.cluster.local:8333
         secret:
           name: cnpg-backup-s3-credentials
           accessKey: accessKey

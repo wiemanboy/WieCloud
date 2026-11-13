@@ -7,5 +7,5 @@ output "cluster" {
 }
 
 output "ip" {
-  value = var.ip
+  value = module.dhcp_lease.data.address
 }

@@ -11,6 +11,13 @@ provider "proxmox" {
   pm_tls_insecure     = true
 }
 
+provider "routeros" {
+  hosturl  = var.routeros_api_url
+  username = var.routeros_username
+  password = var.routeros_password
+}
+
 provider "kubernetes" {}
 
 provider "talos" {}
+
