@@ -1,6 +1,8 @@
-# Keycloak tofu
+# Keycloak
 
-Requires a client to be created in the master realm:
+## tofu
+
+The opentofu requires a client to be created in the master realm:
 
 - Client authentication > ON
 - Authorization > ON
