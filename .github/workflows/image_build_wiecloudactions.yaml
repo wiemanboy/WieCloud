@@ -5,7 +5,7 @@ on:
     branches:
     - master
     paths:
-    - products/wiecloudactions/image**
+    - applications/forgejo/wiecloudactions/image**
     - .github/workflows/image_build_wiecloudactions.yaml
     - .github/workflows/image_build.yaml
     - pipeline/build/scripts/image/**

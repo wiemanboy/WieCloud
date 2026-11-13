@@ -5,7 +5,7 @@ on:
     branches:
     - master
     paths:
-    - products/forgejorunnercontroller/image**
+    - applications/forgejo/forgejorunnercontroller/image**
     - .github/workflows/image_build_forgejorunnercontroller.yaml
     - .github/workflows/image_build.yaml
     - pipeline/build/scripts/image/**

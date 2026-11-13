@@ -69,7 +69,7 @@ images:
     image:
       registry: harbor.wieman.cloud
       repository: products/forgejorunnercontroller
-      version: 0.0.1
+      version: 0.0.2
   keycloakserver:
     image:
       registry: docker.io
@@ -104,4 +104,4 @@ images:
     image:
       registry: harbor.wieman.cloud
       repository: products/wiecloudactions
-      version: 0.0.1
+      version: 0.0.2
