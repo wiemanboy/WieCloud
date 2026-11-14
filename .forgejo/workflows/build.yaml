@@ -140,14 +140,11 @@ jobs:
       - name: Build image
         id: build
         run: |
-          echo "Building chart ${{ matrix.chart.name }} at ${{ matrix.chart.path }} with tag ${{ needs.changed.outputs.tag }}\n"
-          output=$( ./pipeline/build/scripts/image/image_build.sh --path ${{ matrix.image.path }} --tag "${{ needs.changed.outputs.tag }}" )
+          ./pipeline/build/scripts/image/image_build.sh --path ${{ matrix.image.path }} --tag "${{ needs.changed.outputs.tag }}"
           echo
 
-          build_image=$(echo "$output" | grep -oE 'Building docker image: [^ ]+' | awk '{print $4}')
-
           echo "Image: $build_image"
-          echo "build_image=$build_image" >> "$FORGEJO_OUTPUT"
+          echo "build_image=${{ matrix.image.name }}:${{ needs.changed.outputs.tag }}" >> "$FORGEJO_OUTPUT"
 
       - name: Push image
         run: ./pipeline/build/scripts/image/image_push.sh --image ${{ steps.build.outputs.build_image }} --registry ${{ vars.OCI_REGISTRY }} --repository ${{ matrix.chart.project }}
