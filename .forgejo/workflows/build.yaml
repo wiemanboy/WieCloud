@@ -64,9 +64,11 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Login to registry
+        env:
+          OCI_REGISTRY_USERNAME: ${{ secrets.OCI_REGISTRY_USERNAME }}
         run: |
           echo "Login in to ${{ vars.OCI_REGISTRY }}"
-          helm registry login ${{ vars.OCI_REGISTRY }} --username "${{ secrets.OCI_REGISTRY_USERNAME }}" --password "${{ secrets.OCI_REGISTRY_PASSWORD }}"
+          helm registry login ${{ vars.OCI_REGISTRY }} --username "${ OCI_REGISTRY_USERNAME }" --password "${{ secrets.OCI_REGISTRY_PASSWORD }}"
 
       - name: Package Helm chart
         id: package
