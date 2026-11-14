@@ -35,6 +35,27 @@ tofu apply -target='module.wiecloud_vlan'
 5. Make the dhcp lease static in routeros `IP > DHCP Server > Leases > <lease> > Make Static > edit`
 6. Create an API token  `Datacenter > permission > API Tokens > Add` disable privilege separation
 
+##### Network issues
+
+If you see frequent stops in networking on the node, disable hardware offloading by setting the following crontab, this turns it off after every reboot (this will only take effect after reboot):
+
+```bash
+echo '@reboot root sleep 30 && /usr/sbin/ethtool -K nic0 tso off gso off gro off rx off tx off' > /etc/cron.d/nic_offload && chmod 644 /etc/cron.d/nic_offload
+```
+
+Run the following command to confirm:
+
+```bash
+ethtool -k nic0 | grep -E 'segmentation|receive-offload|checksumming'
+```
+
+If networking is currently in a broken state, reboot the nic:
+
+```bash
+ip link set nic0 down
+ip link set nic0 up
+```
+
 ### Initial node setup
 
 1. Run the below Tofu commands
