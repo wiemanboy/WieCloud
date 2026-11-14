@@ -7,10 +7,8 @@ RUN apk add --no-cache \
     git \
     curl \
     wget \
-    podman \
-    podman-docker \
+    docker \
     helm \
     nodejs
 
-RUN ln -s /usr/bin/podman /usr/local/bin/docker
 ENTRYPOINT ["/bin/bash"]
