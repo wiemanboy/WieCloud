@@ -45,8 +45,8 @@ jobs:
         run: |
           tag="${{ forgejo.head_ref }}-$(echo ${{ forgejo.sha }} | cut -c1-7)"
 
-          # If label "Status/Ready for master" is not set don't use a tag
-          if ! echo '${{ toJSON(forgejo.event.issue.labels.*.name) }}' | grep -q "Status/Ready for master"; then
+          # If label "Status/Ready for master" is set don't use a tag
+          if echo '${{ toJSON(forgejo.event.issue.labels.*.name) }}' | grep -q "Status/Ready for master"; then
             tag=""
           fi
 
