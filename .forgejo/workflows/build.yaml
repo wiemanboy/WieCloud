@@ -1,0 +1,99 @@
+on:
+  pull_request:
+    branches:
+      - master
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - labeled
+
+jobs:
+  changes:
+    runs-on: wiecloud
+    outputs:
+      files: ${{ steps.changed.outputs.files }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Get changed charts
+        id: charts
+        run: |
+          git fetch origin "${ forgejo.base_ref }"
+          changed=$(git diff --name-only "origin/${ forgejo.base_ref }" | jq -R . | jq -sc .)
+
+          diff=$(git diff origin/master --name-only --diff-filter=AMR | grep -E '^(infrastructure|applications|products)/.*/chart/') || diff=""
+          edited_charts=$(printf '%s\n' "$diff"| sed 's|\(.*\/chart\)/.*|\1|' | sort -u)
+
+          charts=$(echo $edited_charts | jq -R -s -c '
+            split("\n")
+            | map(select(length > 0))
+            | map(split("/") | {path: join("/"), name: .[1], project: .[0]})
+          ')
+
+          echo $charts | jq
+          echo "charts=$charts" >> "$FORGEJO_OUTPUT"
+
+      - name: Generate tag
+        run: |
+          tag="${ forgejo.head_ref }-$(echo ${ forgejo.sha } | cut -c1-7)"
+
+          # If label "Status/Ready for master" is not set don't use a tag
+          if ! echo '${{ toJSON(forgejo.event.issue.labels.*.name) }}' | grep -q "Status/Ready for master"; then
+            tag=""
+          fi
+
+          echo "tag=$tag" >> "$FORGEJO_OUTPUT"
+
+  publish-helm-chart:
+    needs: [ changes ]
+    runs-on: wiecloud
+    strategy:
+      fail-fast: false
+      matrix:
+        chart: ${{ fromJSON(needs.changed.outputs.charts) }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Login to registry
+        run: |
+          echo "Login in to ${{ vars.REGISTRY }}"
+          helm registry login ${{ vars.REGISTRY }} --username ${{ secrets.REGISTRY_USERNAME }} --password {{ secrets.REGISTRY_PASSWORD }}
+
+      - name: Package Helm chart
+        id: package
+        run: |
+          echo ${{ needs.changed.outputs.tag }}
+          output=$( ./pipeline/build/scripts/helm/helm_package.sh --path ${{ matrix.chart.path }} --tag "${{ needs.changed.outputs.tag }}" )
+
+          packaged_path=$(echo "$output" | grep -oE '/[^ ]+\.tgz')
+          echo "Packaged chart path: $packaged_path"
+          echo "chart_package_path=$packaged_path" >> "$FORGEJO_OUTPUT"
+
+      - name: Push Helm chart
+        run: ./pipeline/build/scripts/helm/helm_push.sh --package ${{ steps.package.outputs.chart_package_path }} --registry ${{ vars.REGISTRY }} --repository ${{ matrix.chart.project }}
+
+  update-versions:
+    needs: [ changes, publish-helm-chart ]
+    runs-on: wiecloud
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Configure git credentials
+        run: |
+          git config user.name "WiemanBot"
+          git config user.email "bot@wieman.cloud"
+
+      - name: Update versions
+        run: |
+          git fetch origin "${ forgejo.base_ref }"
+          ./pipeline/version/scripts/update_versions.sh --tag "${{ needs.changes.outputs.tag }}"
+
+      - name: Commit changes
+        run: |
+          git add .
+          git commit -m "UPDATE: reference versions in wiecloud/chart/versions.yaml ${{ needs.changes.outputs.tag }}" || exit 0
+          git push origin HEAD:${ forgejo.head_Ref } || exit 0
