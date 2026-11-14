@@ -90,7 +90,7 @@ jobs:
       - name: Update versions
         run: |
           git fetch origin "${ forgejo.base_ref }"
-          ./pipeline/version/scripts/update_versions.sh --tag "${{ needs.changes.outputs.tag }}"
+          ./pipeline/version/scripts/update_versions.sh --charts '${{ needs.changes.outputs.charts }}' --tag "${{ needs.changes.outputs.tag }}"
 
       - name: Commit changes
         run: |
