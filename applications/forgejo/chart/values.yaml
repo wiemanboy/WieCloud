@@ -5,6 +5,9 @@ forgejo:
       APP_NAME: Forgejo
       APP_SLOGAN: The WieCloud git server
 
+      server:
+        SSH_DISABLE: true
+
       repository:
         MAX_CREATION_LIMIT: 100
         DISABLED_REPO_UNITS: repo.packages
@@ -121,9 +124,8 @@ runner:
       runner:
         file: .runner
         capacity: 5
-        # envs:
-        #   A_TEST_ENV_NAME_1: a_test_env_value_1
-        #   A_TEST_ENV_NAME_2: a_test_env_value_2
+        envs:
+          DOCKER_HOST: tcp://dind.docker.internal:2375
         env_file: .env
         timeout: 3h
         shutdown_timeout: 3h
@@ -148,7 +150,7 @@ runner:
         network: ""
         enable_ipv6: false
         privileged: true
-        options:
+        options: "--add-host=dind.docker.internal:host-gateway"
         workdir_parent:
         valid_volumes: []
         docker_host: "tcp://127.0.0.1:2375"
