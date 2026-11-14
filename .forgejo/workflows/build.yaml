@@ -26,30 +26,38 @@ jobs:
         id: charts
         run: |
           git fetch origin "${{ forgejo.base_ref }}"
-          changed=$(git diff --name-only "origin/${{ forgejo.base_ref }}" | jq -R . | jq -sc .)
+          echo
 
+          echo "Getting diff"
           diff=$(git diff origin/master --name-only --diff-filter=AMR | grep -E '^(infrastructure|applications|products)/.*/chart/') || diff=""
+
+          echo "Extracting edited charts from diff"
           edited_charts=$(printf '%s\n' "$diff"| sed 's|\(.*\/chart\)/.*|\1|' | sort -u)
 
+          echo "Converting edited charts to json"
           charts=$(echo $edited_charts | jq -R -s -c '
             split("\n")
             | map(select(length > 0))
             | map(split("/") | {path: join("/"), name: .[1], project: .[0]})
           ')
 
+          echo "Changed charts:"
           echo $charts | jq
           echo "charts=$charts" >> "$FORGEJO_OUTPUT"
 
       - name: Generate tag
         id: tag
         run: |
+          echo "Generating tag"
           tag="${{ forgejo.head_ref }}-$(echo ${{ forgejo.sha }} | cut -c1-7)"
 
           # If label "Status/Ready for master" is set don't use a tag
           if echo '${{ toJSON(forgejo.event.issue.labels.*.name) }}' | grep -q "Status/Ready for master"; then
             tag=""
+            echo "No tag set"
           fi
 
+          echo "Tag is set to: ${tag}"
           echo "tag=$tag" >> "$FORGEJO_OUTPUT"
 
   publish-helm-chart:
@@ -73,10 +81,12 @@ jobs:
       - name: Package Helm chart
         id: package
         run: |
-          echo ${{ needs.changed.outputs.tag }}
+          echo "Building chart ${{ matrix.chart.name }} at ${{ matrix.chart.path }} with tag ${{ needs.changed.outputs.tag }}\n"
           output=$( ./pipeline/build/scripts/helm/helm_package.sh --path ${{ matrix.chart.path }} --tag "${{ needs.changed.outputs.tag }}" )
+          echo
 
           packaged_path=$(echo "$output" | grep -oE '/[^ ]+\.tgz')
+
           echo "Packaged chart path: $packaged_path"
           echo "chart_package_path=$packaged_path" >> "$FORGEJO_OUTPUT"
 
@@ -92,16 +102,23 @@ jobs:
 
       - name: Configure git credentials
         run: |
+          echo "Configuring git user: WiemanBot, email: bot@wieman.cloud"
           git config user.name "WiemanBot"
           git config user.email "bot@wieman.cloud"
 
       - name: Update versions
         run: |
           git fetch origin "${{ forgejo.base_ref }}"
+          echo
+
           ./pipeline/version/scripts/update_versions.sh --charts '${{ needs.changed.outputs.charts }}' --tag "${{ needs.changed.outputs.tag }}"
 
       - name: Commit changes
         run: |
           git add .
+          echo
+
           git commit -m "UPDATE: reference versions in wiecloud/chart/versions.yaml ${{ needs.changed.outputs.tag }}" || exit 0
+          echo
+
           git push origin HEAD:${{ forgejo.head_Ref }} || exit 0
