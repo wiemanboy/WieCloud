@@ -23,8 +23,8 @@ jobs:
       - name: Get changed charts
         id: charts
         run: |
-          git fetch origin "${ forgejo.base_ref }"
-          changed=$(git diff --name-only "origin/${ forgejo.base_ref }" | jq -R . | jq -sc .)
+          git fetch origin "${{ forgejo.base_ref }}"
+          changed=$(git diff --name-only "origin/${{ forgejo.base_ref }}" | jq -R . | jq -sc .)
 
           diff=$(git diff origin/master --name-only --diff-filter=AMR | grep -E '^(infrastructure|applications|products)/.*/chart/') || diff=""
           edited_charts=$(printf '%s\n' "$diff"| sed 's|\(.*\/chart\)/.*|\1|' | sort -u)
