@@ -5,6 +5,9 @@ forgejo:
       APP_NAME: Forgejo
       APP_SLOGAN: The WieCloud git server
 
+      server:
+        DISABLE_SSH: true
+
       repository:
         MAX_CREATION_LIMIT: 100
         DISABLED_REPO_UNITS: repo.packages
