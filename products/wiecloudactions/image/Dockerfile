@@ -1,9 +1,4 @@
-FROM docker:29.7.2-dind AS docker
-
 FROM alpine:3.24.4
-
-COPY --from=docker /usr/local/bin/docker* /usr/local/bin/
-COPY --from=docker /usr/local/bin/containerd* /usr/local/bin/
 
 RUN apk add --no-cache \
     bash \
@@ -12,7 +7,10 @@ RUN apk add --no-cache \
     git \
     curl \
     wget \
+    podman \
+    podman-docker \
     helm \
     nodejs
 
+RUN ln -s /usr/bin/podman /usr/local/bin/docker
 ENTRYPOINT ["/bin/bash"]
