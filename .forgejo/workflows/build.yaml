@@ -30,7 +30,7 @@ jobs:
           echo
 
           echo "Getting diff...\n"
-          diff=$(git diff origin/master --name-only --diff-filter=AMR | grep -E '^(infrastructure|applications|products)/.*/chart/') || diff=""
+          diff=$(git diff origin/${{ forgejo.base_ref }} --name-only --diff-filter=AMR | grep -E '^(infrastructure|applications|products)/.*/chart/') || diff=""
 
           echo "Extracting edited charts from diff...\n"
           edited_charts=$(printf '%s\n' "$diff"| sed 's|\(.*\/chart\)/.*|\1|' | sort -u)
@@ -53,10 +53,10 @@ jobs:
           echo
 
           echo "Getting diff...\n"
-          diff=$(git diff origin/master --name-only --diff-filter=AMR | grep -E '^(infrastructure|applications|products)/.*/image/') || diff=""
+          diff=$(git diff origin/${{ forgejo.base_ref }} --name-only | grep -E '^(infrastructure|applications|products)/.*/image/') || exit 0
 
           echo "Extracting edited images from diff...\n"
-          edited_images=$(printf '%s\n' "$diff"| sed 's|\(.*\/chart\)/.*|\1|' | sort -u)
+          edited_images=$(printf '%s\n' "$diff"| sed 's|\(.*\/image\)/.*|\1|' | sort -u)
 
           echo "Converting edited images to json...\n"
           images=$(echo "$edited_images" | jq -R -s -c '
