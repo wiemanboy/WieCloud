@@ -1,5 +1,5 @@
-# Requires vars: REGISTRY
-# Requires secrets: REGISTRY_USERNAME, REGISTRY_PASSWORD
+# Requires vars: OCI_REGISTRY
+# Requires secrets: OCI_REGISTRY_USERNAME, OCI_REGISTRY_PASSWORD
 
 on:
   pull_request:
@@ -65,8 +65,8 @@ jobs:
 
       - name: Login to registry
         run: |
-          echo "Login in to ${{ vars.REGISTRY }}"
-          helm registry login ${{ vars.REGISTRY }} --username ${{ secrets.REGISTRY_USERNAME }} --password {{ secrets.REGISTRY_PASSWORD }}
+          echo "Login in to ${{ vars.OCI_REGISTRY }}"
+          helm registry login ${{ vars.OCI_REGISTRY }} --username ${{ secrets.OCI_REGISTRY_USERNAME }} --password ${{ secrets.OCI_REGISTRY_PASSWORD }}
 
       - name: Package Helm chart
         id: package
@@ -79,7 +79,7 @@ jobs:
           echo "chart_package_path=$packaged_path" >> "$FORGEJO_OUTPUT"
 
       - name: Push Helm chart
-        run: ./pipeline/build/scripts/helm/helm_push.sh --package ${{ steps.package.outputs.chart_package_path }} --registry ${{ vars.REGISTRY }} --repository ${{ matrix.chart.project }}
+        run: ./pipeline/build/scripts/helm/helm_push.sh --package ${{ steps.package.outputs.chart_package_path }} --registry ${{ vars.OCI_REGISTRY }} --repository ${{ matrix.chart.project }}
 
   update-versions:
     needs: [ changed, publish-helm-chart ]
