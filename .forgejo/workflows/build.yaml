@@ -12,7 +12,7 @@ on:
       - labeled
 
 jobs:
-  changes:
+  changed:
     runs-on: wiecloud
     outputs:
       files: ${{ steps.changed.outputs.files }}
@@ -50,7 +50,7 @@ jobs:
           echo "tag=$tag" >> "$FORGEJO_OUTPUT"
 
   publish-helm-chart:
-    needs: [ changes ]
+    needs: [ changed ]
     runs-on: wiecloud
     strategy:
       fail-fast: false
@@ -79,7 +79,7 @@ jobs:
         run: ./pipeline/build/scripts/helm/helm_push.sh --package ${{ steps.package.outputs.chart_package_path }} --registry ${{ vars.REGISTRY }} --repository ${{ matrix.chart.project }}
 
   update-versions:
-    needs: [ changes, publish-helm-chart ]
+    needs: [ changed, publish-helm-chart ]
     runs-on: wiecloud
     steps:
       - name: Checkout code
@@ -93,10 +93,10 @@ jobs:
       - name: Update versions
         run: |
           git fetch origin "${ forgejo.base_ref }"
-          ./pipeline/version/scripts/update_versions.sh --charts '${{ needs.changes.outputs.charts }}' --tag "${{ needs.changes.outputs.tag }}"
+          ./pipeline/version/scripts/update_versions.sh --charts '${{ needs.changed.outputs.charts }}' --tag "${{ needs.changed.outputs.tag }}"
 
       - name: Commit changes
         run: |
           git add .
-          git commit -m "UPDATE: reference versions in wiecloud/chart/versions.yaml ${{ needs.changes.outputs.tag }}" || exit 0
+          git commit -m "UPDATE: reference versions in wiecloud/chart/versions.yaml ${{ needs.changed.outputs.tag }}" || exit 0
           git push origin HEAD:${ forgejo.head_Ref } || exit 0
