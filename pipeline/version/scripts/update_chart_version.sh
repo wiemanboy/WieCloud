@@ -31,6 +31,10 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+if [ $tag -eq "-" ]; then
+  tag=""
+fi
+
 missing=()
 [[ -z "$chart_path" ]] && missing+=("--path")
 [[ -z "$project" ]] && missing+=("--project")

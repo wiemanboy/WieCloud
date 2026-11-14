@@ -26,6 +26,10 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+if [ $tag -eq "-" ]; then
+  tag=""
+fi
+
 missing=()
 [[ -z "$image_path" ]] && missing+=("--path")
 [[ -z "$name" ]] && missing+=("--name")

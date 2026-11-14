@@ -25,6 +25,10 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+if [ $tag -eq "-" ]; then
+  tag=""
+fi
+
 missing=()
 [[ -z "$package" ]] && missing+=("--package")
 [[ -z "$registry" ]] && missing+=("--registry")
