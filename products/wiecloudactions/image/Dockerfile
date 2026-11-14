@@ -11,4 +11,6 @@ RUN apk update && apk add --no-cache \
     helm \
     nodejs
 
+ENV DOCKER_HOST=tcp://localhost:2375
+
 ENTRYPOINT ["/bin/bash"]
