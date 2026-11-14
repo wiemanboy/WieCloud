@@ -1,6 +1,6 @@
 applications:
   forgejo:
-    version: 0.0.4
+    version: 0.0.5
   harbor:
     version: 1.4.0
   minecraft:
