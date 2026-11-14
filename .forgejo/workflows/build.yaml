@@ -1,3 +1,6 @@
+# Requires vars: REGISTRY
+# Requires secrets: REGISTRY_USERNAME, REGISTRY_PASSWORD
+
 on:
   pull_request:
     branches:
