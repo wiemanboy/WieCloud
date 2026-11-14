@@ -15,7 +15,9 @@ jobs:
   changed:
     runs-on: wiecloud
     outputs:
-      files: ${{ steps.changed.outputs.files }}
+      charts: ${{ steps.charts.outputs.charts }}
+      tag: ${{ steps.tag.outputs.tag }}
+      images: "[]"
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
@@ -39,6 +41,7 @@ jobs:
           echo "charts=$charts" >> "$FORGEJO_OUTPUT"
 
       - name: Generate tag
+        id: tag
         run: |
           tag="${{ forgejo.head_ref }}-$(echo ${{ forgejo.sha }} | cut -c1-7)"
 
