@@ -120,7 +120,7 @@ runner:
 
       runner:
         file: .runner
-        capacity: 1
+        capacity: 5
         # envs:
         #   A_TEST_ENV_NAME_1: a_test_env_value_1
         #   A_TEST_ENV_NAME_2: a_test_env_value_2
@@ -147,7 +147,7 @@ runner:
       container:
         network: ""
         enable_ipv6: false
-        privileged: false
+        privileged: true
         options:
         workdir_parent:
         valid_volumes: []
