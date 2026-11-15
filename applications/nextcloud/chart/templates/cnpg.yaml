@@ -4,7 +4,7 @@ metadata:
   name: nextcloud-postgres-cluster
 spec:
   database: nextcloud
-  instances: 1
+  instances: 3
   storage:
     size: 10Gi
 
