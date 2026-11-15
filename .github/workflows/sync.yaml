@@ -1,0 +1,41 @@
+name: Sync from forgejo
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+
+jobs:
+  sync:
+    name: Sync from forgejo
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.APP_CLIENT_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          fetch-depth: 0
+
+      - name: Add Forgejo remote
+        run: |
+          git remote add forgejo ${{ vars.FORGEJO_REPO_URL }}
+
+      - name: Fetch Forgejo master
+        run: |
+          git fetch forgejo master
+
+      - name: Update local master
+        run: |
+          git switch master
+          git merge --ff-only forgejo/master
+
+      - name: Push to GitHub
+        run: |
+          git push origin master
