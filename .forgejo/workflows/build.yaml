@@ -1,0 +1,181 @@
+# Requires vars: OCI_REGISTRY
+# Requires secrets: OCI_REGISTRY_USERNAME, OCI_REGISTRY_PASSWORD
+
+on:
+  pull_request:
+    branches:
+      - master
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - labeled
+
+jobs:
+  changed:
+    name: Get changes
+    runs-on: wiecloud
+    outputs:
+      charts: ${{ steps.charts.outputs.charts }}
+      images: ${{ steps.images.outputs.images }}
+      tag: ${{ steps.tag.outputs.tag }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Get changed charts
+        id: charts
+        run: |
+          git fetch origin "${{ forgejo.base_ref }}"
+          echo
+
+          echo "Getting diff..."
+          diff=$(git diff origin/${{ forgejo.base_ref }} --name-only --diff-filter=AMR | grep -E '^(infrastructure|applications|products)/.*/chart/') || diff=""
+
+          echo "Extracting edited charts from diff..."
+          edited_charts=$(printf '%s\n' "$diff"| sed 's|\(.*\/chart\)/.*|\1|' | sort -u)
+
+          echo "Converting edited charts to json..."
+          charts=$(echo "$edited_charts" | jq -R -s -c '
+            split("\n")
+            | map(select(length > 0))
+            | map(split("/") | {path: join("/"), name: .[1], project: .[0]})
+          ')
+
+          echo "Changed charts:"
+          echo $charts | jq
+          echo "charts=$charts" >> "$FORGEJO_OUTPUT"
+
+      - name: Get changed images
+        id: images
+        run: |
+          git fetch origin "${{ forgejo.base_ref }}"
+          echo
+
+          echo "Getting diff..."
+          diff=$(git diff origin/${{ forgejo.base_ref }} --name-only | grep -E '^(infrastructure|applications|products)/.*/image/') || exit 0
+
+          echo "Extracting edited images from diff..."
+          edited_images=$(printf '%s\n' "$diff"| sed 's|\(.*\/image\)/.*|\1|' | sort -u)
+
+          echo "Converting edited images to json..."
+          images=$(echo "$edited_images" | jq -R -s -c '
+            split("\n")
+            | map(select(length > 0))
+            | map({path: ., name: (split("/") | .[-2])})
+          ')
+
+          echo "Changed images:"
+          echo $images | jq
+          echo "images=$images" >> "$FORGEJO_OUTPUT"
+
+      - name: Generate tag
+        id: tag
+        run: |
+          echo "Generating tag..."
+          tag="${{ forgejo.head_ref }}-$(echo ${{ forgejo.sha }} | cut -c1-7)"
+
+          # If label "Status/Ready for master" is set don't use a tag
+          if echo '${{ toJSON(forgejo.event.pull_request.labels.*.name) }}' | grep -q "Status/Ready for master"; then
+            tag=""
+            echo "No tag set"
+          fi
+
+          echo "Tag is set to: ${tag}"
+          echo "tag=$tag" >> "$FORGEJO_OUTPUT"
+
+  publish-helm-chart:
+    name: Publish Helm chart; ${{ matrix.chart.name }}
+    needs: [ changed ]
+    runs-on: wiecloud
+    strategy:
+      fail-fast: false
+      matrix:
+        chart: ${{ fromJSON(needs.changed.outputs.charts) }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Login to registry
+        env:
+          OCI_REGISTRY_USERNAME: ${{ secrets.OCI_REGISTRY_USERNAME }}
+        run: |
+          echo "Login in to ${{ vars.OCI_REGISTRY }}"
+          helm registry login ${{ vars.OCI_REGISTRY }} --username "${OCI_REGISTRY_USERNAME}" --password "${{ secrets.OCI_REGISTRY_PASSWORD }}"
+
+      - name: Package Helm chart
+        id: package
+        run: |
+          echo "Building chart ${{ matrix.chart.name }} at ${{ matrix.chart.path }} with tag ${{ needs.changed.outputs.tag }}"
+          output=$( ./pipeline/build/scripts/helm/helm_package.sh --path ${{ matrix.chart.path }} --tag "${{ needs.changed.outputs.tag }}" )
+          echo
+
+          packaged_path=$(echo "$output" | grep -oE '/[^ ]+\.tgz')
+
+          echo "Packaged chart path: $packaged_path"
+          echo "chart_package_path=$packaged_path" >> "$FORGEJO_OUTPUT"
+
+      - name: Push Helm chart
+        run: ./pipeline/build/scripts/helm/helm_push.sh --package ${{ steps.package.outputs.chart_package_path }} --registry ${{ vars.OCI_REGISTRY }} --repository ${{ matrix.chart.project }}
+
+  publish-image:
+    name: Publish image; ${{ matrix.image.name }}
+    needs: [ changed ]
+    runs-on: wiecloud
+    strategy:
+      fail-fast: false
+      matrix:
+        image: ${{ fromJSON(needs.changed.outputs.images) }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Login to registry
+        env:
+          OCI_REGISTRY_USERNAME: ${{ secrets.OCI_REGISTRY_USERNAME }}
+        run: |
+          echo "Login in to ${{ vars.OCI_REGISTRY }}"
+          docker login ${{ vars.OCI_REGISTRY }} --username "${OCI_REGISTRY_USERNAME}" --password "${{ secrets.OCI_REGISTRY_PASSWORD }}"
+
+      - name: Build image
+        id: build
+        run: |
+          echo "Building image ${{ matrix.image.name }} at ${{ matrix.image.path }} with tag ${{ needs.changed.outputs.tag }}"
+
+          output=$( ./pipeline/build/scripts/image/image_build.sh --path ${{ matrix.image.path }} --tag "${{ needs.changed.outputs.tag }}" | tee /dev/stderr )
+          build_image=$(grep -oE 'Building docker image: [^ ]+' <<< "$output" | awk '{print $4}')
+
+          echo "Image: $build_image"
+          echo "build_image=$build_image" >> "$FORGEJO_OUTPUT"
+
+      - name: Push image
+        run: ./pipeline/build/scripts/image/image_push.sh --image ${{ steps.build.outputs.build_image }} --registry ${{ vars.OCI_REGISTRY }} --repository products
+
+  update-versions:
+    name: Update versions
+    needs: [ changed, publish-helm-chart, publish-image ]
+    runs-on: wiecloud
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Configure git credentials
+        run: |
+          echo "Configuring git user: WiemanBot, email: bot@wieman.cloud"
+          git config user.name "WiemanBot"
+          git config user.email "bot@wieman.cloud"
+
+      - name: Update versions
+        run: |
+          git fetch origin "${{ forgejo.base_ref }}"
+          echo
+
+          ./pipeline/version/scripts/update_versions.sh --charts '${{ needs.changed.outputs.charts }}' --images '${{ needs.changed.outputs.images }}' --tag "${{ needs.changed.outputs.tag }}"
+
+      - name: Commit changes
+        run: |
+          git add .
+          git commit -m "UPDATE: reference versions in wiecloud/chart/versions.yaml ${{ needs.changed.outputs.tag }}" || exit 0
+          echo
+
+          git push origin HEAD:${{ forgejo.head_Ref }} || exit 0

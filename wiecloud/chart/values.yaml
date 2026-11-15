@@ -88,7 +88,6 @@ targetRepository:
 applications:
   forgejo:
     deploy: true
-    version: 0.1.0
     cnpg:
       restore: false
     restores:
@@ -107,7 +106,6 @@ applications:
 
   minecraft:
     deploy: true
-    version: 1.2.4
     restores:
       - name: minecraft-restore
         enabled: false
@@ -152,7 +150,6 @@ applications:
 
   satisfactory:
     deploy: true
-    version: 0.0.4
     restores:
       - name: server-files-restore
         enabled: false
@@ -176,15 +173,12 @@ applications:
 infrastructure:
   argocd:
     deploy: true
-    version: 0.4.3
 
   certmanager:
     deploy: true
-    version: 0.2.9
 
   cilium:
     deploy: true
-    version: 0.0.2
 
   cnpg:
     deploy: true
@@ -202,11 +196,9 @@ infrastructure:
 
   crossplane:
     deploy: true
-    version: 0.3.1
 
   dragonflydb:
     deploy: true
-    version: 0.0.2
 
   envoygateway:
     deploy: true
@@ -214,15 +206,12 @@ infrastructure:
 
   externaldns:
     deploy: true
-    version: 0.2.2
 
   externalsecrets:
     deploy: true
-    version: 0.1.2
 
   k8up:
     deploy: true
-    version: 1.1.0
 
   keycloak:
     deploy: true
@@ -254,25 +243,17 @@ infrastructure:
 
   kyverno:
     deploy: true
-    version: 0.1.2
 
   longhorn:
     deploy: true
-    version: 0.3.1
     routes:
       deploy: true
 
-  metallb:
-    deploy: false
-    version: 0.0.12
-
   metricsserver:
     deploy: true
-    version: 0.0.2
 
   nodes:
     deploy: true
-    version: 0.3.0
     api:
       proxmox: https://10.0.0.50:8006/api2/json
       routeros: http://10.0.0.1
@@ -288,23 +269,9 @@ infrastructure:
 
   prometheus:
     deploy: true
-    version: 0.0.7
 
   seaweedfs:
     deploy: true
-    version: 0.1.4
-
-  wireguard:
-    deploy: false
-    version: 0.1.0
-    vpn:
-      peers:
-        - pc
-        - laptop
-        - s24ultra
-      dns:
-        - "1.1.1.1"
-        - "8.8.8.8"
 
   repository: harbor.wieman.cloud/infrastructure
 

@@ -16,7 +16,7 @@ while [[ $# -gt 0 ]]; do
       shift 2
       ;;
     --tag)
-      tag="-$2"
+      tag="$2"
       shift 2
       ;;
     *)
@@ -25,6 +25,10 @@ while [[ $# -gt 0 ]]; do
       ;;
   esac
 done
+
+if [[ -n "$tag" ]]; then
+  tag="-$tag"
+fi
 
 missing=()
 [[ -z "$image_path" ]] && missing+=("--path")
@@ -42,4 +46,4 @@ version=$( yq .version $image_path/Image.yaml )
 
 echo "Setting image version ${version}${tag} for ${name}"
 
-sed -i "/${name}:/,/version:/ s/^\(\s*version:\s*\).*/\1${version}${tag}/" $app_chart/values.yaml
+yq -i ".images.${name}.image.version = \"${version}${tag}\"" $app_chart/versions.yaml

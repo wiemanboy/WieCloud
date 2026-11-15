@@ -10,7 +10,7 @@ while [[ $# -gt 0 ]]; do
       shift 2
       ;;
     --tag)
-      tag="-$2"
+      tag="$2"
       shift 2
       ;;
     *)
@@ -19,6 +19,10 @@ while [[ $# -gt 0 ]]; do
       ;;
   esac
 done
+
+if [[ -n "$tag" ]]; then
+  tag="-$tag"
+fi
 
 missing=()
 [[ -z "$chart_path" ]] && missing+=("--path")

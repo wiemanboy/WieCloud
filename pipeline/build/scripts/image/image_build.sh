@@ -34,4 +34,4 @@ image_version=$(yq '.version' "$image_path/Image.yaml")
 image_tag="${image_version}${tag}"
 
 echo "Building docker image: $image_name:$image_tag"
-docker build $image_path --tag $image_name:$image_tag
+docker build $image_path --tag $image_name:$image_tag >&2

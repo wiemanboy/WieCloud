@@ -2,6 +2,7 @@ set -e
 
 app_chart="./wiecloud/chart"
 chart_path=""
+project=""
 name=""
 tag=""
 
@@ -11,12 +12,16 @@ while [[ $# -gt 0 ]]; do
       chart_path="$2"
       shift 2
       ;;
+    --project)
+      project="$2"
+      shift 2
+      ;;
     --name)
       name="$2"
       shift 2
       ;;
     --tag)
-      tag="-$2"
+      tag="$2"
       shift 2
       ;;
     *)
@@ -26,8 +31,13 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+if [[ -n "$tag" ]]; then
+  tag="-$tag"
+fi
+
 missing=()
 [[ -z "$chart_path" ]] && missing+=("--path")
+[[ -z "$project" ]] && missing+=("--project")
 [[ -z "$name" ]] && missing+=("--name")
 
 
@@ -43,3 +53,5 @@ version=$( yq .version $chart_path/Chart.yaml )
 echo "Setting chart version ${version}${tag} for ${name}"
 
 sed -i "/^  ${name}:/,/^  [^ ]/ s/^\(    version:\s*\).*/\1${version}${tag}/" "$app_chart/values.yaml"
+
+yq -i ".${project}.${name}.version = \"${version}${tag}\"" $app_chart/versions.yaml
