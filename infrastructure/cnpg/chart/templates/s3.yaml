@@ -21,7 +21,7 @@ spec:
 
   volume:
     replicas: 1
-    storage: 20Gi
+    storage: 50Gi
     resources:
       limits:
         memory: 128Mi
