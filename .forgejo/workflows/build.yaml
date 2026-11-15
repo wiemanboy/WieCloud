@@ -36,7 +36,7 @@ jobs:
           edited_charts=$(printf '%s\n' "$diff"| sed 's|\(.*\/chart\)/.*|\1|' | sort -u)
 
           echo "Converting edited charts to json..."
-          charts=$(echo $edited_charts | jq -R -s -c '
+          charts=$(echo "$edited_charts" | jq -R -s -c '
             split("\n")
             | map(select(length > 0))
             | map(split("/") | {path: join("/"), name: .[1], project: .[0]})
