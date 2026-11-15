@@ -146,7 +146,7 @@ jobs:
           build_image=$(grep -oE 'Building docker image: [^ ]+' <<< "$output" | awk '{print $4}')
 
           echo "Image: $build_image"
-          echo "build_image=${{ matrix.image.name }}:${{ needs.changed.outputs.tag }}" >> "$FORGEJO_OUTPUT"
+          echo "build_image=$build_image" >> "$FORGEJO_OUTPUT"
 
       - name: Push image
         run: ./pipeline/build/scripts/image/image_push.sh --image ${{ steps.build.outputs.build_image }} --registry ${{ vars.OCI_REGISTRY }} --repository products
