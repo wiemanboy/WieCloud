@@ -6,7 +6,7 @@ spec:
   database: forgejo
   instances: 1
   storage:
-    size: 10Gi
+    size: 12Gi
 
   backup:
     {{- with .Values.cnpg }}
