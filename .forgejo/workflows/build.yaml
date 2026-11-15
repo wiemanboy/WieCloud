@@ -29,13 +29,13 @@ jobs:
           git fetch origin "${{ forgejo.base_ref }}"
           echo
 
-          echo "Getting diff...\n"
+          echo "Getting diff..."
           diff=$(git diff origin/${{ forgejo.base_ref }} --name-only --diff-filter=AMR | grep -E '^(infrastructure|applications|products)/.*/chart/') || diff=""
 
-          echo "Extracting edited charts from diff...\n"
-          edited_charts=$(printf '%s\n' "$diff"| sed 's|\(.*\/chart\)/.*|\1|' | sort -u)
+          echo "Extracting edited charts from diff..."
+          edited_charts=$(printf '%s' "$diff"| sed 's|\(.*\/chart\)/.*|\1|' | sort -u)
 
-          echo "Converting edited charts to json...\n"
+          echo "Converting edited charts to json..."
           charts=$(echo $edited_charts | jq -R -s -c '
             split("\n")
             | map(select(length > 0))
@@ -52,13 +52,13 @@ jobs:
           git fetch origin "${{ forgejo.base_ref }}"
           echo
 
-          echo "Getting diff...\n"
+          echo "Getting diff..."
           diff=$(git diff origin/${{ forgejo.base_ref }} --name-only | grep -E '^(infrastructure|applications|products)/.*/image/') || exit 0
 
-          echo "Extracting edited images from diff...\n"
+          echo "Extracting edited images from diff..."
           edited_images=$(printf '%s\n' "$diff"| sed 's|\(.*\/image\)/.*|\1|' | sort -u)
 
-          echo "Converting edited images to json...\n"
+          echo "Converting edited images to json..."
           images=$(echo "$edited_images" | jq -R -s -c '
             split("\n")
             | map(select(length > 0))
@@ -72,7 +72,7 @@ jobs:
       - name: Generate tag
         id: tag
         run: |
-          echo "Generating tag...\n"
+          echo "Generating tag..."
           tag="${{ forgejo.head_ref }}-$(echo ${{ forgejo.sha }} | cut -c1-7)"
 
           # If label "Status/Ready for master" is set don't use a tag
@@ -106,7 +106,7 @@ jobs:
       - name: Package Helm chart
         id: package
         run: |
-          echo "Building chart ${{ matrix.chart.name }} at ${{ matrix.chart.path }} with tag ${{ needs.changed.outputs.tag }}\n"
+          echo "Building chart ${{ matrix.chart.name }} at ${{ matrix.chart.path }} with tag ${{ needs.changed.outputs.tag }}"
           output=$( ./pipeline/build/scripts/helm/helm_package.sh --path ${{ matrix.chart.path }} --tag "${{ needs.changed.outputs.tag }}" )
           echo
 
@@ -140,7 +140,7 @@ jobs:
       - name: Build image
         id: build
         run: |
-          echo "Building image ${{ matrix.image.name }} at ${{ matrix.image.path }} with tag ${{ needs.changed.outputs.tag }}\n"
+          echo "Building image ${{ matrix.image.name }} at ${{ matrix.image.path }} with tag ${{ needs.changed.outputs.tag }}"
 
           output=$( ./pipeline/build/scripts/image/image_build.sh --path ${{ matrix.image.path }} --tag "${{ needs.changed.outputs.tag }}" | tee /dev/stderr )
           build_image=$(grep -oE 'Building docker image: [^ ]+' <<< "$output" | awk '{print $4}')
