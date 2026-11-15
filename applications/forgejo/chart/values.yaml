@@ -6,7 +6,7 @@ forgejo:
       APP_SLOGAN: The WieCloud git server
 
       server:
-        SSH_DISABLE: true
+        DISABLE_SSH: true
 
       repository:
         MAX_CREATION_LIMIT: 100
