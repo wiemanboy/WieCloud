@@ -41,13 +41,59 @@ module "https" {
   dst_port = 443
   protocol = "tcp"
 }
-module "wireguard" {
+
+module "minecraft" {
   source = "./modules/routeros/port_forward"
 
-  name    = "wireguard"
-  address = "10.0.0.150"
+  name    = "minecraft"
+  address = "10.0.0.151"
 
-  src_port = 51820
-  dst_port = 51820
+  src_port = 25565
+  dst_port = 25565
+  protocol = "tcp"
+}
+
+
+module "minecraft-voicechat" {
+  source = "./modules/routeros/port_forward"
+
+  name    = "minecraft-voicechat"
+  address = "10.0.0.151"
+
+  src_port = 24454
+  dst_port = 24454
   protocol = "udp"
+}
+
+module "satisfactory-tcp" {
+  source = "./modules/routeros/port_forward"
+
+  name    = "satisfactory"
+  address = "10.0.0.151"
+
+  src_port = 7777
+  dst_port = 7777
+  protocol = "tcp"
+}
+
+module "satisfactory-udp" {
+  source = "./modules/routeros/port_forward"
+
+  name    = "satisfactory"
+  address = "10.0.0.151"
+
+  src_port = 7777
+  dst_port = 7777
+  protocol = "udp"
+}
+
+module "satisfactory-messaging" {
+  source = "./modules/routeros/port_forward"
+
+  name    = "satisfactory-messaging"
+  address = "10.0.0.151"
+
+  src_port = 8888
+  dst_port = 8888
+  protocol = "tcp"
 }
