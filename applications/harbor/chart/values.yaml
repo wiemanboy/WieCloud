@@ -40,6 +40,7 @@ harbor:
     enabled: false
 
   portal:
+    replicas: 2
     resources:
       limits:
         memory: 32Mi
@@ -48,6 +49,7 @@ harbor:
         memory: 16Mi
 
   core:
+    replicas: 2
     resources:
       limits:
         memory: 256Mi
@@ -56,6 +58,7 @@ harbor:
         memory: 128Mi
 
   jobservice:
+    replicas: 2
     resources:
       limits:
         memory: 64Mi
@@ -64,6 +67,7 @@ harbor:
         memory: 32Mi
 
   registry:
+    replicas: 2
     registry:
       resources:
         limits:
