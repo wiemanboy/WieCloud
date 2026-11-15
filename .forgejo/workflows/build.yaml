@@ -76,7 +76,6 @@ jobs:
           tag="${{ forgejo.head_ref }}-$(echo ${{ forgejo.sha }} | cut -c1-7)"
 
           # If label "Status/Ready for master" is set don't use a tag
-          echo '${{ toJSON(forgejo.event.pull_request.labels.*.name) }}'
           if echo '${{ toJSON(forgejo.event.pull_request.labels.*.name) }}' | grep -q "Status/Ready for master"; then
             tag=""
             echo "No tag set"
