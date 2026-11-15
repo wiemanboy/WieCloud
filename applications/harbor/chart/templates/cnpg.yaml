@@ -4,7 +4,7 @@ metadata:
   name: harbor-postgres-cluster
 spec:
   database: harbor
-  instances: 1
+  instances: 3
   storage:
     size: 5Gi
 

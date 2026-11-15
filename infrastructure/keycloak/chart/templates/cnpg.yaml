@@ -4,7 +4,7 @@ metadata:
   name: keycloak-postgres-cluster
 spec:
   database: keycloak
-  instances: 1
+  instances: 3
   storage:
     size: 5Gi
 
