@@ -2,7 +2,7 @@ applications:
   forgejo:
     version: 0.1.2
   harbor:
-    version: 1.4.1
+    version: 1.4.2
   minecraft:
     version: 1.2.6
   nextcloud:
