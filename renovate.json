@@ -11,6 +11,9 @@
   "addLabels": [
     "Type/Update"
   ],
+  "gitIgnoredAuthors": [
+    "bot@wieman.cloud"
+  ],
   "bumpVersion": "patch",
   "packageRules": [
     {
