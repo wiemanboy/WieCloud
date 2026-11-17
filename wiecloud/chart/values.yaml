@@ -279,7 +279,7 @@ images:
     image:
       registry: docker.io
       repository: alpine
-      version: 3.18.2
+      version: 3.24.4
   kubectl:
     image:
       registry: docker.io

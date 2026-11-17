@@ -100,7 +100,7 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Check for version change
-        if: ${{ matrix.image.name != 'skip' }}
+        if: ${{ matrix.chart.name != 'skip' }}
         run: |
           git fetch origin "${{ forgejo.base_ref }}"
           echo
