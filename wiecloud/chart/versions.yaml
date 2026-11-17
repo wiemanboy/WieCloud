@@ -21,7 +21,7 @@ infrastructure:
   cnpg:
     version: 0.2.2
   crossplane:
-    version: 0.3.2
+    version: 0.3.3
   dragonflydb:
     version: 0.0.2
   envoygateway:
