@@ -15,19 +15,24 @@ package_rules=$(jq -n --argjson dirs "$(printf '%s\n' "${dirs[@]}" | jq -R . | j
 
   {
     "matchFileNames": ["\($project)/\($name)/**"],
-    "matchUpdateTypes": ["patch", "minor"],
+    "matchUpdateTypes": ["patch"],
+    "groupName": "\($name) patch",
+    "group": { "branchTopic": "\($name)/minor" },
+    "bumpVersion": "patch"
+  },
+  {
+    "matchFileNames": ["\($project)/\($name)/**"],
+    "matchUpdateTypes": ["minor"],
     "groupName": "\($name) minor",
-    "group": {
-      "branchTopic": "\($name)/minor"
-    }
+    "group": { "branchTopic": "\($name)/minor" },
+    "bumpVersion": "minor"
   },
   {
     "matchFileNames": ["\($project)/\($name)/**"],
     "matchUpdateTypes": ["major"],
     "groupName": "\($name) major",
-    "group": {
-      "branchTopic": "\($name)/major"
-    }
+    "group": { "branchTopic": "\($name)/major" },
+    "bumpVersion": "major"
   }
 ]
 ')
