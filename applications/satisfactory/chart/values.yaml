@@ -32,4 +32,4 @@ images:
     image:
       registry: docker.io
       repository: wolveix/satisfactory-server
-      version: v1.9.10
+      version: v1.9.11
