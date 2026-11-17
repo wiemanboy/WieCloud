@@ -162,12 +162,6 @@ runner:
 
 
 images:
-  alpine:
-    image:
-      registry: docker.io
-      repository: alpine
-      version: 3.18.2
-
   dind:
     image:
       registry: docker.io
@@ -176,24 +170,12 @@ images:
 
   forgejo:
     image:
-      registry: data.forgejo.org
+      registry: code.forgejo.org
       repository: forgejo/forgejo
-      version: 16.0.2
+      version: 15.0.6
 
   forgejorunner:
     image:
-      registry: code.forgejo.org/forgejo
-      repository: runner
-      version: v13
-
-  forgejorunnercontroller:
-    image:
-      registry: harbor.wieman.cloud
-      repository: products/forgejorunnercontroller
-      version: 0.0.0
-
-  kubectl:
-    image:
-      registry: docker.io
-      repository: alpine/kubectl
-      version: 1.36.3
+      registry: data.forgejo.org
+      repository: forgejo/runner
+      version: 13.0.0

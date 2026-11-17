@@ -8,3 +8,10 @@ seaweedfs-operator:
     requests:
       cpu: 5m
       memory: 64Mi
+
+images:
+  seaweedfs:
+    image:
+      registry: docker.io
+      repository: chrislusf/seaweedfs
+      version: 4.47

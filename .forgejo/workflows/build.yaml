@@ -1,5 +1,6 @@
 # Requires vars: OCI_REGISTRY
 # Requires secrets: OCI_REGISTRY_USERNAME, OCI_REGISTRY_PASSWORD
+name: Build Pipeline
 
 on:
   pull_request:
@@ -91,12 +92,24 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        chart: ${{ fromJSON(needs.changed.outputs.charts) }}
+        chart: ${{ fromJSON(needs.changed.outputs.charts || '[{"name":"skip"}]') }}
     steps:
       - name: Checkout code
+        if: ${{ matrix.chart.name != 'skip' }}
         uses: actions/checkout@v7
 
+      - name: Check for version change
+        if: ${{ matrix.image.name != 'skip' }}
+        run: |
+          git fetch origin "${{ forgejo.base_ref }}"
+          echo
+
+          # Make sure no production images are overwritten
+          echo "Checking for version change"
+          git diff origin/${{ forgejo.base_ref }} -- ${{ matrix.chart.path }}/Chart.yaml | grep +version || (echo "Version not updated, exiting" && exit 1)
+
       - name: Login to registry
+        if: ${{ matrix.chart.name != 'skip' }}
         env:
           OCI_REGISTRY_USERNAME: ${{ secrets.OCI_REGISTRY_USERNAME }}
         run: |
@@ -104,6 +117,7 @@ jobs:
           helm registry login ${{ vars.OCI_REGISTRY }} --username "${OCI_REGISTRY_USERNAME}" --password "${{ secrets.OCI_REGISTRY_PASSWORD }}"
 
       - name: Package Helm chart
+        if: ${{ matrix.chart.name != 'skip' }}
         id: package
         run: |
           echo "Building chart ${{ matrix.chart.name }} at ${{ matrix.chart.path }} with tag ${{ needs.changed.outputs.tag }}"
@@ -116,6 +130,7 @@ jobs:
           echo "chart_package_path=$packaged_path" >> "$FORGEJO_OUTPUT"
 
       - name: Push Helm chart
+        if: ${{ matrix.chart.name != 'skip' }}
         run: ./pipeline/build/scripts/helm/helm_push.sh --package ${{ steps.package.outputs.chart_package_path }} --registry ${{ vars.OCI_REGISTRY }} --repository ${{ matrix.chart.project }}
 
   publish-image:
@@ -125,12 +140,25 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        image: ${{ fromJSON(needs.changed.outputs.images) }}
+        image: ${{ fromJSON(needs.changed.outputs.images || '[{"name":"skip"}]') }}
+
     steps:
       - name: Checkout code
+        if: ${{ matrix.image.name != 'skip' }}
         uses: actions/checkout@v7
 
+      - name: Check for version change
+        if: ${{ matrix.image.name != 'skip' }}
+        run: |
+          git fetch origin "${{ forgejo.base_ref }}"
+          echo
+
+          # Make sure no production images are overwritten
+          echo "Checking for version change"
+          git diff origin/${{ forgejo.base_ref }} -- ${{ matrix.image.path }}/Image.yaml | grep +version || (echo "Version not updated, exiting" && exit 1)
+
       - name: Login to registry
+        if: ${{ matrix.image.name != 'skip' }}
         env:
           OCI_REGISTRY_USERNAME: ${{ secrets.OCI_REGISTRY_USERNAME }}
         run: |
@@ -138,6 +166,7 @@ jobs:
           docker login ${{ vars.OCI_REGISTRY }} --username "${OCI_REGISTRY_USERNAME}" --password "${{ secrets.OCI_REGISTRY_PASSWORD }}"
 
       - name: Build image
+        if: ${{ matrix.image.name != 'skip' }}
         id: build
         run: |
           echo "Building image ${{ matrix.image.name }} at ${{ matrix.image.path }} with tag ${{ needs.changed.outputs.tag }}"
@@ -149,6 +178,7 @@ jobs:
           echo "build_image=$build_image" >> "$FORGEJO_OUTPUT"
 
       - name: Push image
+        if: ${{ matrix.image.name != 'skip' }}
         run: ./pipeline/build/scripts/image/image_push.sh --image ${{ steps.build.outputs.build_image }} --registry ${{ vars.OCI_REGISTRY }} --repository products
 
   update-versions:
@@ -172,10 +202,13 @@ jobs:
 
           ./pipeline/version/scripts/update_versions.sh --charts '${{ needs.changed.outputs.charts }}' --images '${{ needs.changed.outputs.images }}' --tag "${{ needs.changed.outputs.tag }}"
 
+      - name: Update renovate config
+        run: ./pipeline/update/renovate.sh
+
       - name: Commit changes
         run: |
           git add .
           git commit -m "UPDATE: reference versions in wiecloud/chart/versions.yaml ${{ needs.changed.outputs.tag }}" || exit 0
           echo
 
-          git push origin HEAD:${{ forgejo.head_Ref }} || exit 0
+          git push origin HEAD:${{ forgejo.head_ref }} || exit 0

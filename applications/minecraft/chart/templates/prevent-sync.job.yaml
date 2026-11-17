@@ -13,9 +13,9 @@ spec:
       restartPolicy: Never
       containers:
       - name: prevent-sync
-        {{ with .Values.images.rconcli.image -}}
+        {{- with (((.Values.images | default dict).rconcli | default dict).image) }}
         image: {{ .registry }}/{{ .repository }}:{{ .version }}
-        {{ end -}}
+        {{- end }}
         command:
           - sh
           - -c

@@ -1,0 +1,614 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "enabledManagers": [
+    "dockerfile",
+    "terraform",
+    "helm-values",
+    "helmv3",
+    "gomod",
+    "crossplane"
+  ],
+  "bumpVersion": "patch",
+  "packageRules": [
+    {
+      "matchFileNames": [
+        "applications/forgejo/**"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "forgejo minor",
+      "group": {
+        "branchTopic": "forgejo/minor"
+      }
+    },
+    {
+      "matchFileNames": [
+        "applications/forgejo/**"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "forgejo major",
+      "group": {
+        "branchTopic": "forgejo/major"
+      }
+    },
+    {
+      "matchFileNames": [
+        "applications/harbor/**"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "harbor minor",
+      "group": {
+        "branchTopic": "harbor/minor"
+      }
+    },
+    {
+      "matchFileNames": [
+        "applications/harbor/**"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "harbor major",
+      "group": {
+        "branchTopic": "harbor/major"
+      }
+    },
+    {
+      "matchFileNames": [
+        "applications/minecraft/**"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "minecraft minor",
+      "group": {
+        "branchTopic": "minecraft/minor"
+      }
+    },
+    {
+      "matchFileNames": [
+        "applications/minecraft/**"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "minecraft major",
+      "group": {
+        "branchTopic": "minecraft/major"
+      }
+    },
+    {
+      "matchFileNames": [
+        "applications/nextcloud/**"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "nextcloud minor",
+      "group": {
+        "branchTopic": "nextcloud/minor"
+      }
+    },
+    {
+      "matchFileNames": [
+        "applications/nextcloud/**"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "nextcloud major",
+      "group": {
+        "branchTopic": "nextcloud/major"
+      }
+    },
+    {
+      "matchFileNames": [
+        "applications/renovate/**"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "renovate minor",
+      "group": {
+        "branchTopic": "renovate/minor"
+      }
+    },
+    {
+      "matchFileNames": [
+        "applications/renovate/**"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "renovate major",
+      "group": {
+        "branchTopic": "renovate/major"
+      }
+    },
+    {
+      "matchFileNames": [
+        "applications/satisfactory/**"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "satisfactory minor",
+      "group": {
+        "branchTopic": "satisfactory/minor"
+      }
+    },
+    {
+      "matchFileNames": [
+        "applications/satisfactory/**"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "satisfactory major",
+      "group": {
+        "branchTopic": "satisfactory/major"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/argocd/**"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "argocd minor",
+      "group": {
+        "branchTopic": "argocd/minor"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/argocd/**"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "argocd major",
+      "group": {
+        "branchTopic": "argocd/major"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/certmanager/**"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "certmanager minor",
+      "group": {
+        "branchTopic": "certmanager/minor"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/certmanager/**"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "certmanager major",
+      "group": {
+        "branchTopic": "certmanager/major"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/cilium/**"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "cilium minor",
+      "group": {
+        "branchTopic": "cilium/minor"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/cilium/**"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "cilium major",
+      "group": {
+        "branchTopic": "cilium/major"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/cnpg/**"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "cnpg minor",
+      "group": {
+        "branchTopic": "cnpg/minor"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/cnpg/**"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "cnpg major",
+      "group": {
+        "branchTopic": "cnpg/major"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/crossplane/**"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "crossplane minor",
+      "group": {
+        "branchTopic": "crossplane/minor"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/crossplane/**"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "crossplane major",
+      "group": {
+        "branchTopic": "crossplane/major"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/dragonflydb/**"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "dragonflydb minor",
+      "group": {
+        "branchTopic": "dragonflydb/minor"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/dragonflydb/**"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "dragonflydb major",
+      "group": {
+        "branchTopic": "dragonflydb/major"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/envoygateway/**"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "envoygateway minor",
+      "group": {
+        "branchTopic": "envoygateway/minor"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/envoygateway/**"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "envoygateway major",
+      "group": {
+        "branchTopic": "envoygateway/major"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/externaldns/**"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "externaldns minor",
+      "group": {
+        "branchTopic": "externaldns/minor"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/externaldns/**"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "externaldns major",
+      "group": {
+        "branchTopic": "externaldns/major"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/externalsecrets/**"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "externalsecrets minor",
+      "group": {
+        "branchTopic": "externalsecrets/minor"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/externalsecrets/**"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "externalsecrets major",
+      "group": {
+        "branchTopic": "externalsecrets/major"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/k8up/**"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "k8up minor",
+      "group": {
+        "branchTopic": "k8up/minor"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/k8up/**"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "k8up major",
+      "group": {
+        "branchTopic": "k8up/major"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/keycloak/**"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "keycloak minor",
+      "group": {
+        "branchTopic": "keycloak/minor"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/keycloak/**"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "keycloak major",
+      "group": {
+        "branchTopic": "keycloak/major"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/kyverno/**"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "kyverno minor",
+      "group": {
+        "branchTopic": "kyverno/minor"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/kyverno/**"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "kyverno major",
+      "group": {
+        "branchTopic": "kyverno/major"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/longhorn/**"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "longhorn minor",
+      "group": {
+        "branchTopic": "longhorn/minor"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/longhorn/**"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "longhorn major",
+      "group": {
+        "branchTopic": "longhorn/major"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/metricsserver/**"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "metricsserver minor",
+      "group": {
+        "branchTopic": "metricsserver/minor"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/metricsserver/**"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "metricsserver major",
+      "group": {
+        "branchTopic": "metricsserver/major"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/nodes/**"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "nodes minor",
+      "group": {
+        "branchTopic": "nodes/minor"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/nodes/**"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "nodes major",
+      "group": {
+        "branchTopic": "nodes/major"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/prometheus/**"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "prometheus minor",
+      "group": {
+        "branchTopic": "prometheus/minor"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/prometheus/**"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "prometheus major",
+      "group": {
+        "branchTopic": "prometheus/major"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/seaweedfs/**"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "seaweedfs minor",
+      "group": {
+        "branchTopic": "seaweedfs/minor"
+      }
+    },
+    {
+      "matchFileNames": [
+        "infrastructure/seaweedfs/**"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "seaweedfs major",
+      "group": {
+        "branchTopic": "seaweedfs/major"
+      }
+    },
+    {
+      "matchFileNames": [
+        "products/tofudeployer/**"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "tofudeployer minor",
+      "group": {
+        "branchTopic": "tofudeployer/minor"
+      }
+    },
+    {
+      "matchFileNames": [
+        "products/tofudeployer/**"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "tofudeployer major",
+      "group": {
+        "branchTopic": "tofudeployer/major"
+      }
+    }
+  ]
+}

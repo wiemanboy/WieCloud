@@ -15,5 +15,8 @@
   },
   "[KCL]": {
     "editor.formatOnSave": false
+  },
+  "json.schemaDownload.trustedDomains": {
+    "https://docs.renovatebot.com": true
   }
 }

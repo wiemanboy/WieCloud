@@ -154,10 +154,3 @@ network:
     name: example-gateway
     listener: web-example
     namespace: example
-
-images:
-  rconcli:
-    image:
-      registry: example.com
-      repository: tools/rconcli
-      version: 0.0.0

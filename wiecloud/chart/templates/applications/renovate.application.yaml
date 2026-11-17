@@ -1,0 +1,35 @@
+{{- with .Values.applications.renovate -}}
+{{- if .deploy -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: renovate
+  namespace: argocd
+spec:
+  source:
+    chart: renovate
+    repoURL: {{ $.Values.applications.repository }}
+    targetRevision: {{ .version }}
+    helm:
+      valuesObject:
+        renovate:
+          schedule: {{ .schedule }}
+          env:
+            RENOVATE_ENDPOINT: https://forgejo.{{$.Values.network.hostname}}
+            {{ if .dryRun }}
+            RENOVATE_DRY_RUN: full # ["extract", "lookup", "full"]
+            {{ end }}
+
+  destination:
+    namespace: renovate
+    server: https://kubernetes.default.svc
+  project: applications
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
+{{- end -}}
+{{- end -}}

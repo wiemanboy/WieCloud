@@ -87,9 +87,9 @@ spec:
       serviceAccountName: forgejo-runner-controller
       containers:
       - name: controller
-        {{ with .Values.images.forgejorunnercontroller.image -}}
+        {{- with (((.Values.images | default dict).forgejorunnercontroller | default dict).image) }}
         image: {{ .registry }}/{{ .repository }}:{{ .version }}
-        {{ end -}}
+        {{- end }}
         env:
           - name: CONTROLLER_NAME
             valueFrom:
@@ -118,7 +118,7 @@ spec:
             value: {{ .registry }}/{{ .repository }}:{{ .version }}
             {{- end }}
           - name: KUBECTL_IMAGE
-            {{ with .Values.images.kubectl.image -}}
+            {{- with (((.Values.images | default dict).kubectl | default dict).image) }}
             value: {{ .registry }}/{{ .repository }}:{{ .version }}
             {{- end }}
         resources: {}

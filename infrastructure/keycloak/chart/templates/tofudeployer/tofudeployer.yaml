@@ -16,7 +16,7 @@ spec:
           serviceAccountName: tofudeployer
           containers:
           - name: tofudeployer
-            {{- with .Values.images.tofudeployer.image }}
+            {{- with (((.Values.images | default dict).tofudeployer | default dict).image) }}
             image: {{ .registry }}/{{ .repository }}:{{ .version }}
             {{- end }}
             env:

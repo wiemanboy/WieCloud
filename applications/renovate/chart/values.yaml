@@ -1,0 +1,21 @@
+renovate:
+  schedule: '0 1 * * *'
+
+  renovate:
+    config: |
+      {
+        "platform": "forgejo",
+        "autodiscover": true,
+        "branchPrefix": "update/"
+      }
+
+  env:
+    RENOVATE_ENDPOINT: https://forgejo.wieman.cloud
+
+  existingSecret: renovate-secrets
+
+  limits:
+   memory: 2Gi
+  requests:
+   cpu: 300m
+   memory: 1Gi
