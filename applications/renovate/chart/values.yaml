@@ -6,7 +6,8 @@ renovate:
       {
         "platform": "forgejo",
         "autodiscover": true,
-        "branchPrefix": "update/"
+        "branchPrefix": "update/",
+        "prHourlyLimit": 0
       }
 
   env:

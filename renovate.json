@@ -8,6 +8,9 @@
     "gomod",
     "crossplane"
   ],
+  "addLabels": [
+    "Type/Update"
+  ],
   "bumpVersion": "patch",
   "packageRules": [
     {

@@ -148,7 +148,7 @@ applications:
   renovate:
     deploy: true
     dryRun: false
-    schedule: "0 1 * * *"
+    schedule: "0 15 * * *"
 
   satisfactory:
     deploy: true

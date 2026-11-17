@@ -31,7 +31,7 @@ jobs:
           echo
 
           echo "Getting diff..."
-          diff=$(git diff origin/${{ forgejo.base_ref }} --name-only --diff-filter=AMR | grep -E '^(infrastructure|applications|products)/.*/chart/') || diff=""
+          diff=$(git diff origin/${{ forgejo.base_ref }} --name-only --diff-filter=AMR | grep -E '^(infrastructure|applications|products)/.*/chart/') || exit 0
 
           echo "Extracting edited charts from diff..."
           edited_charts=$(printf '%s\n' "$diff"| sed 's|\(.*\/chart\)/.*|\1|' | sort -u)
@@ -75,6 +75,7 @@ jobs:
         run: |
           echo "Generating tag..."
           tag="${{ forgejo.head_ref }}-$(echo ${{ forgejo.sha }} | cut -c1-7)"
+          tag="${tag//\//-}"
 
           # If label "Status/Ready for master" is set don't use a tag
           if echo '${{ toJSON(forgejo.event.pull_request.labels.*.name) }}' | grep -q "Status/Ready for master"; then
