@@ -8,7 +8,7 @@ spec:
       - apiGroups: ['apps']
         apiVersions: ['v1']
         operations: ['CREATE', 'UPDATE']
-        resources: ['deployments', 'statefulsets']
+        resources: ['deployments', 'statefulsets', 'daemonsets']
   mutations:
     - patchType: ApplyConfiguration
       applyConfiguration:
