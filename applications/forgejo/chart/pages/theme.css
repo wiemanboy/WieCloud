@@ -1,0 +1,43 @@
+@import url("https://forgejo.wieman.cloud/assets/css/theme-forgejo-dark.css");
+@import url("https://cdn.jsdelivr.net/gh/irazvan2745/forgejo-theming/modules/syntax-highlighting.css");
+@import url("https://cdn.jsdelivr.net/gh/irazvan2745/forgejo-theming/modules/material-icon.css");
+
+:root {
+  --color-primary: #bb68ff !important;
+  --color-secondary: oklch(25.017% 0.02978 259.082) !important;
+
+  --color-primary-hover: #c37aff !important;
+  --color-primary-active: #e87cfd !important;
+  --color-accent: var(--color-primary) !important;
+
+  --color-primary-light-4: #fa7ec2 !important;
+  --color-primary-light-2: #ef53fd !important;
+  --color-primary-dark-2: #9322fc !important;
+  --color-primary-dark-4: #6100fc !important;
+
+  --color-body: oklch(18.603% 0.03849 266.653) !important;
+
+  --color-box-header: oklch(21% 0.034 264.665) !important;
+  --color-box-body: oklch(27.8% 0.033 256.848) !important;
+
+  --color-input-background: var(--color-box-body) !important;
+
+  --color-button: var(--color-box-header) !important;
+  --color-hover: var(--color-button) !important;
+
+  --color-label-bg: var(--color-box-header) !important;
+  --color-label-bg-alt: var(--color-label-bg) !important;
+
+  --color-menu: var(--color-input-background) !important;
+  --color-active: oklch(22.671% 0.03819 261.625) !important;
+
+  --color-nav-bg: oklch(13.358% 0.03921 307.087) !important;
+  --color-nav-hover-bg: var(--color-box-body) !important;
+  --color-footer: var(--color-nav-bg) !important;
+
+  --color-box-body-highlight: var(--color-box-header) !important;
+  --color-code-bg: var(--color-box-body) !important;
+  --color-expand-button: var(--color-secondary) !important;
+
+  --color-console-bg: var(--color-box-body) !important;
+}

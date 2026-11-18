@@ -13,6 +13,10 @@ forgejo:
         DISABLED_REPO_UNITS: repo.packages
         ALLOW_FORK_WITHOUT_MAXIMUM_LIMIT: false
 
+      ui:
+        THEMES: custom
+        DEFAULT_THEME: custom
+
       admin:
         DISABLE_REGULAR_ORG_CREATION: true
         EXTERNAL_USER_DISABLE_FEATURES: deletion, manage_password
@@ -106,11 +110,17 @@ forgejo:
     - name: homepage
       configMap:
         name: forgejo-homepage
+    - name: theme
+      configMap:
+        name: forgejo-theme
 
   extraContainerVolumeMounts:
     - name: homepage
       readOnly: true
       mountPath: /data/gitea/templates
+    - name: theme
+      readOnly: true
+      mountPath: /data/gitea/public/assets/css
 
 runner:
   config:
