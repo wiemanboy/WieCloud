@@ -25,7 +25,7 @@ infrastructure:
   dragonflydb:
     version: 0.0.2
   envoygateway:
-    version: 0.4.3
+    version: 0.5.0
   externaldns:
     version: 0.2.2
   externalsecrets:

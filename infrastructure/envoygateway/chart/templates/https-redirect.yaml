@@ -1,0 +1,22 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: https-redirect
+spec:
+  parentRefs:
+  {{ with .Values.network.gateway }}
+  - kind: Gateway
+    name: {{ .name }}
+    namespace: {{ .namespace }}
+    sectionName: http
+  {{ end }}
+  rules:
+  - filters:
+    - type: RequestRedirect
+      requestRedirect:
+        scheme: https
+        statusCode: 301
+    matches:
+        - path:
+            type: PathPrefix
+            value: /

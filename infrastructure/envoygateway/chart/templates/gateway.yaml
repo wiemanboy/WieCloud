@@ -17,7 +17,7 @@ spec:
       port: 80
       allowedRoutes:
         namespaces:
-          from: All
+          from: Same
     - name: {{ .Values.network.gateway.listener }}
       protocol: HTTPS
       port: 443
@@ -76,12 +76,3 @@ spec:
           selector:
             matchLabels:
               kubernetes.io/metadata.name: satisfactory
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: letsencrypt-certificate
-spec:
-  secretName: letsencrypt-certificate
-  dnsNames: {{ toYaml .Values.network.gateway.certificate.hostnames | nindent 4 }}
-  issuerRef: {{ toYaml .Values.network.gateway.certificate.issuerRef | nindent 4 }}
