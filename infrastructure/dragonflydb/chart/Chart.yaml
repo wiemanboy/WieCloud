@@ -1,8 +1,8 @@
 apiVersion: v2
 name: dragonflydb
 type: application
-version: 0.0.2
+version: 0.1.0
 dependencies:
   - name: dragonfly-operator
-    version: v1.6.1
+    version: v1.8.0
     repository: oci://ghcr.io/dragonflydb/dragonfly-operator/helm
