@@ -14,4 +14,4 @@ images:
     image:
       registry: docker.io
       repository: chrislusf/seaweedfs
-      version: 4.47
+      version: 4.54

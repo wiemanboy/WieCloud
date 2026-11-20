@@ -45,7 +45,7 @@ infrastructure:
   prometheus:
     version: 1.0.0
   seaweedfs:
-    version: 0.1.5
+    version: 0.1.6
 images:
   forgejorunnercontroller:
     image:
