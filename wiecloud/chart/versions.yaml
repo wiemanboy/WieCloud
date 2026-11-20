@@ -29,7 +29,7 @@ infrastructure:
   externaldns:
     version: 0.2.2
   externalsecrets:
-    version: 0.1.2
+    version: 0.2.0
   k8up:
     version: 1.1.1
   keycloak:
