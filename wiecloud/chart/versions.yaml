@@ -35,7 +35,7 @@ infrastructure:
   keycloak:
     version: 3.1.2
   kyverno:
-    version: 0.1.3
+    version: 0.2.0
   longhorn:
     version: 0.3.1
   metricsserver:
