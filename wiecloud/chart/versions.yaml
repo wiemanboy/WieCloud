@@ -19,7 +19,7 @@ infrastructure:
   cilium:
     version: 0.0.2
   cnpg:
-    version: 0.2.2
+    version: 0.3.0
   crossplane:
     version: 0.3.3
   dragonflydb:
