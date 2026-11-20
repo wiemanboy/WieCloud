@@ -43,7 +43,7 @@ infrastructure:
   nodes:
     version: 0.3.1
   prometheus:
-    version: 0.0.7
+    version: 1.0.0
   seaweedfs:
     version: 0.1.5
 images:
