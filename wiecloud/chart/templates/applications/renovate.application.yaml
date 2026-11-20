@@ -13,7 +13,8 @@ spec:
     helm:
       valuesObject:
         renovate:
-          schedule: {{ .schedule }}
+          cronjob:
+            schedule: {{ .schedule }}
           env:
             RENOVATE_ENDPOINT: https://forgejo.{{$.Values.network.hostname}}
             {{ if .dryRun }}

@@ -1,5 +1,6 @@
 renovate:
-  schedule: '0 1 * * *'
+  cronjob:
+    schedule: '0 1 * * *'
 
   renovate:
     config: |
@@ -7,7 +8,8 @@ renovate:
         "platform": "forgejo",
         "autodiscover": true,
         "branchPrefix": "update/",
-        "prHourlyLimit": 0
+        "prHourlyLimit": 0,
+        "prConcurrentLimit": 0
       }
 
   env:
@@ -16,7 +18,7 @@ renovate:
   existingSecret: renovate-secrets
 
   limits:
-   memory: 2Gi
+    memory: 2Gi
   requests:
-   cpu: 300m
-   memory: 1Gi
+    cpu: 300m
+    memory: 1Gi
